@@ -44,7 +44,8 @@ const ForumSection: React.FC = () => {
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h2 className="text-3xl font-extrabold text-gray-900 mb-8">Entraide & Discussions</h2>
+      {/* H1 SEO Optimization */}
+      <h1 className="text-3xl font-extrabold text-gray-900 mb-8">Entraide & Discussions</h1>
 
       <div className="bg-white rounded-lg shadow-sm p-6 mb-8 border border-gray-200">
         <form onSubmit={handlePost}>

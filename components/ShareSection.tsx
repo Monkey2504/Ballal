@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Share2, Copy, Smartphone, Facebook, Check, Link } from 'lucide-react';
 
@@ -59,9 +58,10 @@ const ShareSection: React.FC = () => {
           <div className="inline-flex items-center justify-center p-3 bg-red-100 rounded-full mb-4">
              <Share2 className="h-8 w-8 text-[#CE1126]" />
           </div>
-          <h2 className="text-3xl font-extrabold text-gray-900">
+          {/* H1 SEO Optimization */}
+          <h1 className="text-3xl font-extrabold text-gray-900">
             Faites grandir la communauté
-          </h2>
+          </h1>
           <p className="mt-4 text-xl text-gray-600 font-medium">
             Ballal existe grâce à vous. Partagez l'application avec vos proches.
           </p>

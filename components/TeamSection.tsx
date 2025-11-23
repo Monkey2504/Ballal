@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Phone, Mail, User, Shield } from 'lucide-react';
 import { LanguageCode } from '../types';
@@ -11,38 +10,37 @@ interface TeamSectionProps {
 const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
   const t = translations[language];
 
-  // REMARQUE: Remplacez ces URLs par les vraies photos des administrateurs
   const teamMembers = [
     {
-      name: "Mamadou Sow",
-      role: t.role_president,
-      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop",
-      phone: "+32 400 00 00 01",
-      email: "president@ballal-asbl.be",
+      name: "Thierno I. T. Diallo",
+      role: "Administrateur",
+      image: "https://i.imgur.com/T2LT1pB.jpg",
+      phone: "", 
+      email: "", 
       color: "border-[#CE1126]" // Rouge
     },
     {
-      name: "Aissatou Diallo",
-      role: t.role_secretary,
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop",
-      phone: "+32 400 00 00 02",
-      email: "secretariat@ballal-asbl.be",
+      name: "Bah Ibrahim",
+      role: "Administrateur",
+      image: "https://i.imgur.com/l3UdDov.jpg",
+      phone: "",
+      email: "",
       color: "border-[#FCD116]" // Jaune
     },
     {
-      name: "Ibrahima Barry",
-      role: t.role_treasurer,
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=800&auto=format&fit=crop",
-      phone: "+32 400 00 00 03",
-      email: "tresorerie@ballal-asbl.be",
+      name: "Kadiatou Sow",
+      role: "Administratrice", 
+      image: "https://i.imgur.com/THTzMBW.jpg",
+      phone: "",
+      email: "",
       color: "border-[#009460]" // Vert
     },
     {
-      name: "Fatoumata Camara",
-      role: t.role_social,
-      image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=800&auto=format&fit=crop",
+      name: "Membre à Ajouter",
+      role: t.role_treasurer, 
+      image: "https://i.imgur.com/CwnDz75.png", // Image mise à jour
       phone: "+32 400 00 00 04",
-      email: "social@ballal-asbl.be",
+      email: "a_remplacer@ballal-asbl.be",
       color: "border-gray-800"
     }
   ];
@@ -83,18 +81,23 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
               
               <div className="p-6">
                 <div className="space-y-4">
-                    <a href={`tel:${member.phone}`} className="flex items-center text-gray-600 hover:text-[#CE1126] transition-colors group">
-                        <div className="p-2 bg-gray-100 rounded-full mr-3 group-hover:bg-red-50">
-                            <Phone className="h-4 w-4" />
-                        </div>
-                        <span className="text-sm font-bold">{member.phone}</span>
-                    </a>
-                    <a href={`mailto:${member.email}`} className="flex items-center text-gray-600 hover:text-[#009460] transition-colors group">
-                        <div className="p-2 bg-gray-100 rounded-full mr-3 group-hover:bg-green-50">
-                            <Mail className="h-4 w-4" />
-                        </div>
-                        <span className="text-sm truncate">{member.email}</span>
-                    </a>
+                    {member.phone && (
+                        <a href={`tel:${member.phone}`} className="flex items-center text-gray-600 hover:text-[#CE1126] transition-colors group">
+                            <div className="p-2 bg-gray-100 rounded-full mr-3 group-hover:bg-red-50">
+                                <Phone className="h-4 w-4" />
+                            </div>
+                            <span className="text-sm font-bold">{member.phone}</span>
+                        </a>
+                    )}
+                    
+                    {member.email && (
+                        <a href={`mailto:${member.email}`} className="flex items-center text-gray-600 hover:text-[#009460] transition-colors group">
+                            <div className="p-2 bg-gray-100 rounded-full mr-3 group-hover:bg-green-50">
+                                <Mail className="h-4 w-4" />
+                            </div>
+                            <span className="text-sm truncate">{member.email}</span>
+                        </a>
+                    )}
                 </div>
                 
                 <button className="w-full mt-6 bg-slate-900 text-white py-2 rounded-lg font-bold text-sm hover:bg-slate-800 transition-colors flex items-center justify-center">

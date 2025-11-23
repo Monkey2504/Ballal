@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { Calendar, MapPin, Users, RefreshCw, Search, Info } from 'lucide-react';
 import { CommunityEvent } from '../types';
@@ -38,9 +37,10 @@ const EventsSection: React.FC = () => {
     <div className="py-12 min-h-screen bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10 bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+          {/* H1 SEO Optimization */}
+          <h1 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
             Agenda de la Communauté
-          </h2>
+          </h1>
           <p className="mt-3 max-w-2xl mx-auto text-xl text-gray-600 font-medium sm:mt-4">
             Les événements publics détectés en Belgique pour la diaspora.
           </p>

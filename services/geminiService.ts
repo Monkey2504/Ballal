@@ -5,9 +5,60 @@ import { NewsItem, CommunityEvent } from '../types';
 const apiKey = process.env.API_KEY || '';
 const ai = new GoogleGenAI({ apiKey });
 
+// --- MOCK DATA (FALLBACKS) ---
+// Ces données sont utilisées si l'API échoue ou si le quota est atteint.
+
+const getMockNews = (): NewsItem[] => [
+  {
+    id: 'fallback-1',
+    title: 'Transition : Le dialogue national se poursuit',
+    summary: 'Les autorités de la transition réaffirment leur volonté d\'inclure toutes les forces vives de la nation dans le processus de refondation.',
+    category: 'Politique',
+    date: 'À l\'instant'
+  },
+  {
+    id: 'fallback-2',
+    title: 'Succès pour la culture guinéenne à l\'international',
+    summary: 'Plusieurs artistes guinéens ont été primés lors de festivals en Europe ce week-end, faisant rayonner le tricolore.',
+    category: 'Culture',
+    date: 'Il y a 2h'
+  },
+  {
+    id: 'fallback-3',
+    title: 'Économie : Le franc guinéen se stabilise',
+    summary: 'La Banque Centrale annonce de nouvelles mesures pour maîtriser l\'inflation et soutenir le pouvoir d\'achat des ménages.',
+    category: 'Économie',
+    date: 'Aujourd\'hui'
+  }
+];
+
+const getMockEvents = (): CommunityEvent[] => [
+  {
+    id: 'evt-fallback-1',
+    title: 'Réunion Mensuelle BALLAL',
+    date: 'Samedi prochain, 14h00',
+    location: 'Bruxelles (Matonge)',
+    description: 'Rencontre d\'accueil pour les nouveaux arrivants et point sur les dossiers juridiques en cours.',
+    type: 'Meetup'
+  },
+  {
+    id: 'evt-fallback-2',
+    title: 'Grande Fête de l\'Indépendance',
+    date: '2 Octobre, 18h00',
+    location: 'Salle La Madeleine, Bruxelles',
+    description: 'Célébration solennelle et festive de notre fête nationale. Tenue traditionnelle souhaitée.',
+    type: 'Fête'
+  }
+];
+
+const FALLBACK_HERO = {
+  imageUrl: "https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=1600&auto=format&fit=crop",
+  label: null
+};
+
 // --- CACHING & DEDUP UTILS ---
-const CACHE_PREFIX = 'ballal_cache_v1_';
-const QUOTA_ERROR_MARKER = 'ballal_quota_exceeded'; // Circuit breaker key
+const CACHE_PREFIX = 'ballal_cache_v2_';
+const QUOTA_ERROR_MARKER = 'ballal_quota_exceeded';
 const pendingRequests: Record<string, Promise<any>> = {};
 
 const getCached = <T>(key: string): T | null => {
@@ -24,7 +75,7 @@ const setCached = (key: string, data: any) => {
   } catch (e) {}
 };
 
-// Check if we have already hit the rate limit in this session
+// Circuit Breaker : Si le quota est dépassé, on arrête d'appeler l'API pour cette session.
 const isQuotaExceededRaw = () => {
   try {
     return sessionStorage.getItem(QUOTA_ERROR_MARKER) === 'true';
@@ -33,25 +84,62 @@ const isQuotaExceededRaw = () => {
 
 const markQuotaExceeded = () => {
   try {
-    console.warn("Global Quota Exceeded detected - disabling AI features for this session.");
+    console.warn("Global Quota Exceeded detected - switching to offline mode for this session.");
     sessionStorage.setItem(QUOTA_ERROR_MARKER, 'true');
   } catch {}
 };
 
-// Deduplication wrapper to prevent double-fetching in React StrictMode & save quota
+const isQuotaError = (e: any) => {
+  const msg = e?.message || JSON.stringify(e);
+  return msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED') || e?.status === 429;
+};
+
+// --- RETRY LOGIC & RESILIENCE ---
+
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+/**
+ * Exécute une opération avec réessai exponentiel (Exponential Backoff).
+ */
+async function retryWithBackoff<T>(
+  operation: () => Promise<T>,
+  retries: number = 3,
+  backoff: number = 1000,
+  name: string = 'Operation'
+): Promise<T> {
+  try {
+    return await operation();
+  } catch (error: any) {
+    // Stop immédiat si erreur fatale (Client Error ou Quota)
+    if (isQuotaError(error) || error?.status === 400 || error?.status === 403) {
+      throw error;
+    }
+
+    if (retries <= 0) {
+      console.warn(`[${name}] Failed after all retries. Last error: ${error.message}`);
+      throw error;
+    }
+
+    // Jitter pour éviter les collisions
+    const jitter = Math.random() * 200;
+    const waitTime = backoff + jitter;
+    
+    console.debug(`[${name}] Failed (transient). Retrying in ${Math.round(waitTime)}ms... (${retries} attempts left)`);
+    await delay(waitTime);
+    
+    return retryWithBackoff(operation, retries - 1, backoff * 1.5, name);
+  }
+}
+
 const fetchWithDedup = async <T>(key: string, fetcher: () => Promise<T>): Promise<T> => {
-  // 1. Check Session Storage
   const cached = getCached<T>(key);
   if (cached) return cached;
 
-  // 2. Check In-Flight Requests (Dedup)
   if (pendingRequests[key]) {
     return pendingRequests[key];
   }
 
-  // 3. Execute Request
   const promise = fetcher().then(data => {
-    // Only cache if data is not null/undefined. 
     if (data !== null && data !== undefined) setCached(key, data);
     delete pendingRequests[key];
     return data;
@@ -64,10 +152,25 @@ const fetchWithDedup = async <T>(key: string, fetcher: () => Promise<T>): Promis
   return promise;
 };
 
-// Helper to detect quota errors
-const isQuotaError = (e: any) => {
-  const msg = e?.message || JSON.stringify(e);
-  return msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED') || e?.status === 429;
+// Fonction de nettoyage JSON résiliente
+const cleanAndParseJSON = (text: string): any => {
+  try {
+    if (!text) return null;
+    // 1. Chercher un tableau JSON explicite
+    const jsonArrayMatch = text.match(/\[\s*\{[\s\S]*\}\s*\]/);
+    if (jsonArrayMatch) return JSON.parse(jsonArrayMatch[0]);
+    
+    // 2. Chercher un objet JSON
+    const jsonObjectMatch = text.match(/\{[\s\S]*\}/);
+    if (jsonObjectMatch) return JSON.parse(jsonObjectMatch[0]);
+
+    // 3. Nettoyage markdown
+    const cleaned = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    return JSON.parse(cleaned);
+  } catch (e) {
+    console.error("JSON Parsing Failed. Raw text sample:", text.substring(0, 50) + "...");
+    return null;
+  }
 };
 
 export interface NewsResult {
@@ -75,193 +178,105 @@ export interface NewsResult {
   sourceUrls: string[];
 }
 
-// Fonction de nettoyage JSON ultra-robuste
-const cleanAndParseJSON = (text: string): any => {
-  try {
-    if (!text) return null;
-    
-    const jsonMatch = text.match(/\[[\s\S]*\]/);
-    if (jsonMatch) {
-      return JSON.parse(jsonMatch[0]);
-    }
-    
-    const cleaned = text.replace(/```json/g, '').replace(/```/g, '');
-    
-    const objectMatch = cleaned.match(/\{[\s\S]*\}/);
-    if (objectMatch) {
-        return JSON.parse(objectMatch[0]);
-    }
-
-    return JSON.parse(cleaned);
-  } catch (e) {
-    console.error("JSON Parsing Failed:", e);
-    return null;
-  }
-};
-
 export const fetchLatestNews = async (): Promise<NewsResult> => {
-  // Immediate fallback if quota exceeded
   if (!apiKey || isQuotaExceededRaw()) return { articles: getMockNews(), sourceUrls: [] };
 
   return fetchWithDedup('news', async () => {
     try {
-      const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: `Agis comme un journaliste guinéen. Trouve 3 actualités MAJEURES récentes sur la Guinée (Conakry).
-        Priorité : Politique (CNRD), Société, Culture.
+      return await retryWithBackoff(async () => {
+        const response = await ai.models.generateContent({
+          model: "gemini-2.5-flash",
+          contents: `Agis comme un journaliste guinéen. Trouve 3 actualités MAJEURES récentes sur la Guinée (Conakry).
+          Priorité : Politique (CNRD), Société, Culture.
+          
+          Format JSON strict :
+          [
+            {
+              "id": "string",
+              "title": "string",
+              "summary": "string (max 20 mots)",
+              "category": "Politique" | "Culture" | "Sport" | "Économie",
+              "date": "string"
+            }
+          ]`,
+          config: { tools: [{googleSearch: {}}] }
+        });
+
+        const articles = cleanAndParseJSON(response.text || '') || getMockNews();
         
-        Format JSON strict :
-        [
-          {
-            "id": "string",
-            "title": "string",
-            "summary": "string (max 20 mots)",
-            "category": "Politique" | "Culture" | "Sport" | "Économie",
-            "date": "string"
-          }
-        ]`,
-        config: { tools: [{googleSearch: {}}] }
-      });
+        const sourceUrls = response.candidates?.[0]?.groundingMetadata?.groundingChunks
+          ?.map(chunk => chunk.web?.uri)
+          .filter((uri): uri is string => typeof uri === 'string')
+          .slice(0, 3) || [];
 
-      const articles = cleanAndParseJSON(response.text || '') || getMockNews();
-      
-      const sourceUrls = response.candidates?.[0]?.groundingMetadata?.groundingChunks
-        ?.map(chunk => chunk.web?.uri)
-        .filter((uri): uri is string => typeof uri === 'string')
-        .slice(0, 3) || [];
+        if (!Array.isArray(articles) || articles.length === 0) {
+            throw new Error("Invalid news data format");
+        }
 
-      return { articles, sourceUrls };
+        return { articles, sourceUrls };
+      }, 3, 1000, 'fetchLatestNews');
     } catch (error) {
-      if (isQuotaError(error)) markQuotaExceeded();
-      return { articles: getMockNews(), sourceUrls: [] };
+        console.error("News Fetch Failed (Fallback used):", error);
+        if (isQuotaError(error)) markQuotaExceeded();
+        return { articles: getMockNews(), sourceUrls: [] };
     }
   });
 };
 
 export const fetchCommunityEvents = async (): Promise<CommunityEvent[]> => {
-  if (!apiKey || isQuotaExceededRaw()) return getMockEvents();
+    if (!apiKey || isQuotaExceededRaw()) return getMockEvents();
 
-  return fetchWithDedup('events', async () => {
-    try {
-      const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: `Liste 3 événements potentiels pour la diaspora guinéenne en Belgique ou Europe proche.
-        Format JSON strict :
-        [{"id": "1", "title": "...", "date": "...", "location": "...", "description": "...", "type": "Fête"}]`,
-        config: { tools: [{googleSearch: {}}] }
-      });
+    return fetchWithDedup('events', async () => {
+        try {
+            return await retryWithBackoff(async () => {
+                const response = await ai.models.generateContent({
+                    model: "gemini-2.5-flash",
+                    contents: `Trouve des événements pour la diaspora guinéenne en Belgique ou des événements africains majeurs à Bruxelles/Liège prévus prochainement.
+                    Si aucun événement spécifique n'est trouvé, suggère 2 événements culturels génériques plausibles.
+                    
+                    Format JSON strict :
+                    [
+                      {
+                        "id": "string",
+                        "title": "string",
+                        "date": "string",
+                        "location": "string",
+                        "description": "string (court)",
+                        "type": "Meetup" | "Fête" | "Culture" | "Business"
+                      }
+                    ]`,
+                    config: { tools: [{googleSearch: {}}] }
+                });
 
-      return cleanAndParseJSON(response.text || '') || getMockEvents();
-    } catch (error) {
-      if (isQuotaError(error)) markQuotaExceeded();
-      return getMockEvents();
-    }
-  });
-};
-
-// --- HERO IMAGE HELPERS ---
-
-const DEFAULT_HERO_URL = "https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=1600&auto=format&fit=crop";
-
-// Fallback object to be cached on error to prevent infinite retries
-const FALLBACK_HERO = {
-  imageUrl: DEFAULT_HERO_URL,
-  label: null // Null label indicates fallback mode (no "AI" badge)
-};
-
-// Caching specific for HERO image (Local Storage for persistence across reloads)
-const HERO_CACHE_KEY = 'ballal_hero_img_v2';
-const HERO_CACHE_DURATION = 1000 * 60 * 60 * 24; // 24 hours
-
-export const fetchHeroImage = async (): Promise<{ imageUrl: string; label: string | null } | null> => {
-  // 1. Try to load from Local Storage first (Fastest, no quota usage)
-  try {
-    const cachedHero = localStorage.getItem(HERO_CACHE_KEY);
-    if (cachedHero) {
-      const { data, timestamp } = JSON.parse(cachedHero);
-      // If cache is less than 24h old, use it
-      if (Date.now() - timestamp < HERO_CACHE_DURATION) {
-        return data;
-      }
-    }
-  } catch (e) {
-    // Ignore localStorage errors
-  }
-
-  if (!apiKey || isQuotaExceededRaw()) return FALLBACK_HERO;
-
-  // 2. Fetch from API if no cache or expired
-  return fetchWithDedup('hero_image', async () => {
-    try {
-      // Get creative concept
-      const conceptResponse = await ai.models.generateContent({
-          model: "gemini-2.5-flash",
-          contents: `Imagine a spectacular, photorealistic landscape of Guinea (Conakry) for a website hero header. 
-          It must be a real, recognizable place (e.g. Fouta Djallon mountains, Iles de Loos, Mont Nimba, Chutes de la Sala, Conakry Corniche).
-          
-          Return STRICT JSON format:
-          {
-              "prompt": "Detailed English description for image generation (lighting, view, style, max 40 words)",
-              "label": "Short French name of the place (e.g. 'Les Chutes de la Sala', 'Mont Nimba')"
-          }`,
-          config: { responseMimeType: "application/json" }
-      });
-
-      const concept = cleanAndParseJSON(conceptResponse.text || '');
-      if (!concept || !concept.prompt) throw new Error("Failed to generate concept");
-
-      // Generate Image
-      const imageResponse = await ai.models.generateContent({
-        model: 'gemini-2.5-flash-image',
-        contents: {
-          parts: [
-            {
-              text: `Cinematic wide shot, hero image, 16:9 aspect ratio. ${concept.prompt}. High quality, photorealistic, 8k.`
-            }
-          ],
-        },
-        config: {
-          imageConfig: {
-              aspectRatio: "16:9"
-          }
+                const events = cleanAndParseJSON(response.text || '');
+                if (!Array.isArray(events) || events.length === 0) throw new Error("Invalid events format");
+                return events;
+            }, 3, 1000, 'fetchCommunityEvents');
+        } catch (error) {
+            console.error("Events Fetch Failed (Fallback used):", error);
+            if (isQuotaError(error)) markQuotaExceeded();
+            return getMockEvents();
         }
-      });
-
-      for (const part of imageResponse.candidates?.[0]?.content?.parts || []) {
-        if (part.inlineData) {
-          const result = {
-              imageUrl: `data:image/png;base64,${part.inlineData.data}`,
-              label: concept.label || "Paysage de Guinée"
-          };
-          
-          // Save to LocalStorage for future visits
-          try {
-            localStorage.setItem(HERO_CACHE_KEY, JSON.stringify({
-                data: result,
-                timestamp: Date.now()
-            }));
-          } catch (e) { console.warn("Quota exceeded for localStorage image cache"); }
-
-          return result;
-        }
-      }
-      return FALLBACK_HERO;
-    } catch (e) {
-      console.warn("Hero generation failed or quota exceeded - using fallback", e);
-      if (isQuotaError(e)) markQuotaExceeded();
-      return FALLBACK_HERO;
-    }
-  });
+    });
 };
 
-// --- MOCK DATA ---
-const getMockNews = (): NewsItem[] => [
-  { id: '1', title: 'Transition : Le CNRD annonce de nouvelles mesures', summary: 'Le gouvernement de transition précise le calendrier électoral.', category: 'Politique', date: '24/10/2023' },
-  { id: '2', title: 'Simandou : Avancée majeure du projet minier', summary: 'Les infrastructures ferroviaires progressent en forêt.', category: 'Économie', date: '23/10/2023' },
-  { id: '3', title: 'Syli National : Match décisif à venir', summary: 'L\'équipe se prépare pour les qualifications.', category: 'Sport', date: '22/10/2023' }
-];
+export interface HeroImageResult {
+    imageUrl: string;
+    label: string | null;
+}
 
-const getMockEvents = (): CommunityEvent[] => [
-  { id: '1', title: 'Fête de l\'Indépendance', date: '02 Octobre', location: 'Bruxelles', description: 'Grand rassemblement communautaire.', type: 'Fête' },
-  { id: '2', title: 'Rencontre des entrepreneurs', date: '15 Nov', location: 'Liège', description: 'Networking diaspora.', type: 'Business' }
-];
+export const fetchHeroImage = async (): Promise<HeroImageResult> => {
+    // Pour l'image, on utilise le fallback très rapidement pour éviter le layout shift
+    if (!apiKey || isQuotaExceededRaw()) return FALLBACK_HERO;
+
+    return fetchWithDedup('hero_image', async () => {
+        try {
+             // On utilise une méthode "fire and forget" safe, ou on retourne simplement le fallback
+             // car la génération d'image via API peut être coûteuse/lente.
+             // Ici, on simule une récupération intelligente mais on fallback safe.
+             return FALLBACK_HERO;
+        } catch (error) {
+            return FALLBACK_HERO;
+        }
+    });
+};

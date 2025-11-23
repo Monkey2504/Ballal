@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BookOpen, Clock, ArrowDown, Star } from 'lucide-react';
 
@@ -48,7 +47,8 @@ const HistorySection: React.FC = () => {
           <div className="flex justify-center mb-4">
              <BookOpen className="h-12 w-12 text-red-600" />
           </div>
-          <h2 className="text-4xl font-extrabold text-gray-900">Notre Histoire : De Conakry à Bruxelles</h2>
+          {/* H1 SEO Optimization */}
+          <h1 className="text-4xl font-extrabold text-gray-900">Notre Histoire : De Conakry à Bruxelles</h1>
           <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
             L'histoire de la <span className="font-bold text-red-600">3ème communauté africaine de Belgique</span>. 
             Un parcours fait de courage, d'études, de travail et de solidarité.
