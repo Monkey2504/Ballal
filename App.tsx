@@ -133,7 +133,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-50 flex flex-col font-sans" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       <Navbar currentView={currentView} setView={setCurrentView} language={language} setLanguage={setLanguage} />
       
       <main className="flex-grow">

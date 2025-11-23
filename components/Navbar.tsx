@@ -29,13 +29,17 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
 
   const languages: {code: LanguageCode; label: string}[] = [
     { code: 'fr', label: 'Français' },
+    { code: 'en', label: 'English' },
+    { code: 'nl', label: 'Nederlands' },
+    { code: 'es', label: 'Español' },
+    { code: 'ar', label: 'العربية' },
     { code: 'pe', label: 'Pular' },
     { code: 'ma', label: 'Malinké' },
     { code: 'su', label: 'Soussou' }
   ];
 
   return (
-    <nav className="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
+    <nav className="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100" dir="ltr">
       {/* Top border with Guinean Flag Gradient */}
       <div className="h-1 w-full guinea-gradient-bg"></div>
       

@@ -22,6 +22,12 @@ interface Translation {
   health_desc: string;
   lawyer_title: string;
   lawyer_desc: string;
+  // Flash Card Keys
+  flash_title: string;
+  flash_msg_title: string;
+  flash_msg_body: string;
+  flash_close: string;
+  click_for_flash: string;
 }
 
 export const translations: Record<LanguageCode, Translation> = {
@@ -45,7 +51,12 @@ export const translations: Record<LanguageCode, Translation> = {
     health_title: "Santé & Urgence",
     health_desc: "Même sans papiers, vous avez droit aux soins médicaux (AMU). Allez au CPAS.",
     lawyer_title: "Défense Juridique",
-    lawyer_desc: "Trouvez un avocat gratuit (Pro Deo) immédiatement."
+    lawyer_desc: "Trouvez un avocat gratuit (Pro Deo) immédiatement.",
+    flash_title: "JE NE DÉCLARE RIEN.\nJE NE SIGNE RIEN.\nJE VEUX MON AVOCAT.",
+    flash_msg_title: "MESSAGE À LA POLICE",
+    flash_msg_body: "\"Je fais valoir mon droit au silence (Salduz). Je demande l'assistance immédiate d'un avocat Pro Deo avant toute audition.\"",
+    flash_close: "Touchez l'écran pour fermer",
+    click_for_flash: "Cliquez pour afficher le bouclier juridique"
   },
   en: {
     nav_home: "Home",
@@ -67,7 +78,12 @@ export const translations: Record<LanguageCode, Translation> = {
     health_title: "Health & Emergency",
     health_desc: "Even without papers, you are entitled to medical care (AMU). Go to CPAS.",
     lawyer_title: "Legal Defense",
-    lawyer_desc: "Find a free lawyer (Pro Deo) immediately."
+    lawyer_desc: "Find a free lawyer (Pro Deo) immediately.",
+    flash_title: "I DECLARE NOTHING.\nI SIGN NOTHING.\nI WANT MY LAWYER.",
+    flash_msg_title: "MESSAGE TO POLICE",
+    flash_msg_body: "\"I invoke my right to remain silent (Salduz). I request immediate assistance from a Pro Deo lawyer before any questioning.\"",
+    flash_close: "Tap screen to close",
+    click_for_flash: "Click to show legal shield"
   },
   nl: {
     nav_home: "Home",
@@ -89,7 +105,66 @@ export const translations: Record<LanguageCode, Translation> = {
     health_title: "Gezondheid & Nood",
     health_desc: "Zelfs zonder papieren heeft u recht op medische zorg (DMH). Ga naar het OCMW.",
     lawyer_title: "Juridische Verdediging",
-    lawyer_desc: "Vind onmiddellijk een gratis advocaat (Pro Deo)."
+    lawyer_desc: "Vind onmiddellijk een gratis advocaat (Pro Deo).",
+    flash_title: "IK VERKLAAR NIETS.\nIK TEKEN NIETS.\nIK WIL MIJN ADVOCAAT.",
+    flash_msg_title: "BERICHT AAN POLITIE",
+    flash_msg_body: "\"Ik beroep mij op mijn zwijgrecht (Salduz). Ik vraag onmiddellijke bijstand van een Pro Deo advocaat vóór elk verhoor.\"",
+    flash_close: "Tik op scherm om te sluiten",
+    click_for_flash: "Klik om juridisch schild te tonen"
+  },
+  es: {
+    nav_home: "Inicio",
+    nav_directory: "Directorio",
+    nav_news: "Noticias",
+    nav_events: "Eventos",
+    nav_legal: "Ayuda Legal",
+    nav_history: "Historia",
+    nav_gallery: "Galería",
+    nav_forum: "Foro",
+    nav_share: "Compartir",
+    hero_title: "Solidaridad Guinea-Bélgica",
+    hero_subtitle: "Acoger. Proteger. Unir.",
+    hero_desc: "La estructura de referencia para la comunidad guineana en Bélgica. Asistencia legal, apoyo social y promoción de nuestra cultura.",
+    btn_assist: "Necesito ayuda",
+    btn_donate: "Donar",
+    urgent_title: "Solidaridad y Derechos",
+    urgent_alert: "En caso de arresto: NO firme nada sin abogado. Pida 'Pro Deo'.",
+    health_title: "Salud y Emergencia",
+    health_desc: "Incluso sin papeles, tiene derecho a atención médica (AMU). Vaya al CPAS.",
+    lawyer_title: "Defensa Legal",
+    lawyer_desc: "Encuentre un abogado gratuito (Pro Deo) inmediatamente.",
+    flash_title: "NO DECLARO NADA.\nNO FIRMO NADA.\nQUIERO MI ABOGADO.",
+    flash_msg_title: "MENSAJE A LA POLICÍA",
+    flash_msg_body: "\"Invoco mi derecho a guardar silencio (Salduz). Solicito asistencia inmediata de un abogado Pro Deo antes de cualquier interrogatorio.\"",
+    flash_close: "Toque la pantalla para cerrar",
+    click_for_flash: "Haga clic para mostrar escudo legal"
+  },
+  ar: {
+    nav_home: "الرئيسية",
+    nav_directory: "الدليل",
+    nav_news: "الأخبار",
+    nav_events: "الفعاليات",
+    nav_legal: "الحقوق والمساعدة",
+    nav_history: "التاريخ",
+    nav_gallery: "المعرض",
+    nav_forum: "المنتدى",
+    nav_share: "مشاركة",
+    hero_title: "تضامن غينيا-بلجيكا",
+    hero_subtitle: "ترحيب. حماية. اتحاد.",
+    hero_desc: "المرجع الأساسي للجالية الغينية في بلجيكا. مساعدة قانونية، دعم اجتماعي، وتعزيز ثقافتنا.",
+    btn_assist: "أحتاج مساعدة",
+    btn_donate: "تبرع",
+    urgent_title: "تضامن وحقوق",
+    urgent_alert: "في حالة الاعتقال: لا توقع على شيء بدون محام. اطلب محامياً مجانياً.",
+    health_title: "صحة وطوارئ",
+    health_desc: "حتى بدون أوراق، لك الحق في الرعاية الطبية. اذهب إلى CPAS.",
+    lawyer_title: "دفاع قانوني",
+    lawyer_desc: "اعثر على محامٍ مجاني (Pro Deo) فوراً.",
+    flash_title: "لا أصرح بشيء.\nلا أوقع على شيء.\nأريد محامياً.",
+    flash_msg_title: "رسالة إلى الشرطة",
+    flash_msg_body: "\"أتمسك بحقي في التزام الصمت (Salduz). أطلب المساعدة الفورية من محامٍ مجاني قبل أي استجواب.\"",
+    flash_close: "اضغط على الشاشة للإغلاق",
+    click_for_flash: "اضغط لإظهار الدرع القانوني"
   },
   pe: { // Pular (Peul)
     nav_home: "Jaɓɓagol",
@@ -111,7 +186,12 @@ export const translations: Record<LanguageCode, Translation> = {
     health_title: "Cellal & Kaaɗi",
     health_desc: "Hay si a alaa kaydi, aɗa jogii hakke e safaare (AMU). Yah CPAS.",
     lawyer_title: "Dandi hoore ma",
-    lawyer_desc: "Ƴam gorko sariya (avocat) mo yoɓetaake kooni."
+    lawyer_desc: "Ƴam gorko sariya (avocat) mo yoɓetaake kooni.",
+    flash_title: "MI HALATA HAY FU.\nMI SIITATA HAY FU.\nMIDO FALA AVOCAT AN.",
+    flash_msg_title: "MESSAAS FI POLICI",
+    flash_msg_body: "\"Mido jogi hakke dejjugol (Salduz). Mido ɲina ballal avocat Pro Deo gila ko mi lamda.\"",
+    flash_close: "Memu ecran on fi maɓɓugol",
+    click_for_flash: "Memu ɗo fi yi'gol ballal"
   },
   ma: { // Malinké
     nav_home: "Dalajɛ",
@@ -133,7 +213,12 @@ export const translations: Record<LanguageCode, Translation> = {
     health_title: "Kɛnɛya",
     health_desc: "Hali ni sɛbɛn tɛ i bolo, i bɛ se ka furakɛ (AMU). Ta CPAS.",
     lawyer_title: "Sariya Dɛmɛ",
-    lawyer_desc: "Avocat glara ɲini joona joona."
+    lawyer_desc: "Avocat glara ɲini joona joona.",
+    flash_title: "N TƐ FƆYI FƆ.\nN TƐ SƐBƐN KƐ.\nN BƐ N KA AVOCAT FƐ.",
+    flash_msg_title: "LASIGIGIRAN POLISI MA",
+    flash_msg_body: "\"N ka droit bɛ n bolo ka n da tugu (Salduz). N bɛ avocat Pro Deo dɛmɛ ɲini sani n ka ɲininka.\"",
+    flash_close: "Ecran ma kɔnɔ ka da tugu",
+    click_for_flash: "Digi yan ka kɔlɔsi sariya"
   },
   su: { // Soussou
     nav_home: "Xina",
@@ -155,6 +240,11 @@ export const translations: Record<LanguageCode, Translation> = {
     health_title: "Yalanya",
     health_desc: "Hali kèdi mou na i yi, i noko yalandé (AMU). Siga CPAS.",
     lawyer_title: "Sariya Karamo",
-    lawyer_desc: "Avocat naxan mou sarama fen keren na."
+    lawyer_desc: "Avocat naxan mou sarama fen keren na.",
+    flash_title: "N MOU SE FALAMA.\nN MOU SE SÈBÈMA.\nN WAMA N MA AVOCAT XON.",
+    flash_msg_title: "XIBARU POLISI BÈ",
+    flash_msg_body: "\"N yangeré na a ra n xa doundou (Salduz). N wama avocat Pro Deo xon benun wo xa n maxorin.\"",
+    flash_close: "Ecran ma kɔnɔ ka da tugu",
+    click_for_flash: "Digi be ka kɔlɔsi sariya"
   }
 };

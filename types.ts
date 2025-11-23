@@ -46,7 +46,7 @@ export interface DirectoryItem {
   isVerified: boolean;
 }
 
-export type LanguageCode = 'fr' | 'en' | 'nl' | 'pe' | 'ma' | 'su'; // Français, English, Nederlands, Peul (Pular), Malinké, Soussou
+export type LanguageCode = 'fr' | 'en' | 'nl' | 'pe' | 'ma' | 'su' | 'es' | 'ar'; // Français, English, Nederlands, Peul, Malinké, Soussou, Espagnol, Arabe
 
 export enum ViewState {
   HOME = 'HOME',

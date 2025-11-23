@@ -18,7 +18,7 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
   }
 
   return (
-    <div className="bg-slate-50 min-h-screen pb-12">
+    <div className="bg-slate-50 min-h-screen pb-12" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       
       {/* --- MODE FLASH (PLEIN ÉCRAN) --- */}
       {isFlashMode && (
@@ -32,22 +32,20 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
             
             <Shield className="h-24 w-24 text-white mb-8 animate-pulse" />
             
-            <h1 className="text-4xl sm:text-6xl font-black text-white leading-tight uppercase tracking-tighter mb-8 drop-shadow-md">
-                JE NE DÉCLARE RIEN.<br/>
-                JE NE SIGNE RIEN.<br/>
-                JE VEUX MON AVOCAT.
+            <h1 className="text-4xl sm:text-6xl font-black text-white leading-tight uppercase tracking-tighter mb-8 drop-shadow-md whitespace-pre-line">
+                {t.flash_title}
             </h1>
 
             <div className="bg-white text-black p-6 rounded-xl max-w-md shadow-2xl transform rotate-1">
-                <p className="font-bold text-lg mb-2 border-b-2 border-black pb-2">MESSAGE À LA POLICE / POLICE MESSAGE</p>
+                <p className="font-bold text-lg mb-2 border-b-2 border-black pb-2 uppercase">{t.flash_msg_title}</p>
                 <p className="text-sm font-mono leading-relaxed">
-                    "Je fais valoir mon droit au silence (Salduz). Je demande l'assistance immédiate d'un avocat Pro Deo avant toute audition."
+                    {t.flash_msg_body}
                 </p>
                 <p className="text-xs font-mono mt-2 text-right">Art. 47bis Code Instruction Criminelle</p>
             </div>
 
             <p className="text-white/80 mt-12 text-sm font-bold animate-bounce uppercase">
-                Touchez l'écran pour fermer
+                {t.flash_close}
             </p>
         </div>
       )}
@@ -60,11 +58,17 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                 <Gavel className="h-10 w-10 text-white" />
             </div>
             <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4">
-                Vos Droits sont vos Armes
+                {t.urgent_title}
             </h2>
             <p className="text-xl text-slate-300 max-w-3xl mx-auto font-medium leading-relaxed">
-                En collaboration (de combat) avec la <span className="text-white font-bold">Ligue des Droits Humains</span> et le <span className="text-white font-bold">CIRÉ</span>.
-                <br/>Face à l'arbitraire, le silence est votre meilleure protection.
+                {language === 'ar' 
+                  ? "بالتعاون مع رابطة حقوق الإنسان و CIRÉ. الصمت هو أفضل حماية لك." 
+                  : language === 'es'
+                  ? "En colaboración con la Liga de Derechos Humanos y CIRÉ. Ante la arbitrariedad, el silencio es su mejor protección."
+                  : language === 'en'
+                  ? "In collaboration with the Human Rights League and CIRÉ. Against arbitrariness, silence is your best protection."
+                  : "En collaboration (de combat) avec la Ligue des Droits Humains et le CIRÉ. Face à l'arbitraire, le silence est votre meilleure protection."
+                }
             </p>
         </div>
       </div>
@@ -78,18 +82,17 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                 {/* Bandeau clignotant */}
                 <div className="bg-[#CE1126] text-white p-4 text-center font-black uppercase tracking-widest flex items-center justify-center animate-pulse">
                     <Zap className="h-6 w-6 mr-2 fill-yellow-400 text-yellow-400" />
-                    CLIQUEZ ICI EN CAS D'URGENCE POLICE
+                    {language === 'ar' ? 'انقر هنا في حالة طوارئ الشرطة' : "CLIQUEZ ICI EN CAS D'URGENCE POLICE"}
                     <Zap className="h-6 w-6 ml-2 fill-yellow-400 text-yellow-400" />
                 </div>
 
                 <div className="p-8 md:p-12 text-center space-y-6 bg-red-50 group-hover:bg-red-100 transition-colors">
-                    <h3 className="text-3xl md:text-5xl font-black text-gray-900 leading-none tracking-tight">
-                        "JE NE DÉCLARE RIEN.<br/>
-                        JE NE SIGNE RIEN."
+                    <h3 className="text-3xl md:text-4xl font-black text-gray-900 leading-none tracking-tight whitespace-pre-line">
+                         {t.flash_title.split('\n')[0]}...
                     </h3>
                     
                     <div className="inline-block bg-black text-white px-4 py-2 text-sm font-bold rounded uppercase transform -rotate-2">
-                        Cliquez pour afficher le bouclier juridique plein écran
+                        {t.click_for_flash}
                     </div>
                 </div>
                 
@@ -112,7 +115,7 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                     
                     <div className="space-y-6">
                         <p className="text-gray-700 font-medium">
-                            Attention aux pièges. Ne confondez jamais ces deux procédures.
+                             {language === 'ar' ? "احذر من الفخاخ. لا تخلط أبداً بين هذين الإجراءين." : "Attention aux pièges. Ne confondez jamais ces deux procédures."}
                         </p>
                         
                         <div className="space-y-4">
@@ -144,7 +147,9 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                 <div className="p-6">
                     <div className="flex items-center mb-6">
                         <GraduationCap className="h-8 w-8 text-yellow-600 mr-3" />
-                        <h3 className="text-2xl font-black text-gray-900">L'École : Zone Sanctuaire</h3>
+                        <h3 className="text-2xl font-black text-gray-900">
+                            {language === 'ar' ? "المدرسة: منطقة آمنة" : "L'École : Zone Sanctuaire"}
+                        </h3>
                     </div>
                     
                     <div className="space-y-4">
@@ -209,12 +214,12 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                 <div className="p-6">
                     <div className="flex items-center mb-6">
                         <HeartPulse className="h-8 w-8 text-[#009460] mr-3" />
-                        <h3 className="text-2xl font-black text-gray-900">Santé (AMU)</h3>
+                        <h3 className="text-2xl font-black text-gray-900">{t.health_title}</h3>
                     </div>
                     
                     <div className="space-y-4">
                         <p className="text-sm text-gray-600 font-medium">
-                            Tomber malade n'est pas un crime. L'Aide Médicale Urgente est un droit humain inaliénable.
+                            {t.health_desc}
                         </p>
                         
                         <div className="bg-green-50 p-4 rounded-lg border border-green-100">
