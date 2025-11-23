@@ -29,6 +29,27 @@ const getMockNews = (): NewsItem[] => [
     summary: 'La Banque Centrale annonce de nouvelles mesures pour maîtriser l\'inflation et soutenir le pouvoir d\'achat des ménages.',
     category: 'Économie',
     date: 'Aujourd\'hui'
+  },
+  {
+    id: 'fallback-4',
+    title: 'Syli National : Préparation pour la CAN',
+    summary: 'L\'équipe nationale entame son stage de préparation avec l\'arrivée des expatriés. L\'espoir est grand pour cette compétition.',
+    category: 'Sport',
+    date: 'Hier'
+  },
+  {
+    id: 'fallback-5',
+    title: 'Infrastructures : Réfection de la route Coyah-Mamou',
+    summary: 'Les travaux avancent à grands pas sur la nationale numéro 1, promettant de faciliter les échanges commerciaux vers l\'intérieur.',
+    category: 'Économie',
+    date: 'Il y a 1j'
+  },
+  {
+    id: 'fallback-6',
+    title: 'Mines : Nouveau projet de bauxite à Boké',
+    summary: 'Un accord a été signé pour l\'exploitation durable d\'un nouveau gisement, avec des garanties environnementales renforcées.',
+    category: 'Économie',
+    date: 'Il y a 2j'
   }
 ];
 
@@ -178,25 +199,29 @@ export interface NewsResult {
   sourceUrls: string[];
 }
 
-export const fetchLatestNews = async (): Promise<NewsResult> => {
+export const fetchLatestNews = async (language: string = 'fr'): Promise<NewsResult> => {
   if (!apiKey || isQuotaExceededRaw()) return { articles: getMockNews(), sourceUrls: [] };
 
-  return fetchWithDedup('news', async () => {
+  const cacheKey = `news_${language}`;
+
+  return fetchWithDedup(cacheKey, async () => {
     try {
       return await retryWithBackoff(async () => {
         const response = await ai.models.generateContent({
           model: "gemini-2.5-flash",
-          contents: `Agis comme un journaliste guinéen. Trouve 3 actualités MAJEURES récentes sur la Guinée (Conakry).
-          Priorité : Politique (CNRD), Société, Culture.
+          contents: `Agis comme un journaliste. Trouve 6 actualités MAJEURES récentes sur la Guinée (Conakry).
+          Priorité : Politique (CNRD), Société, Culture, Sport.
           
-          Format JSON strict :
+          Important: Réponds dans cette langue : ${language === 'fr' ? 'Français' : language === 'en' ? 'Anglais' : language === 'ar' ? 'Arabe' : language === 'es' ? 'Espagnol' : 'Français'}.
+          
+          Format JSON strict (tableau de 6 objets) :
           [
             {
               "id": "string",
-              "title": "string",
-              "summary": "string (max 20 mots)",
+              "title": "string (Titre traduit dans la langue demandée)",
+              "summary": "string (max 20 mots, traduit)",
               "category": "Politique" | "Culture" | "Sport" | "Économie",
-              "date": "string"
+              "date": "string (ex: 'Il y a 2h' traduit)"
             }
           ]`,
           config: { tools: [{googleSearch: {}}] }

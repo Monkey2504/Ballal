@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Shield, HeartPulse, Scale, AlertTriangle, Gavel, Home, Camera, X, Zap, GraduationCap, Lock, EyeOff } from 'lucide-react';
 import { LanguageCode } from '../types';
@@ -9,6 +10,7 @@ interface LegalAidSectionProps {
 
 const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) => {
   const [isFlashMode, setIsFlashMode] = useState(false);
+  const [lastOpenTime, setLastOpenTime] = useState(0);
   const t = translations[language];
 
   // Empêcher le scroll quand le mode Flash est activé
@@ -16,8 +18,16 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
     document.body.style.overflow = isFlashMode ? 'hidden' : 'unset';
   }
 
-  const toggleFlashMode = () => {
-    setIsFlashMode(!isFlashMode);
+  const openFlashMode = () => {
+    setIsFlashMode(true);
+    setLastOpenTime(Date.now());
+  };
+
+  const closeFlashMode = (e?: React.MouseEvent) => {
+    // Prevent closing if opened less than 500ms ago (avoids accidental close on double click)
+    if (Date.now() - lastOpenTime > 500) {
+        setIsFlashMode(false);
+    }
   };
 
   return (
@@ -27,7 +37,7 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
       {isFlashMode && (
         <div 
             className="fixed inset-0 z-[100] bg-[#CE1126] flex flex-col items-center justify-center p-4 text-center animate-in fade-in duration-200 cursor-pointer focus:outline-none"
-            onClick={() => setIsFlashMode(false)}
+            onClick={closeFlashMode}
             role="alertdialog"
             aria-modal="true"
             aria-labelledby="flash-title"
@@ -80,7 +90,7 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                   ? "En colaboración con la Liga de Derechos Humanos y CIRÉ. Ante la arbitrariedad, el silencio es su mejor protección."
                   : language === 'en'
                   ? "In collaboration with the Human Rights League and CIRÉ. Against arbitrariness, silence is your best protection."
-                  : "En collaboration (de combat) avec la Ligue des Droits Humains et le CIRÉ. Face à l'arbitraire, le silence est votre meilleure protection."
+                  : "En cas d'arrestation, double-cliquez sur l'image en dessous et présentez-le aux policiers. Après, ne dites plus un mot."
                 }
             </p>
         </div>
@@ -91,8 +101,8 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
         {/* LA FLASH CARD - DÉCLENCHEUR */}
         <div 
             className="mb-16 transform transition-all duration-300 hover:scale-[1.02] cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400 rounded-xl"
-            onClick={toggleFlashMode}
-            onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleFlashMode()}
+            onClick={openFlashMode}
+            onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && openFlashMode()}
             role="button"
             tabIndex={0}
             aria-label="Ouvrir le mode urgence police (Carte Flash)"

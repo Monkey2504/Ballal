@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -22,7 +23,7 @@ const App: React.FC = () => {
     // Définition des titres par vue
     const titles: Record<ViewState, string> = {
       [ViewState.HOME]: t.hero_title,
-      [ViewState.NEWS]: t.nav_news,
+      [ViewState.NEWS]: t.news_section_title, // Use full title
       [ViewState.EVENTS]: t.nav_events,
       [ViewState.FORUM]: t.nav_forum,
       [ViewState.DIRECTORY]: t.nav_directory,
@@ -34,7 +35,7 @@ const App: React.FC = () => {
     // Définition des descriptions par vue
     const descriptions: Record<ViewState, string> = {
       [ViewState.HOME]: t.hero_desc,
-      [ViewState.NEWS]: `Actualités vérifiées de la Guinée et de la diaspora en Belgique. ${t.nav_news}.`,
+      [ViewState.NEWS]: `Actualités vérifiées de la Guinée et de la diaspora en Belgique. ${t.news_section_title}.`,
       [ViewState.EVENTS]: `Agenda des événements culturels, fêtes et meetups de la communauté guinéenne. ${t.nav_events}.`,
       [ViewState.FORUM]: "Espace de discussion, d'entraide et de partage pour les Guinéens de Belgique.",
       [ViewState.DIRECTORY]: "Annuaire des commerces, entrepreneurs et services guinéens en Belgique.",
@@ -44,7 +45,8 @@ const App: React.FC = () => {
     };
 
     // Mise à jour du Document Title
-    document.title = `BALLAL | ${titles[currentView]}`;
+    const pageTitle = titles[currentView] || t.hero_title;
+    document.title = `BALLAL | ${pageTitle}`;
 
     // Mise à jour de la Meta Description
     let metaDescription = document.querySelector('meta[name="description"]');
@@ -53,7 +55,8 @@ const App: React.FC = () => {
       metaDescription.setAttribute('name', 'description');
       document.head.appendChild(metaDescription);
     }
-    metaDescription.setAttribute('content', descriptions[currentView] || t.hero_desc);
+    const pageDesc = descriptions[currentView] || t.hero_desc;
+    metaDescription.setAttribute('content', pageDesc);
 
   }, [currentView, language, t]);
 
@@ -67,11 +70,12 @@ const App: React.FC = () => {
               language={language}
               onShare={() => setCurrentView(ViewState.SHARE)}
             />
+            {/* La section membres est bien ici */}
             <TeamSection language={language} />
           </>
         );
       case ViewState.NEWS:
-        return <NewsSection />;
+        return <NewsSection language={language} />;
       case ViewState.EVENTS:
         return <EventsSection />;
       case ViewState.FORUM:

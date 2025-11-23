@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { Menu, X, HeartHandshake, Globe, Share2 } from 'lucide-react';
+import { Menu, X, HeartHandshake, Globe, Share2, Users } from 'lucide-react';
 import { ViewState, LanguageCode } from '../types';
 import { translations } from '../utils/translations';
 
@@ -14,6 +15,18 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
   const [isOpen, setIsOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
   const t = translations[language];
+
+  const handleTeamClick = () => {
+    setView(ViewState.HOME);
+    setIsOpen(false);
+    // Petit délai pour laisser le temps au DOM de se mettre à jour si on n'était pas sur HOME
+    setTimeout(() => {
+        const teamSection = document.getElementById('team-section');
+        if (teamSection) {
+            teamSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, 100);
+  };
 
   const navItems = [
     { label: t.nav_home, value: ViewState.HOME },
@@ -64,7 +77,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
           </button>
           
           {/* Desktop Menu */}
-          <div className="hidden xl:flex items-center space-x-2" role="menubar">
+          <div className="hidden xl:flex items-center space-x-1" role="menubar">
             {navItems.map((item) => (
               <button
                 key={item.value}
@@ -80,6 +93,15 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                 {item.label}
               </button>
             ))}
+
+             {/* Team Link (Scroll anchor) */}
+             <button
+                onClick={handleTeamClick}
+                role="menuitem"
+                className="px-3 py-2 rounded-md text-xs font-bold text-gray-500 hover:text-[#CE1126] hover:bg-gray-50 transition-colors duration-200 uppercase tracking-wide focus:outline-none focus:ring-2 focus:ring-[#CE1126]"
+              >
+                {t.nav_team}
+              </button>
 
             {/* Share Button (Special) */}
              <button
@@ -186,6 +208,14 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                 {item.label}
               </button>
             ))}
+             
+             <button
+                onClick={handleTeamClick}
+                className="block w-full text-left px-4 py-3 rounded-md text-base font-bold text-gray-600 hover:text-[#CE1126] hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#CE1126]"
+             >
+                {t.nav_team}
+             </button>
+
              <button
                 onClick={() => {
                   setView(ViewState.SHARE);
