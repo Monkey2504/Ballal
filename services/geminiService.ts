@@ -5,92 +5,120 @@ import { NewsItem, CommunityEvent } from '../types';
 const apiKey = process.env.API_KEY || '';
 const ai = new GoogleGenAI({ apiKey });
 
-// --- IMAGE MAPPING SYSTEM (FAST & RELIABLE) ---
-// Au lieu de générer des images (lent/buggy), on mappe des catégories à des images Unsplash de haute qualité.
+// --- SMART IMAGE BANK (HIGH QUALITY & DIVERSE) ---
+// Banque d'images classée par thèmes visuels précis pour éviter l'effet "générique"
 
-const getCategoryImageUrl = (category: string, type: 'news' | 'event'): string => {
-  const cat = category.toLowerCase();
-  
-  if (type === 'news') {
-    if (cat.includes('sport') || cat.includes('football') || cat.includes('syli')) 
-      return 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=800&auto=format&fit=crop'; // Sport/Foot
-    if (cat.includes('politique') || cat.includes('cnrd') || cat.includes('gouvernement')) 
-      return 'https://images.unsplash.com/photo-1575320181282-9afab399332c?q=80&w=800&auto=format&fit=crop'; // Micro/Discours
-    if (cat.includes('culture') || cat.includes('art') || cat.includes('concert')) 
-      return 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=800&auto=format&fit=crop'; // Culture/Musique
-    if (cat.includes('économ') || cat.includes('mine') || cat.includes('argent')) 
-      return 'https://images.unsplash.com/photo-1628122971556-9a25b18b4386?q=80&w=800&auto=format&fit=crop'; // Économie/Bauxite
-    
-    // Default News (Guinea Landscape/Flag vibes)
-    return 'https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=800&auto=format&fit=crop';
-  } 
-  
-  else { // Events
-    if (cat.includes('fête') || cat.includes('party') || cat.includes('concert')) 
-      return 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop'; // Fête
-    if (cat.includes('business') || cat.includes('réunion') || cat.includes('forum')) 
-      return 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=800&auto=format&fit=crop'; // Business
-    if (cat.includes('meetup') || cat.includes('rencontre') || cat.includes('juridique')) 
-      return 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=800&auto=format&fit=crop'; // Meetup/Social
-    if (cat.includes('sport') || cat.includes('match')) 
-      return 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=800&auto=format&fit=crop'; // Sport
-      
-    // Default Event
-    return 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=800&auto=format&fit=crop';
-  }
+const TOPIC_IMAGES: Record<string, string[]> = {
+  POLITICS: [
+    'https://images.unsplash.com/photo-1575320181282-9afab399332c?q=80&w=800&auto=format&fit=crop', // Microphones
+    'https://images.unsplash.com/photo-1541872703-74c5963631df?q=80&w=800&auto=format&fit=crop', // Bâtiment officiel
+    'https://images.unsplash.com/photo-1576670159805-381a9de1e2b9?q=80&w=800&auto=format&fit=crop', // Poignée de main
+    'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=800&auto=format&fit=crop', // Documents/Stylo
+    'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?q=80&w=800&auto=format&fit=crop'  // Drapeau/Officiel
+  ],
+  JUSTICE: [
+    'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=800&auto=format&fit=crop', // Marteau juge
+    'https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=800&auto=format&fit=crop', // Balance
+    'https://images.unsplash.com/photo-1589391886645-d51941baf7fb?q=80&w=800&auto=format&fit=crop'  // Palais justice
+  ],
+  SOCCER: [
+    'https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=800&auto=format&fit=crop', // Ballon
+    'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?q=80&w=800&auto=format&fit=crop', // Joueurs terrain
+    'https://images.unsplash.com/photo-1518091043644-c1d4457512c6?q=80&w=800&auto=format&fit=crop', // Stade foule
+    'https://images.unsplash.com/photo-1517466787929-bc90951d0974?q=80&w=800&auto=format&fit=crop'  // Action foot
+  ],
+  ECONOMY: [
+    'https://images.unsplash.com/photo-1605218427368-35b0160d5c97?q=80&w=800&auto=format&fit=crop', // Port/Container
+    'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?q=80&w=800&auto=format&fit=crop', // Argent/Finance
+    'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=800&auto=format&fit=crop', // Industrie/Mines
+    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop'  // Graphiques
+  ],
+  MINING: [
+     'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=800&auto=format&fit=crop', // Usine
+     'https://images.unsplash.com/photo-1595245863339-b9e7df18f2f6?q=80&w=800&auto=format&fit=crop', // Terre rouge
+     'https://images.unsplash.com/photo-1516937941344-00b4e0337589?q=80&w=800&auto=format&fit=crop'  // Industriel
+  ],
+  CULTURE: [
+    'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=800&auto=format&fit=crop', // Scène
+    'https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=800&auto=format&fit=crop', // Artiste
+    'https://images.unsplash.com/photo-1519671482538-518b5c2bf7c6?q=80&w=800&auto=format&fit=crop', // Instruments
+    'https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=800&auto=format&fit=crop'  // Fête
+  ],
+  SOCIETY: [
+    'https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=800&auto=format&fit=crop', // Paysage Guinée
+    'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=800&auto=format&fit=crop', // Groupe solidaire
+    'https://images.unsplash.com/photo-1577563908411-5077b6dc7624?q=80&w=800&auto=format&fit=crop', // Discussion
+    'https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?q=80&w=800&auto=format&fit=crop'  // Enfants/École
+  ],
+  DEFAULT: [
+    'https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=800&auto=format&fit=crop'
+  ]
 };
 
-// --- MOCK DATA (FALLBACKS) ---
-// Ces données sont utilisées si l'API échoue ou si le quota est atteint.
+const getRandomImageForTopic = (topic: string | undefined): string => {
+  const key = topic?.toUpperCase() || 'DEFAULT';
+  const images = TOPIC_IMAGES[key] || TOPIC_IMAGES['DEFAULT'];
+  // Utilise le temps actuel pour pseudo-randomiser mais garder une constance si appelé en boucle rapide
+  const index = Math.floor(Math.random() * images.length);
+  return images[index];
+};
+
+// --- MOCK DATA (UPDATED) ---
 
 const getMockNews = (): NewsItem[] => [
   {
     id: 'fallback-1',
-    title: 'Transition : Le dialogue national se poursuit',
-    summary: 'Les autorités de la transition réaffirment leur volonté d\'inclure toutes les forces vives de la nation dans le processus de refondation.',
+    title: 'Transition : Le CNT adopte le volet budgétaire',
+    summary: 'Les conseillers nationaux ont validé hier la loi de finances rectificative, mettant l\'accent sur les infrastructures routières.',
     category: 'Politique',
-    date: 'À l\'instant',
-    imageUrl: getCategoryImageUrl('Politique', 'news')
+    date: 'Aujourd\'hui',
+    source: 'Guineenews',
+    imageUrl: getRandomImageForTopic('POLITICS')
   },
   {
     id: 'fallback-2',
-    title: 'Succès pour la culture guinéenne à l\'international',
-    summary: 'Plusieurs artistes guinéens ont été primés lors de festivals en Europe ce week-end, faisant rayonner le tricolore.',
-    category: 'Culture',
+    title: 'Syli National : Liste des convoqués dévoilée',
+    summary: 'Le sélectionneur a publié la liste des 23 joueurs pour la prochaine trêve internationale. Quelques surprises en attaque.',
+    category: 'Sport',
     date: 'Il y a 2h',
-    imageUrl: getCategoryImageUrl('Culture', 'news')
+    source: 'Foot224',
+    imageUrl: getRandomImageForTopic('SOCCER')
   },
   {
     id: 'fallback-3',
-    title: 'Économie : Le franc guinéen se stabilise',
-    summary: 'La Banque Centrale annonce de nouvelles mesures pour maîtriser l\'inflation et soutenir le pouvoir d\'achat des ménages.',
+    title: 'Boké : Reprise des exportations de bauxite',
+    summary: 'Après une brève interruption technique, le train minéralier a repris ses rotations vers le port de Kamsar.',
     category: 'Économie',
-    date: 'Aujourd\'hui',
-    imageUrl: getCategoryImageUrl('Économie', 'news')
+    date: 'Hier',
+    source: 'Mines Guinée',
+    imageUrl: getRandomImageForTopic('MINING')
   },
   {
     id: 'fallback-4',
-    title: 'Syli National : Préparation pour la CAN',
-    summary: 'L\'équipe nationale entame son stage de préparation avec l\'arrivée des expatriés. L\'espoir est grand pour cette compétition.',
-    category: 'Sport',
-    date: 'Hier',
-    imageUrl: getCategoryImageUrl('Sport', 'news')
+    title: 'Concert géant sur l\'Esplanade',
+    summary: 'Les stars de la musique urbaine guinéenne se sont produites devant une foule immense pour la paix.',
+    category: 'Culture',
+    date: 'Ce week-end',
+    source: 'Africaguinee',
+    imageUrl: getRandomImageForTopic('CULTURE')
   },
   {
     id: 'fallback-5',
-    title: 'Infrastructures : Réfection de la route Coyah-Mamou',
-    summary: 'Les travaux avancent à grands pas sur la nationale numéro 1, promettant de faciliter les échanges commerciaux vers l\'intérieur.',
-    category: 'Économie',
-    date: 'Il y a 1j',
-    imageUrl: getCategoryImageUrl('Économie', 'news')
+    title: 'Justice : Ouverture du procès des événements',
+    summary: 'Le tribunal de Dixinn a ouvert ce matin l\'audience tant attendue. Sécurité renforcée autour du tribunal.',
+    category: 'Justice',
+    date: 'Il y a 4h',
+    source: 'Kaloumpresse',
+    imageUrl: getRandomImageForTopic('JUSTICE')
   },
   {
     id: 'fallback-6',
-    title: 'Mines : Nouveau projet de bauxite à Boké',
-    summary: 'Un accord a été signé pour l\'exploitation durable d\'un nouveau gisement, avec des garanties environnementales renforcées.',
-    category: 'Économie',
-    date: 'Il y a 2j',
-    imageUrl: getCategoryImageUrl('Économie', 'news')
+    title: 'Rentrée scolaire : Les dates confirmées',
+    summary: 'Le Ministère de l\'Enseignement Pré-Universitaire confirme la date de la rentrée et annonce de nouvelles mesures.',
+    category: 'Société',
+    date: 'Hier',
+    source: 'MEPU-A',
+    imageUrl: getRandomImageForTopic('SOCIETY')
   }
 ];
 
@@ -102,7 +130,7 @@ const getMockEvents = (): CommunityEvent[] => [
     location: 'Bruxelles (Matonge)',
     description: 'Rencontre d\'accueil pour les nouveaux arrivants et point sur les dossiers juridiques en cours.',
     type: 'Meetup',
-    imageUrl: getCategoryImageUrl('Meetup', 'event')
+    imageUrl: getRandomImageForTopic('SOCIETY')
   },
   {
     id: 'evt-fallback-2',
@@ -111,7 +139,7 @@ const getMockEvents = (): CommunityEvent[] => [
     location: 'Salle La Madeleine, Bruxelles',
     description: 'Célébration solennelle et festive de notre fête nationale. Tenue traditionnelle souhaitée.',
     type: 'Fête',
-    imageUrl: getCategoryImageUrl('Fête', 'event')
+    imageUrl: getRandomImageForTopic('CULTURE')
   },
   {
     id: 'evt-fallback-3',
@@ -120,7 +148,7 @@ const getMockEvents = (): CommunityEvent[] => [
     location: 'Sheraton Brussels Airport',
     description: 'Networking pour les entrepreneurs de la diaspora. Opportunités d\'investissement au pays.',
     type: 'Business',
-    imageUrl: getCategoryImageUrl('Business', 'event')
+    imageUrl: getRandomImageForTopic('ECONOMY')
   },
   {
     id: 'evt-fallback-4',
@@ -128,8 +156,8 @@ const getMockEvents = (): CommunityEvent[] => [
     date: 'Dimanche 24, 10h00',
     location: 'Stade de Schaerbeek',
     description: 'Match de gala entre les vétérans et la jeunesse. Les fonds iront à une école à Mamou.',
-    type: 'Fête',
-    imageUrl: getCategoryImageUrl('Sport', 'event')
+    type: 'Sport',
+    imageUrl: getRandomImageForTopic('SOCCER')
   },
   {
     id: 'evt-fallback-5',
@@ -138,7 +166,7 @@ const getMockEvents = (): CommunityEvent[] => [
     location: 'Siège Ballal (Ixelles)',
     description: 'Consultations gratuites avec nos avocats partenaires pour vos dossiers de régularisation.',
     type: 'Meetup',
-    imageUrl: getCategoryImageUrl('Meetup', 'event')
+    imageUrl: getRandomImageForTopic('JUSTICE')
   },
   {
     id: 'evt-fallback-6',
@@ -147,7 +175,7 @@ const getMockEvents = (): CommunityEvent[] => [
     location: 'Centre Culturel PianoFabriek',
     description: 'Une immersion dans notre patrimoine oral avec des conteurs venus spécialement de Labé.',
     type: 'Culture',
-    imageUrl: getCategoryImageUrl('Culture', 'event')
+    imageUrl: getRandomImageForTopic('CULTURE')
   }
 ];
 
@@ -157,7 +185,7 @@ const FALLBACK_HERO = {
 };
 
 // --- CACHING & DEDUP UTILS ---
-const CACHE_PREFIX = 'ballal_cache_v2_';
+const CACHE_PREFIX = 'ballal_cache_v3_';
 const QUOTA_ERROR_MARKER = 'ballal_quota_exceeded';
 const pendingRequests: Record<string, Promise<any>> = {};
 
@@ -175,7 +203,6 @@ const setCached = (key: string, data: any) => {
   } catch (e) {}
 };
 
-// Circuit Breaker : Si le quota est dépassé, on arrête d'appeler l'API pour cette session.
 const isQuotaExceededRaw = () => {
   try {
     return sessionStorage.getItem(QUOTA_ERROR_MARKER) === 'true';
@@ -194,13 +221,8 @@ const isQuotaError = (e: any) => {
   return msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED') || e?.status === 429;
 };
 
-// --- RETRY LOGIC & RESILIENCE ---
-
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-/**
- * Exécute une opération avec réessai exponentiel (Exponential Backoff).
- */
 async function retryWithBackoff<T>(
   operation: () => Promise<T>,
   retries: number = 3,
@@ -210,23 +232,16 @@ async function retryWithBackoff<T>(
   try {
     return await operation();
   } catch (error: any) {
-    // Stop immédiat si erreur fatale (Client Error ou Quota)
     if (isQuotaError(error) || error?.status === 400 || error?.status === 403) {
       throw error;
     }
-
     if (retries <= 0) {
       console.warn(`[${name}] Failed after all retries. Last error: ${error.message}`);
       throw error;
     }
-
-    // Jitter pour éviter les collisions
     const jitter = Math.random() * 200;
     const waitTime = backoff + jitter;
-    
-    console.debug(`[${name}] Failed (transient). Retrying in ${Math.round(waitTime)}ms... (${retries} attempts left)`);
     await delay(waitTime);
-    
     return retryWithBackoff(operation, retries - 1, backoff * 1.5, name);
   }
 }
@@ -252,19 +267,13 @@ const fetchWithDedup = async <T>(key: string, fetcher: () => Promise<T>): Promis
   return promise;
 };
 
-// Fonction de nettoyage JSON résiliente
 const cleanAndParseJSON = (text: string): any => {
   try {
     if (!text) return null;
-    // 1. Chercher un tableau JSON explicite
     const jsonArrayMatch = text.match(/\[\s*\{[\s\S]*\}\s*\]/);
     if (jsonArrayMatch) return JSON.parse(jsonArrayMatch[0]);
-    
-    // 2. Chercher un objet JSON
     const jsonObjectMatch = text.match(/\{[\s\S]*\}/);
     if (jsonObjectMatch) return JSON.parse(jsonObjectMatch[0]);
-
-    // 3. Nettoyage markdown
     const cleaned = text.replace(/```json/g, '').replace(/```/g, '').trim();
     return JSON.parse(cleaned);
   } catch (e) {
@@ -281,26 +290,34 @@ export interface NewsResult {
 export const fetchLatestNews = async (language: string = 'fr'): Promise<NewsResult> => {
   if (!apiKey || isQuotaExceededRaw()) return { articles: getMockNews(), sourceUrls: [] };
 
-  const cacheKey = `news_${language}`;
+  const cacheKey = `news_${language}_v3`;
 
   return fetchWithDedup(cacheKey, async () => {
     try {
       return await retryWithBackoff(async () => {
+        // Prompt optimisé pour la qualité et les images
         const response = await ai.models.generateContent({
           model: "gemini-2.5-flash",
-          contents: `Agis comme un journaliste. Trouve 6 actualités MAJEURES récentes sur la Guinée (Conakry).
-          Priorité : Politique (CNRD), Société, Culture, Sport.
+          contents: `Agis comme un rédacteur en chef expert sur la Guinée (Conakry).
+          Cherche les 6 actualités MAJEURES et VÉRIFIÉES des dernières 48 heures.
           
-          Important: Réponds dans cette langue : ${language === 'fr' ? 'Français' : language === 'en' ? 'Anglais' : language === 'ar' ? 'Arabe' : language === 'es' ? 'Espagnol' : 'Français'}.
+          Règles strictes :
+          1. Pas de rumeurs, que des faits.
+          2. Cite la source principale (ex: Guineenews, Africaguinee, RFI).
+          3. Assigne un 'visual_topic' précis pour l'illustration.
           
-          Format JSON strict (tableau de 6 objets) :
+          Langue de réponse : ${language === 'fr' ? 'Français' : language === 'en' ? 'Anglais' : language === 'ar' ? 'Arabe' : 'Français'}.
+          
+          Format JSON strict (Tableau) :
           [
             {
               "id": "string",
-              "title": "string (Titre traduit dans la langue demandée)",
-              "summary": "string (max 20 mots, traduit)",
-              "category": "Politique" | "Culture" | "Sport" | "Économie",
-              "date": "string (ex: 'Il y a 2h' traduit)"
+              "title": "string (Titre accrocheur et court)",
+              "summary": "string (Résumé informatif max 25 mots)",
+              "category": "Politique" | "Culture" | "Sport" | "Économie" | "Société" | "Justice",
+              "date": "string (ex: 'Il y a 2h', 'Ce matin')",
+              "source": "string (Nom du média source)",
+              "visual_topic": "POLITICS" | "SOCCER" | "ECONOMY" | "CULTURE" | "JUSTICE" | "SOCIETY" | "MINING"
             }
           ]`,
           config: { tools: [{googleSearch: {}}] }
@@ -308,10 +325,11 @@ export const fetchLatestNews = async (language: string = 'fr'): Promise<NewsResu
 
         const rawArticles = cleanAndParseJSON(response.text || '') || getMockNews();
         
-        // Enrichissement des articles avec des images
-        const articles = Array.isArray(rawArticles) ? rawArticles.map((article: NewsItem) => ({
+        // Enrichissement intelligent des images
+        const articles = Array.isArray(rawArticles) ? rawArticles.map((article: any) => ({
           ...article,
-          imageUrl: getCategoryImageUrl(article.category, 'news')
+          // On force l'utilisation de notre banque d'images HD basée sur le topic retourné par l'IA
+          imageUrl: getRandomImageForTopic(article.visual_topic || mapCategoryToTopic(article.category))
         })) : getMockNews();
         
         const sourceUrls = response.candidates?.[0]?.groundingMetadata?.groundingChunks
@@ -333,26 +351,38 @@ export const fetchLatestNews = async (language: string = 'fr'): Promise<NewsResu
   });
 };
 
+// Fallback mapping if AI forgets visual_topic
+const mapCategoryToTopic = (category: string): string => {
+    const c = category?.toUpperCase() || '';
+    if (c.includes('POLITIQUE')) return 'POLITICS';
+    if (c.includes('SPORT') || c.includes('FOOT')) return 'SOCCER';
+    if (c.includes('ECONOM') || c.includes('MINE')) return 'ECONOMY';
+    if (c.includes('CULTURE') || c.includes('ART')) return 'CULTURE';
+    if (c.includes('JUSTICE')) return 'JUSTICE';
+    return 'SOCIETY';
+};
+
 export const fetchCommunityEvents = async (): Promise<CommunityEvent[]> => {
     if (!apiKey || isQuotaExceededRaw()) return getMockEvents();
 
-    return fetchWithDedup('events', async () => {
+    return fetchWithDedup('events_v3', async () => {
         try {
             return await retryWithBackoff(async () => {
                 const response = await ai.models.generateContent({
                     model: "gemini-2.5-flash",
-                    contents: `Trouve des événements pour la diaspora guinéenne en Belgique ou des événements africains majeurs à Bruxelles/Liège prévus prochainement.
-                    Si aucun événement spécifique n'est trouvé, suggère 6 événements culturels génériques plausibles (ex: réunion, fête, foot, business).
+                    contents: `Trouve des événements pour la diaspora guinéenne en Belgique (Bruxelles/Liège) ou des événements africains majeurs.
+                    Priorité aux événements réels futurs. Si rien, propose des événements génériques réalistes.
                     
-                    Format JSON strict (tableau de 6 objets max) :
+                    Format JSON strict :
                     [
                       {
                         "id": "string",
                         "title": "string",
                         "date": "string",
                         "location": "string",
-                        "description": "string (court)",
-                        "type": "Meetup" | "Fête" | "Culture" | "Business"
+                        "description": "string",
+                        "type": "Meetup" | "Fête" | "Culture" | "Business" | "Sport",
+                        "visual_topic": "SOCIETY" | "CULTURE" | "ECONOMY" | "SOCCER"
                       }
                     ]`,
                     config: { tools: [{googleSearch: {}}] }
@@ -360,10 +390,9 @@ export const fetchCommunityEvents = async (): Promise<CommunityEvent[]> => {
 
                 const rawEvents = cleanAndParseJSON(response.text || '');
                 
-                // Enrichissement avec images
-                const events = Array.isArray(rawEvents) ? rawEvents.map((event: CommunityEvent) => ({
+                const events = Array.isArray(rawEvents) ? rawEvents.map((event: any) => ({
                   ...event,
-                  imageUrl: getCategoryImageUrl(event.type, 'event')
+                  imageUrl: getRandomImageForTopic(event.visual_topic || mapCategoryToTopic(event.type))
                 })) : getMockEvents();
 
                 if (events.length === 0) throw new Error("Invalid events format");
@@ -383,15 +412,7 @@ export interface HeroImageResult {
 }
 
 export const fetchHeroImage = async (): Promise<HeroImageResult> => {
-    // Pour l'image, on utilise le fallback très rapidement pour éviter le layout shift
     if (!apiKey || isQuotaExceededRaw()) return FALLBACK_HERO;
-
-    return fetchWithDedup('hero_image', async () => {
-        try {
-             // On utilise une méthode "fire and forget" safe, ou on retourne simplement le fallback
-             return FALLBACK_HERO;
-        } catch (error) {
-            return FALLBACK_HERO;
-        }
-    });
+    // On garde le fallback Hero car l'API de génération d'image n'est pas demandée ici et risque de ralentir
+    return FALLBACK_HERO;
 };

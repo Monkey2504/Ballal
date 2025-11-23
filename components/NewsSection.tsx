@@ -1,7 +1,8 @@
+
 import React, { useEffect, useState, useCallback } from 'react';
 import { fetchLatestNews } from '../services/geminiService';
 import { NewsItem, LanguageCode } from '../types';
-import { RefreshCcw, MapPin, ExternalLink, ArrowRight } from 'lucide-react';
+import { RefreshCcw, MapPin, ExternalLink, ArrowRight, Newspaper } from 'lucide-react';
 import { translations } from '../utils/translations';
 
 interface NewsSectionProps {
@@ -32,11 +33,10 @@ const NewsSection: React.FC<NewsSectionProps> = ({ language = 'fr' }) => {
   }, [loadNews]);
 
   const handleArticleClick = (item: NewsItem) => {
-    const query = encodeURIComponent(`${item.title} Guinée actualité`);
+    const query = encodeURIComponent(`${item.title} ${item.source || 'Guinée'}`);
     window.open(`https://www.google.com/search?q=${query}`, '_blank');
   };
 
-  // Helper to get border color based on index to create a rhythm
   const getBorderColorClass = (idx: number) => {
       const colors = ['border-b-[#CE1126]', 'border-b-[#FCD116]', 'border-b-[#009460]'];
       return colors[idx % 3];
@@ -47,7 +47,6 @@ const NewsSection: React.FC<NewsSectionProps> = ({ language = 'fr' }) => {
       
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 border-b border-orange-100 pb-6">
         <div>
-            {/* H1 SEO optimization */}
             <h1 className="text-3xl font-black text-slate-900 flex items-center tracking-tight">
                 {t.news_section_title}
                 <span className="ml-3 flex h-3 w-3 relative">
@@ -95,7 +94,7 @@ const NewsSection: React.FC<NewsSectionProps> = ({ language = 'fr' }) => {
                     }}
                     role="button"
                     tabIndex={0}
-                    className={`bg-white rounded-2xl shadow-sm card-hover-effect border border-gray-100 flex flex-col h-full focus:outline-none focus:ring-4 focus:ring-red-100 overflow-hidden border-b-8 ${getBorderColorClass(idx)}`}
+                    className={`bg-white rounded-2xl shadow-sm card-hover-effect border border-gray-100 flex flex-col h-full focus:outline-none focus:ring-4 focus:ring-red-100 overflow-hidden border-b-8 ${getBorderColorClass(idx)} group`}
                     aria-label={`${t.read_article} : ${item.title}`}
                 >
                     <div className="h-56 overflow-hidden relative">
@@ -104,14 +103,16 @@ const NewsSection: React.FC<NewsSectionProps> = ({ language = 'fr' }) => {
                                 src={item.imageUrl} 
                                 alt={item.category} 
                                 className="w-full h-full object-cover transform transition-transform duration-700 hover:scale-110"
+                                loading="lazy"
                              />
                          ) : (
                              <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">
                                  Pas d'image
                              </div>
                          )}
-                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
-                         <div className="absolute top-4 left-4">
+                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80"></div>
+                         
+                         <div className="absolute top-4 left-4 flex gap-2">
                              <span className={`px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wide shadow-lg
                                 ${item.category === 'Politique' ? 'bg-[#CE1126] text-white' : 
                                   item.category === 'Sport' ? 'bg-[#009460] text-white' : 
@@ -120,17 +121,29 @@ const NewsSection: React.FC<NewsSectionProps> = ({ language = 'fr' }) => {
                                 {item.category}
                             </span>
                          </div>
+                         
+                         {/* Source Badge on Image */}
+                         {item.source && (
+                             <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-[10px] font-black text-slate-800 uppercase tracking-widest flex items-center shadow-sm">
+                                 <Newspaper className="h-3 w-3 mr-1 text-[#CE1126]" />
+                                 {item.source}
+                             </div>
+                         )}
                     </div>
 
                     <div className="p-6 flex flex-col flex-grow relative">
-                        {/* Motif discret en fond de carte */}
+                        {/* Motif discret */}
                         <div className="absolute top-0 right-0 w-24 h-24 bg-african-pattern opacity-30 rounded-bl-full pointer-events-none"></div>
 
-                        <span className="text-xs text-gray-400 font-bold uppercase tracking-wider mb-2 block">{item.date}</span>
-                        <h3 className="font-bold text-slate-900 text-xl mb-3 line-clamp-2 hover:text-[#CE1126] transition-colors leading-tight">
+                        <div className="flex items-center text-xs text-gray-400 font-bold uppercase tracking-wider mb-3">
+                             <span className="w-1.5 h-1.5 rounded-full bg-red-500 mr-2"></span>
+                             {item.date}
+                        </div>
+
+                        <h3 className="font-bold text-slate-900 text-xl mb-3 line-clamp-2 hover:text-[#CE1126] transition-colors leading-tight font-heading">
                             {item.title}
                         </h3>
-                        <p className="text-sm text-gray-600 line-clamp-3 mb-6 flex-grow leading-relaxed">
+                        <p className="text-sm text-gray-600 line-clamp-3 mb-6 flex-grow leading-relaxed font-medium">
                             {item.summary}
                         </p>
                         
@@ -138,7 +151,7 @@ const NewsSection: React.FC<NewsSectionProps> = ({ language = 'fr' }) => {
                              <div className="flex items-center text-xs text-gray-400 font-medium">
                                 <MapPin className="h-3 w-3 mr-1 text-red-400" aria-hidden="true" /> Conakry
                             </div>
-                             <div className="flex items-center font-bold text-sm text-[#CE1126] group hover:underline cursor-pointer">
+                             <div className="flex items-center font-bold text-sm text-[#CE1126] group-hover:underline cursor-pointer">
                                 {t.read_article} <ArrowRight className="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                             </div>
                         </div>
@@ -159,9 +172,8 @@ const NewsSection: React.FC<NewsSectionProps> = ({ language = 'fr' }) => {
                         target="_blank" 
                         rel="noreferrer" 
                         className="text-xs bg-white text-gray-600 px-3 py-1.5 rounded-lg shadow-sm hover:bg-gray-50 transition-colors truncate max-w-[200px] border border-gray-200 font-medium"
-                        aria-label={`Source externe : ${new URL(url).hostname}`}
                     >
-                        {new URL(url).hostname}
+                        {new URL(url).hostname.replace('www.', '')}
                     </a>
                 ))}
             </div>

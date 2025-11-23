@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Search, MapPin, Phone, CheckCircle, Store, Briefcase, Scissors, Utensils, Stethoscope, Hammer, Globe } from 'lucide-react';
+import { Search, MapPin, Phone, CheckCircle, Store, Briefcase, Scissors, Utensils, Stethoscope, Hammer, Globe, Filter, Star } from 'lucide-react';
 import { DirectoryItem } from '../types';
 
 // Données RÉELLES et VERIFIABLES de la communauté à Bruxelles/Belgique
@@ -284,49 +284,78 @@ const DirectorySection: React.FC = () => {
     }
   };
 
+  const getBorderColor = (index: number) => {
+      const colors = ['border-t-[#CE1126]', 'border-t-[#FCD116]', 'border-t-[#009460]'];
+      return colors[index % 3];
+  };
+
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+        case 'Gastronomie': return 'bg-orange-100 text-orange-700';
+        case 'Beauté & Mode': return 'bg-pink-100 text-pink-700';
+        case 'Services': return 'bg-blue-100 text-blue-700';
+        case 'Santé': return 'bg-green-100 text-green-700';
+        case 'Artisanat': return 'bg-purple-100 text-purple-700';
+        default: return 'bg-gray-100 text-gray-700';
+      }
+  };
+
   return (
-    <div className="min-h-screen py-12 bg-slate-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-16 bg-[#FFFBF0] relative">
+      <div className="absolute top-0 left-0 w-full h-64 bg-african-pattern opacity-40 pointer-events-none"></div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
-        <div className="text-center mb-10 bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+        <div className="text-center mb-12">
           {/* H1 SEO Optimization */}
-          <h1 className="text-3xl font-extrabold text-gray-900">
-            Annuaire des Adresses Utiles
+          <h1 className="text-4xl font-black text-slate-900 mb-4 tracking-tight">
+            <span className="relative inline-block">
+                Annuaire Pro
+                <span className="absolute -bottom-2 left-0 w-full h-2 bg-[#FCD116] opacity-60 skew-x-12 transform"></span>
+            </span> 
+            <span className="ml-2 guinea-gradient-text">Guinée-Benelux</span>
           </h1>
-          <p className="mt-4 text-lg text-gray-600">
-            Retrouvez les commerces réels, les services officiels et les lieux incontournables de la communauté guinéenne et africaine en Belgique.
+          <p className="max-w-2xl mx-auto text-xl text-gray-700 font-medium">
+            Retrouvez les commerces réels, les services officiels et les lieux incontournables de la communauté.
           </p>
         </div>
 
-        {/* Search & Filters */}
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8 sticky top-24 z-30">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div className="relative flex-grow max-w-lg">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        {/* Search & Filters Panel */}
+        <div className="bg-white p-6 rounded-3xl shadow-xl border border-gray-100 mb-10 sticky top-24 z-30 card-hover-effect">
+            <div className="flex flex-col lg:flex-row gap-6">
+                
+                {/* Search Input */}
+                <div className="relative flex-grow max-w-xl">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <Search className="h-5 w-5 text-gray-400" aria-hidden="true" />
                     </div>
-                    <label htmlFor="directory-search" className="sr-only">Rechercher un nom, une ville ou un service</label>
+                    <label htmlFor="directory-search" className="sr-only">Rechercher</label>
                     <input
                         id="directory-search"
                         type="text"
-                        className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-lg focus:ring-[#CE1126] focus:border-[#CE1126]"
-                        placeholder="Rechercher (ex: Chez Diallo, Matonge, Avocat...)"
+                        className="block w-full pl-11 pr-4 py-4 border-2 border-gray-100 rounded-2xl bg-gray-50 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#CE1126] focus:border-transparent focus:bg-white transition-all font-medium text-lg"
+                        placeholder="Qu'est-ce que vous cherchez ? (ex: Mafé, Coiffeur...)"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
                 
-                <div className="flex flex-wrap gap-2" role="group" aria-label="Filtrer par catégorie">
+                {/* Category Pills */}
+                <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filtrer par catégorie">
+                    <div className="hidden lg:flex items-center text-gray-400 mr-2">
+                        <Filter className="h-4 w-4 mr-1" />
+                        <span className="text-xs font-bold uppercase tracking-wider">Filtres</span>
+                    </div>
                     {CATEGORIES.map(cat => (
                         <button
                             key={cat}
                             onClick={() => setSelectedCategory(cat)}
                             aria-pressed={selectedCategory === cat}
-                            className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-colors focus:outline-none focus:ring-2 focus:ring-[#CE1126] ${
+                            className={`px-4 py-2.5 rounded-xl text-sm font-bold transition-all transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#CE1126] ${
                                 selectedCategory === cat 
-                                ? 'bg-gray-900 text-white' 
-                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                ? 'bg-slate-900 text-white shadow-lg' 
+                                : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300'
                             }`}
                         >
                             {cat}
@@ -337,46 +366,54 @@ const DirectorySection: React.FC = () => {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredItems.map(item => (
-                <div key={item.id} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border-t-4 border-[#CE1126] overflow-hidden group flex flex-col h-full">
-                    <div className="p-6 flex-grow">
-                        <div className="flex justify-between items-start mb-4">
-                            <div className={`p-2 rounded-lg bg-gray-50 text-gray-700 group-hover:bg-red-50 group-hover:text-[#CE1126] transition-colors`}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredItems.map((item, index) => (
+                <div key={item.id} className={`bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border-t-8 ${getBorderColor(index)} overflow-hidden group flex flex-col h-full relative`}>
+                    
+                    {/* Pattern Overlay in background */}
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-african-pattern opacity-10 rounded-bl-full pointer-events-none transition-opacity group-hover:opacity-20"></div>
+
+                    <div className="p-7 flex-grow">
+                        <div className="flex justify-between items-start mb-5">
+                            <div className={`p-3 rounded-2xl ${getCategoryColor(item.category)} shadow-sm`}>
                                 {getCategoryIcon(item.category)}
                             </div>
                             {item.isVerified && (
-                                <span className="flex items-center text-[10px] font-bold uppercase tracking-wider text-[#009460] bg-green-50 px-2 py-1 rounded-full border border-green-100">
-                                    <CheckCircle className="h-3 w-3 mr-1" aria-hidden="true" /> Vérifié
-                                </span>
+                                <div className="flex items-center bg-[#009460]/10 text-[#009460] px-3 py-1 rounded-full border border-[#009460]/20 transform rotate-2 group-hover:rotate-0 transition-transform">
+                                    <CheckCircle className="h-3.5 w-3.5 mr-1.5 fill-current" aria-hidden="true" /> 
+                                    <span className="text-[10px] font-black uppercase tracking-widest">Officiel</span>
+                                </div>
                             )}
                         </div>
                         
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">{item.name}</h3>
-                        <div className="flex items-center text-sm text-gray-500 mb-4 bg-gray-50 px-2 py-1 rounded inline-block">
-                            <MapPin className="h-3 w-3 mr-1 text-gray-400" aria-hidden="true" />
-                            {item.location}
+                        <h3 className="text-xl font-black text-slate-900 mb-2 leading-tight group-hover:text-[#CE1126] transition-colors">
+                            {item.name}
+                        </h3>
+                        
+                        <div className="flex items-start text-sm text-gray-500 mb-5">
+                            <MapPin className="h-4 w-4 mr-1.5 mt-0.5 text-gray-400 flex-shrink-0" aria-hidden="true" />
+                            <span className="font-medium leading-snug">{item.location}</span>
                         </div>
                         
-                        <p className="text-gray-600 text-sm mb-6 line-clamp-4">
+                        <p className="text-gray-600 text-sm leading-relaxed font-medium bg-gray-50 p-3 rounded-xl border border-gray-100">
                             {item.description}
                         </p>
                     </div>
                         
-                    <div className="p-6 pt-0 mt-auto border-t border-gray-50">
-                        <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                            <a href={`tel:${item.phone}`} className="text-sm font-bold text-gray-900 flex items-center hover:text-[#CE1126] transition-colors">
-                                <Phone className="h-4 w-4 mr-2 text-[#CE1126]" aria-hidden="true" />
+                    <div className="px-7 py-5 bg-gray-50/50 mt-auto border-t border-gray-100">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                            <a href={`tel:${item.phone}`} className="inline-flex items-center text-sm font-black text-slate-900 bg-white px-4 py-2 rounded-lg border border-gray-200 hover:border-[#CE1126] hover:text-[#CE1126] transition-colors shadow-sm w-full sm:w-auto justify-center">
+                                <Phone className="h-4 w-4 mr-2" aria-hidden="true" />
                                 {item.phone}
                             </a>
                             <a 
                                 href={`https://www.google.com/search?q=${encodeURIComponent(item.name + ' ' + item.location)}`} 
                                 target="_blank"
                                 rel="noreferrer"
-                                className="text-xs font-bold text-blue-600 hover:text-blue-800 uppercase focus:outline-none focus:underline flex items-center"
+                                className="inline-flex items-center text-xs font-bold text-gray-500 hover:text-blue-600 uppercase tracking-wide group/link transition-colors ml-auto sm:ml-0"
                             >
-                                <Globe className="h-3 w-3 mr-1" />
-                                Voir sur Google
+                                <Globe className="h-3 w-3 mr-1.5 group-hover/link:animate-spin-slow" />
+                                Google Maps
                             </a>
                         </div>
                     </div>
@@ -385,29 +422,47 @@ const DirectorySection: React.FC = () => {
         </div>
 
         {filteredItems.length === 0 && (
-            <div className="text-center py-12" role="status">
-                <p className="text-gray-500 bg-white inline-block px-4 py-2 rounded-lg border border-gray-100">Aucun résultat trouvé pour cette recherche.</p>
-                <div className="mt-2">
-                    <button 
-                        onClick={() => {setSearchTerm(''); setSelectedCategory('Tout')}}
-                        className="mt-4 text-[#CE1126] font-bold hover:underline bg-white px-4 py-2 rounded-lg border border-gray-100 focus:outline-none focus:ring-2 focus:ring-[#CE1126]"
-                    >
-                        Réinitialiser les filtres
-                    </button>
+            <div className="text-center py-20 bg-white rounded-3xl shadow-sm border-2 border-dashed border-gray-200" role="status">
+                <div className="bg-gray-50 p-4 rounded-full inline-block mb-4">
+                    <Search className="h-8 w-8 text-gray-300" />
                 </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Aucune adresse trouvée</h3>
+                <p className="text-gray-500 max-w-md mx-auto mb-6">Essayez de changer de catégorie ou de vérifier l'orthographe.</p>
+                <button 
+                    onClick={() => {setSearchTerm(''); setSelectedCategory('Tout')}}
+                    className="text-white bg-[#CE1126] font-bold px-6 py-3 rounded-xl shadow-lg shadow-red-100 hover:bg-red-700 transition-colors"
+                >
+                    Réinitialiser tout
+                </button>
             </div>
         )}
 
-        {/* Call to Action */}
-        <div className="mt-12 bg-gray-900 rounded-xl p-8 text-center relative overflow-hidden shadow-xl">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#FCD116] opacity-10 rounded-full transform translate-x-10 -translate-y-10"></div>
-            <div className="absolute bottom-0 left-0 w-40 h-40 bg-[#CE1126] opacity-10 rounded-full transform -translate-x-10 translate-y-10"></div>
-            <div className="relative z-10">
-                <h3 className="text-2xl font-bold text-white mb-2">Vous connaissez une bonne adresse ?</h3>
-                <p className="text-gray-400 mb-6 max-w-2xl mx-auto">Aidez-nous à compléter cet annuaire. Si vous connaissez un commerce fiable qui aide la communauté, signalez-le nous.</p>
-                <button className="bg-[#FCD116] text-black font-bold px-8 py-3 rounded-md hover:bg-yellow-400 transition-colors focus:outline-none focus:ring-2 focus:ring-white transform hover:scale-105 duration-200 shadow-lg">
-                    Suggérer une adresse
-                </button>
+        {/* Call to Action - Banner Style */}
+        <div className="mt-20 bg-slate-900 rounded-[2rem] p-8 md:p-12 text-center relative overflow-hidden shadow-2xl border-b-8 border-[#FCD116]">
+            {/* Pattern Overlay */}
+            <div className="absolute inset-0 bg-wax-pattern opacity-5 mix-blend-overlay"></div>
+            
+            {/* Decorative Blobs */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#FCD116] opacity-10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#CE1126] opacity-10 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
+            
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 text-left">
+                <div className="md:w-2/3">
+                    <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 text-[#FCD116] text-xs font-bold uppercase tracking-widest mb-4 border border-white/10">
+                        <Star className="h-3 w-3 mr-2 fill-current" />
+                        Contribution
+                    </div>
+                    <h3 className="text-3xl font-black text-white mb-3 tracking-tight">Vous connaissez une pépite ?</h3>
+                    <p className="text-slate-300 text-lg font-medium leading-relaxed">
+                        Aidez-nous à compléter cet annuaire. Si vous connaissez un commerce fiable qui aide la communauté, signalez-le nous pour validation.
+                    </p>
+                </div>
+                <div className="md:w-1/3 flex justify-center md:justify-end">
+                    <button className="bg-[#FCD116] text-slate-900 font-black px-8 py-4 rounded-xl hover:bg-[#ffe14d] transition-all transform hover:scale-105 hover:rotate-1 shadow-lg shadow-yellow-400/20 focus:outline-none focus:ring-4 focus:ring-yellow-400/50 flex items-center">
+                        <Store className="mr-2 h-5 w-5" />
+                        Suggérer une adresse
+                    </button>
+                </div>
             </div>
         </div>
 

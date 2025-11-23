@@ -3,9 +3,10 @@ export interface NewsItem {
   id: string;
   title: string;
   summary: string;
-  category: 'Politique' | 'Culture' | 'Sport' | 'Économie';
+  category: 'Politique' | 'Culture' | 'Sport' | 'Économie' | 'Société' | 'Santé' | 'Justice';
   date: string;
   imageUrl?: string;
+  source?: string; // Nom du média (ex: Guineenews, RFI)
 }
 
 export interface CommunityEvent {
@@ -14,7 +15,7 @@ export interface CommunityEvent {
   date: string;
   location: string;
   description: string;
-  type: 'Meetup' | 'Fête' | 'Culture' | 'Business';
+  type: 'Meetup' | 'Fête' | 'Culture' | 'Business' | 'Sport';
   imageUrl?: string;
 }
 
