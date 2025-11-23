@@ -18,7 +18,7 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
   }
 
   return (
-    <div className="bg-slate-50 min-h-screen pb-12" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+    <div className="min-h-screen pb-12 bg-slate-50" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       
       {/* --- MODE FLASH (PLEIN ÉCRAN) --- */}
       {isFlashMode && (
@@ -245,15 +245,15 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
             </div>
 
             <div className="grid md:grid-cols-3 gap-4 relative z-10">
-                <a href="https://www.cire.be/" target="_blank" rel="noreferrer" className="bg-slate-700 p-5 rounded hover:bg-red-900 transition-colors border border-slate-600 hover:border-red-500 group text-center">
+                <a href="https://www.cire.be/" target="_blank" rel="noreferrer" className="bg-slate-700/80 p-5 rounded hover:bg-red-900 transition-colors border border-slate-600 hover:border-red-500 group text-center">
                     <h4 className="font-bold text-white text-xl group-hover:text-red-100 mb-1">CIRÉ</h4>
                     <p className="text-xs text-slate-400 group-hover:text-white">La coordination politique des étrangers.</p>
                 </a>
-                <a href="https://www.adde.be/" target="_blank" rel="noreferrer" className="bg-slate-700 p-5 rounded hover:bg-blue-900 transition-colors border border-slate-600 hover:border-blue-500 group text-center">
+                <a href="https://www.adde.be/" target="_blank" rel="noreferrer" className="bg-slate-700/80 p-5 rounded hover:bg-blue-900 transition-colors border border-slate-600 hover:border-blue-500 group text-center">
                     <h4 className="font-bold text-white text-xl group-hover:text-blue-100 mb-1">ADDE</h4>
                     <p className="text-xs text-slate-400 group-hover:text-white">L'arme du droit pur. Fiches juridiques.</p>
                 </a>
-                <a href="https://www.liguedh.be/" target="_blank" rel="noreferrer" className="bg-slate-700 p-5 rounded hover:bg-[#FCD116] hover:text-black transition-colors border border-slate-600 hover:border-white group text-center">
+                <a href="https://www.liguedh.be/" target="_blank" rel="noreferrer" className="bg-slate-700/80 p-5 rounded hover:bg-[#FCD116] hover:text-black transition-colors border border-slate-600 hover:border-white group text-center">
                     <h4 className="font-bold text-white text-xl group-hover:text-black mb-1">LDH</h4>
                     <p className="text-xs text-slate-400 group-hover:text-black">Contre les violences policières.</p>
                 </a>

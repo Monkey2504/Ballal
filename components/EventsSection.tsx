@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Calendar, MapPin, Users, RefreshCw, Search, Info } from 'lucide-react';
 import { CommunityEvent } from '../types';
@@ -34,13 +35,13 @@ const EventsSection: React.FC = () => {
   };
 
   return (
-    <div className="bg-slate-50 py-12 min-h-screen">
+    <div className="py-12 min-h-screen bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10">
+        <div className="text-center mb-10 bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
           <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
             Agenda de la Communauté
           </h2>
-          <p className="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
+          <p className="mt-3 max-w-2xl mx-auto text-xl text-gray-600 font-medium sm:mt-4">
             Les événements publics détectés en Belgique pour la diaspora.
           </p>
           
@@ -106,7 +107,7 @@ const EventsSection: React.FC = () => {
                 </div>
             )}
             
-            <div className="mt-8 text-center text-xs text-gray-400 flex items-center justify-center">
+            <div className="mt-8 text-center text-xs text-gray-500 bg-white p-2 rounded-full inline-block mx-auto flex items-center justify-center max-w-fit px-4 border border-gray-100">
                 <Search className="h-3 w-3 mr-1" />
                 Résultats générés via Google Search AI. Vérifiez toujours les dates officielles auprès des organisateurs.
             </div>

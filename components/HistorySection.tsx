@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BookOpen, Clock, ArrowDown, Star } from 'lucide-react';
 
@@ -41,9 +42,9 @@ const HistorySection: React.FC = () => {
   ];
 
   return (
-    <div className="bg-white py-12">
+    <div className="py-12 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
           <div className="flex justify-center mb-4">
              <BookOpen className="h-12 w-12 text-red-600" />
           </div>
@@ -56,7 +57,7 @@ const HistorySection: React.FC = () => {
 
         <div className="relative max-w-5xl mx-auto">
           {/* Vertical Line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-red-500 via-yellow-400 to-green-600 hidden md:block"></div>
+          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-red-500 via-yellow-400 to-green-600 hidden md:block opacity-80"></div>
 
           <div className="space-y-12">
             {timelineEvents.map((event, index) => (
@@ -64,7 +65,7 @@ const HistorySection: React.FC = () => {
                 
                 {/* Content Side */}
                 <div className="w-full md:w-5/12 mb-4 md:mb-0">
-                  <div className={`bg-slate-50 p-6 rounded-xl shadow-md border-t-4 ${index % 2 === 0 ? 'border-red-500' : 'border-green-600'} hover:shadow-lg transition-all hover:-translate-y-1`}>
+                  <div className={`bg-white p-6 rounded-xl shadow-md border-t-4 ${index % 2 === 0 ? 'border-red-500' : 'border-green-600'} hover:shadow-lg transition-all hover:-translate-y-1`}>
                     <div className="flex items-center mb-3 justify-between">
                         <div className="flex items-center">
                              <Clock className="h-4 w-4 text-gray-400 mr-2" />
@@ -92,7 +93,7 @@ const HistorySection: React.FC = () => {
             ))}
           </div>
             
-          <div className="text-center mt-20 bg-green-50 p-8 rounded-xl border border-green-100">
+          <div className="text-center mt-20 bg-green-50 p-8 rounded-xl border border-green-100 shadow-sm">
             <h3 className="text-2xl font-bold text-green-800 mb-4">Saviez-vous ?</h3>
             <p className="text-gray-700 text-lg">
                 Plus de <span className="font-bold">25.000</span> personnes d'origine guinéenne vivent officiellement en Belgique, sans compter les nombreux binationaux et les sans-papiers que nous soutenons au quotidien.

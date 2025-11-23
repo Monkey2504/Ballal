@@ -47,7 +47,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare }) => {
                   {t.hero_subtitle}
                 </span>
               </h1>
-              <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+              <p className="mt-3 text-base text-gray-600 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0 font-medium">
                 {t.hero_desc}
               </p>
               <div className="mt-8 sm:mt-10 flex flex-wrap gap-3 justify-center lg:justify-start">
@@ -78,14 +78,14 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare }) => {
                 </div>
               </div>
 
-              <p className="mt-4 text-xs text-gray-400 uppercase tracking-widest">
+              <p className="mt-4 text-xs text-gray-500 uppercase tracking-widest font-semibold">
                 Conakry • Labé • Kankan • Nzérékoré • Bruxelles
               </p>
             </div>
           </main>
         </div>
       </div>
-      <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 bg-slate-100 flex items-center justify-center overflow-hidden relative">
+      <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 bg-gray-50 flex items-center justify-center overflow-hidden relative">
         {/* Image spécifique */}
         <img
           className="h-56 w-full object-cover object-center sm:h-72 md:h-96 lg:w-full lg:h-full transition-transform hover:scale-105 duration-[2s]"
@@ -94,7 +94,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare }) => {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-white via-white/20 to-transparent"></div>
         
-        {/* Indicateur IA - Seulement si un label est généré (signe que l'API a fonctionné) */}
+        {/* Indicateur IA */}
         {heroLabel && (
             <div className="absolute bottom-4 right-4 bg-black/40 backdrop-blur-md text-white px-3 py-1 rounded-full text-[10px] font-bold flex items-center border border-white/10 shadow-sm">
                 <Wand2 className="h-3 w-3 mr-1.5 text-[#FCD116]" />

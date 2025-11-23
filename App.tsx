@@ -11,7 +11,7 @@ import DirectorySection from './components/DirectorySection';
 import ShareSection from './components/ShareSection';
 import TeamSection from './components/TeamSection';
 import { ViewState, LanguageCode } from './types';
-import { ShieldAlert, Calendar, MessageCircle, HeartHandshake, Share2 } from 'lucide-react';
+import { ShieldAlert, Calendar, MessageCircle, HeartHandshake, Share2, Users, Image as ImageIcon } from 'lucide-react';
 import { translations } from './utils/translations';
 
 const App: React.FC = () => {
@@ -54,11 +54,11 @@ const App: React.FC = () => {
             />
             
             {/* Section Services de l'ASBL */}
-            <div className="bg-white/90 backdrop-blur-sm py-16 border-b border-gray-100">
+            <div className="bg-white py-16 border-b border-gray-100 shadow-sm">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl font-extrabold text-gray-900">Les Pôles d'Action de BALLAL</h2>
-                        <p className="mt-4 text-gray-500 max-w-2xl mx-auto">
+                        <p className="mt-4 text-gray-600 font-medium max-w-2xl mx-auto">
                             {language === 'fr' 
                              ? "Notre mission est de soutenir l'intégration et la dignité de chaque Guinéen en Belgique." 
                              : t.hero_desc}
@@ -67,7 +67,7 @@ const App: React.FC = () => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                          
                          {/* Card Militante - Mise en avant */}
-                         <div className="bg-white p-8 rounded-xl border-t-4 border-[#CE1126] shadow-sm cursor-pointer hover:shadow-2xl transition-all duration-300 group relative overflow-hidden" onClick={() => setCurrentView(ViewState.LEGAL_AID)}>
+                         <div className="bg-white p-8 rounded-xl border-t-4 border-[#CE1126] shadow-md cursor-pointer hover:shadow-2xl transition-all duration-300 group relative overflow-hidden" onClick={() => setCurrentView(ViewState.LEGAL_AID)}>
                             <div className="absolute top-0 right-0 bg-[#CE1126] text-white text-xs font-bold px-3 py-1 rounded-bl-lg">PRIORITÉ</div>
                             <div className="flex items-center mb-6">
                                 <div className="bg-red-50 p-4 rounded-full group-hover:bg-[#CE1126] transition-colors">
@@ -79,7 +79,7 @@ const App: React.FC = () => {
                             <span className="text-[#CE1126] font-bold text-sm uppercase tracking-wider border-b-2 border-red-100 group-hover:border-[#CE1126] pb-1 transition-all">Consulter le guide →</span>
                          </div>
 
-                         <div className="bg-white p-8 rounded-xl border-t-4 border-[#FCD116] shadow-sm cursor-pointer hover:shadow-2xl transition-all duration-300 group" onClick={() => setCurrentView(ViewState.FORUM)}>
+                         <div className="bg-white p-8 rounded-xl border-t-4 border-[#FCD116] shadow-md cursor-pointer hover:shadow-2xl transition-all duration-300 group" onClick={() => setCurrentView(ViewState.FORUM)}>
                             <div className="flex items-center mb-6">
                                 <div className="bg-yellow-50 p-4 rounded-full group-hover:bg-[#FCD116] transition-colors">
                                     <MessageCircle className="h-8 w-8 text-yellow-600 group-hover:text-white" />
@@ -92,7 +92,7 @@ const App: React.FC = () => {
                             <span className="text-yellow-600 font-bold text-sm uppercase tracking-wider border-b-2 border-yellow-100 group-hover:border-[#FCD116] pb-1 transition-all">Accéder au forum →</span>
                          </div>
 
-                         <div className="bg-white p-8 rounded-xl border-t-4 border-[#009460] shadow-sm cursor-pointer hover:shadow-2xl transition-all duration-300 group" onClick={() => setCurrentView(ViewState.EVENTS)}>
+                         <div className="bg-white p-8 rounded-xl border-t-4 border-[#009460] shadow-md cursor-pointer hover:shadow-2xl transition-all duration-300 group" onClick={() => setCurrentView(ViewState.EVENTS)}>
                             <div className="flex items-center mb-6">
                                 <div className="bg-green-50 p-4 rounded-full group-hover:bg-[#009460] transition-colors">
                                     <Calendar className="h-8 w-8 text-[#009460] group-hover:text-white" />
@@ -109,11 +109,55 @@ const App: React.FC = () => {
             </div>
             
             {/* SECTION BUREAU EXÉCUTIF */}
-            <div className="bg-slate-50/90 backdrop-blur-md">
+            <div className="bg-slate-50">
                <TeamSection language={language} />
             </div>
 
-            <div className="bg-white/95 backdrop-blur-md">
+            {/* SECTION NOS MEMBRES (Photo de groupe) */}
+            <div className="bg-white py-20 border-t border-gray-100">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-10">
+                   <div className="inline-flex items-center justify-center p-3 bg-red-50 rounded-full mb-4">
+                      <Users className="h-8 w-8 text-[#CE1126]" />
+                   </div>
+                   <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                     Nos Membres
+                   </h2>
+                   <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-600 font-medium">
+                     La force de BALLAL, c'est son union. Plus de 500 membres actifs à travers la Belgique.
+                   </p>
+                </div>
+                
+                {/* Conteneur image robuste avec position absolue */}
+                <div className="rounded-2xl overflow-hidden shadow-2xl border-4 border-slate-100 bg-gray-200 relative group h-96 md:h-[600px]">
+                  {/* Loader en arrière-plan */}
+                  <div className="absolute inset-0 flex items-center justify-center text-gray-400 z-0">
+                     <div className="text-center">
+                        <ImageIcon className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                        <span className="text-sm font-medium">Chargement de la photo...</span>
+                     </div>
+                  </div>
+                  
+                  <img 
+                    src="https://www.googleapis.com/download/storage/v1/b/high-flyer-414819.appspot.com/o/2025-03-01%2F4533036e-3949-43c3-88aa-3814674f2603%2F481075677_122143009766258410_5134371917719602052_n.jpg?generation=1740848035133379&alt=media" 
+                    alt="Membres de BALLAL ASBL"
+                    className="absolute inset-0 w-full h-full object-cover z-10 transition-transform duration-700 group-hover:scale-105"
+                    loading="eager"
+                  />
+                  
+                  {/* Overlay dégradé */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-20 pointer-events-none"></div>
+                  
+                  {/* Légende */}
+                  <div className="absolute bottom-6 left-6 z-30 text-white pointer-events-none">
+                     <p className="font-bold text-lg uppercase tracking-wider">L'Union fait la force</p>
+                     <p className="text-sm opacity-90">Rassemblement 2024</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-slate-50">
                <NewsSection />
             </div>
           </>
@@ -138,19 +182,9 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col font-sans relative" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+    <div className="min-h-screen flex flex-col font-sans relative bg-slate-50" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       
-      {/* FOND D'ÉCRAN GLOBAL - PHOTO DES MEMBRES */}
-      <div className="fixed inset-0 z-0">
-         <img 
-            src="https://www.googleapis.com/download/storage/v1/b/high-flyer-414819.appspot.com/o/2025-03-01%2F4533036e-3949-43c3-88aa-3814674f2603%2F481075677_122143009766258410_5134371917719602052_n.jpg?generation=1740848035133379&alt=media" 
-            className="w-full h-full object-cover opacity-15 blur-[2px]" 
-            alt="Membres BALLAL ASBL" 
-         />
-         <div className="absolute inset-0 bg-gradient-to-b from-slate-50/80 via-slate-50/70 to-slate-50/90"></div>
-      </div>
-
-      {/* CONTENU PRINCIPAL (Z-Index pour passer au-dessus du fond) */}
+      {/* CONTENU PRINCIPAL */}
       <div className="relative z-10 flex flex-col min-h-screen">
         <Navbar currentView={currentView} setView={setCurrentView} language={language} setLanguage={setLanguage} />
         

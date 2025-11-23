@@ -52,17 +52,17 @@ const ShareSection: React.FC = () => {
   };
 
   return (
-    <div className="bg-slate-50 py-12 min-h-screen">
+    <div className="py-12 min-h-screen bg-slate-50">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="text-center mb-10">
+        <div className="text-center mb-10 bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
           <div className="inline-flex items-center justify-center p-3 bg-red-100 rounded-full mb-4">
              <Share2 className="h-8 w-8 text-[#CE1126]" />
           </div>
           <h2 className="text-3xl font-extrabold text-gray-900">
             Faites grandir la communauté
           </h2>
-          <p className="mt-4 text-xl text-gray-600">
+          <p className="mt-4 text-xl text-gray-600 font-medium">
             Ballal existe grâce à vous. Partagez l'application avec vos proches.
           </p>
         </div>

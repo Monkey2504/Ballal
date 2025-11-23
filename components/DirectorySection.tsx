@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Search, MapPin, Phone, CheckCircle, Store, Briefcase, Scissors, Utensils, Stethoscope } from 'lucide-react';
 import { DirectoryItem } from '../types';
@@ -84,11 +85,11 @@ const DirectorySection: React.FC = () => {
   };
 
   return (
-    <div className="bg-slate-50 min-h-screen py-12">
+    <div className="min-h-screen py-12 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="text-center mb-10">
+        <div className="text-center mb-10 bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
           <h2 className="text-3xl font-extrabold text-gray-900">
             Annuaire des Talents
           </h2>
@@ -173,13 +174,15 @@ const DirectorySection: React.FC = () => {
 
         {filteredItems.length === 0 && (
             <div className="text-center py-12">
-                <p className="text-gray-500">Aucun résultat trouvé pour cette recherche.</p>
-                <button 
-                    onClick={() => {setSearchTerm(''); setSelectedCategory('Tout')}}
-                    className="mt-4 text-[#CE1126] font-bold hover:underline"
-                >
-                    Réinitialiser les filtres
-                </button>
+                <p className="text-gray-500 bg-white inline-block px-4 py-2 rounded-lg border border-gray-100">Aucun résultat trouvé pour cette recherche.</p>
+                <div className="mt-2">
+                    <button 
+                        onClick={() => {setSearchTerm(''); setSelectedCategory('Tout')}}
+                        className="mt-4 text-[#CE1126] font-bold hover:underline bg-white px-4 py-2 rounded-lg border border-gray-100"
+                    >
+                        Réinitialiser les filtres
+                    </button>
+                </div>
             </div>
         )}
 
