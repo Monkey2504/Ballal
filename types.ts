@@ -19,6 +19,13 @@ export interface CommunityEvent {
   imageUrl?: string;
 }
 
+export interface Comment {
+  id: string;
+  author: string;
+  content: string;
+  date: string;
+}
+
 export interface ForumPost {
   id: string;
   author: string;
@@ -26,6 +33,7 @@ export interface ForumPost {
   content: string;
   likes: number;
   comments: number;
+  commentsList?: Comment[];
   timeAgo: string;
 }
 
@@ -35,7 +43,8 @@ export interface DirectoryItem {
   category: 'Gastronomie' | 'Beauté & Mode' | 'Services' | 'Artisanat' | 'Santé';
   location: string;
   description: string;
-  phone: string;
+  phone?: string;
+  website?: string;
   isVerified: boolean;
 }
 

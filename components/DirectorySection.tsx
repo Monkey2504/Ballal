@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Search, MapPin, Phone, CheckCircle, Store, Briefcase, Scissors, Utensils, Stethoscope, Hammer, Globe, Filter, Star } from 'lucide-react';
+import { Search, MapPin, Phone, CheckCircle, Store, Briefcase, Scissors, Utensils, Stethoscope, Hammer, Globe, Filter, Star, ExternalLink } from 'lucide-react';
 import { DirectoryItem } from '../types';
 
 // Données RÉELLES et VERIFIABLES de la communauté à Bruxelles/Belgique
@@ -237,6 +237,15 @@ const DIRECTORY_DATA: DirectoryItem[] = [
     phone: 'Sur place',
     isVerified: true
   },
+  {
+    id: 's7',
+    name: 'Tabital Pulaaku International',
+    category: 'Services',
+    location: 'Bruxelles / Global',
+    description: 'Association internationale pour la promotion de la culture Peule (Pulaaku) et la solidarité.',
+    website: 'https://www.tabitalpulaaku.org/',
+    isVerified: true
+  },
 
   // --- SANTÉ ---
   {
@@ -275,12 +284,12 @@ const DirectorySection: React.FC = () => {
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'Gastronomie': return <Utensils className="h-5 w-5" aria-hidden="true" />;
-      case 'Beauté & Mode': return <Scissors className="h-5 w-5" aria-hidden="true" />;
-      case 'Services': return <Briefcase className="h-5 w-5" aria-hidden="true" />;
-      case 'Santé': return <Stethoscope className="h-5 w-5" aria-hidden="true" />;
-      case 'Artisanat': return <Hammer className="h-5 w-5" aria-hidden="true" />;
-      default: return <Store className="h-5 w-5" aria-hidden="true" />;
+      case 'Gastronomie': return <Utensils className="h-6 w-6" aria-hidden="true" />;
+      case 'Beauté & Mode': return <Scissors className="h-6 w-6" aria-hidden="true" />;
+      case 'Services': return <Briefcase className="h-6 w-6" aria-hidden="true" />;
+      case 'Santé': return <Stethoscope className="h-6 w-6" aria-hidden="true" />;
+      case 'Artisanat': return <Hammer className="h-6 w-6" aria-hidden="true" />;
+      default: return <Store className="h-6 w-6" aria-hidden="true" />;
     }
   };
 
@@ -312,7 +321,7 @@ const DirectorySection: React.FC = () => {
           <h1 className="text-4xl font-black text-slate-900 mb-4 tracking-tight">
             <span className="relative inline-block">
                 Annuaire Pro
-                <span className="absolute -bottom-2 left-0 w-full h-2 bg-[#FCD116] opacity-60 skew-x-12 transform"></span>
+                <span className="absolute -bottom-2 left-0 w-full h-3 bg-[#FCD116] opacity-60 skew-x-12 transform"></span>
             </span> 
             <span className="ml-2 guinea-gradient-text">Guinée-Benelux</span>
           </h1>
@@ -322,7 +331,7 @@ const DirectorySection: React.FC = () => {
         </div>
 
         {/* Search & Filters Panel */}
-        <div className="bg-white p-6 rounded-3xl shadow-xl border border-gray-100 mb-10 sticky top-24 z-30 card-hover-effect">
+        <div className="bg-white p-6 rounded-3xl shadow-xl border border-orange-100 mb-10 sticky top-24 z-30 card-hover-effect">
             <div className="flex flex-col lg:flex-row gap-6">
                 
                 {/* Search Input */}
@@ -335,7 +344,7 @@ const DirectorySection: React.FC = () => {
                         id="directory-search"
                         type="text"
                         className="block w-full pl-11 pr-4 py-4 border-2 border-gray-100 rounded-2xl bg-gray-50 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#CE1126] focus:border-transparent focus:bg-white transition-all font-medium text-lg"
-                        placeholder="Qu'est-ce que vous cherchez ? (ex: Mafé, Coiffeur...)"
+                        placeholder="Ex: Mafé, Coiffeur, Avocat..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -355,7 +364,7 @@ const DirectorySection: React.FC = () => {
                             className={`px-4 py-2.5 rounded-xl text-sm font-bold transition-all transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#CE1126] ${
                                 selectedCategory === cat 
                                 ? 'bg-slate-900 text-white shadow-lg' 
-                                : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300'
+                                : 'bg-white border border-gray-200 text-gray-600 hover:bg-orange-50 hover:border-orange-200 hover:text-[#CE1126]'
                             }`}
                         >
                             {cat}
@@ -371,19 +380,23 @@ const DirectorySection: React.FC = () => {
                 <div key={item.id} className={`bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border-t-8 ${getBorderColor(index)} overflow-hidden group flex flex-col h-full relative`}>
                     
                     {/* Pattern Overlay in background */}
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-african-pattern opacity-10 rounded-bl-full pointer-events-none transition-opacity group-hover:opacity-20"></div>
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-wax-pattern opacity-5 rounded-bl-full pointer-events-none transition-opacity group-hover:opacity-10"></div>
+
+                    {/* Badge VÉRIFIÉ Style Tampon */}
+                    {item.isVerified && (
+                        <div className="absolute top-4 right-4 z-10 transform rotate-12 group-hover:rotate-0 transition-transform duration-300">
+                            <div className="border-2 border-[#009460] text-[#009460] px-3 py-1 rounded-lg font-black uppercase tracking-widest text-[10px] bg-white/80 backdrop-blur-sm shadow-sm opacity-90 mix-blend-multiply flex items-center gap-1">
+                                <CheckCircle className="h-3 w-3" />
+                                Vérifié
+                            </div>
+                        </div>
+                    )}
 
                     <div className="p-7 flex-grow">
                         <div className="flex justify-between items-start mb-5">
-                            <div className={`p-3 rounded-2xl ${getCategoryColor(item.category)} shadow-sm`}>
+                            <div className={`p-4 rounded-2xl ${getCategoryColor(item.category)} shadow-sm`}>
                                 {getCategoryIcon(item.category)}
                             </div>
-                            {item.isVerified && (
-                                <div className="flex items-center bg-[#009460]/10 text-[#009460] px-3 py-1 rounded-full border border-[#009460]/20 transform rotate-2 group-hover:rotate-0 transition-transform">
-                                    <CheckCircle className="h-3.5 w-3.5 mr-1.5 fill-current" aria-hidden="true" /> 
-                                    <span className="text-[10px] font-black uppercase tracking-widest">Officiel</span>
-                                </div>
-                            )}
                         </div>
                         
                         <h3 className="text-xl font-black text-slate-900 mb-2 leading-tight group-hover:text-[#CE1126] transition-colors">
@@ -391,30 +404,51 @@ const DirectorySection: React.FC = () => {
                         </h3>
                         
                         <div className="flex items-start text-sm text-gray-500 mb-5">
-                            <MapPin className="h-4 w-4 mr-1.5 mt-0.5 text-gray-400 flex-shrink-0" aria-hidden="true" />
+                            <MapPin className="h-4 w-4 mr-1.5 mt-0.5 text-red-500 flex-shrink-0" aria-hidden="true" />
                             <span className="font-medium leading-snug">{item.location}</span>
                         </div>
                         
-                        <p className="text-gray-600 text-sm leading-relaxed font-medium bg-gray-50 p-3 rounded-xl border border-gray-100">
+                        <p className="text-gray-600 text-sm leading-relaxed font-medium bg-orange-50/50 p-4 rounded-xl border border-orange-100/50">
                             {item.description}
                         </p>
                     </div>
                         
                     <div className="px-7 py-5 bg-gray-50/50 mt-auto border-t border-gray-100">
                         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                            <a href={`tel:${item.phone}`} className="inline-flex items-center text-sm font-black text-slate-900 bg-white px-4 py-2 rounded-lg border border-gray-200 hover:border-[#CE1126] hover:text-[#CE1126] transition-colors shadow-sm w-full sm:w-auto justify-center">
-                                <Phone className="h-4 w-4 mr-2" aria-hidden="true" />
-                                {item.phone}
-                            </a>
-                            <a 
-                                href={`https://www.google.com/search?q=${encodeURIComponent(item.name + ' ' + item.location)}`} 
-                                target="_blank"
-                                rel="noreferrer"
-                                className="inline-flex items-center text-xs font-bold text-gray-500 hover:text-blue-600 uppercase tracking-wide group/link transition-colors ml-auto sm:ml-0"
-                            >
-                                <Globe className="h-3 w-3 mr-1.5 group-hover/link:animate-spin-slow" />
-                                Google Maps
-                            </a>
+                            {item.phone ? (
+                                <a href={`tel:${item.phone}`} className="inline-flex items-center text-sm font-black text-slate-900 bg-white px-4 py-3 rounded-xl border border-gray-200 hover:border-[#CE1126] hover:text-[#CE1126] transition-colors shadow-sm w-full sm:w-auto justify-center hover:shadow-md">
+                                    <Phone className="h-4 w-4 mr-2" aria-hidden="true" />
+                                    {item.phone}
+                                </a>
+                            ) : item.website ? (
+                                <a href={item.website} target="_blank" rel="noreferrer" className="inline-flex items-center text-sm font-black text-white bg-slate-900 px-4 py-3 rounded-xl border border-transparent hover:bg-[#CE1126] transition-colors shadow-sm w-full sm:w-auto justify-center hover:shadow-md">
+                                    <Globe className="h-4 w-4 mr-2" aria-hidden="true" />
+                                    Visiter le site
+                                </a>
+                            ) : null}
+
+                            <div className="flex items-center gap-3 ml-auto sm:ml-0">
+                                {item.website && item.phone && (
+                                    <a 
+                                        href={item.website} 
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="inline-flex items-center text-xs font-bold text-gray-500 hover:text-blue-600 uppercase tracking-wide group/link transition-colors"
+                                    >
+                                        <ExternalLink className="h-3 w-3 mr-1.5 group-hover/link:animate-bounce" />
+                                        Site
+                                    </a>
+                                )}
+                                <a 
+                                    href={`https://www.google.com/search?q=${encodeURIComponent(item.name + ' ' + item.location)}`} 
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="inline-flex items-center text-xs font-bold text-gray-500 hover:text-blue-600 uppercase tracking-wide group/link transition-colors"
+                                >
+                                    <Globe className="h-3 w-3 mr-1.5 group-hover/link:animate-spin-slow" />
+                                    Plan
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

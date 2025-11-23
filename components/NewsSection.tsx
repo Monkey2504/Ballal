@@ -1,8 +1,7 @@
-
 import React, { useEffect, useState, useCallback } from 'react';
 import { fetchLatestNews } from '../services/geminiService';
 import { NewsItem, LanguageCode } from '../types';
-import { RefreshCcw, MapPin, ExternalLink, ArrowRight, Newspaper } from 'lucide-react';
+import { RefreshCcw, MapPin, ExternalLink, ArrowRight, Newspaper, Globe } from 'lucide-react';
 import { translations } from '../utils/translations';
 
 interface NewsSectionProps {
@@ -124,7 +123,7 @@ const NewsSection: React.FC<NewsSectionProps> = ({ language = 'fr' }) => {
                          
                          {/* Source Badge on Image */}
                          {item.source && (
-                             <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-[10px] font-black text-slate-800 uppercase tracking-widest flex items-center shadow-sm">
+                             <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm px-2 py-1 rounded text-[10px] font-black text-slate-800 uppercase tracking-widest flex items-center shadow-sm">
                                  <Newspaper className="h-3 w-3 mr-1 text-[#CE1126]" />
                                  {item.source}
                              </div>
@@ -149,7 +148,8 @@ const NewsSection: React.FC<NewsSectionProps> = ({ language = 'fr' }) => {
                         
                         <div className="pt-4 border-t border-gray-100 flex items-center justify-between mt-auto">
                              <div className="flex items-center text-xs text-gray-400 font-medium">
-                                <MapPin className="h-3 w-3 mr-1 text-red-400" aria-hidden="true" /> Conakry
+                                <Globe className="h-3 w-3 mr-1 text-gray-300" aria-hidden="true" /> 
+                                {item.source || 'Guinée'}
                             </div>
                              <div className="flex items-center font-bold text-sm text-[#CE1126] group-hover:underline cursor-pointer">
                                 {t.read_article} <ArrowRight className="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform" aria-hidden="true" />
