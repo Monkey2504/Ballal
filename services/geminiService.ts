@@ -5,6 +5,41 @@ import { NewsItem, CommunityEvent } from '../types';
 const apiKey = process.env.API_KEY || '';
 const ai = new GoogleGenAI({ apiKey });
 
+// --- IMAGE MAPPING SYSTEM (FAST & RELIABLE) ---
+// Au lieu de générer des images (lent/buggy), on mappe des catégories à des images Unsplash de haute qualité.
+
+const getCategoryImageUrl = (category: string, type: 'news' | 'event'): string => {
+  const cat = category.toLowerCase();
+  
+  if (type === 'news') {
+    if (cat.includes('sport') || cat.includes('football') || cat.includes('syli')) 
+      return 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=800&auto=format&fit=crop'; // Sport/Foot
+    if (cat.includes('politique') || cat.includes('cnrd') || cat.includes('gouvernement')) 
+      return 'https://images.unsplash.com/photo-1575320181282-9afab399332c?q=80&w=800&auto=format&fit=crop'; // Micro/Discours
+    if (cat.includes('culture') || cat.includes('art') || cat.includes('concert')) 
+      return 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=800&auto=format&fit=crop'; // Culture/Musique
+    if (cat.includes('économ') || cat.includes('mine') || cat.includes('argent')) 
+      return 'https://images.unsplash.com/photo-1628122971556-9a25b18b4386?q=80&w=800&auto=format&fit=crop'; // Économie/Bauxite
+    
+    // Default News (Guinea Landscape/Flag vibes)
+    return 'https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=800&auto=format&fit=crop';
+  } 
+  
+  else { // Events
+    if (cat.includes('fête') || cat.includes('party') || cat.includes('concert')) 
+      return 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop'; // Fête
+    if (cat.includes('business') || cat.includes('réunion') || cat.includes('forum')) 
+      return 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=800&auto=format&fit=crop'; // Business
+    if (cat.includes('meetup') || cat.includes('rencontre') || cat.includes('juridique')) 
+      return 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=800&auto=format&fit=crop'; // Meetup/Social
+    if (cat.includes('sport') || cat.includes('match')) 
+      return 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=800&auto=format&fit=crop'; // Sport
+      
+    // Default Event
+    return 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=800&auto=format&fit=crop';
+  }
+};
+
 // --- MOCK DATA (FALLBACKS) ---
 // Ces données sont utilisées si l'API échoue ou si le quota est atteint.
 
@@ -14,42 +49,48 @@ const getMockNews = (): NewsItem[] => [
     title: 'Transition : Le dialogue national se poursuit',
     summary: 'Les autorités de la transition réaffirment leur volonté d\'inclure toutes les forces vives de la nation dans le processus de refondation.',
     category: 'Politique',
-    date: 'À l\'instant'
+    date: 'À l\'instant',
+    imageUrl: getCategoryImageUrl('Politique', 'news')
   },
   {
     id: 'fallback-2',
     title: 'Succès pour la culture guinéenne à l\'international',
     summary: 'Plusieurs artistes guinéens ont été primés lors de festivals en Europe ce week-end, faisant rayonner le tricolore.',
     category: 'Culture',
-    date: 'Il y a 2h'
+    date: 'Il y a 2h',
+    imageUrl: getCategoryImageUrl('Culture', 'news')
   },
   {
     id: 'fallback-3',
     title: 'Économie : Le franc guinéen se stabilise',
     summary: 'La Banque Centrale annonce de nouvelles mesures pour maîtriser l\'inflation et soutenir le pouvoir d\'achat des ménages.',
     category: 'Économie',
-    date: 'Aujourd\'hui'
+    date: 'Aujourd\'hui',
+    imageUrl: getCategoryImageUrl('Économie', 'news')
   },
   {
     id: 'fallback-4',
     title: 'Syli National : Préparation pour la CAN',
     summary: 'L\'équipe nationale entame son stage de préparation avec l\'arrivée des expatriés. L\'espoir est grand pour cette compétition.',
     category: 'Sport',
-    date: 'Hier'
+    date: 'Hier',
+    imageUrl: getCategoryImageUrl('Sport', 'news')
   },
   {
     id: 'fallback-5',
     title: 'Infrastructures : Réfection de la route Coyah-Mamou',
     summary: 'Les travaux avancent à grands pas sur la nationale numéro 1, promettant de faciliter les échanges commerciaux vers l\'intérieur.',
     category: 'Économie',
-    date: 'Il y a 1j'
+    date: 'Il y a 1j',
+    imageUrl: getCategoryImageUrl('Économie', 'news')
   },
   {
     id: 'fallback-6',
     title: 'Mines : Nouveau projet de bauxite à Boké',
     summary: 'Un accord a été signé pour l\'exploitation durable d\'un nouveau gisement, avec des garanties environnementales renforcées.',
     category: 'Économie',
-    date: 'Il y a 2j'
+    date: 'Il y a 2j',
+    imageUrl: getCategoryImageUrl('Économie', 'news')
   }
 ];
 
@@ -60,7 +101,8 @@ const getMockEvents = (): CommunityEvent[] => [
     date: 'Samedi prochain, 14h00',
     location: 'Bruxelles (Matonge)',
     description: 'Rencontre d\'accueil pour les nouveaux arrivants et point sur les dossiers juridiques en cours.',
-    type: 'Meetup'
+    type: 'Meetup',
+    imageUrl: getCategoryImageUrl('Meetup', 'event')
   },
   {
     id: 'evt-fallback-2',
@@ -68,7 +110,44 @@ const getMockEvents = (): CommunityEvent[] => [
     date: '2 Octobre, 18h00',
     location: 'Salle La Madeleine, Bruxelles',
     description: 'Célébration solennelle et festive de notre fête nationale. Tenue traditionnelle souhaitée.',
-    type: 'Fête'
+    type: 'Fête',
+    imageUrl: getCategoryImageUrl('Fête', 'event')
+  },
+  {
+    id: 'evt-fallback-3',
+    title: 'Forum Business Guinée-Benelux',
+    date: '15 du mois prochain, 09h00',
+    location: 'Sheraton Brussels Airport',
+    description: 'Networking pour les entrepreneurs de la diaspora. Opportunités d\'investissement au pays.',
+    type: 'Business',
+    imageUrl: getCategoryImageUrl('Business', 'event')
+  },
+  {
+    id: 'evt-fallback-4',
+    title: 'Tournoi de Foot Solidaire',
+    date: 'Dimanche 24, 10h00',
+    location: 'Stade de Schaerbeek',
+    description: 'Match de gala entre les vétérans et la jeunesse. Les fonds iront à une école à Mamou.',
+    type: 'Fête',
+    imageUrl: getCategoryImageUrl('Sport', 'event')
+  },
+  {
+    id: 'evt-fallback-5',
+    title: 'Permanence Juridique Gratuite',
+    date: 'Tous les mercredis, 14h-17h',
+    location: 'Siège Ballal (Ixelles)',
+    description: 'Consultations gratuites avec nos avocats partenaires pour vos dossiers de régularisation.',
+    type: 'Meetup',
+    imageUrl: getCategoryImageUrl('Meetup', 'event')
+  },
+  {
+    id: 'evt-fallback-6',
+    title: 'Soirée Contes et Légendes du Fouta',
+    date: 'Vendredi soir, 19h30',
+    location: 'Centre Culturel PianoFabriek',
+    description: 'Une immersion dans notre patrimoine oral avec des conteurs venus spécialement de Labé.',
+    type: 'Culture',
+    imageUrl: getCategoryImageUrl('Culture', 'event')
   }
 ];
 
@@ -227,14 +306,20 @@ export const fetchLatestNews = async (language: string = 'fr'): Promise<NewsResu
           config: { tools: [{googleSearch: {}}] }
         });
 
-        const articles = cleanAndParseJSON(response.text || '') || getMockNews();
+        const rawArticles = cleanAndParseJSON(response.text || '') || getMockNews();
+        
+        // Enrichissement des articles avec des images
+        const articles = Array.isArray(rawArticles) ? rawArticles.map((article: NewsItem) => ({
+          ...article,
+          imageUrl: getCategoryImageUrl(article.category, 'news')
+        })) : getMockNews();
         
         const sourceUrls = response.candidates?.[0]?.groundingMetadata?.groundingChunks
           ?.map(chunk => chunk.web?.uri)
           .filter((uri): uri is string => typeof uri === 'string')
           .slice(0, 3) || [];
 
-        if (!Array.isArray(articles) || articles.length === 0) {
+        if (articles.length === 0) {
             throw new Error("Invalid news data format");
         }
 
@@ -257,9 +342,9 @@ export const fetchCommunityEvents = async (): Promise<CommunityEvent[]> => {
                 const response = await ai.models.generateContent({
                     model: "gemini-2.5-flash",
                     contents: `Trouve des événements pour la diaspora guinéenne en Belgique ou des événements africains majeurs à Bruxelles/Liège prévus prochainement.
-                    Si aucun événement spécifique n'est trouvé, suggère 2 événements culturels génériques plausibles.
+                    Si aucun événement spécifique n'est trouvé, suggère 6 événements culturels génériques plausibles (ex: réunion, fête, foot, business).
                     
-                    Format JSON strict :
+                    Format JSON strict (tableau de 6 objets max) :
                     [
                       {
                         "id": "string",
@@ -273,8 +358,15 @@ export const fetchCommunityEvents = async (): Promise<CommunityEvent[]> => {
                     config: { tools: [{googleSearch: {}}] }
                 });
 
-                const events = cleanAndParseJSON(response.text || '');
-                if (!Array.isArray(events) || events.length === 0) throw new Error("Invalid events format");
+                const rawEvents = cleanAndParseJSON(response.text || '');
+                
+                // Enrichissement avec images
+                const events = Array.isArray(rawEvents) ? rawEvents.map((event: CommunityEvent) => ({
+                  ...event,
+                  imageUrl: getCategoryImageUrl(event.type, 'event')
+                })) : getMockEvents();
+
+                if (events.length === 0) throw new Error("Invalid events format");
                 return events;
             }, 3, 1000, 'fetchCommunityEvents');
         } catch (error) {
@@ -297,8 +389,6 @@ export const fetchHeroImage = async (): Promise<HeroImageResult> => {
     return fetchWithDedup('hero_image', async () => {
         try {
              // On utilise une méthode "fire and forget" safe, ou on retourne simplement le fallback
-             // car la génération d'image via API peut être coûteuse/lente.
-             // Ici, on simule une récupération intelligente mais on fallback safe.
              return FALLBACK_HERO;
         } catch (error) {
             return FALLBACK_HERO;

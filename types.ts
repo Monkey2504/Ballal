@@ -5,6 +5,7 @@ export interface NewsItem {
   summary: string;
   category: 'Politique' | 'Culture' | 'Sport' | 'Économie';
   date: string;
+  imageUrl?: string;
 }
 
 export interface CommunityEvent {
@@ -14,6 +15,7 @@ export interface CommunityEvent {
   location: string;
   description: string;
   type: 'Meetup' | 'Fête' | 'Culture' | 'Business';
+  imageUrl?: string;
 }
 
 export interface ForumPost {
