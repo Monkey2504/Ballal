@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import NewsSection from './components/NewsSection';
@@ -11,12 +11,17 @@ import DirectorySection from './components/DirectorySection';
 import ShareSection from './components/ShareSection';
 import TeamSection from './components/TeamSection';
 import { ViewState, LanguageCode } from './types';
-import { ShieldAlert, Calendar, MessageCircle, HeartHandshake, Share2, Users, Image as ImageIcon } from 'lucide-react';
+import { ShieldAlert, Calendar, MessageCircle, HeartHandshake, Share2, Users, Image as ImageIcon, Upload } from 'lucide-react';
 import { translations } from './utils/translations';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<ViewState>(ViewState.HOME);
   const [language, setLanguage] = useState<LanguageCode>('fr');
+  
+  // État pour la photo des membres avec URL par défaut
+  const [memberPhoto, setMemberPhoto] = useState("https://www.googleapis.com/download/storage/v1/b/high-flyer-414819.appspot.com/o/2025-03-01%2F4533036e-3949-43c3-88aa-3814674f2603%2F481075677_122143009766258410_5134371917719602052_n.jpg?generation=1740848035133379&alt=media");
+  const [photoError, setPhotoError] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const t = translations[language];
 
@@ -39,6 +44,15 @@ const App: React.FC = () => {
       }
     } else {
       setCurrentView(ViewState.SHARE);
+    }
+  };
+  
+  // Gestionnaire d'upload de photo locale
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const url = URL.createObjectURL(e.target.files[0]);
+      setMemberPhoto(url);
+      setPhotoError(false);
     }
   };
 
@@ -128,28 +142,64 @@ const App: React.FC = () => {
                    </p>
                 </div>
                 
-                {/* Conteneur image robuste avec position absolue */}
+                {/* Conteneur image robuste avec position absolue et Upload manuel */}
                 <div className="rounded-2xl overflow-hidden shadow-2xl border-4 border-slate-100 bg-gray-200 relative group h-96 md:h-[600px]">
-                  {/* Loader en arrière-plan */}
-                  <div className="absolute inset-0 flex items-center justify-center text-gray-400 z-0">
-                     <div className="text-center">
-                        <ImageIcon className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                        <span className="text-sm font-medium">Chargement de la photo...</span>
+                  
+                  {/* Input File invisible */}
+                  <input 
+                    type="file" 
+                    ref={fileInputRef} 
+                    onChange={handlePhotoUpload} 
+                    className="hidden" 
+                    accept="image/*"
+                  />
+
+                  {/* Fallback en cas d'erreur de chargement */}
+                  <div className={`absolute inset-0 flex items-center justify-center text-gray-400 z-0 bg-slate-100 ${photoError ? 'z-20' : ''}`}>
+                     <div className="text-center p-6">
+                        <ImageIcon className="h-16 w-16 mx-auto mb-4 opacity-30" />
+                        <p className="font-bold text-gray-500 mb-2">
+                            {photoError ? "L'image n'a pas pu être chargée." : "Chargement de la photo..."}
+                        </p>
+                        {photoError && (
+                            <button 
+                                onClick={() => fileInputRef.current?.click()}
+                                className="bg-white border border-gray-300 px-4 py-2 rounded-full text-sm font-bold text-gray-700 hover:bg-gray-50 flex items-center mx-auto shadow-sm mt-2 transition-all hover:scale-105"
+                            >
+                                <Upload className="h-4 w-4 mr-2" />
+                                Télécharger la photo manuellement
+                            </button>
+                        )}
                      </div>
                   </div>
                   
-                  <img 
-                    src="https://www.googleapis.com/download/storage/v1/b/high-flyer-414819.appspot.com/o/2025-03-01%2F4533036e-3949-43c3-88aa-3814674f2603%2F481075677_122143009766258410_5134371917719602052_n.jpg?generation=1740848035133379&alt=media" 
-                    alt="Membres de BALLAL ASBL"
-                    className="absolute inset-0 w-full h-full object-cover z-10 transition-transform duration-700 group-hover:scale-105"
-                    loading="eager"
-                  />
+                  {/* L'image elle-même */}
+                  {!photoError && (
+                      <img 
+                        src={memberPhoto} 
+                        alt="Membres de BALLAL ASBL"
+                        className="absolute inset-0 w-full h-full object-cover z-10 transition-transform duration-700 group-hover:scale-105"
+                        onError={() => setPhotoError(true)}
+                        referrerPolicy="no-referrer"
+                      />
+                  )}
+                  
+                  {/* Bouton Edit discret (visible au survol) */}
+                  <div className="absolute top-4 right-4 z-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                     <button 
+                        onClick={() => fileInputRef.current?.click()}
+                        className="bg-black/40 hover:bg-black/70 text-white p-2.5 rounded-full backdrop-blur-md transition-all shadow-lg border border-white/20"
+                        title="Changer la photo"
+                     >
+                        <Upload className="h-5 w-5" />
+                     </button>
+                  </div>
                   
                   {/* Overlay dégradé */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-20 pointer-events-none"></div>
+                  <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-20 pointer-events-none ${photoError ? 'hidden' : ''}`}></div>
                   
                   {/* Légende */}
-                  <div className="absolute bottom-6 left-6 z-30 text-white pointer-events-none">
+                  <div className={`absolute bottom-6 left-6 z-30 text-white pointer-events-none ${photoError ? 'hidden' : ''}`}>
                      <p className="font-bold text-lg uppercase tracking-wider">L'Union fait la force</p>
                      <p className="text-sm opacity-90">Rassemblement 2024</p>
                   </div>
