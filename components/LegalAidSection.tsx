@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { Shield, HeartPulse, Scale, AlertTriangle, Phone, Gavel, Siren, Eye, FileWarning, Users, BookOpen, Home, Camera } from 'lucide-react';
+import React, { useState } from 'react';
+import { Shield, HeartPulse, Scale, AlertTriangle, Gavel, Home, Camera, X, Zap, GraduationCap, Lock, EyeOff } from 'lucide-react';
 import { LanguageCode } from '../types';
 import { translations } from '../utils/translations';
 
@@ -9,59 +9,93 @@ interface LegalAidSectionProps {
 }
 
 const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) => {
+  const [isFlashMode, setIsFlashMode] = useState(false);
   const t = translations[language];
+
+  // Empêcher le scroll quand le mode Flash est activé
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = isFlashMode ? 'hidden' : 'unset';
+  }
 
   return (
     <div className="bg-slate-50 min-h-screen pb-12">
+      
+      {/* --- MODE FLASH (PLEIN ÉCRAN) --- */}
+      {isFlashMode && (
+        <div 
+            className="fixed inset-0 z-[100] bg-[#CE1126] flex flex-col items-center justify-center p-4 text-center animate-in fade-in duration-200 cursor-pointer"
+            onClick={() => setIsFlashMode(false)}
+        >
+            <button className="absolute top-8 right-8 text-white/50 hover:text-white">
+                <X className="h-10 w-10" />
+            </button>
+            
+            <Shield className="h-24 w-24 text-white mb-8 animate-pulse" />
+            
+            <h1 className="text-4xl sm:text-6xl font-black text-white leading-tight uppercase tracking-tighter mb-8 drop-shadow-md">
+                JE NE DÉCLARE RIEN.<br/>
+                JE NE SIGNE RIEN.<br/>
+                JE VEUX MON AVOCAT.
+            </h1>
+
+            <div className="bg-white text-black p-6 rounded-xl max-w-md shadow-2xl transform rotate-1">
+                <p className="font-bold text-lg mb-2 border-b-2 border-black pb-2">MESSAGE À LA POLICE / POLICE MESSAGE</p>
+                <p className="text-sm font-mono leading-relaxed">
+                    "Je fais valoir mon droit au silence (Salduz). Je demande l'assistance immédiate d'un avocat Pro Deo avant toute audition."
+                </p>
+                <p className="text-xs font-mono mt-2 text-right">Art. 47bis Code Instruction Criminelle</p>
+            </div>
+
+            <p className="text-white/80 mt-12 text-sm font-bold animate-bounce uppercase">
+                Touchez l'écran pour fermer
+            </p>
+        </div>
+      )}
+
       {/* HEADER ACTIVISTE */}
       <div className="bg-slate-900 text-white py-12 relative overflow-hidden border-b-8 border-[#CE1126]">
         <div className="absolute top-0 right-0 w-64 h-64 bg-[#CE1126] opacity-10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
             <div className="inline-flex items-center justify-center p-3 bg-[#CE1126] rounded-full mb-6 shadow-lg animate-pulse">
-                <Shield className="h-10 w-10 text-white" />
+                <Gavel className="h-10 w-10 text-white" />
             </div>
             <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4">
                 Vos Droits sont vos Armes
             </h2>
             <p className="text-xl text-slate-300 max-w-3xl mx-auto font-medium leading-relaxed">
-                En collaboration (spirituelle) avec la <span className="text-white font-bold">Ligue des Droits Humains</span> et le <span className="text-white font-bold">CIRÉ</span>.
-                <br/>Ici, on ne demande pas. On exige le respect des droits fondamentaux.
+                En collaboration (de combat) avec la <span className="text-white font-bold">Ligue des Droits Humains</span> et le <span className="text-white font-bold">CIRÉ</span>.
+                <br/>Face à l'arbitraire, le silence est votre meilleure protection.
             </p>
         </div>
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12">
         
-        {/* LA FLASH CARD - À SCREENSHOTER */}
-        <div className="mb-16 transform md:-rotate-1 hover:rotate-0 transition-transform duration-300">
-            <div className="bg-white rounded-xl shadow-2xl overflow-hidden border-4 border-gray-900 relative max-w-2xl mx-auto">
-                <div className="bg-[#CE1126] text-white p-4 text-center font-black uppercase tracking-widest flex items-center justify-center">
-                    <Camera className="h-5 w-5 mr-2" />
-                    Capturez cet écran • Montrez ceci à la Police
+        {/* LA FLASH CARD - DÉCLENCHEUR */}
+        <div className="mb-16 transform transition-all duration-300 hover:scale-[1.02] cursor-pointer" onClick={() => setIsFlashMode(true)}>
+            <div className="bg-white rounded-xl shadow-2xl overflow-hidden border-4 border-[#CE1126] relative max-w-2xl mx-auto group">
+                
+                {/* Bandeau clignotant */}
+                <div className="bg-[#CE1126] text-white p-4 text-center font-black uppercase tracking-widest flex items-center justify-center animate-pulse">
+                    <Zap className="h-6 w-6 mr-2 fill-yellow-400 text-yellow-400" />
+                    CLIQUEZ ICI EN CAS D'URGENCE POLICE
+                    <Zap className="h-6 w-6 ml-2 fill-yellow-400 text-yellow-400" />
                 </div>
-                <div className="p-8 md:p-12 text-center space-y-6">
-                    <h3 className="text-3xl md:text-4xl font-black text-gray-900 leading-tight">
+
+                <div className="p-8 md:p-12 text-center space-y-6 bg-red-50 group-hover:bg-red-100 transition-colors">
+                    <h3 className="text-3xl md:text-5xl font-black text-gray-900 leading-none tracking-tight">
                         "JE NE DÉCLARE RIEN.<br/>
-                        JE NE SIGNE RIEN.<br/>
-                        JE VEUX MON AVOCAT."
+                        JE NE SIGNE RIEN."
                     </h3>
-                    <div className="w-full h-1 bg-gray-200 my-4"></div>
-                    <p className="text-gray-500 font-bold text-sm uppercase">
-                        En cas de contrôle ou d'arrestation
-                    </p>
-                    <div className="grid grid-cols-2 gap-4 text-left bg-gray-50 p-4 rounded-lg border border-gray-200">
-                        <div>
-                            <span className="text-xs text-gray-400 uppercase font-bold">Français</span>
-                            <p className="font-bold text-gray-900 leading-tight">Je demande l'assistance d'un avocat pro-deo.</p>
-                        </div>
-                        <div>
-                            <span className="text-xs text-gray-400 uppercase font-bold">English</span>
-                            <p className="font-bold text-gray-900 leading-tight">I ask for a free lawyer. I remain silent.</p>
-                        </div>
+                    
+                    <div className="inline-block bg-black text-white px-4 py-2 text-sm font-bold rounded uppercase transform -rotate-2">
+                        Cliquez pour afficher le bouclier juridique plein écran
                     </div>
                 </div>
-                <div className="bg-gray-900 text-white p-3 text-center text-xs font-mono">
-                    Article 47bis du Code d'instruction criminelle belge
+                
+                <div className="bg-gray-900 text-white p-3 text-center text-xs font-mono flex justify-between px-6">
+                    <span>Ceci est une protection légale.</span>
+                    <span className="flex items-center"><Camera className="h-3 w-3 mr-1"/> Screenshot conseillé</span>
                 </div>
             </div>
         </div>
@@ -69,77 +103,109 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
         <div className="grid md:grid-cols-2 gap-8 mb-12">
             
             {/* 9bis vs 9ter - CLARIFICATION */}
-            <div className="bg-white rounded-xl shadow-md border-l-8 border-blue-600 overflow-hidden group hover:shadow-lg transition-all">
+            <div className="bg-white rounded-xl shadow-md border-l-8 border-blue-600 overflow-hidden hover:shadow-lg transition-all">
                 <div className="p-6">
                     <div className="flex items-center mb-6">
                         <Scale className="h-8 w-8 text-blue-600 mr-3" />
-                        <h3 className="text-2xl font-black text-gray-900">La Régularisation</h3>
+                        <h3 className="text-2xl font-black text-gray-900">La Stratégie Papiers</h3>
                     </div>
                     
                     <div className="space-y-6">
                         <p className="text-gray-700 font-medium">
-                            Ne confondez pas les procédures. Chaque dossier est unique.
+                            Attention aux pièges. Ne confondez jamais ces deux procédures.
                         </p>
                         
                         <div className="space-y-4">
-                            <div className="border-l-4 border-blue-200 pl-4">
-                                <h4 className="font-bold text-blue-900 text-lg">9bis (Humanitaire)</h4>
-                                <p className="text-sm text-gray-600">
-                                    Pour des circonstances exceptionnelles (long séjour, attaches sociales, scolarité des enfants).
-                                    <br/><span className="font-bold text-red-600">Attention :</span> Il faut une carte d'identité nationale valide.
+                            <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                                <h4 className="font-bold text-blue-900 text-lg uppercase flex items-center justify-between">
+                                    9bis <span className="text-xs bg-white px-2 py-1 rounded text-blue-600">Humanitaire</span>
+                                </h4>
+                                <p className="text-sm text-gray-800 mt-1">
+                                    C'est la preuve de votre intégration (travail, longue présence).
+                                    <br/><span className="font-bold text-red-600">Impératif :</span> Il faut présenter une carte d'identité ou un passeport valide. Sans ça, c'est le rejet.
                                 </p>
                             </div>
-                            <div className="border-l-4 border-blue-200 pl-4">
-                                <h4 className="font-bold text-blue-900 text-lg">9ter (Médical)</h4>
-                                <p className="text-sm text-gray-600">
-                                    Si vous êtes trop malade pour être soigné en Guinée. Le seuil de gravité exigé est très élevé.
+                            <div className="bg-indigo-50 p-4 rounded-lg border-l-4 border-indigo-500">
+                                <h4 className="font-bold text-indigo-900 text-lg uppercase flex items-center justify-between">
+                                    9ter <span className="text-xs bg-white px-2 py-1 rounded text-indigo-600">Médical</span>
+                                </h4>
+                                <p className="text-sm text-gray-800 mt-1">
+                                    Uniquement si vous êtes <strong>trop malade</strong> pour être soigné en Guinée (risque vital).
+                                    <br/>Le filtre médical est extrêmement sévère. Ne jouez pas avec ça sans avocat.
                                 </p>
                             </div>
-                        </div>
-                        
-                        <div className="bg-blue-50 p-3 rounded text-xs text-blue-800 font-bold flex items-center">
-                            <AlertTriangle className="h-4 w-4 mr-2 flex-shrink-0" />
-                            N'introduisez jamais une demande sans l'avis d'un avocat spécialisé ou d'une association (ADDE, CIRE).
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* L'ÉCOLE - SANCTUAIRE */}
-            <div className="bg-white rounded-xl shadow-md border-l-8 border-[#FCD116] overflow-hidden group hover:shadow-lg transition-all">
+            {/* L'ÉCOLE - SANCTUAIRE (NOUVEAU) */}
+            <div className="bg-white rounded-xl shadow-md border-l-8 border-[#FCD116] overflow-hidden hover:shadow-lg transition-all">
                 <div className="p-6">
                     <div className="flex items-center mb-6">
-                        <BookOpen className="h-8 w-8 text-yellow-500 mr-3" />
-                        <h3 className="text-2xl font-black text-gray-900">L'École est un Droit</h3>
+                        <GraduationCap className="h-8 w-8 text-yellow-600 mr-3" />
+                        <h3 className="text-2xl font-black text-gray-900">L'École : Zone Sanctuaire</h3>
                     </div>
                     
                     <div className="space-y-4">
-                        <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-100">
-                            <p className="font-bold text-gray-900 mb-2">Aucun papier n'est requis pour inscrire un enfant.</p>
-                            <p className="text-sm text-gray-700">
-                                L'école est obligatoire et gratuite pour tous les mineurs, <strong>même sans papiers</strong>.
+                        <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                            <p className="font-bold text-gray-900 text-lg mb-2">Pas de papiers ? Pas de problème.</p>
+                            <p className="text-sm text-gray-800">
+                                L'inscription à l'école est un <strong>droit fondamental</strong> et une obligation. Les directeurs d'école n'ont pas le droit de refuser un enfant parce qu'il n'a pas de papiers.
                             </p>
                         </div>
 
-                        <ul className="text-sm space-y-3 text-gray-600">
+                        <ul className="space-y-3 text-gray-700 font-medium">
                             <li className="flex items-start">
-                                <CheckShieldIcon className="h-4 w-4 text-green-500 mr-2 mt-1 flex-shrink-0" />
-                                <span>L'école ne dénonce JAMAIS les parents. C'est un sanctuaire.</span>
+                                <EyeOff className="h-5 w-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
+                                <span>L'école ne dénonce JAMAIS les familles à la police. C'est interdit.</span>
                             </li>
                             <li className="flex items-start">
-                                <CheckShieldIcon className="h-4 w-4 text-green-500 mr-2 mt-1 flex-shrink-0" />
-                                <span>La scolarité d'un enfant est une preuve d'intégration majeure pour une future régularisation (9bis).</span>
+                                <Shield className="h-5 w-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
+                                <span>La police n'entre pas dans les écoles pour chercher des enfants.</span>
+                            </li>
+                            <li className="flex items-start">
+                                <div className="h-5 w-5 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-xs mr-2 mt-0.5 flex-shrink-0">!</div>
+                                <span className="text-sm">Mettre votre enfant à l'école est la meilleure preuve de votre volonté d'intégration pour le dossier 9bis.</span>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div className="bg-[#FCD116] px-6 py-3 text-black font-bold text-sm flex justify-between items-center">
-                    <span>Protégez l'avenir de vos enfants.</span>
+            </div>
+
+            {/* LOGEMENT & DOMICILE - INVIOLABLE */}
+            <div className="bg-white rounded-xl shadow-md border-l-8 border-slate-800 overflow-hidden hover:shadow-lg transition-all">
+                <div className="p-6">
+                    <div className="flex items-center mb-6">
+                        <Home className="h-8 w-8 text-slate-800 mr-3" />
+                        <div className="flex flex-col">
+                            <h3 className="text-2xl font-black text-gray-900">Domicile = Forteresse</h3>
+                            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Inviolabilité du logement</span>
+                        </div>
+                    </div>
+                    
+                    <div className="space-y-4">
+                        <div className="p-5 bg-slate-100 rounded-lg border-2 border-slate-200 relative overflow-hidden">
+                            <Lock className="absolute top-2 right-2 h-12 w-12 text-slate-200" />
+                            <p className="font-black text-slate-900 text-xl mb-2">"AVEZ-VOUS UN MANDAT ?"</p>
+                            <p className="text-slate-700 font-medium">
+                                La police ne peut <span className="underline decoration-red-500 decoration-2">jamais</span> entrer chez vous sans l'autorisation d'un <strong>Juge d'Instruction</strong>.
+                            </p>
+                            <p className="text-sm text-slate-600 mt-2">
+                                Un ordre de l'Office des Étrangers (O.Q.T.) ne suffit pas pour forcer votre porte.
+                            </p>
+                        </div>
+                        
+                        <div className="bg-red-50 p-3 rounded text-red-800 text-sm font-bold flex items-start">
+                            <AlertTriangle className="h-5 w-5 mr-2 flex-shrink-0" />
+                            Si on frappe : Ne parlez pas. N'ouvrez pas. Demandez à voir le mandat par la fenêtre ou sous la porte.
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            {/* SANTÉ & AMU - LE PIÈGE À ÉVITER */}
-            <div className="bg-white rounded-xl shadow-md border-l-8 border-[#009460] overflow-hidden">
+             {/* SANTÉ (AMU) */}
+             <div className="bg-white rounded-xl shadow-md border-l-8 border-[#009460] overflow-hidden hover:shadow-lg transition-all">
                 <div className="p-6">
                     <div className="flex items-center mb-6">
                         <HeartPulse className="h-8 w-8 text-[#009460] mr-3" />
@@ -147,75 +213,45 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                     </div>
                     
                     <div className="space-y-4">
-                        <p className="text-sm text-gray-600">
-                            L'Aide Médicale Urgente (AMU) est un droit, pas une faveur. Elle couvre les soins préventifs et curatifs (pas juste "l'urgence" vitale).
+                        <p className="text-sm text-gray-600 font-medium">
+                            Tomber malade n'est pas un crime. L'Aide Médicale Urgente est un droit humain inaliénable.
                         </p>
                         
                         <div className="bg-green-50 p-4 rounded-lg border border-green-100">
-                            <h4 className="font-bold text-green-800 mb-1">La procédure exacte :</h4>
-                            <ol className="list-decimal list-inside text-sm text-green-800 space-y-1">
-                                <li>Allez au CPAS de la commune où vous habitez (fictivement).</li>
+                            <h4 className="font-bold text-green-900 mb-2">La procédure CPAS :</h4>
+                            <ol className="list-decimal list-inside text-sm text-green-800 space-y-2">
+                                <li>Allez au CPAS de votre commune de résidence.</li>
                                 <li>Demandez une enquête sociale pour l'AMU.</li>
-                                <li>Le CPAS <strong>vérifie que vous êtes indigent</strong> (sans ressources) et en séjour illégal.</li>
+                                <li>Le CPAS vérifie l'indigence (manque d'argent) et le séjour illégal.</li>
+                                <li><span className="font-bold">Le CPAS ne vous dénonce pas.</span></li>
                             </ol>
                         </div>
-                        
-                        <p className="text-xs text-red-500 font-bold italic mt-2">
-                            * Le médecin est tenu au secret professionnel absolu. Il ne parle pas à la police.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            {/* LOGEMENT & DOMICILE */}
-            <div className="bg-white rounded-xl shadow-md border-l-8 border-slate-800 overflow-hidden">
-                <div className="p-6">
-                    <div className="flex items-center mb-6">
-                        <Home className="h-8 w-8 text-slate-800 mr-3" />
-                        <h3 className="text-2xl font-black text-gray-900">Votre Domicile</h3>
-                    </div>
-                    
-                    <div className="space-y-4">
-                        <div className="p-4 bg-slate-100 rounded-lg border border-slate-200">
-                            <p className="font-bold text-slate-900 text-lg mb-2">"Avez-vous un mandat ?"</p>
-                            <p className="text-sm text-slate-700">
-                                La police ne peut pas entrer chez vous (même en séjour illégal) sans un mandat signé par un <strong>Juge d'Instruction</strong>. Un ordre de l'Office des Étrangers ne suffit pas pour forcer la porte.
-                            </p>
-                        </div>
-                        
-                        <p className="text-sm text-gray-600 mt-2">
-                            Si la police frappe : ne parlez pas, n'ouvrez pas, demandez le mandat à travers la porte.
-                        </p>
                     </div>
                 </div>
             </div>
         </div>
 
         {/* ALLIÉS & EXPERTS */}
-        <div className="bg-slate-800 rounded-xl p-8 text-slate-200">
-            <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-white mb-2">Les Alliés Stratégiques</h3>
-                <p className="text-slate-400">Ne faites jamais confiance aux rumeurs. Faites confiance aux experts.</p>
+        <div className="bg-slate-800 rounded-xl p-8 text-slate-200 relative overflow-hidden">
+             <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-full blur-2xl"></div>
+            <div className="text-center mb-8 relative z-10">
+                <h3 className="text-2xl font-bold text-white mb-2">Vos Alliés Stratégiques</h3>
+                <p className="text-slate-400">Ne faites jamais confiance à la rumeur ("le cousin m'a dit..."). Faites confiance aux juristes.</p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-4">
-                <a href="https://www.cire.be/" target="_blank" rel="noreferrer" className="bg-slate-700 p-5 rounded hover:bg-red-900 transition-colors border border-slate-600 hover:border-red-500 group">
-                    <h4 className="font-bold text-white text-lg group-hover:text-red-100">CIRÉ</h4>
-                    <p className="text-xs mt-2 text-slate-300">Coordination et Initiatives pour Réfugiés et Étrangers. La référence politique et juridique.</p>
+            <div className="grid md:grid-cols-3 gap-4 relative z-10">
+                <a href="https://www.cire.be/" target="_blank" rel="noreferrer" className="bg-slate-700 p-5 rounded hover:bg-red-900 transition-colors border border-slate-600 hover:border-red-500 group text-center">
+                    <h4 className="font-bold text-white text-xl group-hover:text-red-100 mb-1">CIRÉ</h4>
+                    <p className="text-xs text-slate-400 group-hover:text-white">La coordination politique des étrangers.</p>
                 </a>
-                <a href="https://www.adde.be/" target="_blank" rel="noreferrer" className="bg-slate-700 p-5 rounded hover:bg-blue-900 transition-colors border border-slate-600 hover:border-blue-500 group">
-                    <h4 className="font-bold text-white text-lg group-hover:text-blue-100">ADDE</h4>
-                    <p className="text-xs mt-2 text-slate-300">Association pour le Droit des Étrangers. Fiches juridiques très précises.</p>
+                <a href="https://www.adde.be/" target="_blank" rel="noreferrer" className="bg-slate-700 p-5 rounded hover:bg-blue-900 transition-colors border border-slate-600 hover:border-blue-500 group text-center">
+                    <h4 className="font-bold text-white text-xl group-hover:text-blue-100 mb-1">ADDE</h4>
+                    <p className="text-xs text-slate-400 group-hover:text-white">L'arme du droit pur. Fiches juridiques.</p>
                 </a>
-                <a href="https://www.liguedh.be/" target="_blank" rel="noreferrer" className="bg-slate-700 p-5 rounded hover:bg-[#FCD116] hover:text-black transition-colors border border-slate-600 hover:border-white group">
-                    <h4 className="font-bold text-white text-lg group-hover:text-black">Ligue des Droits Humains</h4>
-                    <p className="text-xs mt-2 text-slate-300 group-hover:text-black">Surveillance des violences policières et des centres fermés.</p>
+                <a href="https://www.liguedh.be/" target="_blank" rel="noreferrer" className="bg-slate-700 p-5 rounded hover:bg-[#FCD116] hover:text-black transition-colors border border-slate-600 hover:border-white group text-center">
+                    <h4 className="font-bold text-white text-xl group-hover:text-black mb-1">LDH</h4>
+                    <p className="text-xs text-slate-400 group-hover:text-black">Contre les violences policières.</p>
                 </a>
-            </div>
-
-            <div className="mt-8 bg-white/5 border border-white/10 p-4 rounded text-center text-xs text-slate-400">
-                <Users className="h-4 w-4 inline mr-2" />
-                Rejoignez les comités de soutien aux Sans-Papiers (La Voix des Sans-Papiers, Comité des Femmes...). L'union fait la force politique.
             </div>
         </div>
 
@@ -223,12 +259,5 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
     </div>
   );
 };
-
-// Petite icone helper pour éviter la redondance
-const CheckShieldIcon = ({className}: {className: string}) => (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-);
 
 export default LegalAidSection;
