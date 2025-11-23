@@ -8,7 +8,6 @@ interface Translation {
   nav_events: string;
   nav_legal: string;
   nav_history: string;
-  nav_gallery: string;
   nav_forum: string;
   nav_share: string;
   hero_title: string;
@@ -28,6 +27,14 @@ interface Translation {
   flash_msg_body: string;
   flash_close: string;
   click_for_flash: string;
+  // Team Keys
+  team_title: string;
+  team_subtitle: string;
+  role_president: string;
+  role_secretary: string;
+  role_treasurer: string;
+  role_social: string;
+  contact_btn: string;
 }
 
 export const translations: Record<LanguageCode, Translation> = {
@@ -38,7 +45,6 @@ export const translations: Record<LanguageCode, Translation> = {
     nav_events: "Agenda",
     nav_legal: "Aide & Droits",
     nav_history: "Histoire",
-    nav_gallery: "Galerie",
     nav_forum: "Forum",
     nav_share: "Partager",
     hero_title: "Solidarité Guinée-Belgique",
@@ -56,7 +62,14 @@ export const translations: Record<LanguageCode, Translation> = {
     flash_msg_title: "MESSAGE À LA POLICE",
     flash_msg_body: "\"Je fais valoir mon droit au silence (Salduz). Je demande l'assistance immédiate d'un avocat Pro Deo avant toute audition.\"",
     flash_close: "Touchez l'écran pour fermer",
-    click_for_flash: "Cliquez pour afficher le bouclier juridique"
+    click_for_flash: "Cliquez pour afficher le bouclier juridique",
+    team_title: "Votre Bureau Exécutif",
+    team_subtitle: "Les administrateurs au service de la communauté, accessibles 7j/7.",
+    role_president: "Président",
+    role_secretary: "Secrétaire Général",
+    role_treasurer: "Trésorier",
+    role_social: "Responsable Social",
+    contact_btn: "Contacter"
   },
   en: {
     nav_home: "Home",
@@ -65,7 +78,6 @@ export const translations: Record<LanguageCode, Translation> = {
     nav_events: "Events",
     nav_legal: "Rights & Aid",
     nav_history: "History",
-    nav_gallery: "Gallery",
     nav_forum: "Forum",
     nav_share: "Share",
     hero_title: "Guinea-Belgium Solidarity",
@@ -83,7 +95,14 @@ export const translations: Record<LanguageCode, Translation> = {
     flash_msg_title: "MESSAGE TO POLICE",
     flash_msg_body: "\"I invoke my right to remain silent (Salduz). I request immediate assistance from a Pro Deo lawyer before any questioning.\"",
     flash_close: "Tap screen to close",
-    click_for_flash: "Click to show legal shield"
+    click_for_flash: "Click to show legal shield",
+    team_title: "Executive Board",
+    team_subtitle: "Administrators serving the community, accessible 24/7.",
+    role_president: "President",
+    role_secretary: "General Secretary",
+    role_treasurer: "Treasurer",
+    role_social: "Social Manager",
+    contact_btn: "Contact"
   },
   nl: {
     nav_home: "Home",
@@ -92,7 +111,6 @@ export const translations: Record<LanguageCode, Translation> = {
     nav_events: "Agenda",
     nav_legal: "Hulp & Rechten",
     nav_history: "Geschiedenis",
-    nav_gallery: "Galerij",
     nav_forum: "Forum",
     nav_share: "Delen",
     hero_title: "Solidariteit Guinee-België",
@@ -110,7 +128,14 @@ export const translations: Record<LanguageCode, Translation> = {
     flash_msg_title: "BERICHT AAN POLITIE",
     flash_msg_body: "\"Ik beroep mij op mijn zwijgrecht (Salduz). Ik vraag onmiddellijke bijstand van een Pro Deo advocaat vóór elk verhoor.\"",
     flash_close: "Tik op scherm om te sluiten",
-    click_for_flash: "Klik om juridisch schild te tonen"
+    click_for_flash: "Klik om juridisch schild te tonen",
+    team_title: "Bestuur",
+    team_subtitle: "Beheerders ten dienste van de gemeenschap.",
+    role_president: "Voorzitter",
+    role_secretary: "Secretaris-Generaal",
+    role_treasurer: "Penningmeester",
+    role_social: "Sociaal Verantwoordelijke",
+    contact_btn: "Contacteer"
   },
   es: {
     nav_home: "Inicio",
@@ -119,7 +144,6 @@ export const translations: Record<LanguageCode, Translation> = {
     nav_events: "Eventos",
     nav_legal: "Ayuda Legal",
     nav_history: "Historia",
-    nav_gallery: "Galería",
     nav_forum: "Foro",
     nav_share: "Compartir",
     hero_title: "Solidaridad Guinea-Bélgica",
@@ -137,7 +161,14 @@ export const translations: Record<LanguageCode, Translation> = {
     flash_msg_title: "MENSAJE A LA POLICÍA",
     flash_msg_body: "\"Invoco mi derecho a guardar silencio (Salduz). Solicito asistencia inmediata de un abogado Pro Deo antes de cualquier interrogatorio.\"",
     flash_close: "Toque la pantalla para cerrar",
-    click_for_flash: "Haga clic para mostrar escudo legal"
+    click_for_flash: "Haga clic para mostrar escudo legal",
+    team_title: "Junta Ejecutiva",
+    team_subtitle: "Administradores al servicio de la comunidad.",
+    role_president: "Presidente",
+    role_secretary: "Secretario General",
+    role_treasurer: "Tesorero",
+    role_social: "Responsable Social",
+    contact_btn: "Contactar"
   },
   ar: {
     nav_home: "الرئيسية",
@@ -146,7 +177,6 @@ export const translations: Record<LanguageCode, Translation> = {
     nav_events: "الفعاليات",
     nav_legal: "الحقوق والمساعدة",
     nav_history: "التاريخ",
-    nav_gallery: "المعرض",
     nav_forum: "المنتدى",
     nav_share: "مشاركة",
     hero_title: "تضامن غينيا-بلجيكا",
@@ -164,7 +194,14 @@ export const translations: Record<LanguageCode, Translation> = {
     flash_msg_title: "رسالة إلى الشرطة",
     flash_msg_body: "\"أتمسك بحقي في التزام الصمت (Salduz). أطلب المساعدة الفورية من محامٍ مجاني قبل أي استجواب.\"",
     flash_close: "اضغط على الشاشة للإغلاق",
-    click_for_flash: "اضغط لإظهار الدرع القانوني"
+    click_for_flash: "اضغط لإظهار الدرع القانوني",
+    team_title: "المكتب التنفيذي",
+    team_subtitle: "مسؤولون في خدمة المجتمع.",
+    role_president: "الرئيس",
+    role_secretary: "الأمين العام",
+    role_treasurer: "أمين الصندوق",
+    role_social: "المسؤول الاجتماعي",
+    contact_btn: "اتصال"
   },
   pe: { // Pular (Peul)
     nav_home: "Jaɓɓagol",
@@ -173,7 +210,6 @@ export const translations: Record<LanguageCode, Translation> = {
     nav_events: "Pottitte",
     nav_legal: "Ballal & Sariya",
     nav_history: "Tarikh",
-    nav_gallery: "Natal",
     nav_forum: "Kaldal",
     nav_share: "Lollin",
     hero_title: "Ballal Ɠineyankooɓe",
@@ -191,7 +227,14 @@ export const translations: Record<LanguageCode, Translation> = {
     flash_msg_title: "MESSAAS FI POLICI",
     flash_msg_body: "\"Mido jogi hakke dejjugol (Salduz). Mido ɲina ballal avocat Pro Deo gila ko mi lamda.\"",
     flash_close: "Memu ecran on fi maɓɓugol",
-    click_for_flash: "Memu ɗo fi yi'gol ballal"
+    click_for_flash: "Memu ɗo fi yi'gol ballal",
+    team_title: "Hooreeɓe Fedde",
+    team_subtitle: "Yimɓe daraniiɓe dental ngal.",
+    role_president: "Hooreejo",
+    role_secretary: "Sekreter",
+    role_treasurer: "Kajo",
+    role_social: "Ballal Yimɓe",
+    contact_btn: "Noddital"
   },
   ma: { // Malinké
     nav_home: "Dalajɛ",
@@ -200,7 +243,6 @@ export const translations: Record<LanguageCode, Translation> = {
     nav_events: "Ɲɛnajɛ",
     nav_legal: "Dɛmɛ & Sariya",
     nav_history: "Tariku",
-    nav_gallery: "Ja",
     nav_forum: "Baro",
     nav_share: "Jɛnsɛn",
     hero_title: "Ginɛkaw Dɛmɛ",
@@ -218,7 +260,14 @@ export const translations: Record<LanguageCode, Translation> = {
     flash_msg_title: "LASIGIGIRAN POLISI MA",
     flash_msg_body: "\"N ka droit bɛ n bolo ka n da tugu (Salduz). N bɛ avocat Pro Deo dɛmɛ ɲini sani n ka ɲininka.\"",
     flash_close: "Ecran ma kɔnɔ ka da tugu",
-    click_for_flash: "Digi yan ka kɔlɔsi sariya"
+    click_for_flash: "Digi yan ka kɔlɔsi sariya",
+    team_title: "Kunnafoni Tigiw",
+    team_subtitle: "Mɔgɔw minnu bɛ baara kɛ jamana ye.",
+    role_president: "Kuntigi",
+    role_secretary: "Sɛbɛnnikɛla",
+    role_treasurer: "Waritigi",
+    role_social: "Mɔgɔ Dɛmɛ",
+    contact_btn: "Weleli"
   },
   su: { // Soussou
     nav_home: "Xina",
@@ -227,7 +276,6 @@ export const translations: Record<LanguageCode, Translation> = {
     nav_events: "Lougoudjou",
     nav_legal: "Mali & Sariya",
     nav_history: "Tarix",
-    nav_gallery: "Photo",
     nav_forum: "Wongni",
     nav_share: "Xayini",
     hero_title: "Mali Guinékaw Bè",
@@ -245,6 +293,13 @@ export const translations: Record<LanguageCode, Translation> = {
     flash_msg_title: "XIBARU POLISI BÈ",
     flash_msg_body: "\"N yangeré na a ra n xa doundou (Salduz). N wama avocat Pro Deo xon benun wo xa n maxorin.\"",
     flash_close: "Ecran ma kɔnɔ ka da tugu",
-    click_for_flash: "Digi be ka kɔlɔsi sariya"
+    click_for_flash: "Digi be ka kɔlɔsi sariya",
+    team_title: "Mangèya",
+    team_subtitle: "Muxu naxan walima ɲama bè.",
+    role_president: "Mangè",
+    role_secretary: "Sèbèlikè",
+    role_treasurer: "Kobanétigi",
+    role_social: "Mali Tigi",
+    contact_btn: "Maxori"
   }
 };

@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Menu, X, User, HeartHandshake, Globe, Share2 } from 'lucide-react';
+import { Menu, X, HeartHandshake, Globe, Share2 } from 'lucide-react';
 import { ViewState, LanguageCode } from '../types';
 import { translations } from '../utils/translations';
 
@@ -23,7 +23,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
     { label: t.nav_events, value: ViewState.EVENTS },
     { label: t.nav_legal, value: ViewState.LEGAL_AID },
     { label: t.nav_history, value: ViewState.HISTORY },
-    { label: t.nav_gallery, value: ViewState.GALLERY },
     { label: t.nav_forum, value: ViewState.FORUM },
   ];
 

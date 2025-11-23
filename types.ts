@@ -26,16 +26,6 @@ export interface ForumPost {
   timeAgo: string;
 }
 
-export interface GalleryItem {
-  id: string;
-  title: string;
-  location: string;
-  description: string;
-  imageUrl: string;
-  tags: string[];
-  category?: string;
-}
-
 export interface DirectoryItem {
   id: string;
   name: string;
@@ -56,6 +46,5 @@ export enum ViewState {
   DIRECTORY = 'DIRECTORY',
   LEGAL_AID = 'LEGAL_AID',
   HISTORY = 'HISTORY',
-  GALLERY = 'GALLERY',
   SHARE = 'SHARE',
 }

@@ -6,10 +6,10 @@ import NewsSection from './components/NewsSection';
 import EventsSection from './components/EventsSection';
 import ForumSection from './components/ForumSection';
 import LegalAidSection from './components/LegalAidSection';
-import GallerySection from './components/GallerySection';
 import HistorySection from './components/HistorySection';
 import DirectorySection from './components/DirectorySection';
 import ShareSection from './components/ShareSection';
+import TeamSection from './components/TeamSection';
 import { ViewState, LanguageCode } from './types';
 import { ShieldAlert, Calendar, MessageCircle, HeartHandshake, Share2 } from 'lucide-react';
 import { translations } from './utils/translations';
@@ -54,7 +54,7 @@ const App: React.FC = () => {
             />
             
             {/* Section Services de l'ASBL */}
-            <div className="bg-slate-50 py-16">
+            <div className="bg-white/90 backdrop-blur-sm py-16 border-b border-gray-100">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl font-extrabold text-gray-900">Les Pôles d'Action de BALLAL</h2>
@@ -108,7 +108,14 @@ const App: React.FC = () => {
                 </div>
             </div>
             
-            <NewsSection />
+            {/* SECTION BUREAU EXÉCUTIF */}
+            <div className="bg-slate-50/90 backdrop-blur-md">
+               <TeamSection language={language} />
+            </div>
+
+            <div className="bg-white/95 backdrop-blur-md">
+               <NewsSection />
+            </div>
           </>
         );
       case ViewState.NEWS:
@@ -119,8 +126,6 @@ const App: React.FC = () => {
         return <ForumSection />;
       case ViewState.LEGAL_AID:
         return <LegalAidSection language={language} />;
-      case ViewState.GALLERY:
-        return <GallerySection />;
       case ViewState.HISTORY:
         return <HistorySection />;
       case ViewState.DIRECTORY:
@@ -133,62 +138,76 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans" dir={language === 'ar' ? 'rtl' : 'ltr'}>
-      <Navbar currentView={currentView} setView={setCurrentView} language={language} setLanguage={setLanguage} />
+    <div className="min-h-screen flex flex-col font-sans relative" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       
-      <main className="flex-grow">
-        {renderContent()}
-      </main>
+      {/* FOND D'ÉCRAN GLOBAL - PHOTO DES MEMBRES */}
+      <div className="fixed inset-0 z-0">
+         <img 
+            src="https://www.googleapis.com/download/storage/v1/b/high-flyer-414819.appspot.com/o/2025-03-01%2F4533036e-3949-43c3-88aa-3814674f2603%2F481075677_122143009766258410_5134371917719602052_n.jpg?generation=1740848035133379&alt=media" 
+            className="w-full h-full object-cover opacity-15 blur-[2px]" 
+            alt="Membres BALLAL ASBL" 
+         />
+         <div className="absolute inset-0 bg-gradient-to-b from-slate-50/80 via-slate-50/70 to-slate-50/90"></div>
+      </div>
 
-      <footer className="bg-slate-900 text-slate-300 border-t-4 border-transparent relative">
-        <div className="absolute top-0 left-0 w-full h-1 guinea-gradient-bg"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-            <div className="col-span-1 md:col-span-1">
-              <div className="flex items-center mb-4 text-white">
-                  <HeartHandshake className="h-8 w-8 text-[#CE1126] mr-2" />
-                  <span className="text-xl font-black tracking-tight">BALLAL ASBL</span>
+      {/* CONTENU PRINCIPAL (Z-Index pour passer au-dessus du fond) */}
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <Navbar currentView={currentView} setView={setCurrentView} language={language} setLanguage={setLanguage} />
+        
+        <main className="flex-grow">
+          {renderContent()}
+        </main>
+
+        <footer className="bg-slate-900 text-slate-300 border-t-4 border-transparent relative">
+          <div className="absolute top-0 left-0 w-full h-1 guinea-gradient-bg"></div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+              <div className="col-span-1 md:col-span-1">
+                <div className="flex items-center mb-4 text-white">
+                    <HeartHandshake className="h-8 w-8 text-[#CE1126] mr-2" />
+                    <span className="text-xl font-black tracking-tight">BALLAL ASBL</span>
+                </div>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  Association Sans But Lucratif dédiée à l'entraide, à l'intégration et au rayonnement de la communauté guinéenne en Belgique.
+                </p>
               </div>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                Association Sans But Lucratif dédiée à l'entraide, à l'intégration et au rayonnement de la communauté guinéenne en Belgique.
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-6">L'Association</h4>
-              <ul className="space-y-3 text-sm">
-                <li><button onClick={() => setCurrentView(ViewState.HOME)} className="hover:text-white transition-colors">{t.nav_home}</button></li>
-                <li><button onClick={() => setCurrentView(ViewState.HISTORY)} className="hover:text-white transition-colors">{t.nav_history}</button></li>
-                <li><button onClick={() => setCurrentView(ViewState.LEGAL_AID)} className="hover:text-[#CE1126] text-white font-medium transition-colors">{t.nav_legal}</button></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-6">Communauté</h4>
-              <ul className="space-y-3 text-sm">
-                <li><button onClick={() => setCurrentView(ViewState.DIRECTORY)} className="hover:text-white transition-colors">{t.nav_directory}</button></li>
-                <li><button onClick={() => setCurrentView(ViewState.NEWS)} className="hover:text-white transition-colors">{t.nav_news}</button></li>
-                <li><button onClick={() => setCurrentView(ViewState.EVENTS)} className="hover:text-white transition-colors">{t.nav_events}</button></li>
-                <li><button onClick={() => setCurrentView(ViewState.FORUM)} className="hover:text-white transition-colors">{t.nav_forum}</button></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-6">Contact</h4>
-              <p className="text-white font-bold text-sm mb-2">contact@ballal-asbl.be</p>
               
-              <div className="flex space-x-4 mt-4">
-                 <div className="w-8 h-8 bg-slate-800 rounded flex items-center justify-center hover:bg-blue-600 cursor-pointer transition-colors text-white font-bold text-xs">FB</div>
-                 <div className="w-8 h-8 bg-slate-800 rounded flex items-center justify-center hover:bg-pink-600 cursor-pointer transition-colors text-white font-bold text-xs">IG</div>
-                 <button onClick={() => setCurrentView(ViewState.SHARE)} className="w-8 h-8 bg-slate-800 rounded flex items-center justify-center hover:bg-green-600 cursor-pointer transition-colors text-white font-bold text-xs"><Share2 className="h-4 w-4"/></button>
+              <div>
+                <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-6">L'Association</h4>
+                <ul className="space-y-3 text-sm">
+                  <li><button onClick={() => setCurrentView(ViewState.HOME)} className="hover:text-white transition-colors">{t.nav_home}</button></li>
+                  <li><button onClick={() => setCurrentView(ViewState.HISTORY)} className="hover:text-white transition-colors">{t.nav_history}</button></li>
+                  <li><button onClick={() => setCurrentView(ViewState.LEGAL_AID)} className="hover:text-[#CE1126] text-white font-medium transition-colors">{t.nav_legal}</button></li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-6">Communauté</h4>
+                <ul className="space-y-3 text-sm">
+                  <li><button onClick={() => setCurrentView(ViewState.DIRECTORY)} className="hover:text-white transition-colors">{t.nav_directory}</button></li>
+                  <li><button onClick={() => setCurrentView(ViewState.NEWS)} className="hover:text-white transition-colors">{t.nav_news}</button></li>
+                  <li><button onClick={() => setCurrentView(ViewState.EVENTS)} className="hover:text-white transition-colors">{t.nav_events}</button></li>
+                  <li><button onClick={() => setCurrentView(ViewState.FORUM)} className="hover:text-white transition-colors">{t.nav_forum}</button></li>
+                </ul>
+              </div>
+              
+              <div>
+                <h4 className="text-white font-bold text-sm uppercase tracking-wider mb-6">Contact</h4>
+                <p className="text-white font-bold text-sm mb-2">contact@ballal-asbl.be</p>
+                
+                <div className="flex space-x-4 mt-4">
+                  <div className="w-8 h-8 bg-slate-800 rounded flex items-center justify-center hover:bg-blue-600 cursor-pointer transition-colors text-white font-bold text-xs">FB</div>
+                  <div className="w-8 h-8 bg-slate-800 rounded flex items-center justify-center hover:bg-pink-600 cursor-pointer transition-colors text-white font-bold text-xs">IG</div>
+                  <button onClick={() => setCurrentView(ViewState.SHARE)} className="w-8 h-8 bg-slate-800 rounded flex items-center justify-center hover:bg-green-600 cursor-pointer transition-colors text-white font-bold text-xs"><Share2 className="h-4 w-4"/></button>
+                </div>
               </div>
             </div>
+            <div className="mt-16 border-t border-slate-800 pt-8 text-center text-slate-600 text-xs flex justify-between items-center flex-col md:flex-row">
+              <span>&copy; 2024 BALLAL ASBL.</span>
+            </div>
           </div>
-          <div className="mt-16 border-t border-slate-800 pt-8 text-center text-slate-600 text-xs flex justify-between items-center flex-col md:flex-row">
-            <span>&copy; 2024 BALLAL ASBL.</span>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 
 import { GoogleGenAI } from "@google/genai";
-import { NewsItem, CommunityEvent, GalleryItem } from '../types';
+import { NewsItem, CommunityEvent } from '../types';
 
 const apiKey = process.env.API_KEY || '';
 const ai = new GoogleGenAI({ apiKey });
@@ -159,109 +159,6 @@ export const fetchCommunityEvents = async (): Promise<CommunityEvent[]> => {
   });
 };
 
-// --- STATIC GALLERY DATA (REMPLACEMENT IA) ---
-const STATIC_GALLERY_DB: GalleryItem[] = [
-  {
-    id: '1',
-    title: 'Architecture de Dalaba',
-    location: 'Fouta Djallon',
-    description: 'Cette maison aux balcons ouvragés et aux murs bleus rappelle l\'architecture coloniale du Fouta Djallon, notamment à Dalaba, ville climatique prisée.',
-    tags: ['Ville', 'Fouta Djallon'],
-    category: 'urban',
-    imageUrl: 'https://images.unsplash.com/photo-1577083288073-40892c0860a4?q=80&w=800'
-  },
-  {
-    id: '2',
-    title: 'Le Tressage au Village',
-    location: 'Basse-Guinée',
-    description: 'Moment de partage et de convivialité entre femmes. La coiffure traditionnelle est un art qui se transmet de mère en fille au cœur du village.',
-    tags: ['Société', 'Basse-Guinée'],
-    category: 'culture',
-    imageUrl: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=800'
-  },
-  {
-    id: '3',
-    title: 'Football au Crépuscule',
-    location: 'Conakry',
-    description: 'Sur la plage de Bénarès ou de Rogbane, les enfants profitent de la marée basse et du coucher de soleil pour taper dans le ballon. Le rêve de devenir le prochain grand joueur.',
-    tags: ['Sport', 'Conakry'],
-    category: 'urban',
-    imageUrl: 'https://images.unsplash.com/photo-1500468776905-559d2737604b?q=80&w=800'
-  },
-  {
-    id: '4',
-    title: 'Pirogue sur le Fleuve',
-    location: 'Basse-Guinée',
-    description: 'Le calme du soir sur le littoral. Cette pirogue traditionnelle symbolise l\'importance de la pêche artisanale pour les communautés côtières.',
-    tags: ['Mer', 'Basse-Guinée'],
-    category: 'water',
-    imageUrl: 'https://images.unsplash.com/photo-1544078751-58fee2d8a03b?q=80&w=800'
-  },
-  {
-    id: '5',
-    title: 'Abondance du Marché',
-    location: 'Conakry',
-    description: 'Étalages colorés de piments, céréales et épices. Le marché est le cœur battant de l\'économie locale, où l\'on trouve tous les produits du terroir.',
-    tags: ['Ville', 'Conakry'],
-    category: 'urban',
-    imageUrl: 'https://images.unsplash.com/photo-1516646255117-f9f933680173?q=80&w=800'
-  },
-  {
-    id: '6',
-    title: 'Le Griot et sa Kora',
-    location: 'Haute-Guinée',
-    description: 'Sous l\'arbre à palabres, le maître de la parole joue de la Kora. Il raconte l\'épopée de Soundiata Keïta aux enfants, perpétuant l\'histoire orale.',
-    tags: ['Culture', 'Haute-Guinée'],
-    category: 'culture',
-    imageUrl: 'https://images.unsplash.com/photo-1514525253440-b393452e2729?q=80&w=800'
-  },
-  {
-    id: '7',
-    title: 'Retour du Champ',
-    location: 'Guinée Forestière',
-    description: 'L\'élégance et la force. Ces femmes rapportent la récolte de fruits dans des paniers tressés, marchant en file indienne sur les pistes de terre rouge.',
-    tags: ['Nature', 'Forêt'],
-    category: 'nature',
-    imageUrl: 'https://images.unsplash.com/photo-1530932029582-73047240a5ee?q=80&w=800'
-  },
-  {
-    id: '8',
-    title: 'Rizières de la Guinée',
-    location: 'Guinée Forestière',
-    description: 'Paysage agraire typique. La riziculture est essentielle à l\'alimentation. Ici, les champs inondés reflètent le ciel, promettant une bonne moisson.',
-    tags: ['Nature', 'Forêt'],
-    category: 'nature',
-    imageUrl: 'https://images.unsplash.com/photo-1621360841013-c768371e93cf?q=80&w=800'
-  },
-  {
-    id: '9',
-    title: 'Transports Urbains',
-    location: 'Conakry',
-    description: 'L\'ambiance frénétique des gares routières. Les minibus chargés de bagages et de passagers relient la capitale à l\'intérieur du pays.',
-    tags: ['Ville', 'Conakry'],
-    category: 'urban',
-    imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=800'
-  },
-  {
-    id: '10',
-    title: 'Cascade en Forêt',
-    location: 'Fouta Djallon',
-    description: 'La Guinée, château d\'eau de l\'Afrique de l\'Ouest. Cette chute d\'eau, nichée dans une végétation luxuriante, offre fraîcheur et beauté pure.',
-    tags: ['Nature', 'Fouta Djallon'],
-    category: 'nature',
-    imageUrl: 'https://images.unsplash.com/photo-1433086966358-54859d0ed716?q=80&w=800'
-  },
-  {
-    id: '11',
-    title: 'Célébration Nationale',
-    location: 'Conakry',
-    description: 'La ferveur populaire. La foule brandit les drapeaux Rouge-Jaune-Vert, célébrant l\'unité et la fierté d\'appartenir à la nation guinéenne.',
-    tags: ['Société', 'Conakry'],
-    category: 'culture',
-    imageUrl: 'https://images.unsplash.com/photo-1532446756857-418247db6a4f?q=80&w=800'
-  }
-];
-
 // --- HERO IMAGE HELPERS ---
 
 const DEFAULT_HERO_URL = "https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=1600&auto=format&fit=crop";
@@ -354,25 +251,6 @@ export const fetchHeroImage = async (): Promise<{ imageUrl: string; label: strin
       if (isQuotaError(e)) markQuotaExceeded();
       return FALLBACK_HERO;
     }
-  });
-};
-
-export const fetchGalleryMemories = async (filter: string): Promise<GalleryItem[]> => {
-  // Return static DB immediately. No more AI dependency for gallery.
-  return new Promise((resolve) => {
-    setTimeout(() => {
-        if (filter === 'Tout' || filter === 'Paysages et Vie en Guinée') {
-            resolve(STATIC_GALLERY_DB);
-        } else {
-            const lowerFilter = filter.toLowerCase();
-            const filtered = STATIC_GALLERY_DB.filter(item => 
-                item.location.toLowerCase().includes(lowerFilter) || 
-                item.description.toLowerCase().includes(lowerFilter) ||
-                item.tags.some(t => t.toLowerCase().includes(lowerFilter))
-            );
-            resolve(filtered.length > 0 ? filtered : STATIC_GALLERY_DB);
-        }
-    }, 100);
   });
 };
 

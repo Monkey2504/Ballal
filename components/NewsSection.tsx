@@ -2,31 +2,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { fetchLatestNews } from '../services/geminiService';
 import { NewsItem } from '../types';
-import { RefreshCcw, MapPin, ExternalLink, Radio, Volume2, Play, ArrowRight } from 'lucide-react';
-
-const RADIO_STATIONS = [
-  {
-    id: 'espace',
-    name: 'Radio Espace',
-    frequency: '99.7 FM',
-    webUrl: 'https://zeno.fm/radio/radio-espace-guinee',
-    color: 'from-red-600 to-red-800'
-  },
-  {
-    id: 'fim',
-    name: 'FIM FM',
-    frequency: '95.3 FM',
-    webUrl: 'https://zeno.fm/radio/fim-fm',
-    color: 'from-green-600 to-green-800'
-  },
-  {
-    id: 'djoma',
-    name: 'Djoma FM',
-    frequency: '93.1 FM',
-    webUrl: 'https://zeno.fm/radio/djoma-fm',
-    color: 'from-yellow-500 to-yellow-600'
-  }
-];
+import { RefreshCcw, MapPin, ExternalLink, ArrowRight } from 'lucide-react';
 
 const NewsSection: React.FC = () => {
   const [news, setNews] = useState<NewsItem[]>([]);
@@ -68,53 +44,11 @@ const NewsSection: React.FC = () => {
                     <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
                 </span>
             </h2>
-            <p className="text-gray-500 text-sm mt-1">Actualités vérifiées et radios en direct</p>
+            <p className="text-gray-500 text-sm mt-1">Actualités vérifiées en provenance de Conakry</p>
         </div>
         <button onClick={loadNews} className="p-2 rounded-full hover:bg-gray-100 transition-colors">
             <RefreshCcw className={`h-5 w-5 text-gray-600 ${loading ? 'animate-spin' : ''}`} />
         </button>
-      </div>
-
-      {/* RADIO LINKS (Simple & Reliable) */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
-        {RADIO_STATIONS.map((station) => {
-            return (
-                <a 
-                  key={station.id} 
-                  href={station.webUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className={`relative overflow-hidden rounded-xl shadow-lg bg-gradient-to-br ${station.color} text-white transition-transform hover:-translate-y-1 group block`}
-                >
-                    <div className="p-5 relative z-10">
-                        <div className="flex justify-between items-start">
-                            <div>
-                                <p className="text-xs font-bold opacity-80 uppercase tracking-wider">{station.frequency}</p>
-                                <h3 className="text-xl font-black mt-1">{station.name}</h3>
-                            </div>
-                            <div className="bg-white/20 p-2 rounded-full group-hover:scale-110 transition-transform">
-                                <Radio className="h-5 w-5 text-white" />
-                            </div>
-                        </div>
-
-                        <div className="mt-6 flex items-center justify-between">
-                            <div className="flex items-center space-x-2">
-                                <span className="text-xs font-medium flex items-center">
-                                    <ExternalLink className="h-3 w-3 mr-1" />
-                                    Écouter sur Zeno.fm
-                                </span>
-                            </div>
-
-                            <div className="h-10 w-10 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-red-600 transition-colors">
-                                <Play className="h-5 w-5 fill-current ml-1" />
-                            </div>
-                        </div>
-                    </div>
-                    {/* Background deco */}
-                    <Volume2 className="absolute -bottom-4 -right-4 h-32 w-32 text-white opacity-10 rotate-12 group-hover:scale-110 transition-transform duration-500" />
-                </a>
-            );
-        })}
       </div>
       
       {/* NEWS GRID */}
