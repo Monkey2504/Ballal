@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { fetchGalleryMemories } from '../services/geminiService';
 import { GalleryItem } from '../types';
@@ -101,6 +102,8 @@ const GallerySection: React.FC = () => {
                         src={item.imageUrl} 
                         alt={item.title}
                         onError={handleImageError}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     

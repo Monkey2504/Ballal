@@ -46,16 +46,16 @@ export interface DirectoryItem {
   isVerified: boolean;
 }
 
-export type LanguageCode = 'fr' | 'pe' | 'ma' | 'su'; // Français, Peul (Pular), Malinké, Soussou
+export type LanguageCode = 'fr' | 'en' | 'nl' | 'pe' | 'ma' | 'su'; // Français, English, Nederlands, Peul (Pular), Malinké, Soussou
 
 export enum ViewState {
   HOME = 'HOME',
   NEWS = 'NEWS',
   EVENTS = 'EVENTS',
   FORUM = 'FORUM',
-  LEGAL_AID = 'LEGAL_AID',
-  GALLERY = 'GALLERY',
-  HISTORY = 'HISTORY',
   DIRECTORY = 'DIRECTORY',
-  SHARE = 'SHARE'
+  LEGAL_AID = 'LEGAL_AID',
+  HISTORY = 'HISTORY',
+  GALLERY = 'GALLERY',
+  SHARE = 'SHARE',
 }

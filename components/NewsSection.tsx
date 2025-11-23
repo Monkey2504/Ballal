@@ -1,7 +1,8 @@
+
 import React, { useEffect, useState, useCallback } from 'react';
 import { fetchLatestNews } from '../services/geminiService';
 import { NewsItem } from '../types';
-import { RefreshCcw, MapPin, ExternalLink, Radio, Volume2, Play } from 'lucide-react';
+import { RefreshCcw, MapPin, ExternalLink, Radio, Volume2, Play, ArrowRight } from 'lucide-react';
 
 const RADIO_STATIONS = [
   {
@@ -48,6 +49,12 @@ const NewsSection: React.FC = () => {
   useEffect(() => {
     loadNews();
   }, [loadNews]);
+
+  const handleArticleClick = (item: NewsItem) => {
+    // Génère une recherche Google précise pour trouver les articles complets sur le sujet
+    const query = encodeURIComponent(`${item.title} Guinée actualité`);
+    window.open(`https://www.google.com/search?q=${query}`, '_blank');
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -120,7 +127,11 @@ const NewsSection: React.FC = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {news.map((item, idx) => (
-                <div key={idx} className="bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-all p-6 flex flex-col">
+                <div 
+                    key={idx} 
+                    onClick={() => handleArticleClick(item)}
+                    className="bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-xl hover:border-red-100 transition-all duration-300 p-6 flex flex-col cursor-pointer group hover:-translate-y-1"
+                >
                     <div className="flex justify-between items-start mb-4">
                         <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wide 
                             ${item.category === 'Politique' ? 'bg-red-50 text-red-700' : 
@@ -129,10 +140,15 @@ const NewsSection: React.FC = () => {
                         </span>
                         <span className="text-xs text-gray-400">{item.date}</span>
                     </div>
-                    <h3 className="font-bold text-gray-900 text-lg mb-2 line-clamp-2">{item.title}</h3>
+                    <h3 className="font-bold text-gray-900 text-lg mb-2 line-clamp-2 group-hover:text-[#CE1126] transition-colors">{item.title}</h3>
                     <p className="text-sm text-gray-600 line-clamp-3 mb-4 flex-grow">{item.summary}</p>
-                    <div className="pt-4 border-t border-gray-50 flex items-center text-xs text-gray-400">
-                        <MapPin className="h-3 w-3 mr-1" /> Conakry
+                    <div className="pt-4 border-t border-gray-50 flex items-center justify-between text-xs text-gray-400">
+                        <div className="flex items-center">
+                             <MapPin className="h-3 w-3 mr-1" /> Conakry
+                        </div>
+                        <div className="flex items-center font-bold text-gray-300 group-hover:text-[#CE1126] transition-colors">
+                            Lire l'article <ArrowRight className="h-3 w-3 ml-1" />
+                        </div>
                     </div>
                 </div>
             ))}

@@ -272,12 +272,31 @@ const FALLBACK_HERO = {
   label: null // Null label indicates fallback mode (no "AI" badge)
 };
 
+// Caching specific for HERO image (Local Storage for persistence across reloads)
+const HERO_CACHE_KEY = 'ballal_hero_img_v2';
+const HERO_CACHE_DURATION = 1000 * 60 * 60 * 24; // 24 hours
+
 export const fetchHeroImage = async (): Promise<{ imageUrl: string; label: string | null } | null> => {
+  // 1. Try to load from Local Storage first (Fastest, no quota usage)
+  try {
+    const cachedHero = localStorage.getItem(HERO_CACHE_KEY);
+    if (cachedHero) {
+      const { data, timestamp } = JSON.parse(cachedHero);
+      // If cache is less than 24h old, use it
+      if (Date.now() - timestamp < HERO_CACHE_DURATION) {
+        return data;
+      }
+    }
+  } catch (e) {
+    // Ignore localStorage errors
+  }
+
   if (!apiKey || isQuotaExceededRaw()) return FALLBACK_HERO;
 
+  // 2. Fetch from API if no cache or expired
   return fetchWithDedup('hero_image', async () => {
     try {
-      // 1. Get creative concept
+      // Get creative concept
       const conceptResponse = await ai.models.generateContent({
           model: "gemini-2.5-flash",
           contents: `Imagine a spectacular, photorealistic landscape of Guinea (Conakry) for a website hero header. 
@@ -294,7 +313,7 @@ export const fetchHeroImage = async (): Promise<{ imageUrl: string; label: strin
       const concept = cleanAndParseJSON(conceptResponse.text || '');
       if (!concept || !concept.prompt) throw new Error("Failed to generate concept");
 
-      // 2. Generate Image
+      // Generate Image
       const imageResponse = await ai.models.generateContent({
         model: 'gemini-2.5-flash-image',
         contents: {
@@ -313,10 +332,20 @@ export const fetchHeroImage = async (): Promise<{ imageUrl: string; label: strin
 
       for (const part of imageResponse.candidates?.[0]?.content?.parts || []) {
         if (part.inlineData) {
-          return {
+          const result = {
               imageUrl: `data:image/png;base64,${part.inlineData.data}`,
               label: concept.label || "Paysage de Guinée"
           };
+          
+          // Save to LocalStorage for future visits
+          try {
+            localStorage.setItem(HERO_CACHE_KEY, JSON.stringify({
+                data: result,
+                timestamp: Date.now()
+            }));
+          } catch (e) { console.warn("Quota exceeded for localStorage image cache"); }
+
+          return result;
         }
       }
       return FALLBACK_HERO;
@@ -330,14 +359,11 @@ export const fetchHeroImage = async (): Promise<{ imageUrl: string; label: strin
 
 export const fetchGalleryMemories = async (filter: string): Promise<GalleryItem[]> => {
   // Return static DB immediately. No more AI dependency for gallery.
-  // This ensures images are always available and fast.
   return new Promise((resolve) => {
-    // Simulate tiny network delay for realism if needed, or just return.
     setTimeout(() => {
         if (filter === 'Tout' || filter === 'Paysages et Vie en Guinée') {
             resolve(STATIC_GALLERY_DB);
         } else {
-            // Simple keyword matching for filtering
             const lowerFilter = filter.toLowerCase();
             const filtered = STATIC_GALLERY_DB.filter(item => 
                 item.location.toLowerCase().includes(lowerFilter) || 
