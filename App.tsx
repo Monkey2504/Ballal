@@ -14,12 +14,17 @@ import { ViewState, LanguageCode } from './types';
 import { ShieldAlert, Calendar, MessageCircle, HeartHandshake, Share2, Users, Image as ImageIcon, Upload } from 'lucide-react';
 import { translations } from './utils/translations';
 
+// --- CONFIGURATION IMAGE MEMBRES ---
+// COLLEZ LE LIEN DE VOTRE PHOTO CI-DESSOUS ENTRE LES GUILLEMETS
+const VOTRE_LIEN_IMAGE_ICI = "https://drive.google.com/uc?export=view&id=1GC-ZOAU1Pu8RwdXYgzaIoPBjg8qXs9tr"; 
+// Exemple : "https://monsite.com/photo.jpg" ou le lien Google Storage public
+
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<ViewState>(ViewState.HOME);
   const [language, setLanguage] = useState<LanguageCode>('fr');
   
-  // État pour la photo des membres avec URL par défaut
-  const [memberPhoto, setMemberPhoto] = useState("https://www.googleapis.com/download/storage/v1/b/high-flyer-414819.appspot.com/o/2025-03-01%2F4533036e-3949-43c3-88aa-3814674f2603%2F481075677_122143009766258410_5134371917719602052_n.jpg?generation=1740848035133379&alt=media");
+  // État pour la photo des membres
+  const [memberPhoto, setMemberPhoto] = useState(VOTRE_LIEN_IMAGE_ICI);
   const [photoError, setPhotoError] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -29,6 +34,12 @@ const App: React.FC = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [currentView]);
+
+  // Si l'utilisateur change le lien dans le code, on met à jour l'état
+  useEffect(() => {
+    setMemberPhoto(VOTRE_LIEN_IMAGE_ICI);
+    setPhotoError(false);
+  }, []);
 
   // Smart Share Handler
   const handleShare = async () => {
@@ -154,27 +165,39 @@ const App: React.FC = () => {
                     accept="image/*"
                   />
 
-                  {/* Fallback en cas d'erreur de chargement */}
-                  <div className={`absolute inset-0 flex items-center justify-center text-gray-400 z-0 bg-slate-100 ${photoError ? 'z-20' : ''}`}>
+                  {/* Fallback en cas d'erreur de chargement ou pas de lien */}
+                  <div className={`absolute inset-0 flex items-center justify-center text-gray-400 z-0 bg-slate-100 ${photoError || !memberPhoto ? 'z-20' : ''}`}>
                      <div className="text-center p-6">
                         <ImageIcon className="h-16 w-16 mx-auto mb-4 opacity-30" />
-                        <p className="font-bold text-gray-500 mb-2">
-                            {photoError ? "L'image n'a pas pu être chargée." : "Chargement de la photo..."}
-                        </p>
-                        {photoError && (
-                            <button 
-                                onClick={() => fileInputRef.current?.click()}
-                                className="bg-white border border-gray-300 px-4 py-2 rounded-full text-sm font-bold text-gray-700 hover:bg-gray-50 flex items-center mx-auto shadow-sm mt-2 transition-all hover:scale-105"
-                            >
-                                <Upload className="h-4 w-4 mr-2" />
-                                Télécharger la photo manuellement
-                            </button>
+                        
+                        {!memberPhoto ? (
+                             <div className="bg-red-50 border border-red-200 p-4 rounded-lg max-w-md mx-auto">
+                                <p className="font-bold text-red-700 mb-2">Aucune image configurée</p>
+                                <p className="text-sm text-red-600 mb-4">
+                                    Veuillez coller le lien de votre image dans le fichier <code>App.tsx</code> à la ligne 15.
+                                </p>
+                             </div>
+                        ) : (
+                            <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg max-w-md mx-auto">
+                                <p className="font-bold text-yellow-800 mb-2">Erreur d'affichage</p>
+                                <p className="text-sm text-yellow-700 mb-4">
+                                    Le lien de l'image ne fonctionne pas ou est privé. Vérifiez le lien dans le code.
+                                </p>
+                             </div>
                         )}
+
+                        <button 
+                            onClick={() => fileInputRef.current?.click()}
+                            className="mt-6 bg-white border border-gray-300 px-4 py-2 rounded-full text-sm font-bold text-gray-700 hover:bg-gray-50 flex items-center mx-auto shadow-sm transition-all hover:scale-105"
+                        >
+                            <Upload className="h-4 w-4 mr-2" />
+                            Charger une photo (Visible uniquement pour vous)
+                        </button>
                      </div>
                   </div>
                   
                   {/* L'image elle-même */}
-                  {!photoError && (
+                  {memberPhoto && !photoError && (
                       <img 
                         src={memberPhoto} 
                         alt="Membres de BALLAL ASBL"
@@ -189,17 +212,17 @@ const App: React.FC = () => {
                      <button 
                         onClick={() => fileInputRef.current?.click()}
                         className="bg-black/40 hover:bg-black/70 text-white p-2.5 rounded-full backdrop-blur-md transition-all shadow-lg border border-white/20"
-                        title="Changer la photo"
+                        title="Changer la photo pour ma session"
                      >
                         <Upload className="h-5 w-5" />
                      </button>
                   </div>
                   
                   {/* Overlay dégradé */}
-                  <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-20 pointer-events-none ${photoError ? 'hidden' : ''}`}></div>
+                  <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-20 pointer-events-none ${(photoError || !memberPhoto) ? 'hidden' : ''}`}></div>
                   
                   {/* Légende */}
-                  <div className={`absolute bottom-6 left-6 z-30 text-white pointer-events-none ${photoError ? 'hidden' : ''}`}>
+                  <div className={`absolute bottom-6 left-6 z-30 text-white pointer-events-none ${(photoError || !memberPhoto) ? 'hidden' : ''}`}>
                      <p className="font-bold text-lg uppercase tracking-wider">L'Union fait la force</p>
                      <p className="text-sm opacity-90">Rassemblement 2024</p>
                   </div>
