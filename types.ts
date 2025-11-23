@@ -1,3 +1,4 @@
+
 export interface NewsItem {
   id: string;
   title: string;
@@ -25,6 +26,28 @@ export interface ForumPost {
   timeAgo: string;
 }
 
+export interface GalleryItem {
+  id: string;
+  title: string;
+  location: string;
+  description: string;
+  imageUrl: string;
+  tags: string[];
+  category?: string;
+}
+
+export interface DirectoryItem {
+  id: string;
+  name: string;
+  category: 'Gastronomie' | 'Beauté & Mode' | 'Services' | 'Artisanat' | 'Santé';
+  location: string;
+  description: string;
+  phone: string;
+  isVerified: boolean;
+}
+
+export type LanguageCode = 'fr' | 'pe' | 'ma' | 'su'; // Français, Peul (Pular), Malinké, Soussou
+
 export enum ViewState {
   HOME = 'HOME',
   NEWS = 'NEWS',
@@ -32,5 +55,7 @@ export enum ViewState {
   FORUM = 'FORUM',
   LEGAL_AID = 'LEGAL_AID',
   GALLERY = 'GALLERY',
-  HISTORY = 'HISTORY'
+  HISTORY = 'HISTORY',
+  DIRECTORY = 'DIRECTORY',
+  SHARE = 'SHARE'
 }
