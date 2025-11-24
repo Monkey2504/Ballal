@@ -65,7 +65,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
             >
               <div className="relative h-80 overflow-hidden bg-gray-100">
                 <img 
-                    className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-110" 
+                    className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-110" 
                     src={member.image} 
                     alt={member.name} 
                     loading="lazy"
