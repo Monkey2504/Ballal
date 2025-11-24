@@ -1,7 +1,12 @@
 
 import React, { useState } from 'react';
 import { Search, MapPin, Phone, CheckCircle, Store, Briefcase, Scissors, Utensils, Stethoscope, Hammer, Globe, Filter, Star, ExternalLink } from 'lucide-react';
-import { DirectoryItem } from '../types';
+import { DirectoryItem, LanguageCode } from '../types';
+import { translations } from '../utils/translations';
+
+interface DirectorySectionProps {
+  language: LanguageCode;
+}
 
 // Données RÉELLES et VERIFIABLES de la communauté à Bruxelles/Belgique
 const DIRECTORY_DATA: DirectoryItem[] = [
@@ -270,9 +275,10 @@ const DIRECTORY_DATA: DirectoryItem[] = [
 
 const CATEGORIES = ['Tout', 'Services', 'Gastronomie', 'Beauté & Mode', 'Santé', 'Artisanat'];
 
-const DirectorySection: React.FC = () => {
+const DirectorySection: React.FC<DirectorySectionProps> = ({ language }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Tout');
+  const t = translations[language];
 
   const filteredItems = DIRECTORY_DATA.filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -310,7 +316,7 @@ const DirectorySection: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen py-16 bg-[#FFFBF0] relative">
+    <div className="min-h-screen py-16 bg-[#FFFBF0] relative" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       <div className="absolute top-0 left-0 w-full h-64 bg-african-pattern opacity-40 pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -320,13 +326,13 @@ const DirectorySection: React.FC = () => {
           {/* H1 SEO Optimization */}
           <h1 className="text-4xl font-black text-slate-900 mb-4 tracking-tight">
             <span className="relative inline-block">
-                Annuaire Pro
+                {t.dir_title}
                 <span className="absolute -bottom-2 left-0 w-full h-3 bg-[#FCD116] opacity-60 skew-x-12 transform"></span>
             </span> 
             <span className="ml-2 guinea-gradient-text">Guinée-Benelux</span>
           </h1>
           <p className="max-w-2xl mx-auto text-xl text-gray-700 font-medium">
-            Retrouvez les commerces réels, les services officiels et les lieux incontournables de la communauté.
+            {t.dir_subtitle}
           </p>
         </div>
 
@@ -344,7 +350,7 @@ const DirectorySection: React.FC = () => {
                         id="directory-search"
                         type="text"
                         className="block w-full pl-11 pr-4 py-4 border-2 border-gray-100 rounded-2xl bg-gray-50 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#CE1126] focus:border-transparent focus:bg-white transition-all font-medium text-lg"
-                        placeholder="Ex: Mafé, Coiffeur, Avocat..."
+                        placeholder={t.dir_search_placeholder}
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -354,7 +360,7 @@ const DirectorySection: React.FC = () => {
                 <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filtrer par catégorie">
                     <div className="hidden lg:flex items-center text-gray-400 mr-2">
                         <Filter className="h-4 w-4 mr-1" />
-                        <span className="text-xs font-bold uppercase tracking-wider">Filtres</span>
+                        <span className="text-xs font-bold uppercase tracking-wider">{t.dir_filters}</span>
                     </div>
                     {CATEGORIES.map(cat => (
                         <button
@@ -367,7 +373,7 @@ const DirectorySection: React.FC = () => {
                                 : 'bg-white border border-gray-200 text-gray-600 hover:bg-orange-50 hover:border-orange-200 hover:text-[#CE1126]'
                             }`}
                         >
-                            {cat}
+                            {cat === 'Tout' ? t.dir_filter_all : cat}
                         </button>
                     ))}
                 </div>
@@ -387,7 +393,7 @@ const DirectorySection: React.FC = () => {
                         <div className="absolute top-4 right-4 z-10 transform rotate-12 group-hover:rotate-0 transition-transform duration-300">
                             <div className="border-2 border-[#009460] text-[#009460] px-3 py-1 rounded-lg font-black uppercase tracking-widest text-[10px] bg-white/80 backdrop-blur-sm shadow-sm opacity-90 mix-blend-multiply flex items-center gap-1">
                                 <CheckCircle className="h-3 w-3" />
-                                Vérifié
+                                {t.dir_verified}
                             </div>
                         </div>
                     )}
@@ -423,7 +429,7 @@ const DirectorySection: React.FC = () => {
                             ) : item.website ? (
                                 <a href={item.website} target="_blank" rel="noreferrer" className="inline-flex items-center text-sm font-black text-white bg-slate-900 px-4 py-3 rounded-xl border border-transparent hover:bg-[#CE1126] transition-colors shadow-sm w-full sm:w-auto justify-center hover:shadow-md">
                                     <Globe className="h-4 w-4 mr-2" aria-hidden="true" />
-                                    Visiter le site
+                                    {t.dir_visit_site}
                                 </a>
                             ) : null}
 
@@ -446,7 +452,7 @@ const DirectorySection: React.FC = () => {
                                     className="inline-flex items-center text-xs font-bold text-gray-500 hover:text-blue-600 uppercase tracking-wide group/link transition-colors"
                                 >
                                     <Globe className="h-3 w-3 mr-1.5 group-hover/link:animate-spin-slow" />
-                                    Plan
+                                    {t.dir_map}
                                 </a>
                             </div>
                         </div>
@@ -460,13 +466,13 @@ const DirectorySection: React.FC = () => {
                 <div className="bg-gray-50 p-4 rounded-full inline-block mb-4">
                     <Search className="h-8 w-8 text-gray-300" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Aucune adresse trouvée</h3>
-                <p className="text-gray-500 max-w-md mx-auto mb-6">Essayez de changer de catégorie ou de vérifier l'orthographe.</p>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">{t.dir_empty_title}</h3>
+                <p className="text-gray-500 max-w-md mx-auto mb-6">{t.dir_empty_desc}</p>
                 <button 
                     onClick={() => {setSearchTerm(''); setSelectedCategory('Tout')}}
                     className="text-white bg-[#CE1126] font-bold px-6 py-3 rounded-xl shadow-lg shadow-red-100 hover:bg-red-700 transition-colors"
                 >
-                    Réinitialiser tout
+                    {t.dir_reset_btn}
                 </button>
             </div>
         )}
@@ -486,15 +492,15 @@ const DirectorySection: React.FC = () => {
                         <Star className="h-3 w-3 mr-2 fill-current" />
                         Contribution
                     </div>
-                    <h3 className="text-3xl font-black text-white mb-3 tracking-tight">Vous connaissez une pépite ?</h3>
+                    <h3 className="text-3xl font-black text-white mb-3 tracking-tight">{t.dir_contrib_title}</h3>
                     <p className="text-slate-300 text-lg font-medium leading-relaxed">
-                        Aidez-nous à compléter cet annuaire. Si vous connaissez un commerce fiable qui aide la communauté, signalez-le nous pour validation.
+                        {t.dir_contrib_desc}
                     </p>
                 </div>
                 <div className="md:w-1/3 flex justify-center md:justify-end">
                     <button className="bg-[#FCD116] text-slate-900 font-black px-8 py-4 rounded-xl hover:bg-[#ffe14d] transition-all transform hover:scale-105 hover:rotate-1 shadow-lg shadow-yellow-400/20 focus:outline-none focus:ring-4 focus:ring-yellow-400/50 flex items-center">
                         <Store className="mr-2 h-5 w-5" />
-                        Suggérer une adresse
+                        {t.dir_suggest_btn}
                     </button>
                 </div>
             </div>

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { ShieldCheck, Heart, Wand2, Share2 } from 'lucide-react';
 import { fetchHeroImage } from '../services/geminiService';
@@ -47,7 +48,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare }) => {
             <div className="sm:text-center lg:text-left">
               <div className="inline-flex items-center px-3 py-1 rounded-full border border-green-200 bg-green-50 text-[#009460] text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
                  <span className="w-2 h-2 bg-[#009460] rounded-full mr-2 animate-pulse"></span>
-                 Association Sans But Lucratif
+                 {t.hero_asbl}
               </div>
               <h1 className="text-4xl tracking-tighter font-black text-slate-900 sm:text-5xl md:text-6xl mb-6 leading-tight">
                 <span className="block xl:inline">BALLAL ASBL</span>{' '}

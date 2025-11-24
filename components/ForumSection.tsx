@@ -1,7 +1,12 @@
 
 import React, { useState } from 'react';
 import { MessageSquare, ThumbsUp, Send, User, CornerDownRight } from 'lucide-react';
-import { ForumPost, Comment } from '../types';
+import { ForumPost, Comment, LanguageCode } from '../types';
+import { translations } from '../utils/translations';
+
+interface ForumSectionProps {
+  language: LanguageCode;
+}
 
 const MOCK_POSTS: ForumPost[] = [
   {
@@ -41,9 +46,10 @@ const MOCK_POSTS: ForumPost[] = [
   }
 ];
 
-const ForumSection: React.FC = () => {
+const ForumSection: React.FC<ForumSectionProps> = ({ language }) => {
   const [posts, setPosts] = useState<ForumPost[]>(MOCK_POSTS);
   const [newPostContent, setNewPostContent] = useState('');
+  const t = translations[language];
   
   // État pour gérer quel post a ses commentaires ouverts
   const [expandedPostId, setExpandedPostId] = useState<string | null>(null);
@@ -114,10 +120,10 @@ const ForumSection: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       {/* H1 SEO Optimization */}
-      <h1 className="text-3xl font-extrabold text-gray-900 mb-2">Entraide & Discussions</h1>
-      <p className="text-gray-500 mb-8">Posez vos questions, partagez vos bons plans et échangez avec la communauté.</p>
+      <h1 className="text-3xl font-extrabold text-gray-900 mb-2">{t.forum_title}</h1>
+      <p className="text-gray-500 mb-8">{t.forum_subtitle}</p>
 
       {/* ZONE DE PUBLICATION */}
       <div className="bg-white rounded-2xl shadow-sm p-6 mb-10 border border-gray-200">
@@ -129,20 +135,20 @@ const ForumSection: React.FC = () => {
                 <div className="flex-grow">
                     <textarea
                         className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none bg-gray-50 focus:bg-white transition-colors"
-                        placeholder="Quoi de neuf ? Posez une question ou partagez une info..."
+                        placeholder={t.forum_placeholder}
                         rows={3}
                         value={newPostContent}
                         onChange={(e) => setNewPostContent(e.target.value)}
                     ></textarea>
                     <div className="mt-3 flex justify-between items-center">
-                        <span className="text-xs text-gray-400 font-medium">Votre message sera visible par tous.</span>
+                        <span className="text-xs text-gray-400 font-medium">{t.forum_public_warning}</span>
                         <button 
                             type="submit" 
                             disabled={!newPostContent.trim()}
                             className="bg-[#CE1126] text-white px-6 py-2 rounded-full font-bold hover:bg-red-700 flex items-center transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-red-100 shadow-lg"
                         >
                             <Send className="h-4 w-4 mr-2" />
-                            Publier
+                            {t.forum_publish_btn}
                         </button>
                     </div>
                 </div>
@@ -180,14 +186,14 @@ const ForumSection: React.FC = () => {
                         className="flex items-center text-gray-500 hover:text-red-600 transition-colors text-sm font-bold group"
                     >
                         <ThumbsUp className="h-5 w-5 mr-2 group-active:scale-125 transition-transform" />
-                        {post.likes} <span className="hidden sm:inline ml-1">J'aime</span>
+                        {post.likes} <span className="hidden sm:inline ml-1">{t.forum_like}</span>
                     </button>
                     <button 
                         onClick={() => toggleComments(post.id)}
                         className={`flex items-center transition-colors text-sm font-bold ${expandedPostId === post.id ? 'text-[#009460]' : 'text-gray-500 hover:text-[#009460]'}`}
                     >
                         <MessageSquare className="h-5 w-5 mr-2" />
-                        {post.comments} <span className="hidden sm:inline ml-1">Commentaires</span>
+                        {post.comments} <span className="hidden sm:inline ml-1">{t.forum_comments}</span>
                     </button>
                 </div>
             </div>
@@ -218,7 +224,7 @@ const ForumSection: React.FC = () => {
                         </div>
                     ) : (
                         <div className="text-center py-4 text-gray-400 text-sm italic mb-4">
-                            Aucun commentaire pour l'instant. Soyez le premier !
+                            {t.forum_no_comments}
                         </div>
                     )}
 
@@ -233,7 +239,7 @@ const ForumSection: React.FC = () => {
                                 value={newCommentText}
                                 onChange={(e) => setNewCommentText(e.target.value)}
                                 onKeyDown={(e) => e.key === 'Enter' && handleAddComment(post.id)}
-                                placeholder="Écrivez un commentaire..."
+                                placeholder={t.forum_write_comment}
                                 className="w-full pl-4 pr-12 py-2.5 rounded-full border border-gray-300 focus:outline-none focus:border-[#009460] focus:ring-1 focus:ring-[#009460] text-sm bg-white"
                             />
                             <button 

@@ -1,11 +1,18 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Calendar, MapPin, Users, RefreshCw, Search, Info, Clock, ArrowRight } from 'lucide-react';
-import { CommunityEvent } from '../types';
+import { CommunityEvent, LanguageCode } from '../types';
 import { fetchCommunityEvents } from '../services/geminiService';
+import { translations } from '../utils/translations';
 
-const EventsSection: React.FC = () => {
+interface EventsSectionProps {
+  language: LanguageCode;
+}
+
+const EventsSection: React.FC<EventsSectionProps> = ({ language }) => {
   const [events, setEvents] = useState<CommunityEvent[]>([]);
   const [loading, setLoading] = useState(true);
+  const t = translations[language];
 
   const loadEvents = useCallback(async () => {
     setLoading(true);
@@ -34,7 +41,7 @@ const EventsSection: React.FC = () => {
   };
 
   return (
-    <div className="py-16 min-h-screen bg-transparent">
+    <div className="py-16 min-h-screen bg-transparent" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 bg-white p-12 rounded-[2rem] shadow-sm border-b-8 border-[#FCD116] relative overflow-hidden">
           <div className="absolute inset-0 bg-african-pattern opacity-30 pointer-events-none"></div>
@@ -42,10 +49,10 @@ const EventsSection: React.FC = () => {
           <div className="relative z-10">
             {/* H1 SEO Optimization */}
             <h1 className="text-4xl font-black text-slate-900 sm:text-5xl mb-6 tracking-tight">
-              Agenda de la Communauté
+              {t.events_title}
             </h1>
             <p className="max-w-2xl mx-auto text-xl text-gray-600 font-medium leading-relaxed">
-              Les événements incontournables : Fêtes, Business, Culture et Rencontres.
+              {t.events_subtitle}
             </p>
             
             <div className="mt-10 flex justify-center">
@@ -55,7 +62,7 @@ const EventsSection: React.FC = () => {
                   className="inline-flex items-center px-8 py-4 border border-transparent text-base font-bold rounded-full shadow-lg text-white bg-slate-900 hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 disabled:opacity-70 transition-all hover:-translate-y-1"
               >
                   <RefreshCw className={`mr-2 h-5 w-5 ${loading ? 'animate-spin' : ''}`} />
-                  {loading ? 'Recherche en cours...' : 'Actualiser l\'agenda'}
+                  {loading ? '...' : t.events_refresh}
               </button>
             </div>
           </div>
@@ -127,7 +134,7 @@ const EventsSection: React.FC = () => {
                                 </div>
                                 <button className="w-full inline-flex items-center justify-center px-4 py-3 border border-transparent text-sm font-bold rounded-xl text-white bg-[#CE1126] hover:bg-red-700 transition-colors shadow-red-100 shadow-lg">
                                     <Users className="mr-2 h-4 w-4" />
-                                    Je participe
+                                    {t.events_participate}
                                 </button>
                             </div>
                         </div>
@@ -137,14 +144,14 @@ const EventsSection: React.FC = () => {
             ) : (
                 <div className="text-center py-20 bg-white rounded-3xl shadow-sm border border-gray-100">
                     <Info className="h-16 w-16 text-gray-300 mx-auto mb-6" />
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">Aucun événement trouvé</h3>
-                    <p className="text-gray-500 text-lg">Revenez plus tard ou proposez votre événement.</p>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{t.events_empty}</h3>
+                    <p className="text-gray-500 text-lg">{t.events_empty_desc}</p>
                 </div>
             )}
             
             <div className="mt-12 text-center text-xs text-gray-400 flex items-center justify-center font-medium">
                 <Search className="h-3 w-3 mr-2 opacity-50" />
-                Résultats agrégés via Google Search AI.
+                {t.events_ai_disclaimer}
             </div>
             </div>
         )}

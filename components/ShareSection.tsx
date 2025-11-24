@@ -1,12 +1,21 @@
+
 import React, { useState } from 'react';
 import { Share2, Copy, Smartphone, Facebook, Check, Link } from 'lucide-react';
+import { LanguageCode } from '../types';
+import { translations } from '../utils/translations';
 
-const ShareSection: React.FC = () => {
+interface ShareSectionProps {
+  language: LanguageCode;
+}
+
+const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
   const [copied, setCopied] = useState(false);
   const appUrl = typeof window !== 'undefined' ? window.location.href : 'https://ballal-asbl.be';
-  const shareText = "Retrouvez BALLAL, la plateforme d'entraide pour la communauté guinéenne en Belgique !";
   const canShare = typeof navigator !== 'undefined' && !!navigator.share;
+  const t = translations[language];
   
+  const shareText = "Ballal ASBL - Solidarité Guinée-Belgique";
+
   // Utilisation de wa.me pour un support mobile/desktop universel
   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + appUrl)}`;
   // URL pour Facebook
@@ -51,7 +60,7 @@ const ShareSection: React.FC = () => {
   };
 
   return (
-    <div className="py-12 min-h-screen bg-slate-50">
+    <div className="py-12 min-h-screen bg-slate-50" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center mb-10 bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
@@ -60,17 +69,17 @@ const ShareSection: React.FC = () => {
           </div>
           {/* H1 SEO Optimization */}
           <h1 className="text-3xl font-extrabold text-gray-900">
-            Faites grandir la communauté
+            {t.share_title}
           </h1>
           <p className="mt-4 text-xl text-gray-600 font-medium">
-            Ballal existe grâce à vous. Partagez l'application avec vos proches.
+            {t.share_subtitle}
           </p>
         </div>
 
         {/* QR Code Card */}
         <div className="bg-white rounded-2xl shadow-lg border-t-8 border-[#FCD116] overflow-hidden mb-8">
             <div className="p-8 flex flex-col items-center">
-                <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">Scanner pour rejoindre</p>
+                <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">{t.share_scan}</p>
                 
                 <div className="bg-white p-4 rounded-xl border-2 border-gray-100 shadow-inner mb-6">
                     <img 
@@ -82,7 +91,7 @@ const ShareSection: React.FC = () => {
                 
                 {/* Input visible pour copie manuelle - Solution au problème "je n'arrive pas à partager" */}
                 <div className="w-full max-w-md">
-                    <label className="block text-xs font-bold text-gray-500 mb-2 uppercase text-left">Lien direct (cliquez pour sélectionner)</label>
+                    <label className="block text-xs font-bold text-gray-500 mb-2 uppercase text-left">{t.share_link_label}</label>
                     <div className="flex rounded-md shadow-sm">
                         <div className="relative flex-grow focus-within:z-10">
                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -103,7 +112,7 @@ const ShareSection: React.FC = () => {
                             className={`-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md bg-white hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-red-500 transition-colors ${copied ? 'text-green-600' : 'text-gray-700'}`}
                         >
                             {copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
-                            <span>{copied ? 'Copié !' : 'Copier'}</span>
+                            <span>{copied ? t.share_copied : t.share_copy}</span>
                         </button>
                     </div>
                 </div>
@@ -120,7 +129,7 @@ const ShareSection: React.FC = () => {
                     className="w-full flex items-center justify-center px-6 py-4 bg-gray-900 text-white rounded-xl shadow-md hover:bg-black transition-all hover:-translate-y-1 font-bold text-lg mb-2"
                 >
                     <Share2 className="h-6 w-6 mr-3" />
-                    Partager via...
+                    {t.share_via}
                 </button>
             )}
 
@@ -134,7 +143,7 @@ const ShareSection: React.FC = () => {
                 <div className="mr-3 p-1 bg-white/20 rounded-full">
                     <Smartphone className="h-6 w-6" />
                 </div>
-                Envoyer sur WhatsApp
+                {t.share_whatsapp}
             </a>
 
             <div className="grid grid-cols-1 gap-4">
@@ -145,7 +154,7 @@ const ShareSection: React.FC = () => {
                     className="flex items-center justify-center px-4 py-4 bg-[#1877F2] hover:bg-[#166fe5] text-white rounded-xl shadow-sm font-bold transition-all hover:-translate-y-1"
                 >
                     <Facebook className="h-5 w-5 mr-2" />
-                    Partager sur Facebook
+                    {t.share_facebook}
                 </a>
             </div>
 

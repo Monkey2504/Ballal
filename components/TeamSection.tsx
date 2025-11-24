@@ -62,11 +62,12 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
                 key={index} 
                 className={`bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border-t-4 ${member.color}`}
             >
-              <div className="relative h-80 overflow-hidden">
+              <div className="relative h-80 overflow-hidden bg-gray-100">
                 <img 
-                    className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-110" 
+                    className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-110" 
                     src={member.image} 
                     alt={member.name} 
+                    loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                 <div className="absolute bottom-4 left-4 text-white">
@@ -115,20 +116,21 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
                     {t.members_title}
                 </h3>
                 <p className="mt-3 text-lg text-gray-500">
-                    La force de Ballal, c'est son collectif.
+                    {t.team_collective_strength}
                 </p>
             </div>
 
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white max-w-5xl mx-auto group">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white max-w-5xl mx-auto group bg-gray-100">
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10 pointer-events-none"></div>
                 <img 
                     src="https://i.imgur.com/CwnDz75.png" 
                     alt="Les membres de Ballal ASBL" 
                     className="w-full h-auto object-cover transform transition-transform duration-1000 group-hover:scale-105"
+                    loading="lazy"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 sm:p-10 z-20">
                     <p className="text-white font-medium text-center sm:text-left max-w-2xl">
-                        Rejoignez une équipe dynamique et engagée pour le rayonnement de la communauté guinéenne en Belgique.
+                        {t.team_join_desc}
                     </p>
                 </div>
             </div>

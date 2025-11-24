@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -31,16 +32,16 @@ const App: React.FC = () => {
       [ViewState.SHARE]: t.nav_share,
     };
 
-    // Définition des descriptions par vue
+    // Définition des descriptions par vue (Dynamique via traductions)
     const descriptions: Record<ViewState, string> = {
-      [ViewState.HOME]: t.hero_desc,
-      [ViewState.NEWS]: `Actualités vérifiées de la Guinée et de la diaspora en Belgique. ${t.news_section_title}.`,
-      [ViewState.EVENTS]: `Agenda des événements culturels, fêtes et meetups de la communauté guinéenne. ${t.nav_events}.`,
-      [ViewState.FORUM]: "Espace de discussion, d'entraide et de partage pour les Guinéens de Belgique.",
-      [ViewState.DIRECTORY]: "Annuaire des commerces, entrepreneurs et services guinéens en Belgique.",
-      [ViewState.LEGAL_AID]: t.urgent_alert,
-      [ViewState.HISTORY]: "Découvrez l'histoire de la communauté guinéenne en Belgique, de 1958 à nos jours.",
-      [ViewState.SHARE]: "Partagez l'application Ballal ASBL pour renforcer notre communauté."
+      [ViewState.HOME]: t.meta_desc_home || t.hero_desc,
+      [ViewState.NEWS]: t.meta_desc_news,
+      [ViewState.EVENTS]: t.meta_desc_events,
+      [ViewState.FORUM]: t.meta_desc_forum,
+      [ViewState.DIRECTORY]: t.meta_desc_directory,
+      [ViewState.LEGAL_AID]: t.meta_desc_legal,
+      [ViewState.HISTORY]: t.meta_desc_history,
+      [ViewState.SHARE]: t.meta_desc_share
     };
 
     // Mise à jour du Document Title
@@ -76,17 +77,17 @@ const App: React.FC = () => {
       case ViewState.NEWS:
         return <NewsSection language={language} />;
       case ViewState.EVENTS:
-        return <EventsSection />;
+        return <EventsSection language={language} />;
       case ViewState.FORUM:
-        return <ForumSection />;
+        return <ForumSection language={language} />;
       case ViewState.DIRECTORY:
-        return <DirectorySection />;
+        return <DirectorySection language={language} />;
       case ViewState.LEGAL_AID:
         return <LegalAidSection language={language} />;
       case ViewState.HISTORY:
-        return <HistorySection />;
+        return <HistorySection language={language} />;
       case ViewState.SHARE:
-        return <ShareSection />;
+        return <ShareSection language={language} />;
       default:
         return (
           <>

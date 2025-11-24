@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Menu, X, HeartHandshake, Globe, Share2, Users } from 'lucide-react';
 import { ViewState, LanguageCode } from '../types';
@@ -29,10 +30,10 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
 
   const navItems = [
     { label: t.nav_home, value: ViewState.HOME },
+    { label: t.nav_legal, value: ViewState.LEGAL_AID }, // Positionné juste après l'accueil
     { label: t.nav_directory, value: ViewState.DIRECTORY },
     { label: t.nav_news, value: ViewState.NEWS },
     { label: t.nav_events, value: ViewState.EVENTS },
-    { label: t.nav_legal, value: ViewState.LEGAL_AID },
     { label: t.nav_history, value: ViewState.HISTORY },
     { label: t.nav_forum, value: ViewState.FORUM },
   ];
@@ -72,7 +73,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                     </div>
                 </div>
                 <span className="text-[10px] uppercase tracking-[0.2em] text-[#009460] font-bold ml-11 mt-1 opacity-80">
-                    Solidarité
+                    {t.nav_solidarity}
                 </span>
             </div>
           </button>
@@ -145,6 +146,14 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                   </div>
                 )}
             </div>
+            
+            {/* Desktop Member Access Button (Optional/Visual) */}
+            <button 
+              className="ml-3 p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition-colors"
+              title={t.nav_member_access}
+            >
+              <Users className="h-5 w-5" />
+            </button>
           </div>
 
           {/* Mobile menu button */}
@@ -232,8 +241,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                 {t.nav_share}
               </button>
 
-             <button className="w-full text-left px-4 py-3 text-white bg-slate-900 font-bold mt-2 border-l-4 border-[#FCD116] focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded-r-lg">
-              Accès Membre
+             <button 
+                title={t.nav_member_access}
+                className="w-full text-left px-4 py-3 text-white bg-slate-900 font-bold mt-2 border-l-4 border-[#FCD116] focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded-r-lg"
+             >
+              {t.nav_member_access}
             </button>
           </div>
         </div>

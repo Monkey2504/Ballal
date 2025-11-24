@@ -1,57 +1,65 @@
+
 import React from 'react';
 import { BookOpen, Clock, ArrowDown, Star } from 'lucide-react';
+import { LanguageCode } from '../types';
+import { translations } from '../utils/translations';
 
-const HistorySection: React.FC = () => {
+interface HistorySectionProps {
+  language: LanguageCode;
+}
+
+const HistorySection: React.FC<HistorySectionProps> = ({ language }) => {
+  const t = translations[language];
+
   const timelineEvents = [
     {
       year: '1958',
-      title: 'La Dignité et l\'Indépendance',
-      description: 'Le 28 septembre, la Guinée dit "NON" au Général de Gaulle. Le 2 octobre, l\'indépendance est proclamée sous Ahmed Sékou Touré. Une fierté nationale qui marque l\'identité de chaque Guinéen, même en exil.',
+      title: t.hist_1958_title || 'La Dignité et l\'Indépendance',
+      description: t.hist_1958_desc || 'Le 28 septembre, la Guinée dit "NON" au Général de Gaulle.',
       side: 'left',
       icon: '🇬🇳'
     },
     {
       year: '1960-1980',
-      title: 'Premiers Liens Académiques',
-      description: 'Bien que la Guinée se soit tournée vers l\'Est, des étudiants guinéens commencent à arriver en Belgique (ULB, UCL, Liège) pour des formations en médecine et ingénierie. Ils forment le noyau intellectuel de la diaspora.',
+      title: t.hist_1960_title || 'Premiers Liens Académiques',
+      description: t.hist_1960_desc || 'Arrivée des premiers boursiers guinéens dans les universités belges.',
       side: 'right',
       icon: '🎓'
     },
     {
-      year: 'Années 1990',
-      title: 'L\'Exil Politique et Économique',
-      description: 'L\'instabilité politique pousse de nombreux Guinéens à chercher refuge. La Belgique devient une terre d\'accueil majeure. Le quartier Matonge à Bruxelles commence à voir fleurir les commerces guinéens.',
+      year: t.hist_1990_year || '1990s',
+      title: t.hist_1990_title || 'L\'Exil Politique et Économique',
+      description: t.hist_1990_desc || 'L\'instabilité politique pousse de nombreux Guinéens à chercher refuge.',
       side: 'left',
       icon: '✈️'
     },
     {
       year: '2000-2010',
-      title: '3ème Communauté Africaine',
-      description: 'La communauté guinéenne grandit pour devenir la 3ème plus grande communauté subsaharienne de Belgique (après la RDC et le Rwanda). Création de nombreuses ASBL culturelles et sportives.',
+      title: t.hist_2000_title || '3ème Communauté Africaine',
+      description: t.hist_2000_desc || 'La communauté guinéenne grandit pour devenir majeure.',
       side: 'right',
       icon: '🏘️'
     },
     {
       year: '2024',
-      title: 'Une Force Vive',
-      description: 'Aujourd\'hui, les Belgo-Guinéens sont entrepreneurs, médecins, ouvriers, artistes. Ils contribuent à l\'économie belge tout en soutenant massivement le pays via les transferts de fonds.',
+      title: t.hist_2024_title || 'Une Force Vive',
+      description: t.hist_2024_desc || 'Aujourd\'hui, les Belgo-Guinéens sont entrepreneurs, médecins, ouvriers, artistes.',
       side: 'left',
       icon: '🤝'
     }
   ];
 
   return (
-    <div className="py-12 bg-slate-50">
+    <div className="py-12 bg-slate-50" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
           <div className="flex justify-center mb-4">
              <BookOpen className="h-12 w-12 text-red-600" />
           </div>
           {/* H1 SEO Optimization */}
-          <h1 className="text-4xl font-extrabold text-gray-900">Notre Histoire : De Conakry à Bruxelles</h1>
+          <h1 className="text-4xl font-extrabold text-gray-900">{t.hist_title}</h1>
           <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-            L'histoire de la <span className="font-bold text-red-600">3ème communauté africaine de Belgique</span>. 
-            Un parcours fait de courage, d'études, de travail et de solidarité.
+            {t.hist_subtitle}
           </p>
         </div>
 
@@ -94,9 +102,9 @@ const HistorySection: React.FC = () => {
           </div>
             
           <div className="text-center mt-20 bg-green-50 p-8 rounded-xl border border-green-100 shadow-sm">
-            <h3 className="text-2xl font-bold text-green-800 mb-4">Saviez-vous ?</h3>
+            <h3 className="text-2xl font-bold text-green-800 mb-4">{t.hist_did_you_know}</h3>
             <p className="text-gray-700 text-lg">
-                Plus de <span className="font-bold">25.000</span> personnes d'origine guinéenne vivent officiellement en Belgique, sans compter les nombreux binationaux et les sans-papiers que nous soutenons au quotidien.
+                {t.hist_stat_text}
             </p>
           </div>
 
