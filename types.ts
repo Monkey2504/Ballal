@@ -59,4 +59,5 @@ export enum ViewState {
   LEGAL_AID = 'LEGAL_AID',
   HISTORY = 'HISTORY',
   SHARE = 'SHARE',
+  DONATE = 'DONATE',
 }

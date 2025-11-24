@@ -105,7 +105,7 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                 {/* Bandeau clignotant */}
                 <div className="bg-[#CE1126] text-white p-4 text-center font-black uppercase tracking-widest flex items-center justify-center animate-pulse">
                     <Zap className="h-6 w-6 mr-2 fill-yellow-400 text-yellow-400" aria-hidden="true" />
-                    {language === 'ar' ? 'انقر هنا في حالة طوارئ الشرطة' : (language === 'pe' ? 'Dobbo ɗoo' : "CLIQUEZ ICI EN CAS D'URGENCE POLICE")}
+                    {t.legal_flash_btn}
                     <Zap className="h-6 w-6 ml-2 fill-yellow-400 text-yellow-400" aria-hidden="true" />
                 </div>
 

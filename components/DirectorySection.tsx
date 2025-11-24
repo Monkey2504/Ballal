@@ -9,12 +9,13 @@ interface DirectorySectionProps {
 }
 
 // Données RÉELLES et VERIFIABLES de la communauté à Bruxelles/Belgique
-const DIRECTORY_DATA: DirectoryItem[] = [
+// Categories are now keys that map to translations
+const DIRECTORY_DATA: (Omit<DirectoryItem, 'category'> & { category: string })[] = [
   // --- GASTRONOMIE ---
   {
     id: 'g1',
     name: 'Télé Jazz Restaurant (Chez Diallo)',
-    category: 'Gastronomie',
+    category: 'gastronomy',
     location: '1000 Bruxelles - Chaussée d\'Anvers 84',
     description: 'Restaurant Guinéen très populaire. Un incontournable pour la cuisine du pays.',
     phone: 'Sur place',
@@ -23,7 +24,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 'g2',
     name: 'Le Sankaran',
-    category: 'Gastronomie',
+    category: 'gastronomy',
     location: '1000 Bruxelles - Rue de Malines 32',
     description: 'Restaurant Africain apprécié pour sa bonne ambiance et ses plats conviviaux.',
     phone: 'Sur place',
@@ -32,7 +33,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 'g3',
     name: 'Restaurant La Villa Bantou',
-    category: 'Gastronomie',
+    category: 'gastronomy',
     location: '1020 Laeken - Av. Jean de Bologne 38A',
     description: 'Traiteur et restaurant réputé pour la qualité de son service et ses saveurs.',
     phone: 'Sur place',
@@ -41,7 +42,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 'g4',
     name: 'Chez Maman',
-    category: 'Gastronomie',
+    category: 'gastronomy',
     location: '1000 Bruxelles - Rue du Midi 77',
     description: 'Restaurant Africain avec une véritable ambiance familiale et chaleureuse.',
     phone: 'Sur place',
@@ -50,7 +51,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 'g5',
     name: 'Le Soleil d\'Afrique',
-    category: 'Gastronomie',
+    category: 'gastronomy',
     location: '1050 Ixelles - Rue Longue Vie 10',
     description: 'Institution légendaire de Matonge. Mafé, Yassa, Tiep. Ambiance animée.',
     phone: '02 513 34 30',
@@ -59,7 +60,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 'g6',
     name: 'L\'Horloge du Sud',
-    category: 'Gastronomie',
+    category: 'gastronomy',
     location: '1050 Ixelles - Rue du Trône 141',
     description: 'Restaurant et espace culturel emblématique. Cuisine du Sud et débats.',
     phone: '02 512 62 97',
@@ -68,7 +69,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 'g7',
     name: 'L\'Afro-Food',
-    category: 'Gastronomie',
+    category: 'gastronomy',
     location: '1030 Schaerbeek - Rue du Progrès 145',
     description: 'Épicerie, snack et traiteur. Idéal pour trouver des produits ou manger sur le pouce.',
     phone: 'Sur place',
@@ -77,7 +78,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 'g8',
     name: 'Mama Fati (Marché de Matonge)',
-    category: 'Gastronomie',
+    category: 'gastronomy',
     location: '1050 Ixelles - Rue de la Paix 28 (Galerie)',
     description: 'Épicerie et produits frais africains au cœur de la galerie de Matonge.',
     phone: 'Sur place',
@@ -86,7 +87,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 'g9',
     name: 'Bara Express',
-    category: 'Gastronomie',
+    category: 'gastronomy',
     location: '1070 Anderlecht - Place Bara 3',
     description: 'Grand supermarché exotique très fréquenté à proximité de la Gare du Midi.',
     phone: 'Sur place',
@@ -95,7 +96,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 'g10',
     name: 'Epicerie/Boucherie Halal Stalingrad',
-    category: 'Gastronomie',
+    category: 'gastronomy',
     location: '1000 Bruxelles - Avenue de Stalingrad 67',
     description: 'Épicerie et boucherie halal très fréquentée par la communauté.',
     phone: 'Sur place',
@@ -106,7 +107,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 'b1',
     name: 'Les Ateliers Zarragga',
-    category: 'Beauté & Mode',
+    category: 'beauty',
     location: '1030 Schaerbeek - Avenue Chazal 62B',
     description: 'Salon de coiffure Afro et tresses spécialisé.',
     phone: 'Sur place',
@@ -115,7 +116,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 'b2',
     name: 'Salon de Coiffure "Aminata"',
-    category: 'Beauté & Mode',
+    category: 'beauty',
     location: '1030 Schaerbeek - Rue de Brabant 135',
     description: 'Coiffure Afro dames et tresses. Une référence dans le quartier.',
     phone: 'Sur place',
@@ -124,7 +125,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 'b3',
     name: 'Coiffure Afro "La Source"',
-    category: 'Beauté & Mode',
+    category: 'beauty',
     location: '1000 Bruxelles - Rue de l\'Étuve 52',
     description: 'Coiffure mixte et Barber Shop au centre-ville.',
     phone: 'Sur place',
@@ -133,7 +134,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 'b4',
     name: 'Akwaba Coiffure',
-    category: 'Beauté & Mode',
+    category: 'beauty',
     location: '1050 Ixelles - Rue de la Crèche 7',
     description: 'Coiffure et vente de mèches et produits cosmétiques.',
     phone: 'Sur place',
@@ -142,7 +143,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 'b5',
     name: 'Boutique de Tissus Africains',
-    category: 'Beauté & Mode',
+    category: 'beauty',
     location: '1050 Ixelles - Rue de la Paix 27',
     description: 'Vente de Wax hollandais, Bazin riche et tissus pour cérémonies.',
     phone: 'Sur place',
@@ -151,7 +152,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 'b6',
     name: 'Galerie d\'Ixelles (Matonge)',
-    category: 'Beauté & Mode',
+    category: 'beauty',
     location: '1050 Ixelles - Chaussée de Wavre',
     description: 'Le cœur battant de la beauté afro. Des dizaines de salons de coiffure dans la galerie.',
     phone: 'Sur place',
@@ -160,7 +161,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 'b7',
     name: 'Coiffure Afro "Safi Beauté"',
-    category: 'Beauté & Mode',
+    category: 'beauty',
     location: '1030 Schaerbeek - Rue de Brabant 145',
     description: 'Salon de coiffure et beauté. Spécialiste tresses et soins.',
     phone: 'Sur place',
@@ -171,7 +172,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 'a1',
     name: 'Couture et Vêtements "Moussa"',
-    category: 'Artisanat',
+    category: 'crafts',
     location: '1030 Schaerbeek - Rue Rogier 103',
     description: 'Atelier de couture et retouches. Confection de tenues traditionnelles sur mesure.',
     phone: 'Sur place',
@@ -180,7 +181,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 'a2',
     name: 'Bijouteries du Quartier Midi',
-    category: 'Artisanat',
+    category: 'crafts',
     location: '1060 Saint-Gilles - Rue de France',
     description: 'Plusieurs artisans bijoutiers travaillant l\'or et l\'argent près de la gare.',
     phone: 'Sur place',
@@ -191,7 +192,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 's1',
     name: 'Progress Lawyers Network',
-    category: 'Services',
+    category: 'services',
     location: '1210 Saint-Josse - Rue de la Commune 6',
     description: 'Cabinet d\'avocats militant. Experts en droit des étrangers, régularisation et défense pénale.',
     phone: '02 209 62 80',
@@ -200,7 +201,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 's2',
     name: 'MRAX',
-    category: 'Services',
+    category: 'services',
     location: '1000 Bruxelles - Rue de la Poste 37',
     description: 'Mouvement contre le Racisme. Service juridique gratuit pour les étrangers.',
     phone: '02 209 62 50',
@@ -209,7 +210,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 's3',
     name: 'Sireas ASBL',
-    category: 'Services',
+    category: 'services',
     location: '1060 Saint-Gilles - Rue de la Victoire',
     description: 'Service social pour les immigrés. Aide administrative (CPAS, chomage).',
     phone: '02 649 99 58',
@@ -218,7 +219,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 's4',
     name: 'Agence Royal Air Maroc',
-    category: 'Services',
+    category: 'services',
     location: '1060 Saint-Gilles - Boulevard du Midi',
     description: 'Agence officielle. Billets d\'avion pour Conakry via Casablanca.',
     phone: '02 219 30 30',
@@ -227,7 +228,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 's5',
     name: 'MoneyGram / Western Union (Matonge)',
-    category: 'Services',
+    category: 'services',
     location: '1050 Ixelles - Chaussée de Wavre',
     description: 'Agences de transfert d\'argent pour les envois vers la Guinée.',
     phone: 'Sur place',
@@ -236,7 +237,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 's6',
     name: 'Auto-École G. A. Permis',
-    category: 'Services',
+    category: 'services',
     location: '1000 Bruxelles - Rue du Commerce 10',
     description: 'Auto-école. Moniteurs parlant des langues ouest-africaines, y compris le Poular.',
     phone: 'Sur place',
@@ -245,7 +246,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 's7',
     name: 'Tabital Pulaaku International',
-    category: 'Services',
+    category: 'services',
     location: 'Bruxelles / Global',
     description: 'Association internationale pour la promotion de la culture Peule (Pulaaku) et la solidarité.',
     website: 'https://www.tabitalpulaaku.org/',
@@ -256,7 +257,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 'h1',
     name: 'Hôpital Saint-Pierre (CHU)',
-    category: 'Santé',
+    category: 'health',
     location: '1000 Bruxelles - Rue Haute 322',
     description: 'Hôpital public de référence. Urgences accessibles (AMU).',
     phone: '02 535 31 11',
@@ -265,7 +266,7 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   {
     id: 'h2',
     name: 'Maison Médicale Matonge',
-    category: 'Santé',
+    category: 'health',
     location: '1050 Ixelles - Rue d\'Edimbourg 16',
     description: 'Soins de santé primaires au forfait. Médecins généralistes accueillants.',
     phone: '02 511 22 88',
@@ -273,28 +274,41 @@ const DIRECTORY_DATA: DirectoryItem[] = [
   }
 ];
 
-const CATEGORIES = ['Tout', 'Services', 'Gastronomie', 'Beauté & Mode', 'Santé', 'Artisanat'];
+const CATEGORY_KEYS = ['all', 'services', 'gastronomy', 'beauty', 'health', 'crafts'];
 
 const DirectorySection: React.FC<DirectorySectionProps> = ({ language }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('Tout');
+  const [selectedCategoryKey, setSelectedCategoryKey] = useState('all');
   const t = translations[language];
+
+  // Helper to get translated label
+  const getCategoryLabel = (key: string) => {
+    switch(key) {
+        case 'gastronomy': return t.dir_cat_gastronomy;
+        case 'beauty': return t.dir_cat_beauty;
+        case 'services': return t.dir_cat_services;
+        case 'crafts': return t.dir_cat_artisanat;
+        case 'health': return t.dir_cat_health;
+        case 'all': return t.dir_filter_all;
+        default: return key;
+    }
+  };
 
   const filteredItems = DIRECTORY_DATA.filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                           item.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           item.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'Tout' || item.category === selectedCategory;
+    const matchesCategory = selectedCategoryKey === 'all' || item.category === selectedCategoryKey;
     return matchesSearch && matchesCategory;
   });
 
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'Gastronomie': return <Utensils className="h-6 w-6" aria-hidden="true" />;
-      case 'Beauté & Mode': return <Scissors className="h-6 w-6" aria-hidden="true" />;
-      case 'Services': return <Briefcase className="h-6 w-6" aria-hidden="true" />;
-      case 'Santé': return <Stethoscope className="h-6 w-6" aria-hidden="true" />;
-      case 'Artisanat': return <Hammer className="h-6 w-6" aria-hidden="true" />;
+  const getCategoryIcon = (categoryKey: string) => {
+    switch (categoryKey) {
+      case 'gastronomy': return <Utensils className="h-6 w-6" aria-hidden="true" />;
+      case 'beauty': return <Scissors className="h-6 w-6" aria-hidden="true" />;
+      case 'services': return <Briefcase className="h-6 w-6" aria-hidden="true" />;
+      case 'health': return <Stethoscope className="h-6 w-6" aria-hidden="true" />;
+      case 'crafts': return <Hammer className="h-6 w-6" aria-hidden="true" />;
       default: return <Store className="h-6 w-6" aria-hidden="true" />;
     }
   };
@@ -304,13 +318,13 @@ const DirectorySection: React.FC<DirectorySectionProps> = ({ language }) => {
       return colors[index % 3];
   };
 
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-        case 'Gastronomie': return 'bg-orange-100 text-orange-700';
-        case 'Beauté & Mode': return 'bg-pink-100 text-pink-700';
-        case 'Services': return 'bg-blue-100 text-blue-700';
-        case 'Santé': return 'bg-green-100 text-green-700';
-        case 'Artisanat': return 'bg-purple-100 text-purple-700';
+  const getCategoryColor = (categoryKey: string) => {
+    switch (categoryKey) {
+        case 'gastronomy': return 'bg-orange-100 text-orange-700';
+        case 'beauty': return 'bg-pink-100 text-pink-700';
+        case 'services': return 'bg-blue-100 text-blue-700';
+        case 'health': return 'bg-green-100 text-green-700';
+        case 'crafts': return 'bg-purple-100 text-purple-700';
         default: return 'bg-gray-100 text-gray-700';
       }
   };
@@ -362,18 +376,18 @@ const DirectorySection: React.FC<DirectorySectionProps> = ({ language }) => {
                         <Filter className="h-4 w-4 mr-1" />
                         <span className="text-xs font-bold uppercase tracking-wider">{t.dir_filters}</span>
                     </div>
-                    {CATEGORIES.map(cat => (
+                    {CATEGORY_KEYS.map(catKey => (
                         <button
-                            key={cat}
-                            onClick={() => setSelectedCategory(cat)}
-                            aria-pressed={selectedCategory === cat}
+                            key={catKey}
+                            onClick={() => setSelectedCategoryKey(catKey)}
+                            aria-pressed={selectedCategoryKey === catKey}
                             className={`px-4 py-2.5 rounded-xl text-sm font-bold transition-all transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#CE1126] ${
-                                selectedCategory === cat 
+                                selectedCategoryKey === catKey 
                                 ? 'bg-slate-900 text-white shadow-lg' 
                                 : 'bg-white border border-gray-200 text-gray-600 hover:bg-orange-50 hover:border-orange-200 hover:text-[#CE1126]'
                             }`}
                         >
-                            {cat === 'Tout' ? t.dir_filter_all : cat}
+                            {getCategoryLabel(catKey)}
                         </button>
                     ))}
                 </div>
@@ -469,7 +483,7 @@ const DirectorySection: React.FC<DirectorySectionProps> = ({ language }) => {
                 <h3 className="text-lg font-bold text-gray-900 mb-2">{t.dir_empty_title}</h3>
                 <p className="text-gray-500 max-w-md mx-auto mb-6">{t.dir_empty_desc}</p>
                 <button 
-                    onClick={() => {setSearchTerm(''); setSelectedCategory('Tout')}}
+                    onClick={() => {setSearchTerm(''); setSelectedCategoryKey('all')}}
                     className="text-white bg-[#CE1126] font-bold px-6 py-3 rounded-xl shadow-lg shadow-red-100 hover:bg-red-700 transition-colors"
                 >
                     {t.dir_reset_btn}

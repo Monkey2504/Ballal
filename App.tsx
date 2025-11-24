@@ -9,6 +9,7 @@ import DirectorySection from './components/DirectorySection';
 import LegalAidSection from './components/LegalAidSection';
 import HistorySection from './components/HistorySection';
 import ShareSection from './components/ShareSection';
+import DonationSection from './components/DonationSection';
 import TeamSection from './components/TeamSection';
 import { ViewState, LanguageCode } from './types';
 import { translations } from './utils/translations';
@@ -30,6 +31,7 @@ const App: React.FC = () => {
       [ViewState.LEGAL_AID]: t.nav_legal,
       [ViewState.HISTORY]: t.nav_history,
       [ViewState.SHARE]: t.nav_share,
+      [ViewState.DONATE]: t.btn_donate
     };
 
     // Définition des descriptions par vue (Dynamique via traductions)
@@ -41,7 +43,8 @@ const App: React.FC = () => {
       [ViewState.DIRECTORY]: t.meta_desc_directory,
       [ViewState.LEGAL_AID]: t.meta_desc_legal,
       [ViewState.HISTORY]: t.meta_desc_history,
-      [ViewState.SHARE]: t.meta_desc_share
+      [ViewState.SHARE]: t.meta_desc_share,
+      [ViewState.DONATE]: t.donate_subtitle
     };
 
     // Mise à jour du Document Title
@@ -69,6 +72,7 @@ const App: React.FC = () => {
               onExplore={() => setCurrentView(ViewState.LEGAL_AID)} 
               language={language}
               onShare={() => setCurrentView(ViewState.SHARE)}
+              onDonate={() => setCurrentView(ViewState.DONATE)}
             />
             {/* La section membres est bien ici */}
             <TeamSection language={language} />
@@ -88,6 +92,8 @@ const App: React.FC = () => {
         return <HistorySection language={language} />;
       case ViewState.SHARE:
         return <ShareSection language={language} />;
+      case ViewState.DONATE:
+        return <DonationSection language={language} />;
       default:
         return (
           <>
@@ -95,6 +101,7 @@ const App: React.FC = () => {
               onExplore={() => setCurrentView(ViewState.LEGAL_AID)} 
               language={language}
               onShare={() => setCurrentView(ViewState.SHARE)}
+              onDonate={() => setCurrentView(ViewState.DONATE)}
             />
             <TeamSection language={language} />
           </>

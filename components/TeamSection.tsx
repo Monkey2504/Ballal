@@ -11,10 +11,11 @@ interface TeamSectionProps {
 const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
   const t = translations[language];
 
+  // Using dynamic translations for roles
   const teamMembers = [
     {
       name: "Thierno I. T. Diallo",
-      role: "Administrateur",
+      role: t.role_admin,
       image: "https://i.imgur.com/T2LT1pB.jpg",
       phone: "", 
       email: "", 
@@ -22,7 +23,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
     },
     {
       name: "Bah Ibrahim",
-      role: "Administrateur",
+      role: t.role_admin,
       image: "https://i.imgur.com/l3UdDov.jpg",
       phone: "",
       email: "",
@@ -30,7 +31,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
     },
     {
       name: "Kadiatou Sow",
-      role: "Administratrice", 
+      role: t.role_admin_f, 
       image: "https://i.imgur.com/THTzMBW.jpg",
       phone: "",
       email: "",

@@ -32,6 +32,9 @@ interface Translation {
   hero_asbl: string;
   btn_assist: string;
   btn_donate: string;
+  hero_city_conakry: string;
+  hero_city_brussels: string;
+  hero_city_liege: string;
   
   // Urgent / Legal Aid
   urgent_title: string;
@@ -42,6 +45,7 @@ interface Translation {
   flash_msg_body: string;
   flash_close: string;
   click_for_flash: string;
+  legal_flash_btn: string; // New: Text inside the red flash button
   legal_flash_protection: string;
   legal_flash_screenshot: string;
   legal_strategy_title: string;
@@ -117,6 +121,12 @@ interface Translation {
   dir_contrib_title: string;
   dir_contrib_desc: string;
   dir_suggest_btn: string;
+  // Directory Categories
+  dir_cat_gastronomy: string;
+  dir_cat_beauty: string;
+  dir_cat_services: string;
+  dir_cat_artisanat: string;
+  dir_cat_health: string;
 
   // History
   hist_title: string;
@@ -127,13 +137,26 @@ interface Translation {
   hist_1958_desc?: string;
   hist_1960_title?: string;
   hist_1960_desc?: string;
-  hist_1990_year?: string; // New: label for "1990s"
+  hist_1990_year?: string;
   hist_1990_title?: string;
   hist_1990_desc?: string;
   hist_2000_title?: string;
   hist_2000_desc?: string;
   hist_2024_title?: string;
   hist_2024_desc?: string;
+
+  // Donation
+  donate_title: string;
+  donate_subtitle: string;
+  donate_iban_label: string;
+  donate_communication_label: string;
+  donate_communication_value: string;
+  donate_copy_success: string;
+  donate_impact_title: string;
+  donate_impact_1: string;
+  donate_impact_2: string;
+  donate_impact_3: string;
+  donate_secure_msg: string;
 
   // Share
   share_title: string;
@@ -154,6 +177,8 @@ interface Translation {
   team_collective_strength: string;
   team_join_desc: string;
   contact_btn: string;
+  role_admin: string;
+  role_admin_f: string;
 }
 
 export const translations: Record<LanguageCode, Translation> = {
@@ -185,6 +210,10 @@ export const translations: Record<LanguageCode, Translation> = {
     hero_asbl: "Association Sans But Lucratif",
     btn_assist: "J'ai besoin d'aide",
     btn_donate: "Faire un don",
+    hero_city_conakry: "Conakry",
+    hero_city_brussels: "Bruxelles",
+    hero_city_liege: "Liège",
+
     urgent_title: "Solidarité & Droits",
     urgent_alert: "En cas d'arrestation : Ne signez RIEN sans avocat.",
     legal_intro: "En collaboration avec la Ligue des Droits Humains et le CIRÉ. En cas d'arrestation, le silence est votre meilleure protection.",
@@ -193,6 +222,7 @@ export const translations: Record<LanguageCode, Translation> = {
     flash_msg_body: "\"Je fais valoir mon droit au silence (Salduz). Je demande l'assistance immédiate d'un avocat Pro Deo avant toute audition.\"",
     flash_close: "Fermer",
     click_for_flash: "Cliquez pour le mode urgence",
+    legal_flash_btn: "CLIQUEZ ICI EN CAS D'URGENCE POLICE",
     legal_flash_protection: "Ceci est une protection légale.",
     legal_flash_screenshot: "Capture d'écran conseillée",
     legal_strategy_title: "La Stratégie Papiers",
@@ -225,11 +255,13 @@ export const translations: Record<LanguageCode, Translation> = {
     legal_ally_cire: "Coordination politique des sans-papiers.",
     legal_ally_adde: "L'arme du droit. Fiches juridiques.",
     legal_ally_ldh: "Contre les violences policières.",
+    
     news_section_title: "Les Nouvelles du Pays",
     news_section_subtitle: "Actualités vérifiées en provenance de Conakry",
     read_article: "Lire l'article",
     verified_sources: "Sources vérifiées :",
     refresh_btn: "Actualiser",
+    
     events_title: "Agenda de la Communauté",
     events_subtitle: "Les événements incontournables : Fêtes, Business et Culture.",
     events_refresh: "Actualiser l'agenda",
@@ -237,6 +269,7 @@ export const translations: Record<LanguageCode, Translation> = {
     events_empty: "Aucun événement trouvé",
     events_empty_desc: "Revenez plus tard ou proposez le vôtre.",
     events_ai_disclaimer: "Résultats agrégés via IA.",
+    
     forum_title: "Entraide & Discussions",
     forum_subtitle: "Posez vos questions et échangez avec la communauté.",
     forum_placeholder: "Quoi de neuf ? Posez une question...",
@@ -246,6 +279,7 @@ export const translations: Record<LanguageCode, Translation> = {
     forum_comments: "Commentaires",
     forum_no_comments: "Aucun commentaire.",
     forum_write_comment: "Écrivez un commentaire...",
+    
     dir_title: "Annuaire Pro",
     dir_subtitle: "Retrouvez les commerces et services de la communauté.",
     dir_search_placeholder: "Ex: Restaurant, Coiffeur, Avocat...",
@@ -260,21 +294,46 @@ export const translations: Record<LanguageCode, Translation> = {
     dir_contrib_title: "Vous connaissez une pépite ?",
     dir_contrib_desc: "Aidez-nous à compléter cet annuaire.",
     dir_suggest_btn: "Suggérer une adresse",
+    dir_cat_gastronomy: "Gastronomie",
+    dir_cat_beauty: "Beauté & Mode",
+    dir_cat_services: "Services",
+    dir_cat_artisanat: "Artisanat",
+    dir_cat_health: "Santé",
+
     hist_title: "Notre Histoire",
-    hist_subtitle: "De Conakry à Bruxelles, un parcours de courage.",
+    hist_subtitle: "De la dignité de 1958 à l'intégration d'aujourd'hui : l'épopée d'une communauté résiliente au cœur de l'Europe.",
     hist_did_you_know: "Le saviez-vous ?",
-    hist_stat_text: "Plus de 25.000 personnes d'origine guinéenne vivent en Belgique.",
-    hist_1958_title: "La Dignité",
-    hist_1958_desc: "La Guinée dit NON au Général de Gaulle.",
-    hist_1960_title: "Premiers Étudiants",
-    hist_1960_desc: "Arrivée des boursiers dans les universités belges.",
+    hist_stat_text: "Plus de 25.000 personnes d'origine guinéenne vivent en Belgique, formant l'une des diasporas d'Afrique de l'Ouest les plus dynamiques du Benelux.",
+    
+    // --- TEXTES HISTORIQUES ÉTOFFÉS ---
+    hist_1958_title: "1958 : L'Audace de la Dignité",
+    hist_1958_desc: "Tout commence par un 'NON' retentissant. Le 28 septembre 1958, la Guinée marque l'histoire mondiale en étant la seule colonie française à refuser la communauté proposée par le Général de Gaulle, choisissant l'indépendance immédiate. Ce geste de fierté nationale, porté par Ahmed Sékou Touré, a isolé diplomatiquement le pays mais a forgé une identité indomptable. C'est cet esprit de résistance et de dignité que les premiers Guinéens ont emporté avec eux en quittant la terre natale, posant les bases morales de notre diaspora : la tête haute, quoi qu'il en coûte.",
+    
+    hist_1960_title: "1960-1980 : L'Élite Intellectuelle",
+    hist_1960_desc: "Les premiers ponts avec la Belgique ne furent pas construits par l'exil, mais par le savoir. Durant les deux premières décennies de l'indépendance, des accords bilatéraux ont permis à l'élite étudiante guinéenne de rejoindre les prestigieuses universités belges (ULB, UCL, Liège). Ces pionniers n'étaient pas des réfugiés, mais des boursiers, des futurs ingénieurs, médecins et agronomes venus acquérir des compétences pour bâtir la Guinée. Ils ont formé le premier noyau de notre présence ici, discret mais brillant, excellant dans les auditoires et tissant les premiers liens d'amitié belgo-guinéens.",
+    
     hist_1990_year: "Années 90",
-    hist_1990_title: "L'Exil",
-    hist_1990_desc: "L'instabilité pousse au départ.",
-    hist_2000_title: "3ème Communauté",
-    hist_2000_desc: "La communauté devient majeure en Belgique.",
-    hist_2024_title: "Une Force Vive",
-    hist_2024_desc: "Entrepreneurs, médecins, ouvriers, artistes.",
+    hist_1990_title: "L'Exil et la Survie",
+    hist_1990_desc: "Les années 90 marquent une rupture douloureuse. L'instabilité politique chronique et les crises économiques à Conakry poussent des milliers de Guinéens sur les routes de l'exil. Ce n'est plus une migration choisie, mais une migration subie. La Belgique devient une terre de refuge. C'est l'époque de la débrouille, des demandes d'asile complexes et de la solidarité informelle dans les foyers. C'est dans cette adversité que la communauté a appris à s'organiser, à se serrer les coudes pour survivre, créant les prémices de l'entraide sociale que Ballal incarne aujourd'hui.",
+    
+    hist_2000_title: "2000s : L'Enracinement à Matonge",
+    hist_2000_desc: "Le tournant du millénaire voit la communauté changer de visage. On ne fait plus que passer ; on s'installe. Les familles se regroupent, les premiers enfants nasissent sur le sol belge. Le quartier de Matonge à Bruxelles, et certaines zones de Liège, deviennent des points d'ancrage culturels et économiques. Les commerces guinéens ouvrent, les salons de coiffure deviennent des lieux de débats politiques passionnés. La diaspora devient une force économique, envoyant un soutien vital au pays, tout en commençant à peser dans le tissu associatif bruxellois.",
+    
+    hist_2024_title: "2024 : Une Force Vive et Incontournable",
+    hist_2024_desc: "Aujourd'hui, la communauté guinéenne de Belgique est une réussite d'intégration et de dynamisme. Nous ne sommes plus seulement des demandeurs d'asile, mais des acteurs clés de la société belge. Médecins, avocats, entrepreneurs, artistes, ouvriers qualifiés : les Belgo-Guinéens sont partout. Ballal ASBL est née de cette maturité : la volonté de structurer notre solidarité, de professionnaliser notre aide juridique et de célébrer notre double culture. Nous sommes le pont vivant entre le Fouta, la Basse-Côte, la Haute-Guinée, la Forêt... et le cœur de l'Europe.",
+
+    donate_title: "Soutenir Ballal ASBL",
+    donate_subtitle: "Votre générosité est le moteur de nos actions. Chaque euro versé renforce notre capacité à défendre, aider et unir la communauté.",
+    donate_iban_label: "Compte Bancaire (IBAN)",
+    donate_communication_label: "Communication",
+    donate_communication_value: "Don Ballal ASBL",
+    donate_copy_success: "IBAN copié !",
+    donate_impact_title: "Votre impact est immédiat :",
+    donate_impact_1: "Financer les frais d'avocats et les démarches administratives pour les sans-papiers en situation d'urgence.",
+    donate_impact_2: "Organiser des événements culturels majeurs pour faire rayonner la Guinée en Belgique.",
+    donate_impact_3: "Fournir une aide alimentaire et logistique aux familles nouvellement arrivées ou en grande précarité.",
+    donate_secure_msg: "Scannez pour copier l'IBAN ou utilisez votre application bancaire.",
+
     share_title: "Faites grandir la communauté",
     share_subtitle: "Partagez l'application avec vos proches.",
     share_scan: "Scanner pour rejoindre",
@@ -284,13 +343,16 @@ export const translations: Record<LanguageCode, Translation> = {
     share_via: "Partager via...",
     share_whatsapp: "Envoyer sur WhatsApp",
     share_facebook: "Partager sur Facebook",
+    
     team_title: "Le Conseil d'Administration",
     team_subtitle: "Les administrateurs au service de la communauté.",
     members_title: "Nos Membres",
     members_desc: "Rejoignez une équipe dynamique.",
     team_collective_strength: "La force de Ballal, c'est son collectif.",
     team_join_desc: "Rejoignez une équipe dynamique et engagée pour le rayonnement de la communauté.",
-    contact_btn: "Contacter"
+    contact_btn: "Contacter",
+    role_admin: "Administrateur",
+    role_admin_f: "Administratrice",
   },
   en: {
     nav_home: "Home",
@@ -320,6 +382,10 @@ export const translations: Record<LanguageCode, Translation> = {
     hero_asbl: "Non-Profit Organization",
     btn_assist: "I need help",
     btn_donate: "Donate",
+    hero_city_conakry: "Conakry",
+    hero_city_brussels: "Brussels",
+    hero_city_liege: "Liege",
+
     urgent_title: "Solidarity & Rights",
     urgent_alert: "In case of arrest: Sign NOTHING without a lawyer.",
     legal_intro: "In collaboration with the Human Rights League and CIRÉ. In case of arrest, silence is your best protection.",
@@ -328,6 +394,7 @@ export const translations: Record<LanguageCode, Translation> = {
     flash_msg_body: "\"I invoke my right to remain silent (Salduz). I request immediate assistance from a Pro Deo lawyer before any questioning.\"",
     flash_close: "Close",
     click_for_flash: "Click for Emergency Mode",
+    legal_flash_btn: "CLICK HERE FOR POLICE EMERGENCY",
     legal_flash_protection: "This is legal protection.",
     legal_flash_screenshot: "Screenshot recommended",
     legal_strategy_title: "Paper Strategy",
@@ -360,11 +427,13 @@ export const translations: Record<LanguageCode, Translation> = {
     legal_ally_cire: "Political coordination for undocumented people.",
     legal_ally_adde: "The weapon of law. Legal fact sheets.",
     legal_ally_ldh: "Against police violence.",
+    
     news_section_title: "News from Home",
     news_section_subtitle: "Verified news from Conakry",
     read_article: "Read article",
     verified_sources: "Verified sources:",
     refresh_btn: "Refresh",
+    
     events_title: "Community Agenda",
     events_subtitle: "Key events: Parties, Business, and Culture.",
     events_refresh: "Refresh Agenda",
@@ -372,6 +441,7 @@ export const translations: Record<LanguageCode, Translation> = {
     events_empty: "No events found",
     events_empty_desc: "Come back later or suggest yours.",
     events_ai_disclaimer: "Results aggregated via AI.",
+    
     forum_title: "Help & Discussions",
     forum_subtitle: "Ask questions and chat with the community.",
     forum_placeholder: "What's new? Ask a question...",
@@ -381,6 +451,7 @@ export const translations: Record<LanguageCode, Translation> = {
     forum_comments: "Comments",
     forum_no_comments: "No comments.",
     forum_write_comment: "Write a comment...",
+    
     dir_title: "Pro Directory",
     dir_subtitle: "Find community businesses and services.",
     dir_search_placeholder: "Ex: Restaurant, Barber, Lawyer...",
@@ -395,21 +466,40 @@ export const translations: Record<LanguageCode, Translation> = {
     dir_contrib_title: "Know a hidden gem?",
     dir_contrib_desc: "Help us complete this directory.",
     dir_suggest_btn: "Suggest an address",
+    dir_cat_gastronomy: "Gastronomy",
+    dir_cat_beauty: "Beauty & Fashion",
+    dir_cat_services: "Services",
+    dir_cat_artisanat: "Crafts",
+    dir_cat_health: "Health",
+
     hist_title: "Our History",
-    hist_subtitle: "From Conakry to Brussels, a journey of courage.",
+    hist_subtitle: "From the struggle for independence to integration in Belgium: the epic of a resilient community.",
     hist_did_you_know: "Did you know?",
-    hist_stat_text: "Over 25,000 people of Guinean origin live in Belgium.",
-    hist_1958_title: "Dignity",
-    hist_1958_desc: "Guinea says NO to General de Gaulle.",
-    hist_1960_title: "First Students",
-    hist_1960_desc: "Arrival of scholars in Belgian universities.",
+    hist_stat_text: "Over 25,000 people of Guinean origin live in Belgium, forming one of the most dynamic West African diasporas in the Benelux.",
+    hist_1958_title: "1958: The Audacity of Freedom",
+    hist_1958_desc: "A decisive turning point. On September 28, Guinea marked African history by being the only colony to answer 'NO' to General de Gaulle's referendum. This thirst for immediate sovereignty, driven by Sékou Touré, diplomatically isolated the country but forged a proud and indomitable national identity.",
+    hist_1960_title: "1960-1980: The Era of Intellect",
+    hist_1960_desc: "The first strong links with Belgium were forged through knowledge. Bilateral agreements allowed the Guinean student elite to join the great universities of Liège (ULG) and Brussels (ULB). These pioneers, often engineers or doctors, laid the first stones of our presence.",
     hist_1990_year: "1990s",
-    hist_1990_title: "The Exile",
-    hist_1990_desc: "Instability pushes many to leave.",
-    hist_2000_title: "3rd Community",
-    hist_2000_desc: "The community becomes major in Belgium.",
-    hist_2024_title: "A Vital Force",
-    hist_2024_desc: "Entrepreneurs, doctors, workers, artists.",
+    hist_1990_title: "Exile and Resilience",
+    hist_1990_desc: "A decade of turmoil. Increasing political instability and economic difficulties in Conakry pushed a new wave of Guineans to seek refuge in Europe. It was no longer just migration for studies, but a quest for safety and survival.",
+    hist_2000_title: "2000s: Putting Down Roots",
+    hist_2000_desc: "The community changed its face. Families reunited, children were born here. The Matonge district in Brussels became a cultural rallying point. The first associations organized to structure solidarity. We moved from transit immigration to settlement immigration.",
+    hist_2024_title: "Today: A Vital Force",
+    hist_2024_desc: "A mature and essential diaspora. Belgian-Guineans are now entrepreneurs, doctors, lawyers, skilled workers, and artists. The second generation, born in Belgium, bridges two cultures. Ballal ASBL embodies this success.",
+
+    donate_title: "Support Ballal ASBL",
+    donate_subtitle: "Your generosity funds our legal, social, and cultural actions.",
+    donate_iban_label: "Bank Account (IBAN)",
+    donate_communication_label: "Communication",
+    donate_communication_value: "Donation Ballal ASBL",
+    donate_copy_success: "IBAN copied!",
+    donate_impact_title: "What is your donation used for?",
+    donate_impact_1: "Funding lawyer fees for undocumented people in emergencies.",
+    donate_impact_2: "Organizing cultural events to promote Guinea.",
+    donate_impact_3: "Supporting families in difficulty (food aid, housing).",
+    donate_secure_msg: "Scan to copy IBAN or use your banking app.",
+    
     share_title: "Grow the Community",
     share_subtitle: "Share the app with your loved ones.",
     share_scan: "Scan to join",
@@ -419,14 +509,18 @@ export const translations: Record<LanguageCode, Translation> = {
     share_via: "Share via...",
     share_whatsapp: "Send on WhatsApp",
     share_facebook: "Share on Facebook",
+    
     team_title: "Board of Directors",
     team_subtitle: "Administrators serving the community.",
     members_title: "Our Members",
     members_desc: "Join a dynamic team.",
     team_collective_strength: "Ballal's strength is its collective.",
     team_join_desc: "Join a dynamic team committed to the community's radiance.",
-    contact_btn: "Contact"
+    contact_btn: "Contact",
+    role_admin: "Administrator",
+    role_admin_f: "Administrator",
   },
+  // Other languages kept brief for now, focusing on the French update requested
   nl: {
     nav_home: "Home",
     nav_directory: "Gids",
@@ -455,6 +549,10 @@ export const translations: Record<LanguageCode, Translation> = {
     hero_asbl: "Vereniging zonder winstoogmerk",
     btn_assist: "Ik heb hulp nodig",
     btn_donate: "Doneer",
+    hero_city_conakry: "Conakry",
+    hero_city_brussels: "Brussel",
+    hero_city_liege: "Luik",
+
     urgent_title: "Solidariteit & Rechten",
     urgent_alert: "Bij arrestatie: Teken NIETS zonder advocaat.",
     legal_intro: "In samenwerking met de Liga voor Mensenrechten en CIRÉ. In geval van arrestatie is zwijgen uw beste bescherming.",
@@ -463,6 +561,7 @@ export const translations: Record<LanguageCode, Translation> = {
     flash_msg_body: "\"Ik beroep me op mijn zwijgrecht (Salduz). Ik vraag onmiddellijke bijstand van een Pro Deo advocaat voor elk verhoor.\"",
     flash_close: "Sluiten",
     click_for_flash: "Klik voor Noodmodus",
+    legal_flash_btn: "KLIK HIER BIJ POLITIE NOODGEVAL",
     legal_flash_protection: "Dit is wettelijke bescherming.",
     legal_flash_screenshot: "Screenshot aanbevolen",
     legal_strategy_title: "Papieren Strategie",
@@ -495,11 +594,13 @@ export const translations: Record<LanguageCode, Translation> = {
     legal_ally_cire: "Politieke coördinatie voor mensen zonder papieren.",
     legal_ally_adde: "Het wapen van het recht. Juridische fiches.",
     legal_ally_ldh: "Tegen politiegeweld.",
+    
     news_section_title: "Nieuws uit Thuisland",
     news_section_subtitle: "Geverifieerd nieuws uit Conakry",
     read_article: "Lees artikel",
     verified_sources: "Geverifieerde bronnen:",
     refresh_btn: "Verversen",
+    
     events_title: "Gemeenschapsagenda",
     events_subtitle: "Belangrijke evenementen: Feesten, Zaken en Cultuur.",
     events_refresh: "Agenda verversen",
@@ -507,6 +608,7 @@ export const translations: Record<LanguageCode, Translation> = {
     events_empty: "Geen evenementen gevonden",
     events_empty_desc: "Kom later terug of stel er zelf een voor.",
     events_ai_disclaimer: "Resultaten verzameld via AI.",
+    
     forum_title: "Hulp & Discussies",
     forum_subtitle: "Stel vragen en chat met de gemeenschap.",
     forum_placeholder: "Wat is er nieuw? Stel een vraag...",
@@ -516,6 +618,7 @@ export const translations: Record<LanguageCode, Translation> = {
     forum_comments: "Reacties",
     forum_no_comments: "Geen reacties.",
     forum_write_comment: "Schrijf een reactie...",
+    
     dir_title: "Pro Gids",
     dir_subtitle: "Vind bedrijven en diensten van de gemeenschap.",
     dir_search_placeholder: "Bv: Restaurant, Kapper, Advocaat...",
@@ -530,6 +633,12 @@ export const translations: Record<LanguageCode, Translation> = {
     dir_contrib_title: "Kent u een verborgen parel?",
     dir_contrib_desc: "Help ons deze gids aan te vullen.",
     dir_suggest_btn: "Adres voorstellen",
+    dir_cat_gastronomy: "Gastronomie",
+    dir_cat_beauty: "Schoonheid & Mode",
+    dir_cat_services: "Diensten",
+    dir_cat_artisanat: "Ambachten",
+    dir_cat_health: "Gezondheid",
+
     hist_title: "Onze Geschiedenis",
     hist_subtitle: "Van Conakry naar Brussel, een reis van moed.",
     hist_did_you_know: "Wist u dat?",
@@ -545,6 +654,19 @@ export const translations: Record<LanguageCode, Translation> = {
     hist_2000_desc: "De gemeenschap wordt belangrijk in België.",
     hist_2024_title: "Levende Kracht",
     hist_2024_desc: "Ondernemers, artsen, arbeiders, kunstenaars.",
+
+    donate_title: "Steun Ballal ASBL",
+    donate_subtitle: "Uw vrijgevigheid financiert onze juridische en sociale acties.",
+    donate_iban_label: "Bankrekening (IBAN)",
+    donate_communication_label: "Mededeling",
+    donate_communication_value: "Gift Ballal ASBL",
+    donate_copy_success: "IBAN gekopieerd!",
+    donate_impact_title: "Waarvoor dient uw gift?",
+    donate_impact_1: "Juridische kosten voor mensen zonder papieren.",
+    donate_impact_2: "Organisatie van culturele evenementen.",
+    donate_impact_3: "Steun aan gezinnen in moeilijkheden.",
+    donate_secure_msg: "Scan om IBAN te kopiëren.",
+    
     share_title: "Laat de gemeenschap groeien",
     share_subtitle: "Deel de app met uw naasten.",
     share_scan: "Scan om deel te nemen",
@@ -554,13 +676,16 @@ export const translations: Record<LanguageCode, Translation> = {
     share_via: "Delen via...",
     share_whatsapp: "Verstuur via WhatsApp",
     share_facebook: "Delen op Facebook",
+    
     team_title: "Raad van Bestuur",
     team_subtitle: "Beheerders ten dienste van de gemeenschap.",
     members_title: "Onze Leden",
     members_desc: "Sluit je aan bij een dynamisch team.",
     team_collective_strength: "De kracht van Ballal is het collectief.",
     team_join_desc: "Word lid van een dynamisch team dat zich inzet voor de gemeenschap.",
-    contact_btn: "Contact"
+    contact_btn: "Contact",
+    role_admin: "Bestuurder",
+    role_admin_f: "Bestuurder",
   },
   es: {
     nav_home: "Inicio",
@@ -590,6 +715,10 @@ export const translations: Record<LanguageCode, Translation> = {
     hero_asbl: "Organización Sin Fines de Lucro",
     btn_assist: "Necesito ayuda",
     btn_donate: "Donar",
+    hero_city_conakry: "Conakri",
+    hero_city_brussels: "Bruselas",
+    hero_city_liege: "Lieja",
+
     urgent_title: "Solidaridad y Derechos",
     urgent_alert: "En caso de arresto: NO firme NADA sin abogado.",
     legal_intro: "En colaboración con la Liga de Derechos Humanos y CIRÉ. En caso de arresto, el silencio es su mejor protección.",
@@ -598,6 +727,7 @@ export const translations: Record<LanguageCode, Translation> = {
     flash_msg_body: "\"Invoco mi derecho a guardar silencio (Salduz). Solicito asistencia inmediata de un abogado de oficio antes de cualquier interrogatorio.\"",
     flash_close: "Cerrar",
     click_for_flash: "Clic para Modo Emergencia",
+    legal_flash_btn: "CLIC AQUÍ EN CASO DE EMERGENCIA POLICIAL",
     legal_flash_protection: "Esta es una protección legal.",
     legal_flash_screenshot: "Captura de pantalla recomendada",
     legal_strategy_title: "Estrategia de Papeles",
@@ -630,11 +760,13 @@ export const translations: Record<LanguageCode, Translation> = {
     legal_ally_cire: "Coordinación política para indocumentados.",
     legal_ally_adde: "El arma de la ley. Fichas jurídicas.",
     legal_ally_ldh: "Contra la violencia policial.",
+    
     news_section_title: "Noticias del País",
     news_section_subtitle: "Noticias verificadas de Conakry",
     read_article: "Leer artículo",
     verified_sources: "Fuentes verificadas:",
     refresh_btn: "Actualizar",
+    
     events_title: "Agenda Comunitaria",
     events_subtitle: "Eventos clave: Fiestas, Negocios y Cultura.",
     events_refresh: "Actualizar agenda",
@@ -642,6 +774,7 @@ export const translations: Record<LanguageCode, Translation> = {
     events_empty: "No hay eventos",
     events_empty_desc: "Vuelva más tarde o proponga uno.",
     events_ai_disclaimer: "Resultados agregados por IA.",
+    
     forum_title: "Ayuda y Discusiones",
     forum_subtitle: "Haga preguntas y charle con la comunidad.",
     forum_placeholder: "¿Qué hay de nuevo?",
@@ -651,6 +784,7 @@ export const translations: Record<LanguageCode, Translation> = {
     forum_comments: "Comentarios",
     forum_no_comments: "Sin comentarios.",
     forum_write_comment: "Escriba un comentario...",
+    
     dir_title: "Directorio Pro",
     dir_subtitle: "Encuentre comercios y servicios comunitarios.",
     dir_search_placeholder: "Ej: Restaurante, Peluquero, Abogado...",
@@ -665,6 +799,12 @@ export const translations: Record<LanguageCode, Translation> = {
     dir_contrib_title: "¿Conoce una joya oculta?",
     dir_contrib_desc: "Ayúdenos a completar este directorio.",
     dir_suggest_btn: "Sugerir dirección",
+    dir_cat_gastronomy: "Gastronomía",
+    dir_cat_beauty: "Belleza y Moda",
+    dir_cat_services: "Servicios",
+    dir_cat_artisanat: "Artesanía",
+    dir_cat_health: "Salud",
+
     hist_title: "Nuestra Historia",
     hist_subtitle: "De Conakry a Bruselas, un viaje de coraje.",
     hist_did_you_know: "¿Sabía que?",
@@ -680,6 +820,19 @@ export const translations: Record<LanguageCode, Translation> = {
     hist_2000_desc: "La comunidad se vuelve importante en Bélgica.",
     hist_2024_title: "Fuerza Vital",
     hist_2024_desc: "Emprendedores, médicos, obreros, artistas.",
+
+    donate_title: "Apoye a Ballal ASBL",
+    donate_subtitle: "Su generosidad financia nuestras acciones.",
+    donate_iban_label: "Cuenta Bancaria (IBAN)",
+    donate_communication_label: "Comunicación",
+    donate_communication_value: "Donación Ballal ASBL",
+    donate_copy_success: "IBAN copiado!",
+    donate_impact_title: "¿Para qué sirve su donación?",
+    donate_impact_1: "Honorarios legales para indocumentados.",
+    donate_impact_2: "Eventos culturales.",
+    donate_impact_3: "Ayuda a familias.",
+    donate_secure_msg: "Escanee para copiar IBAN.",
+    
     share_title: "Haga crecer la comunidad",
     share_subtitle: "Comparta la aplicación con sus seres queridos.",
     share_scan: "Escanear para unirse",
@@ -689,13 +842,16 @@ export const translations: Record<LanguageCode, Translation> = {
     share_via: "Compartir vía...",
     share_whatsapp: "Enviar por WhatsApp",
     share_facebook: "Compartir en Facebook",
+    
     team_title: "Junta Directiva",
     team_subtitle: "Administradores al servicio de la comunidad.",
     members_title: "Nuestros Miembros",
     members_desc: "Únete a un equipo dinámico.",
     team_collective_strength: "La fuerza de Ballal es su colectivo.",
     team_join_desc: "Únase a un equipo dinámico comprometido con la comunidad.",
-    contact_btn: "Contactar"
+    contact_btn: "Contactar",
+    role_admin: "Administrador",
+    role_admin_f: "Administradora",
   },
   ar: {
     nav_home: "الرئيسية",
@@ -725,6 +881,10 @@ export const translations: Record<LanguageCode, Translation> = {
     hero_asbl: "منظمة غير ربحية",
     btn_assist: "أحتاج مساعدة",
     btn_donate: "تبرع",
+    hero_city_conakry: "كوناكري",
+    hero_city_brussels: "بروكسل",
+    hero_city_liege: "لييج",
+
     urgent_title: "تضامن وحقوق",
     urgent_alert: "في حالة الاعتقال: لا توقع على شيء بدون محام.",
     legal_intro: "بالتعاون مع رابطة حقوق الإنسان و CIRÉ. في حالة الاعتقال، الصمت هو أفضل حماية لك.",
@@ -733,6 +893,7 @@ export const translations: Record<LanguageCode, Translation> = {
     flash_msg_body: "\"أتمسك بحقي في التزام الصمت (Salduz). أطلب مساعدة فورية من محامٍ مجاني قبل أي استجواب.\"",
     flash_close: "إغلاق",
     click_for_flash: "اضغط لوضع الطوارئ",
+    legal_flash_btn: "اضغط هنا في حالة طوارئ الشرطة",
     legal_flash_protection: "هذه حماية قانونية.",
     legal_flash_screenshot: "يُنصح بأخذ لقطة شاشة",
     legal_strategy_title: "استراتيجية الأوراق",
@@ -765,11 +926,13 @@ export const translations: Record<LanguageCode, Translation> = {
     legal_ally_cire: "تنسيق سياسي للمهاجرين غير الشرعيين.",
     legal_ally_adde: "سلاح القانون. صحائف قانونية.",
     legal_ally_ldh: "ضد عنف الشرطة.",
+    
     news_section_title: "أخبار الوطن",
     news_section_subtitle: "أخبار موثقة من كوناكري",
     read_article: "اقرأ المقال",
     verified_sources: "مصادر موثقة:",
     refresh_btn: "تحديث",
+    
     events_title: "أجندة المجتمع",
     events_subtitle: "أحداث رئيسية: حفلات، أعمال، وثقافة.",
     events_refresh: "تحديث الأجندة",
@@ -777,6 +940,7 @@ export const translations: Record<LanguageCode, Translation> = {
     events_empty: "لا توجد أحداث",
     events_empty_desc: "عد لاحقاً أو اقترح حدثاً.",
     events_ai_disclaimer: "نتائج مجمعة عبر الذكاء الاصطناعي.",
+    
     forum_title: "مساعدة ونقاشات",
     forum_subtitle: "اسأل وتحدث مع المجتمع.",
     forum_placeholder: "ما الجديد؟ اسأل سؤالاً...",
@@ -786,6 +950,7 @@ export const translations: Record<LanguageCode, Translation> = {
     forum_comments: "تعليقات",
     forum_no_comments: "لا تعليقات.",
     forum_write_comment: "اكتب تعليقاً...",
+    
     dir_title: "دليل المحترفين",
     dir_subtitle: "اعثر على متاجر وخدمات المجتمع.",
     dir_search_placeholder: "مثال: مطعم، حلاق، محامي...",
@@ -800,6 +965,12 @@ export const translations: Record<LanguageCode, Translation> = {
     dir_contrib_title: "هل تعرف مكاناً مميزاً؟",
     dir_contrib_desc: "ساعدنا في إكمال هذا الدليل.",
     dir_suggest_btn: "اقترح عنواناً",
+    dir_cat_gastronomy: "فن الطهي",
+    dir_cat_beauty: "جمال وموضة",
+    dir_cat_services: "خدمات",
+    dir_cat_artisanat: "حرف يدوية",
+    dir_cat_health: "صحة",
+
     hist_title: "تاريخنا",
     hist_subtitle: "من كوناكري إلى بروكسل، رحلة شجاعة.",
     hist_did_you_know: "هل تعلم؟",
@@ -815,6 +986,19 @@ export const translations: Record<LanguageCode, Translation> = {
     hist_2000_desc: "أصبح المجتمع رئيسياً في بلجيكا.",
     hist_2024_title: "قوة حيوية",
     hist_2024_desc: "رواد أعمال، أطباء، عمال، فنانون.",
+
+    donate_title: "ادعم Ballal ASBL",
+    donate_subtitle: "سخاؤكم يمول أعمالنا القانونية والاجتماعية.",
+    donate_iban_label: "الحساب البنكي (IBAN)",
+    donate_communication_label: "تواصل",
+    donate_communication_value: "تبرع Ballal ASBL",
+    donate_copy_success: "تم نسخ IBAN!",
+    donate_impact_title: "فيم يستخدم تبرعك؟",
+    donate_impact_1: "تكاليف المحامين للمهاجرين.",
+    donate_impact_2: "أحداث ثقافية.",
+    donate_impact_3: "دعم العائلات.",
+    donate_secure_msg: "امسح لنسخ IBAN.",
+    
     share_title: "تنمية المجتمع",
     share_subtitle: "شارك التطبيق مع أحبائك.",
     share_scan: "امسح للانضمام",
@@ -824,13 +1008,16 @@ export const translations: Record<LanguageCode, Translation> = {
     share_via: "مشاركة عبر...",
     share_whatsapp: "إرسال عبر واتساب",
     share_facebook: "مشاركة على فيسبوك",
+    
     team_title: "مجلس الإدارة",
     team_subtitle: "مديرون في خدمة المجتمع.",
     members_title: "أعضاؤنا",
     members_desc: "انضم إلى فريق ديناميكي.",
     team_collective_strength: "قوة بالال في جماعته.",
     team_join_desc: "انضم إلى فريق ديناميكي ملتزم بخدمة المجتمع.",
-    contact_btn: "اتصال"
+    contact_btn: "اتصال",
+    role_admin: "مسؤول",
+    role_admin_f: "مسؤولة",
   },
   pe: {
     nav_home: "Hoɗo",
@@ -860,6 +1047,10 @@ export const translations: Record<LanguageCode, Translation> = {
     hero_asbl: "Fedde nde yonaa fii riba",
     btn_assist: "Miɗo haajaa ballal",
     btn_donate: "Okku",
+    hero_city_conakry: "Konaakiri",
+    hero_city_brussels: "Burusil",
+    hero_city_liege: "Liege",
+
     urgent_title: "Ballal & Hakke",
     urgent_alert: "Si a nanngaama: WATA A SIINYUU HAY HUUNDE si a alaa awoka.",
     legal_intro: "Gondidal e Ligue des Droits Humains e CIRÉ. Si a nanngaama, deƴƴugol no ɓuri.",
@@ -868,6 +1059,7 @@ export const translations: Record<LanguageCode, Translation> = {
     flash_msg_body: "\"Miɗo jogii hakke deƴƴude (Salduz). Miɗo ɗaɓɓa ballal awoka Pro Deo kisan ado mi lamndaade.\"",
     flash_close: "Uddu",
     click_for_flash: "Dobbo ɗoo fii Noodi",
+    legal_flash_btn: "DOBBO ƊOO FII NOODI POLISI",
     legal_flash_protection: "Ɗum ko aarugol sariya.",
     legal_flash_screenshot: "Nanggu foto (Screenshot)",
     legal_strategy_title: "Pewje Kayitaaji",
@@ -900,11 +1092,13 @@ export const translations: Record<LanguageCode, Translation> = {
     legal_ally_cire: "Fedde walloore ɓe alaa kayit.",
     legal_ally_adde: "Ballal Sariya.",
     legal_ally_ldh: "Fii haɓugol bonki polisi.",
+    
     news_section_title: "Kibaruuji Leydi",
     news_section_subtitle: "Kibaruuji ƴeewtaɗi iwɗi Konaakiri",
     read_article: "Jannge winndannde nden",
     verified_sources: "Iwdiiji ƴeewtaɗi:",
     refresh_btn: "Heggintin",
+    
     events_title: "Kewuuji Renndo",
     events_subtitle: "Kewuuji mawɗi: Welatigi, Jula, e Pinal.",
     events_refresh: "Heggintin",
@@ -912,6 +1106,7 @@ export const translations: Record<LanguageCode, Translation> = {
     events_empty: "Hay huunde heɓaaka",
     events_empty_desc: "Rutto ɓaawo walla addu miijo.",
     events_ai_disclaimer: "Njiitari e AI.",
+    
     forum_title: "Ballal & Batus",
     forum_subtitle: "Lamndo e yewtido e yimɓe ɓen.",
     forum_placeholder: "Ko honɗum hebi? Lamndo...",
@@ -921,6 +1116,7 @@ export const translations: Record<LanguageCode, Translation> = {
     forum_comments: "Yewtere",
     forum_no_comments: "Alaa yewtere.",
     forum_write_comment: "Winndu yewtere...",
+    
     dir_title: "Defte Golle",
     dir_subtitle: "Heɓu bitikiiji e golle yimɓe men.",
     dir_search_placeholder: "Misal: Ñamliirdu, Pemmboowo, Awoka...",
@@ -935,6 +1131,12 @@ export const translations: Record<LanguageCode, Translation> = {
     dir_contrib_title: "Hiɗa andi nokku belɗo?",
     dir_contrib_desc: "Wallu men timmingol.",
     dir_suggest_btn: "Okku aderes",
+    dir_cat_gastronomy: "Ñamri",
+    dir_cat_beauty: "Pinal & Fannu",
+    dir_cat_services: "Gollal",
+    dir_cat_artisanat: "Gollal Juuɗe",
+    dir_cat_health: "Cellal",
+
     hist_title: "Tarikh Men",
     hist_subtitle: "Iwde Konaakiri faa Burusil, laawol cuusal.",
     hist_did_you_know: "Aɗa andino?",
@@ -950,6 +1152,19 @@ export const translations: Record<LanguageCode, Translation> = {
     hist_2000_desc: "Gineyankooɓe heewii.",
     hist_2024_title: "Semmbe",
     hist_2024_desc: "Jula, Dokotoro, Goloowo.",
+
+    donate_title: "Wallu Ballal ASBL",
+    donate_subtitle: "Ballal maa na walla golle men.",
+    donate_iban_label: "Konte Banki (IBAN)",
+    donate_communication_label: "Winndannde",
+    donate_communication_value: "Okku Ballal ASBL",
+    donate_copy_success: "IBAN heɓaama!",
+    donate_impact_title: "Ko honɗum nafa?",
+    donate_impact_1: "Sare awoka.",
+    donate_impact_2: "Kewuuji pinal.",
+    donate_impact_3: "Ballal miskiino.",
+    donate_secure_msg: "Scan fii IBAN.",
+    
     share_title: "Mawnin Fedde Nden",
     share_subtitle: "Lollin application on.",
     share_scan: "Scan fii naatugol",
@@ -959,13 +1174,16 @@ export const translations: Record<LanguageCode, Translation> = {
     share_via: "Lollin...",
     share_whatsapp: "Neldu WhatsApp",
     share_facebook: "Lollin Facebook",
+    
     team_title: "Ardiiɓe Ɓen",
     team_subtitle: "Yimɓe golloowo fii renndo ngon.",
     members_title: "Yimɓe Men",
     members_desc: "Naatu e fedde nden.",
     team_collective_strength: "Semmbe Ballal ko gondidal.",
     team_join_desc: "Naatu e fedde men fii ɓamtaare.",
-    contact_btn: "Jokku"
+    contact_btn: "Jokku",
+    role_admin: "Ardiido",
+    role_admin_f: "Ardiido",
   },
   ma: {
     nav_home: "So",
@@ -995,6 +1213,10 @@ export const translations: Record<LanguageCode, Translation> = {
     hero_asbl: "Tòn min tɛ nàfolo ɲini",
     btn_assist: "N'mako bè dèmè la",
     btn_donate: "Di",
+    hero_city_conakry: "Conakry",
+    hero_city_brussels: "Bruxelles",
+    hero_city_liege: "Liège",
+
     urgent_title: "Dèmè & Hakè",
     urgent_alert: "Ni i minèna: KANA SÈBÈN FÒY ni avoka t'i fè.",
     legal_intro: "An ni Ligue des Droits Humains ni CIRÉ. Ni i minèna, makun.",
@@ -1003,6 +1225,7 @@ export const translations: Record<LanguageCode, Translation> = {
     flash_msg_body: "\"N'bè n'ka hakè ta ka makun (Salduz). N'bè dèmè ɲini avoka Pro Deo la sani n'ka ɲininka.\"",
     flash_close: "Datugu",
     click_for_flash: "Digi yòrò nin na",
+    legal_flash_btn: "DIGI YÒRÒ NIN NA NI POLISI GÈLÈYA BÈ",
     legal_flash_protection: "Nin ye sariya lakana ye.",
     legal_flash_screenshot: "Foto ta",
     legal_strategy_title: "Sèbèn Pèpè",
@@ -1035,11 +1258,13 @@ export const translations: Record<LanguageCode, Translation> = {
     legal_ally_cire: "Mògòw minnu t'i dèmè.",
     legal_ally_adde: "Sariya ka sèbènw.",
     legal_ally_ldh: "Kama polisi tè se ka i gosi.",
+    
     news_section_title: "Jamana Kibaro",
     news_section_subtitle: "Kibaro vèrifiyèlen ka bò Conakry",
     read_article: "Kalan",
     verified_sources: "Yòrò vèrifiyèlen:",
     refresh_btn: "Kura",
+    
     events_title: "Jama Gwa",
     events_subtitle: "Kewale: Dònkili, Jagokè, Pinal.",
     events_refresh: "Gwa kura",
@@ -1047,6 +1272,7 @@ export const translations: Record<LanguageCode, Translation> = {
     events_empty: "Fòy ma sòrò",
     events_empty_desc: "Segi ka na wala fèn fò.",
     events_ai_disclaimer: "Sòròlen AI fè.",
+    
     forum_title: "Dèmè & Baro",
     forum_subtitle: "Ɲininka ni baro kè.",
     forum_placeholder: "Mun bè yen? Ɲininka...",
@@ -1056,6 +1282,7 @@ export const translations: Record<LanguageCode, Translation> = {
     forum_comments: "Kuma",
     forum_no_comments: "Kuma tɛ yen.",
     forum_write_comment: "Sèbèn kè...",
+    
     dir_title: "Baara Sèbèn",
     dir_subtitle: "Baara ni dèmè yòròw ɲini.",
     dir_search_placeholder: "Misali: Dumuniyòrò, Kunsigila, Avoka...",
@@ -1070,6 +1297,12 @@ export const translations: Record<LanguageCode, Translation> = {
     dir_contrib_title: "I yòrò ɲuman dòn wa?",
     dir_contrib_desc: "An dèmè.",
     dir_suggest_btn: "Yòrò fò",
+    dir_cat_gastronomy: "Dumuni",
+    dir_cat_beauty: "Masiri",
+    dir_cat_services: "Baara",
+    dir_cat_artisanat: "Nùgu",
+    dir_cat_health: "Kènèya",
+
     hist_title: "An Ka Tariku",
     hist_subtitle: "Ka bò Conakry ka na Bruxelles.",
     hist_did_you_know: "Yala i b'a dòn wa?",
@@ -1085,6 +1318,19 @@ export const translations: Record<LanguageCode, Translation> = {
     hist_2000_desc: "Guinéekaw cayara.",
     hist_2024_title: "Sembe",
     hist_2024_desc: "Jagokèlaw, Dòkòtòròw.",
+
+    donate_title: "Dèmè Ballal ASBL",
+    donate_subtitle: "I ka dèmè bè an ka baara kè.",
+    donate_iban_label: "Banki (IBAN)",
+    donate_communication_label: "Sèbèn",
+    donate_communication_value: "Dèmè Ballal ASBL",
+    donate_copy_success: "IBAN ta!",
+    donate_impact_title: "Mun nafa?",
+    donate_impact_1: "Avoka sara.",
+    donate_impact_2: "Gwa kè.",
+    donate_impact_3: "Dèmè denbaya.",
+    donate_secure_msg: "Scan fii IBAN.",
+    
     share_title: "Jama Bonya",
     share_subtitle: "App ci i teriw ma.",
     share_scan: "Scan ka na",
@@ -1094,13 +1340,16 @@ export const translations: Record<LanguageCode, Translation> = {
     share_via: "Ci fɛ...",
     share_whatsapp: "Ci WhatsApp la",
     share_facebook: "Ci Facebook la",
+    
     team_title: "Kuntigiw",
     team_subtitle: "Mògò minnu bè baara la.",
     members_title: "An Mògòw",
     members_desc: "Na an fè.",
     team_collective_strength: "Ballal ka sembe ye kelenya ye.",
     team_join_desc: "Na fara an kan.",
-    contact_btn: "Wele"
+    contact_btn: "Wele",
+    role_admin: "Kuntigi",
+    role_admin_f: "Kuntigi Muso",
   },
   su: {
     nav_home: "Bokhi",
@@ -1130,6 +1379,10 @@ export const translations: Record<LanguageCode, Translation> = {
     hero_asbl: "Kulu naxan mu kòbiri fenma",
     btn_assist: "N'mako dèmè ma",
     btn_donate: "Kikhè",
+    hero_city_conakry: "Conakry",
+    hero_city_brussels: "Bruxelles",
+    hero_city_liege: "Liege",
+
     urgent_title: "Dèmè & Kiti",
     urgent_alert: "Kha i suxu: I NAKHA SÈBÈ SESE si avoka mu na.",
     legal_intro: "Muxu nun Ligue des Droits Humains nun CIRÉ. Kha i suxu, i dundhu.",
@@ -1138,6 +1391,7 @@ export const translations: Record<LanguageCode, Translation> = {
     flash_msg_body: "\"N'bara n'yètè suxu (Salduz). N'wama avoka Pro Deo xulun yò.\"",
     flash_close: "Balan",
     click_for_flash: "I xöningè be",
+    legal_flash_btn: "XÖNINGÈ BE KHA POLISI TÒÒRÒ NA",
     legal_flash_protection: "Yakhui sariya nan ya.",
     legal_flash_screenshot: "Foto suxu",
     legal_strategy_title: "Kèyè Fe",
@@ -1170,11 +1424,13 @@ export const translations: Record<LanguageCode, Translation> = {
     legal_ally_cire: "Dèmè mikhi naxan mu kèyè na.",
     legal_ally_adde: "Sariya Sèbèli.",
     legal_ally_ldh: "Gele polisi xa.",
+    
     news_section_title: "Lèydi Kibare",
     news_section_subtitle: "Kibare kèli Conakry",
     read_article: "Karan",
     verified_sources: "Yòrò yètè:",
     refresh_btn: "Nènè",
+    
     events_title: "Jama Loncè",
     events_subtitle: "Kewali: Dònkili, Yula, Pinal.",
     events_refresh: "Nènè",
@@ -1182,6 +1438,7 @@ export const translations: Record<LanguageCode, Translation> = {
     events_empty: "Sese mu to",
     events_empty_desc: "Fa gbèdè wala i gbe fò.",
     events_ai_disclaimer: "AI nan a ramini.",
+    
     forum_title: "Dèmè & Wöyongö",
     forum_subtitle: "Maxòrin nun falan.",
     forum_placeholder: "Mun na? Maxòrin...",
@@ -1191,6 +1448,7 @@ export const translations: Record<LanguageCode, Translation> = {
     forum_comments: "Falan",
     forum_no_comments: "Falan mu na.",
     forum_write_comment: "Sèbè...",
+    
     dir_title: "Wali Yulè",
     dir_subtitle: "Wali nun dèmè to.",
     dir_search_placeholder: "Misali: Donse, Xunsalan, Avoka...",
@@ -1205,6 +1463,12 @@ export const translations: Record<LanguageCode, Translation> = {
     dir_contrib_title: "I yòrò to?",
     dir_contrib_desc: "Muxu dèmè.",
     dir_suggest_btn: "Yòrò fò",
+    dir_cat_gastronomy: "Donse",
+    dir_cat_beauty: "Xunsalan",
+    dir_cat_services: "Wali",
+    dir_cat_artisanat: "Yire",
+    dir_cat_health: "Kènèya",
+
     hist_title: "Muxu Xa Tarikh",
     hist_subtitle: "Kèli Conakry fa Bruxelles.",
     hist_did_you_know: "I a kolon?",
@@ -1220,6 +1484,19 @@ export const translations: Record<LanguageCode, Translation> = {
     hist_2000_desc: "Guineeka wuya.",
     hist_2024_title: "Sèmbè",
     hist_2024_desc: "Yula, Dòkhòtòrò, Wali.",
+
+    donate_title: "Mali Ballal ASBL",
+    donate_subtitle: "I xa kòbiri na muxu malima.",
+    donate_iban_label: "Banki (IBAN)",
+    donate_communication_label: "Sèbèli",
+    donate_communication_value: "Kikhè Ballal ASBL",
+    donate_copy_success: "IBAN tongo!",
+    donate_impact_title: "Mun nafa?",
+    donate_impact_1: "Avoka sara.",
+    donate_impact_2: "Loncè ra.",
+    donate_impact_3: "Dèmè denbaya.",
+    donate_secure_msg: "Scan fii IBAN.",
+    
     share_title: "Jama Xunmasa",
     share_subtitle: "App masiga i xònyè ma.",
     share_scan: "Scan",
@@ -1229,12 +1506,15 @@ export const translations: Record<LanguageCode, Translation> = {
     share_via: "Masiga...",
     share_whatsapp: "WhatsApp",
     share_facebook: "Facebook",
+    
     team_title: "Kuntigi",
     team_subtitle: "Mikhi naxan wali kèma.",
     members_title: "Muxu Mikhi",
     members_desc: "Fa muxu fòkhò ra.",
     team_collective_strength: "Ballal sèmbè na a kulu nan yi.",
     team_join_desc: "Fa lu muxu fòkhò ra.",
-    contact_btn: "Kolo"
+    contact_btn: "Kolo",
+    role_admin: "Kuntigi",
+    role_admin_f: "Kuntigi Ginè",
   }
 };

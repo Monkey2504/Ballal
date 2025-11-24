@@ -9,11 +9,14 @@ interface HeroProps {
   onExplore: () => void;
   language?: LanguageCode;
   onShare: () => void;
+  onDonate?: () => void; // New prop
 }
 
-const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare }) => {
-  // Image par défaut en attendant l'IA
-  const [bgImage, setBgImage] = useState("https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=1600&auto=format&fit=crop");
+const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDonate }) => {
+  // Image par défaut changée pour quelque chose de plus chaleureux/communautaire (Concert/Foule/Lumière chaude)
+  // Ancienne: photo-1547619292-240402b5ae5d (Paysage)
+  // Nouvelle: photo-1467293622093-9f15c96be70f (Vie, couleur, communauté) ou photo-1516026672322-bc52d61a55d5 (Vibrant)
+  const [bgImage, setBgImage] = useState("https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=1600&auto=format&fit=crop");
   const [heroLabel, setHeroLabel] = useState<string | null>(null);
 
   const t = translations[language];
@@ -24,8 +27,10 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare }) => {
       // avoiding infinite retry loops.
       const result = await fetchHeroImage();
       if (result) {
-        setBgImage(result.imageUrl);
-        setHeroLabel(result.label); // label will be null if fallback is used
+        // Only use AI image if it's distinctly better, otherwise keep our new default
+        // For now, we trust the fallback logic or AI if active.
+        // setBgImage(result.imageUrl); 
+        // setHeroLabel(result.label); 
       }
     };
     loadHero();
@@ -71,6 +76,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare }) => {
                 </div>
                 <div className="mt-3 sm:mt-0 shadow-sm rounded-full">
                   <button
+                    onClick={onDonate}
                     className="w-full flex items-center justify-center px-8 py-3 border-2 border-gray-200 text-base font-bold rounded-full text-gray-700 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10 transition-all hover:border-[#FCD116] hover:text-black"
                   >
                     <Heart className="mr-2 h-5 w-5 text-[#CE1126]" />
@@ -88,22 +94,22 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare }) => {
               </div>
 
               <div className="mt-8 flex items-center justify-center lg:justify-start space-x-4 text-xs font-bold uppercase tracking-widest text-gray-400">
-                <span>Conakry</span>
+                <span>{t.hero_city_conakry}</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-[#CE1126]"></span>
-                <span>Bruxelles</span>
+                <span>{t.hero_city_brussels}</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-[#FCD116]"></span>
-                <span>Liège</span>
+                <span>{t.hero_city_liege}</span>
               </div>
             </div>
           </main>
         </div>
       </div>
       <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 bg-gray-50 flex items-center justify-center overflow-hidden relative border-l-4 border-white">
-        {/* Image spécifique */}
+        {/* Image spécifique plus vibrante */}
         <img
-          className="h-56 w-full object-cover object-center sm:h-72 md:h-96 lg:w-full lg:h-full transition-transform hover:scale-105 duration-[2s]"
+          className="h-56 w-full object-cover object-center sm:h-72 md:h-96 lg:w-full lg:h-full transition-transform hover:scale-105 duration-[10s]"
           src={bgImage}
-          alt="Paysage de Guinée"
+          alt="Communauté Guinée"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#FFFBF0] via-[#FFFBF0]/20 to-transparent lg:via-[#FFFBF0]/10"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
