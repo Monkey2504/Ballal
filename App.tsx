@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -11,6 +10,7 @@ import HistorySection from './components/HistorySection';
 import ShareSection from './components/ShareSection';
 import DonationSection from './components/DonationSection';
 import TeamSection from './components/TeamSection';
+import Footer from './components/Footer';
 import { ViewState, LanguageCode } from './types';
 import { translations } from './utils/translations';
 
@@ -110,7 +110,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-african-pattern text-slate-900 font-sans">
+    <div className="min-h-screen bg-african-pattern text-slate-900 font-sans flex flex-col">
       <a 
         href="#main-content" 
         className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[#CE1126] focus:text-white focus:font-bold focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-4 focus:ring-yellow-400"
@@ -125,9 +125,11 @@ const App: React.FC = () => {
         setLanguage={setLanguage} 
       />
       
-      <main id="main-content" tabIndex={-1} className="outline-none">
+      <main id="main-content" tabIndex={-1} className="outline-none flex-grow">
         {renderView()}
       </main>
+
+      <Footer language={language} />
     </div>
   );
 };
