@@ -1,4 +1,5 @@
 
+
 import React, { useState } from 'react';
 import { Menu, X, HeartHandshake, Globe, Share2, Users } from 'lucide-react';
 import { ViewState, LanguageCode } from '../types';
@@ -31,7 +32,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
   const navItems = [
     { label: t.nav_home, value: ViewState.HOME },
     { label: t.nav_legal, value: ViewState.LEGAL_AID }, // Positionné juste après l'accueil
-    { label: t.nav_directory, value: ViewState.DIRECTORY },
     { label: t.nav_news, value: ViewState.NEWS },
     { label: t.nav_events, value: ViewState.EVENTS },
     { label: t.nav_history, value: ViewState.HISTORY },
@@ -42,6 +42,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
     { code: 'fr', label: 'Français' },
     { code: 'en', label: 'English' },
     { code: 'nl', label: 'Nederlands' },
+    { code: 'de', label: 'Deutsch' },
     { code: 'es', label: 'Español' },
     { code: 'ar', label: 'العربية' },
     { code: 'pe', label: 'Pular' },

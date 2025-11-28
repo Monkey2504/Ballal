@@ -1,10 +1,11 @@
+
+
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import NewsSection from './components/NewsSection';
 import EventsSection from './components/EventsSection';
 import ForumSection from './components/ForumSection';
-import DirectorySection from './components/DirectorySection';
 import LegalAidSection from './components/LegalAidSection';
 import HistorySection from './components/HistorySection';
 import ShareSection from './components/ShareSection';
@@ -27,7 +28,6 @@ const App: React.FC = () => {
       [ViewState.NEWS]: t.news_section_title, // Use full title
       [ViewState.EVENTS]: t.nav_events,
       [ViewState.FORUM]: t.nav_forum,
-      [ViewState.DIRECTORY]: t.nav_directory,
       [ViewState.LEGAL_AID]: t.nav_legal,
       [ViewState.HISTORY]: t.nav_history,
       [ViewState.SHARE]: t.nav_share,
@@ -40,7 +40,6 @@ const App: React.FC = () => {
       [ViewState.NEWS]: t.meta_desc_news,
       [ViewState.EVENTS]: t.meta_desc_events,
       [ViewState.FORUM]: t.meta_desc_forum,
-      [ViewState.DIRECTORY]: t.meta_desc_directory,
       [ViewState.LEGAL_AID]: t.meta_desc_legal,
       [ViewState.HISTORY]: t.meta_desc_history,
       [ViewState.SHARE]: t.meta_desc_share,
@@ -84,8 +83,6 @@ const App: React.FC = () => {
         return <EventsSection language={language} />;
       case ViewState.FORUM:
         return <ForumSection language={language} />;
-      case ViewState.DIRECTORY:
-        return <DirectorySection language={language} />;
       case ViewState.LEGAL_AID:
         return <LegalAidSection language={language} />;
       case ViewState.HISTORY:
@@ -95,6 +92,7 @@ const App: React.FC = () => {
       case ViewState.DONATE:
         return <DonationSection language={language} />;
       default:
+        // Par défaut (et pour la compatibilité), on affiche HOME
         return (
           <>
             <Hero 

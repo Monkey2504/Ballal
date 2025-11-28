@@ -1,4 +1,5 @@
 
+
 export interface NewsItem {
   id: string;
   title: string;
@@ -48,14 +49,13 @@ export interface DirectoryItem {
   isVerified: boolean;
 }
 
-export type LanguageCode = 'fr' | 'en' | 'nl' | 'pe' | 'ma' | 'su' | 'es' | 'ar'; // Français, English, Nederlands, Peul, Malinké, Soussou, Espagnol, Arabe
+export type LanguageCode = 'fr' | 'en' | 'nl' | 'pe' | 'ma' | 'su' | 'es' | 'ar' | 'de'; // Français, English, Nederlands, Peul, Malinké, Soussou, Espagnol, Arabe, Allemand
 
 export enum ViewState {
   HOME = 'HOME',
   NEWS = 'NEWS',
   EVENTS = 'EVENTS',
   FORUM = 'FORUM',
-  DIRECTORY = 'DIRECTORY',
   LEGAL_AID = 'LEGAL_AID',
   HISTORY = 'HISTORY',
   SHARE = 'SHARE',

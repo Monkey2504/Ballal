@@ -1,3 +1,5 @@
+
+
 import { GoogleGenAI } from "@google/genai";
 import { NewsItem, CommunityEvent } from '../types';
 
@@ -320,7 +322,7 @@ export const fetchLatestNews = async (language: string = 'fr'): Promise<NewsResu
           3. Assigne un 'visual_topic' précis pour l'illustration.
           4. Évite les faits divers mineurs. Concentre-toi sur la politique, l'économie, les grands événements sociétaux et sportifs.
           
-          Langue de réponse : ${language === 'fr' ? 'Français' : language === 'en' ? 'Anglais' : language === 'ar' ? 'Arabe' : 'Français'}.
+          Langue de réponse : ${language === 'fr' ? 'Français' : language === 'en' ? 'Anglais' : language === 'ar' ? 'Arabe' : language === 'de' ? 'Allemand' : 'Français'}.
           
           Format JSON strict (Tableau) :
           [
