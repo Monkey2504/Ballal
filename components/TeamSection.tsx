@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { Phone, Mail, User, Shield, Users } from 'lucide-react';
 import { LanguageCode } from '../types';
@@ -97,11 +98,6 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
                         </a>
                     )}
                 </div>
-                
-                <button className="w-full mt-6 bg-slate-900 text-white py-2 rounded-lg font-bold text-sm hover:bg-slate-800 transition-colors flex items-center justify-center">
-                    <User className="h-4 w-4 mr-2" />
-                    {t.contact_btn}
-                </button>
               </div>
             </div>
           ))}

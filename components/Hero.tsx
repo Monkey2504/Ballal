@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from 'react';
 import { ShieldCheck, Heart, Wand2, Share2 } from 'lucide-react';
 import { fetchHeroImage } from '../services/geminiService';
@@ -14,10 +15,12 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDonate }) => {
   // Image par défaut changée pour quelque chose de plus chaleureux/communautaire (Concert/Foule/Lumière chaude)
-  // Ancienne: photo-1547619292-240402b5ae5d (Paysage)
-  // Nouvelle: photo-1467293622093-9f15c96be70f (Vie, couleur, communauté) ou photo-1516026672322-bc52d61a55d5 (Vibrant)
-  const [bgImage, setBgImage] = useState("https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=1600&auto=format&fit=crop");
+  const defaultImage = "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=1600&auto=format&fit=crop";
+  const fallbackImage = "https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=1600&auto=format&fit=crop"; // Fallback image (Paysage)
+
+  const [bgImage, setBgImage] = useState(defaultImage);
   const [heroLabel, setHeroLabel] = useState<string | null>(null);
+  const [imgError, setImgError] = useState(false);
 
   const t = translations[language];
 
@@ -26,7 +29,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDona
       // fetchHeroImage now returns a fallback object if quota is exceeded,
       // avoiding infinite retry loops.
       const result = await fetchHeroImage();
-      if (result) {
+      if (result && result.imageUrl) {
         // Only use AI image if it's distinctly better, otherwise keep our new default
         // For now, we trust the fallback logic or AI if active.
         // setBgImage(result.imageUrl); 
@@ -36,8 +39,40 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDona
     loadHero();
   }, []);
 
+  const handleImageError = () => {
+    if (!imgError) {
+      setImgError(true);
+      setBgImage(fallbackImage);
+    }
+  };
+
+  // SEO: Structured Data for NGO
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NGO",
+    "name": "BALLAL ASBL",
+    "url": "https://ballal-asbl.be",
+    "logo": "https://ballal-asbl.be/logo.png",
+    "description": t.hero_desc,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Chaussée de Gand 645",
+      "addressLocality": "Molenbeek-Saint-Jean",
+      "postalCode": "1080",
+      "addressCountry": "BE"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+32493434383",
+      "contactType": "customer service",
+      "email": "Admin@ballal.be"
+    }
+  };
+
   return (
     <div className="relative bg-[#FFFBF0] overflow-hidden border-b border-orange-100">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      
       {/* Background Pattern Overlay */}
       <div className="absolute inset-0 bg-african-pattern opacity-50 z-0 pointer-events-none"></div>
 
@@ -69,6 +104,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDona
                   <button
                     onClick={onExplore}
                     className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-bold rounded-full text-white bg-[#CE1126] hover:bg-red-700 md:py-4 md:text-lg md:px-10 transition-all transform hover:-translate-y-1 shadow-red-200"
+                    aria-label={t.btn_assist}
                   >
                     <ShieldCheck className="mr-2 h-5 w-5" />
                     {t.btn_assist}
@@ -78,6 +114,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDona
                   <button
                     onClick={onDonate}
                     className="w-full flex items-center justify-center px-8 py-3 border-2 border-gray-200 text-base font-bold rounded-full text-gray-700 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10 transition-all hover:border-[#FCD116] hover:text-black"
+                    aria-label={t.btn_donate}
                   >
                     <Heart className="mr-2 h-5 w-5 text-[#CE1126]" />
                     {t.btn_donate}
@@ -87,6 +124,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDona
                   <button
                     onClick={onShare}
                     className="w-full flex items-center justify-center px-4 py-3 border border-gray-200 text-base font-bold rounded-full text-gray-500 bg-white hover:bg-gray-100 md:py-4 md:text-lg transition-all"
+                    aria-label={t.nav_share}
                   >
                     <Share2 className="h-5 w-5" />
                   </button>
@@ -105,11 +143,14 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDona
         </div>
       </div>
       <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 bg-gray-50 flex items-center justify-center overflow-hidden relative border-l-4 border-white">
-        {/* Image spécifique plus vibrante */}
+        {/* Image spécifique plus vibrante - Fallback managed via onError */}
         <img
           className="h-56 w-full object-cover object-center sm:h-72 md:h-96 lg:w-full lg:h-full transition-transform hover:scale-105 duration-[10s]"
           src={bgImage}
-          alt="Communauté Guinée"
+          alt={t.hero_subtitle}
+          onError={handleImageError}
+          // Priority High for above the fold
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#FFFBF0] via-[#FFFBF0]/20 to-transparent lg:via-[#FFFBF0]/10"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>

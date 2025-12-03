@@ -1,4 +1,6 @@
-// components/Footer.tsx (VERSION COMPACTE, COORDONNÉES À JOUR)
+
+
+// components/Footer.tsx (VERSION COMPACTE, COORDONNÉES À JOUR, TRADUCTIONS)
 
 import React from 'react';
 import { Mail, MapPin, Phone, Facebook, Youtube, Link as LinkIcon } from 'lucide-react'; 
@@ -11,14 +13,16 @@ interface FooterProps {
 
 const Footer: React.FC<FooterProps> = ({ language }) => {
   const t = translations[language];
-  const isFrench = language === 'fr';
 
   // --- Données du Pied de Page MISES À JOUR ---
   const contactInfo = {
-    address: "Chaussée de Gand 645, 1080 Molenbeek-Saint-Jean, Belgique", // ✅ ADRESSE MISE À JOUR
-    phone: "0493 43 43 83", // ✅ TÉLÉPHONE MISE À JOUR
-    email: "Admin@ballal.be", // ✅ EMAIL MISE À JOUR
+    address: "Chaussée de Gand 645, 1080 Molenbeek-Saint-Jean, Belgique", 
+    phone: "0493 43 43 83", 
+    email: "Admin@ballal.be", 
   };
+
+  // Generate mailto link dynamically
+  const memberMailto = `mailto:Admin@ballal.be?subject=${encodeURIComponent(t.email_subject_member)}&body=${encodeURIComponent(t.email_body_member)}`;
 
   const socialLinks = [
     { name: 'Facebook', href: '#', icon: Facebook, color: 'text-blue-600' },
@@ -44,10 +48,10 @@ const Footer: React.FC<FooterProps> = ({ language }) => {
             isExternal: true
         },
         { name: t.footer_report || "Rapport Annuel", href: "#" },
-        // ✅ LIEN DEVENIR MEMBRE MIS À JOUR VERS MAILTO
+        // ✅ LIEN DEVENIR MEMBRE MIS À JOUR VERS MAILTO AVEC TRADUCTION
         { 
             name: t.footer_member || "Devenir Membre", 
-            href: "mailto:Admin@ballal.be?subject=Demande%20d'adhésion%20à%20l'ASBL%20Ballal",
+            href: memberMailto,
             isExternal: true 
         },
       ]
@@ -75,8 +79,8 @@ const Footer: React.FC<FooterProps> = ({ language }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`text-gray-400 hover:text-white transition-colors p-1 rounded-full hover:bg-gray-700`}
+                  aria-label={item.name}
                 >
-                  <span className="sr-only">{item.name}</span>
                   <item.icon className={`h-5 w-5 ${item.color}`} aria-hidden="true" />
                 </a>
               ))}
@@ -98,7 +102,7 @@ const Footer: React.FC<FooterProps> = ({ language }) => {
                        rel={link.isExternal ? "noopener noreferrer" : undefined}
                        className="text-xs text-gray-400 hover:text-[#CE1126] transition-colors flex items-center"
                     >
-                      <LinkIcon className="w-3 h-3 mr-2" /> {link.name}
+                      <LinkIcon className="w-3 h-3 mr-2" aria-hidden="true" /> {link.name}
                     </a>
                   </li>
                 ))}
@@ -113,15 +117,15 @@ const Footer: React.FC<FooterProps> = ({ language }) => {
             </h3>
             <address className="space-y-2 not-italic text-xs">
               <p className="flex items-start text-gray-400">
-                <MapPin className="h-4 w-4 mr-2 text-gray-500 flex-shrink-0" />
+                <MapPin className="h-4 w-4 mr-2 text-gray-500 flex-shrink-0" aria-hidden="true" />
                 {contactInfo.address}
               </p>
               <p className="flex items-center text-gray-400">
-                <Phone className="h-4 w-4 mr-2 text-gray-500 flex-shrink-0" />
+                <Phone className="h-4 w-4 mr-2 text-gray-500 flex-shrink-0" aria-hidden="true" />
                 <a href={`tel:${contactInfo.phone}`} className="hover:text-white transition-colors">{contactInfo.phone}</a>
               </p>
               <p className="flex items-center text-gray-400">
-                <Mail className="h-4 w-4 mr-2 text-gray-500 flex-shrink-0" />
+                <Mail className="h-4 w-4 mr-2 text-gray-500 flex-shrink-0" aria-hidden="true" />
                 <a href={`mailto:${contactInfo.email}`} className="hover:text-white transition-colors">{contactInfo.email}</a>
               </p>
             </address>

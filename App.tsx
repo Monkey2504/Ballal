@@ -1,49 +1,59 @@
 
-
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import NewsSection from './components/NewsSection';
-import EventsSection from './components/EventsSection';
 import ForumSection from './components/ForumSection';
 import LegalAidSection from './components/LegalAidSection';
 import HistorySection from './components/HistorySection';
 import ShareSection from './components/ShareSection';
 import DonationSection from './components/DonationSection';
 import TeamSection from './components/TeamSection';
+import FoodAutonomySection from './components/FoodAutonomySection';
+import { FoodSupplierForm, FoodNetworkForm } from './components/FoodForms';
 import Footer from './components/Footer';
 import { ViewState, LanguageCode } from './types';
 import { translations } from './utils/translations';
+import { AuthProvider } from './contexts/AuthContext';
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
   const [currentView, setCurrentView] = useState<ViewState>(ViewState.HOME);
   const [language, setLanguage] = useState<LanguageCode>('fr');
   const t = translations[language];
 
-  // --- GESTION SEO DYNAMIQUE ---
+  // --- GESTION SEO & ACCESSIBILITÉ (RTL) ---
   useEffect(() => {
-    // Définition des titres par vue
+    // 1. Gestion RTL (Right-to-Left) pour l'Arabe
+    const dir = language === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.dir = dir;
+    document.documentElement.lang = language;
+
+    // 2. Définition des titres par vue
     const titles: Record<ViewState, string> = {
       [ViewState.HOME]: t.hero_title,
-      [ViewState.NEWS]: t.news_section_title, // Use full title
-      [ViewState.EVENTS]: t.nav_events,
+      [ViewState.NEWS]: t.news_section_title,
       [ViewState.FORUM]: t.nav_forum,
       [ViewState.LEGAL_AID]: t.nav_legal,
       [ViewState.HISTORY]: t.nav_history,
       [ViewState.SHARE]: t.nav_share,
-      [ViewState.DONATE]: t.btn_donate
+      [ViewState.DONATE]: t.btn_donate,
+      [ViewState.FOOD_AUTONOMY]: t.nav_food_project,
+      [ViewState.FOOD_SUPPLIER]: t.form_supplier_title,
+      [ViewState.FOOD_NETWORK]: t.form_network_title,
     };
 
-    // Définition des descriptions par vue (Dynamique via traductions)
+    // 3. Définition des descriptions par vue (Dynamique via traductions)
     const descriptions: Record<ViewState, string> = {
       [ViewState.HOME]: t.meta_desc_home || t.hero_desc,
       [ViewState.NEWS]: t.meta_desc_news,
-      [ViewState.EVENTS]: t.meta_desc_events,
       [ViewState.FORUM]: t.meta_desc_forum,
       [ViewState.LEGAL_AID]: t.meta_desc_legal,
       [ViewState.HISTORY]: t.meta_desc_history,
       [ViewState.SHARE]: t.meta_desc_share,
-      [ViewState.DONATE]: t.donate_subtitle
+      [ViewState.DONATE]: t.donate_subtitle,
+      [ViewState.FOOD_AUTONOMY]: t.meta_desc_food,
+      [ViewState.FOOD_SUPPLIER]: t.meta_desc_food,
+      [ViewState.FOOD_NETWORK]: t.meta_desc_food,
     };
 
     // Mise à jour du Document Title
@@ -73,18 +83,21 @@ const App: React.FC = () => {
               onShare={() => setCurrentView(ViewState.SHARE)}
               onDonate={() => setCurrentView(ViewState.DONATE)}
             />
-            {/* La section membres est bien ici */}
             <TeamSection language={language} />
           </>
         );
       case ViewState.NEWS:
         return <NewsSection language={language} />;
-      case ViewState.EVENTS:
-        return <EventsSection language={language} />;
       case ViewState.FORUM:
         return <ForumSection language={language} />;
       case ViewState.LEGAL_AID:
         return <LegalAidSection language={language} />;
+      case ViewState.FOOD_AUTONOMY:
+        return <FoodAutonomySection language={language} setView={setCurrentView} />;
+      case ViewState.FOOD_SUPPLIER:
+        return <FoodSupplierForm language={language} onBack={() => setCurrentView(ViewState.FOOD_AUTONOMY)} />;
+      case ViewState.FOOD_NETWORK:
+        return <FoodNetworkForm language={language} onBack={() => setCurrentView(ViewState.FOOD_AUTONOMY)} />;
       case ViewState.HISTORY:
         return <HistorySection language={language} />;
       case ViewState.SHARE:
@@ -92,7 +105,6 @@ const App: React.FC = () => {
       case ViewState.DONATE:
         return <DonationSection language={language} />;
       default:
-        // Par défaut (et pour la compatibilité), on affiche HOME
         return (
           <>
             <Hero 
@@ -129,6 +141,14 @@ const App: React.FC = () => {
 
       <Footer language={language} />
     </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 };
 

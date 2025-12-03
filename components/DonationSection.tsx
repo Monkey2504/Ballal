@@ -1,4 +1,6 @@
 
+
+
 import React, { useState } from 'react';
 import { Heart, Copy, Check, CreditCard, Gift, Users, Scale } from 'lucide-react';
 import { LanguageCode } from '../types';
@@ -52,13 +54,14 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
                 <div className="space-y-2 mb-8">
                     <p className="text-sm text-gray-400 uppercase tracking-wider font-bold">{t.donate_iban_label}</p>
                     <div className="flex items-center space-x-4">
-                        <p className="font-mono text-2xl sm:text-3xl font-bold tracking-wider text-white">{IBAN}</p>
+                        <p className="font-mono text-2xl sm:text-3xl font-bold tracking-wider text-white select-all">{IBAN}</p>
                         <button 
                             onClick={handleCopy}
-                            className="p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-[#FCD116]"
-                            title="Copier IBAN"
+                            className={`p-2 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-[#FCD116] ${copied ? 'bg-green-500 text-white' : 'bg-white/10 hover:bg-white/20 text-white'}`}
+                            title={t.share_copy}
+                            aria-label={t.share_copy}
                         >
-                            {copied ? <Check className="h-5 w-5 text-green-400" /> : <Copy className="h-5 w-5 text-white" />}
+                            {copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
                         </button>
                     </div>
                 </div>
@@ -76,19 +79,21 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
             </div>
             
             <div className="p-8 bg-white">
-                {copied && (
-                    <div className="bg-green-50 text-green-800 px-4 py-3 rounded-xl mb-6 text-center font-bold animate-bounce">
+                <div className={`transition-all duration-300 transform ${copied ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 h-0 overflow-hidden'}`}>
+                    <div className="bg-green-50 text-green-800 px-4 py-3 rounded-xl mb-6 text-center font-bold flex items-center justify-center border border-green-200">
+                        <Check className="h-5 w-5 mr-2" />
                         {t.donate_copy_success}
                     </div>
-                )}
+                </div>
                 <div className="flex justify-center">
                     <img 
                         src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(IBAN)}&color=0f172a`} 
                         alt="QR Code IBAN" 
                         className="w-48 h-48 border-4 border-white shadow-lg rounded-xl"
+                        loading="lazy"
                     />
                 </div>
-                <p className="text-center text-gray-400 text-sm mt-4 font-medium">
+                <p className="text-center text-gray-500 text-sm mt-4 font-medium">
                     {t.donate_secure_msg}
                 </p>
             </div>

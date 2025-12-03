@@ -11,58 +11,54 @@ const ai = new GoogleGenAI({ apiKey });
 
 const TOPIC_IMAGES: Record<string, string[]> = {
   POLITICS: [
-    'https://images.unsplash.com/photo-1575320181282-9afab399332c?q=80&w=800&auto=format&fit=crop', // Microphones
-    'https://images.unsplash.com/photo-1541872703-74c5963631df?q=80&w=800&auto=format&fit=crop', // Bâtiment officiel
-    'https://images.unsplash.com/photo-1576670159805-381a9de1e2b9?q=80&w=800&auto=format&fit=crop', // Poignée de main
-    'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=800&auto=format&fit=crop', // Documents/Stylo
-    'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?q=80&w=800&auto=format&fit=crop',  // Drapeau/Officiel
-    'https://images.unsplash.com/photo-1555848962-6e79363ec58f?q=80&w=800&auto=format&fit=crop', // Election
-    'https://images.unsplash.com/photo-1596521345347-160100d072f5?q=80&w=800&auto=format&fit=crop'  // Conférence
+    'https://images.unsplash.com/photo-1596521345347-160100d072f5?q=80&w=800&auto=format&fit=crop', // Conférence de presse (Microphones flous)
+    'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?q=80&w=800&auto=format&fit=crop', // Drapeau / Officiel
+    'https://images.unsplash.com/photo-1555848962-6e79363ec58f?q=80&w=800&auto=format&fit=crop', // Vote / Urne
+    'https://images.unsplash.com/photo-1541872703-74c5963631df?q=80&w=800&auto=format&fit=crop', // Bâtiment gouvernemental
+    'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=800&auto=format&fit=crop' // Stylo et documents
   ],
   JUSTICE: [
-    'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=800&auto=format&fit=crop', // Marteau juge
-    'https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=800&auto=format&fit=crop', // Balance
-    'https://images.unsplash.com/photo-1589391886645-d51941baf7fb?q=80&w=800&auto=format&fit=crop', // Palais justice
-    'https://images.unsplash.com/photo-1453928582365-b6c57d2d040f?q=80&w=800&auto=format&fit=crop', // Code civil
-    'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=800&auto=format&fit=crop'  // Avocat
+    'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=800&auto=format&fit=crop', // Marteau Juge
+    'https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=800&auto=format&fit=crop', // Balance Justice
+    'https://images.unsplash.com/photo-1589391886645-d51941baf7fb?q=80&w=800&auto=format&fit=crop', // Façade Tribunal
+    'https://images.unsplash.com/photo-1453928582365-b6c57d2d040f?q=80&w=800&auto=format&fit=crop' // Code civil / Livres
   ],
   SOCCER: [
-    'https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=800&auto=format&fit=crop', // Ballon
-    'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?q=80&w=800&auto=format&fit=crop', // Joueurs terrain
-    'https://images.unsplash.com/photo-1518091043644-c1d4457512c6?q=80&w=800&auto=format&fit=crop', // Stade foule
-    'https://images.unsplash.com/photo-1517466787929-bc90951d0974?q=80&w=800&auto=format&fit=crop',  // Action foot
-    'https://images.unsplash.com/photo-1551958219-acbc608c6377?q=80&w=800&auto=format&fit=crop', // Équipe
-    'https://images.unsplash.com/photo-1624880357913-a8539238245b?q=80&w=800&auto=format&fit=crop'  // Africa Foot
+    'https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=800&auto=format&fit=crop', // Ballon Foot sur herbe
+    'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?q=80&w=800&auto=format&fit=crop', // Joueurs (flou)
+    'https://images.unsplash.com/photo-1518091043644-c1d4457512c6?q=80&w=800&auto=format&fit=crop', // Stade ambiance
+    'https://images.unsplash.com/photo-1551958219-acbc608c6377?q=80&w=800&auto=format&fit=crop' // Equipe unie
   ],
   ECONOMY: [
-    'https://images.unsplash.com/photo-1605218427368-35b0160d5c97?q=80&w=800&auto=format&fit=crop', // Port/Container
-    'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?q=80&w=800&auto=format&fit=crop', // Argent/Finance
-    'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=800&auto=format&fit=crop', // Industrie/Mines
-    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop', // Graphiques
-    'https://images.unsplash.com/photo-1565514020176-dbf2277f0c6e?q=80&w=800&auto=format&fit=crop', // Marché
-    'https://images.unsplash.com/photo-1526304640152-d4619684e485?q=80&w=800&auto=format&fit=crop'  // Billets
+    'https://images.unsplash.com/photo-1605218427368-35b0160d5c97?q=80&w=800&auto=format&fit=crop', // Port / Container
+    'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?q=80&w=800&auto=format&fit=crop', // Finance / Monnaie
+    'https://images.unsplash.com/photo-1565514020176-dbf2277f0c6e?q=80&w=800&auto=format&fit=crop', // Marché local
+    'https://images.unsplash.com/photo-1526304640152-d4619684e485?q=80&w=800&auto=format&fit=crop', // Billets
+    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop' // Graphiques business
   ],
   MINING: [
-     'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=800&auto=format&fit=crop', // Usine
-     'https://images.unsplash.com/photo-1595245863339-b9e7df18f2f6?q=80&w=800&auto=format&fit=crop', // Terre rouge
-     'https://images.unsplash.com/photo-1516937941344-00b4e0337589?q=80&w=800&auto=format&fit=crop',  // Industriel
-     'https://images.unsplash.com/photo-1578326457399-3b34dbbf23b8?q=80&w=800&auto=format&fit=crop'  // Bauxite
+    'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=800&auto=format&fit=crop', // Industrie / Usine
+    'https://images.unsplash.com/photo-1595245863339-b9e7df18f2f6?q=80&w=800&auto=format&fit=crop', // Terre rouge / Bauxite
+    'https://images.unsplash.com/photo-1516937941344-00b4e0337589?q=80&w=800&auto=format&fit=crop' // Machinerie
   ],
   CULTURE: [
-    'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=800&auto=format&fit=crop', // Scène
-    'https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=800&auto=format&fit=crop', // Artiste
-    'https://images.unsplash.com/photo-1519671482538-518b5c2bf7c6?q=80&w=800&auto=format&fit=crop', // Instruments
-    'https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=800&auto=format&fit=crop',  // Fête
-    'https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=800&auto=format&fit=crop', // Danse
-    'https://images.unsplash.com/photo-1567860161479-7df919df4345?q=80&w=800&auto=format&fit=crop'  // Tissus/Art
+    'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=800&auto=format&fit=crop', // Scène / Concert
+    'https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=800&auto=format&fit=crop', // Concert (lumières)
+    'https://images.unsplash.com/photo-1519671482538-518b5c2bf7c6?q=80&w=800&auto=format&fit=crop', // Instruments musique
+    'https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=800&auto=format&fit=crop' // Ambiance festive
+  ],
+  HEALTH: [
+    'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?q=80&w=800&auto=format&fit=crop', // Médecin
+    'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=800&auto=format&fit=crop', // Hôpital
+    'https://images.unsplash.com/photo-1584036561566-b93a90a6b262?q=80&w=800&auto=format&fit=crop', // Soins
+    'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=800&auto=format&fit=crop' // Recherche
   ],
   SOCIETY: [
     'https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=800&auto=format&fit=crop', // Paysage Guinée
-    'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=800&auto=format&fit=crop', // Groupe solidaire
-    'https://images.unsplash.com/photo-1577563908411-5077b6dc7624?q=80&w=800&auto=format&fit=crop', // Discussion
-    'https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?q=80&w=800&auto=format&fit=crop',  // Enfants/École
-    'https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=800&auto=format&fit=crop', // Portraits
-    'https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?q=80&w=800&auto=format&fit=crop'  // Humanitaire
+    'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=800&auto=format&fit=crop', // Solidarité
+    'https://images.unsplash.com/photo-1577563908411-5077b6dc7624?q=80&w=800&auto=format&fit=crop', // Discussion groupe
+    'https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?q=80&w=800&auto=format&fit=crop', // École
+    'https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=800&auto=format&fit=crop' // Enfants
   ],
   DEFAULT: [
     'https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=800&auto=format&fit=crop',
@@ -330,10 +326,10 @@ export const fetchLatestNews = async (language: string = 'fr'): Promise<NewsResu
               "id": "string",
               "title": "string (Titre accrocheur et court)",
               "summary": "string (Résumé informatif max 25 mots)",
-              "category": "Politique" | "Culture" | "Sport" | "Économie" | "Société" | "Justice",
+              "category": "Politique" | "Culture" | "Sport" | "Économie" | "Société" | "Justice" | "Santé",
               "date": "string (ex: 'Il y a 2h', 'Ce matin')",
               "source": "string (Nom du média source)",
-              "visual_topic": "POLITICS" | "SOCCER" | "ECONOMY" | "CULTURE" | "JUSTICE" | "SOCIETY" | "MINING"
+              "visual_topic": "POLITICS" | "SOCCER" | "ECONOMY" | "CULTURE" | "JUSTICE" | "SOCIETY" | "MINING" | "HEALTH"
             }
           ]`,
           config: { tools: [{googleSearch: {}}] }
@@ -370,11 +366,12 @@ export const fetchLatestNews = async (language: string = 'fr'): Promise<NewsResu
 // Fallback mapping if AI forgets visual_topic
 const mapCategoryToTopic = (category: string): string => {
     const c = category?.toUpperCase() || '';
-    if (c.includes('POLITIQUE')) return 'POLITICS';
-    if (c.includes('SPORT') || c.includes('FOOT')) return 'SOCCER';
-    if (c.includes('ECONOM') || c.includes('MINE')) return 'ECONOMY';
-    if (c.includes('CULTURE') || c.includes('ART')) return 'CULTURE';
-    if (c.includes('JUSTICE')) return 'JUSTICE';
+    if (c.includes('POLITIQUE') || c.includes('POLITI')) return 'POLITICS';
+    if (c.includes('SPORT') || c.includes('FOOT') || c.includes('MATCH')) return 'SOCCER';
+    if (c.includes('ECONOM') || c.includes('MINE') || c.includes('FINANCE') || c.includes('ARGENT')) return 'ECONOMY';
+    if (c.includes('CULTURE') || c.includes('ART') || c.includes('MUSIQUE') || c.includes('CONCERT')) return 'CULTURE';
+    if (c.includes('JUSTICE') || c.includes('TRIBUNAL') || c.includes('DROIT')) return 'JUSTICE';
+    if (c.includes('SANTE') || c.includes('SANTÉ') || c.includes('HOPITAL') || c.includes('MALADIE')) return 'HEALTH';
     return 'SOCIETY';
 };
 

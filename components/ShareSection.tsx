@@ -1,4 +1,6 @@
 
+
+
 import React, { useState } from 'react';
 import { Share2, Copy, Smartphone, Facebook, Check, Link } from 'lucide-react';
 import { LanguageCode } from '../types';
@@ -86,6 +88,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
                         src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(appUrl)}&color=009460`} 
                         alt="QR Code BALLAL" 
                         className="w-48 h-48"
+                        loading="lazy"
                     />
                 </div>
                 
@@ -109,10 +112,10 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
                         <button
                             type="button"
                             onClick={handleCopy}
-                            className={`-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md bg-white hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-red-500 transition-colors ${copied ? 'text-green-600' : 'text-gray-700'}`}
+                            className={`-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-red-500 transition-all ${copied ? 'bg-green-50 text-green-700 border-green-500' : 'bg-white text-gray-700'}`}
                         >
                             {copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
-                            <span>{copied ? t.share_copied : t.share_copy}</span>
+                            <span>{copied ? t.action_copied : t.share_copy}</span>
                         </button>
                     </div>
                 </div>
