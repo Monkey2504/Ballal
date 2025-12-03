@@ -1,6 +1,4 @@
 
-
-
 import React, { useState } from 'react';
 import { Heart, Copy, Check, CreditCard, Gift, Users, Scale } from 'lucide-react';
 import { LanguageCode } from '../types';
@@ -13,8 +11,6 @@ interface DonationSectionProps {
 const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
   const t = translations[language];
   const [copied, setCopied] = useState(false);
-
-  // Fake IBAN for demo purposes - Replace with real one
   const IBAN = "BE12 3456 7890 1234";
   const BIC = "GEBABEB1";
 
@@ -26,7 +22,6 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
 
   return (
     <div className="min-h-screen py-16 bg-slate-50 relative overflow-hidden" dir={language === 'ar' ? 'rtl' : 'ltr'}>
-      {/* Background decorations */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#FCD116] opacity-10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#CE1126] opacity-10 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
 
@@ -42,7 +37,6 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
           </p>
         </div>
 
-        {/* BANK CARD */}
         <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 mb-12 transform transition-all hover:scale-[1.01]">
             <div className="bg-slate-900 p-8 text-white relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full blur-2xl transform translate-x-1/2 -translate-y-1/2"></div>
@@ -57,7 +51,7 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
                         <p className="font-mono text-2xl sm:text-3xl font-bold tracking-wider text-white select-all">{IBAN}</p>
                         <button 
                             onClick={handleCopy}
-                            className={`p-2 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-[#FCD116] ${copied ? 'bg-green-500 text-white' : 'bg-white/10 hover:bg-white/20 text-white'}`}
+                            className={`p-2 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-[#FCD116] transform active:scale-95 ${copied ? 'bg-green-500 text-white scale-110' : 'bg-white/10 hover:bg-white/20 text-white'}`}
                             title={t.share_copy}
                             aria-label={t.share_copy}
                         >
@@ -79,8 +73,8 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
             </div>
             
             <div className="p-8 bg-white">
-                <div className={`transition-all duration-300 transform ${copied ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 h-0 overflow-hidden'}`}>
-                    <div className="bg-green-50 text-green-800 px-4 py-3 rounded-xl mb-6 text-center font-bold flex items-center justify-center border border-green-200">
+                <div className={`transition-all duration-300 transform ${copied ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 -translate-y-2 scale-95 h-0 overflow-hidden'}`}>
+                    <div className="bg-green-50 text-green-800 px-4 py-3 rounded-xl mb-6 text-center font-bold flex items-center justify-center border border-green-200 shadow-sm">
                         <Check className="h-5 w-5 mr-2" />
                         {t.donate_copy_success}
                     </div>
@@ -99,7 +93,6 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
             </div>
         </div>
 
-        {/* IMPACT SECTION */}
         <div className="mb-8">
             <h3 className="text-2xl font-black text-slate-900 mb-6 text-center">{t.donate_impact_title}</h3>
             <div className="grid md:grid-cols-3 gap-6">
@@ -108,7 +101,7 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
                         <Scale className="h-6 w-6 text-[#CE1126]" />
                     </div>
                     <h3 className="font-bold text-slate-900 mb-2 text-lg">Justice</h3>
-                    <p className="text-gray-600 text-sm font-medium">{t.donate_impact_1}</p>
+                    <p className="text-gray-500 text-sm font-medium">{t.donate_impact_1}</p>
                 </div>
                 
                 <div className="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-[#FCD116] hover:shadow-md transition-shadow">
@@ -116,7 +109,7 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
                         <Gift className="h-6 w-6 text-yellow-600" />
                     </div>
                     <h3 className="font-bold text-slate-900 mb-2 text-lg">Culture</h3>
-                    <p className="text-gray-600 text-sm font-medium">{t.donate_impact_2}</p>
+                    <p className="text-gray-500 text-sm font-medium">{t.donate_impact_2}</p>
                 </div>
 
                 <div className="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-[#009460] hover:shadow-md transition-shadow">
@@ -124,7 +117,7 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
                         <Users className="h-6 w-6 text-[#009460]" />
                     </div>
                     <h3 className="font-bold text-slate-900 mb-2 text-lg">Social</h3>
-                    <p className="text-gray-600 text-sm font-medium">{t.donate_impact_3}</p>
+                    <p className="text-gray-500 text-sm font-medium">{t.donate_impact_3}</p>
                 </div>
             </div>
         </div>

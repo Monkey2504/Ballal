@@ -1,4 +1,5 @@
 
+
 import { LanguageCode } from '../types';
 
 export interface Translation {
@@ -15,6 +16,7 @@ export interface Translation {
   nav_solidarity: string;
   nav_member_access: string;
   nav_food_project: string; 
+  nav_contact: string;
   
   // SEO Meta Descriptions
   meta_desc_home: string;
@@ -26,6 +28,7 @@ export interface Translation {
   meta_desc_history: string;
   meta_desc_share: string;
   meta_desc_food: string;
+  meta_desc_contact: string;
 
   // Hero
   hero_title: string;
@@ -42,6 +45,8 @@ export interface Translation {
   urgent_title: string;
   urgent_alert: string;
   legal_intro: string;
+  legal_disclaimer_title: string;
+  legal_disclaimer_text: string;
   flash_title: string;
   flash_msg_title: string;
   flash_msg_body: string;
@@ -160,6 +165,7 @@ export interface Translation {
   food_collectives_text: string;
   food_collectives_btn: string;
   food_contact_cta: string;
+  food_image_alt: string;
 
   // Food Forms
   form_supplier_title: string;
@@ -178,7 +184,23 @@ export interface Translation {
   form_success_title: string;
   form_success_desc: string;
   form_back_btn: string;
+  form_demo_warning: string;
+  form_consent_gdpr: string;
+  form_error_required: string;
+  form_error_email: string;
+  form_error_consent: string;
+  form_privacy_link: string;
 
+  // Contact Form (New)
+  contact_form_title: string;
+  contact_form_subtitle: string;
+  contact_subject_label: string;
+  contact_subject_general: string;
+  contact_subject_partnership: string;
+  contact_subject_press: string;
+  contact_subject_support: string;
+  contact_send_btn: string;
+  
   // Donation
   donate_title: string;
   donate_subtitle: string;
@@ -202,6 +224,10 @@ export interface Translation {
   share_via: string;
   share_whatsapp: string;
   share_facebook: string;
+  share_privacy_warning: string;
+  share_qr_alt: string;
+  share_qr_inst: string;
+  share_copy_error: string;
 
   // Team
   team_title: string;
@@ -222,6 +248,9 @@ export interface Translation {
   footer_resources: string;
   footer_report: string;
   footer_member: string;
+  footer_bce: string;
+  footer_privacy: string;
+  footer_terms: string;
 
   // EMAILS & ACTIONS
   email_subject_member: string;
@@ -230,6 +259,7 @@ export interface Translation {
   email_body_food_donor: string;
   email_subject_food_network: string;
   email_body_food_network: string;
+  email_subject_contact: string;
   action_copied: string;
 }
 
@@ -246,6 +276,7 @@ const fr: Translation = {
     nav_solidarity: "Solidarité",
     nav_member_access: "Accès Membre",
     nav_food_project: "Projet Alimentaire",
+    nav_contact: "Contact",
     meta_desc_home: "La structure de référence pour la communauté guinéenne en Belgique.",
     meta_desc_news: "Actualités vérifiées de la Guinée et de la diaspora en Belgique.",
     meta_desc_events: "Agenda des événements culturels, fêtes et meetups de la communauté guinéenne.",
@@ -255,6 +286,7 @@ const fr: Translation = {
     meta_desc_history: "Découvrez l'histoire de la communauté guinéenne en Belgique, de 1958 à nos jours.",
     meta_desc_share: "Partagez l'application Ballal ASBL pour renforcer notre communauté.",
     meta_desc_food: "Projet d'autonomie et de sécurité alimentaire pour les collectifs et squats.",
+    meta_desc_contact: "Contactez l'ASBL Ballal pour toute question ou demande de partenariat.",
     hero_title: "Solidarité Guinée-Belgique",
     hero_subtitle: "Accueillir. Protéger. Unir.",
     hero_desc: "La structure de référence pour la communauté guinéenne en Belgique. Assistance juridique, soutien social et promotion de notre culture.",
@@ -267,6 +299,8 @@ const fr: Translation = {
     urgent_title: "Solidarité & Droits : Protéger nos vies, Conquérir nos papiers !",
     urgent_alert: "En cas d'arrestation : Ne signez RIEN sans avocat.",
     legal_intro: "En Belgique, les droits fondamentaux sont souvent bafoués. Cette section est votre guide de survie et votre arme légale. Connaître vos droits est le premier pas vers l'émancipation et la résistance face aux politiques d'enfermement et de précarisation.",
+    legal_disclaimer_title: "Avis de non-responsabilité",
+    legal_disclaimer_text: "Ce contenu est fourni à titre informatif uniquement et ne remplace pas un conseil juridique professionnel. Consultez toujours un avocat spécialisé.",
     flash_title: "DANGER IMMÉDIAT :\nGardez le silence et exigez un avocat.",
     flash_msg_title: "⚠️ Droit Fondamental : Silence et Assistance Légale",
     flash_msg_body: "Vous avez le droit constitutionnel de garder le silence. Ne signez aucun document. N'acceptez pas d'être filmé. Exigez IMMÉDIATEMENT la présence d’un avocat. L'article 47bis du Code d'Instruction Criminelle protège ce droit inaliénable.",
@@ -373,6 +407,7 @@ const fr: Translation = {
     food_collectives_text: "Mise en relation pour intégrer le réseau d'auto-gestion, partage d'expérience et formation aux méthodes d'approvisionnement indépendantes.",
     food_collectives_btn: "Intégrer le réseau",
     food_contact_cta: "Contactez-nous aujourd'hui pour bâtir l'autonomie de demain.",
+    food_image_alt: "Solidarité alimentaire et distribution",
     
     // NEW FORM TRANSLATIONS
     form_supplier_title: "Espace Fournisseur & Donateur",
@@ -387,10 +422,26 @@ const fr: Translation = {
     form_location_label: "Localisation (Commune / Adresse)",
     form_quantity_label: "Nombre de personnes / Quantité estimée",
     form_message_label: "Message / Détails supplémentaires",
-    form_submit_btn: "Envoyer ma demande",
-    form_success_title: "Message Envoyé !",
-    form_success_desc: "Merci pour votre engagement. Un administrateur de Ballal ASBL prendra contact avec vous très rapidement.",
-    form_back_btn: "Retour au projet",
+    form_submit_btn: "Ouvrir mon client mail",
+    form_success_title: "Action Initiée !",
+    form_success_desc: "Votre client mail va s'ouvrir avec les informations pré-remplies. Veuillez cliquer sur 'Envoyer' pour finaliser.",
+    form_back_btn: "Retour",
+    form_demo_warning: "MODE DÉMO : Ce formulaire prépare un email sur votre appareil. Aucune donnée n'est envoyée à un serveur tiers.",
+    form_consent_gdpr: "Je consens à l'utilisation de mon client de messagerie pour envoyer ces informations à l'ASBL Ballal.",
+    form_error_required: "Ce champ est requis.",
+    form_error_email: "Adresse email invalide.",
+    form_error_consent: "Votre consentement est obligatoire.",
+    form_privacy_link: "Politique de confidentialité",
+    
+    // Contact Form (New)
+    contact_form_title: "Contactez-nous",
+    contact_form_subtitle: "Une question, une proposition ou une demande d'aide ? N'hésitez pas.",
+    contact_subject_label: "Sujet de votre message",
+    contact_subject_general: "Information générale",
+    contact_subject_partnership: "Partenariat / Presse",
+    contact_subject_press: "Presse / Média",
+    contact_subject_support: "Demande d'aide sociale",
+    contact_send_btn: "Envoyer le message",
 
     donate_title: "Soutenir Ballal ASBL",
     donate_subtitle: "Votre générosité est le moteur de nos actions. Chaque euro versé renforce notre capacité à défendre, aider et unir la communauté.",
@@ -412,6 +463,12 @@ const fr: Translation = {
     share_via: "Partager via...",
     share_whatsapp: "Envoyer sur WhatsApp",
     share_facebook: "Partager sur Facebook",
+    share_privacy_warning: "Note de confidentialité : Le partage direct via les réseaux sociaux permet à ces plateformes de suivre votre activité.",
+    share_qr_alt: "Code QR pour accéder au site Ballal ASBL",
+    share_qr_inst: "Scannez ce code avec votre appareil photo pour ouvrir le site.",
+    share_copy_error: "Impossible de copier. Veuillez sélectionner le texte manuellement.",
+
+    // Team
     team_title: "Le Conseil d'Administration",
     team_subtitle: "Les administrateurs au service de la communauté.",
     members_title: "Nos Membres",
@@ -430,6 +487,9 @@ const fr: Translation = {
     footer_resources: "Ressources",
     footer_report: "Rapport Annuel",
     footer_member: "Devenir Membre",
+    footer_bce: "BCE : 1016.925.333 (Numéro d'entreprise)",
+    footer_privacy: "Politique de confidentialité",
+    footer_terms: "Conditions d'utilisation",
 
     // EMAILS & ACTIONS
     email_subject_member: "Demande d'adhésion à l'ASBL Ballal",
@@ -438,6 +498,7 @@ const fr: Translation = {
     email_body_food_donor: "Bonjour,\n\nJe souhaite proposer un don ou un partenariat alimentaire.\n\nNom :\nOrganisation :\nType de don :\nContact :",
     email_subject_food_network: "Intégration Réseau Autonomie Alimentaire",
     email_body_food_network: "Bonjour,\n\nNous sommes un collectif/squat et souhaitons rejoindre le projet.\n\nLieu :\nNombre de personnes :\nContact :",
+    email_subject_contact: "Contact via ballal.be",
     action_copied: "Copié !"
 };
 
@@ -454,6 +515,7 @@ const en: Translation = {
     nav_solidarity: "Solidarity",
     nav_member_access: "Member Access",
     nav_food_project: "Food Project",
+    nav_contact: "Contact",
     meta_desc_home: "The reference for the Guinean community in Belgium.",
     meta_desc_news: "Verified news from Guinea and the diaspora in Belgium.",
     meta_desc_events: "Agenda of cultural events, parties and meetups of the Guinean community.",
@@ -463,6 +525,7 @@ const en: Translation = {
     meta_desc_history: "Discover the history of the Guinean community in Belgium, from 1958 to today.",
     meta_desc_share: "Share the Ballal ASBL app to strengthen our community.",
     meta_desc_food: "Food autonomy and security project for collectives and squats.",
+    meta_desc_contact: "Contact Ballal ASBL for any questions or partnership requests.",
     hero_title: "Guinea-Belgium Solidarity",
     hero_subtitle: "Welcome. Protect. Unite.",
     hero_desc: "The reference for the Guinean community in Belgium. Legal assistance, social support, and cultural promotion.",
@@ -475,6 +538,8 @@ const en: Translation = {
     urgent_title: "Solidarity & Rights",
     urgent_alert: "In case of arrest: Sign NOTHING without a lawyer.",
     legal_intro: "In case of arrest, silence is your best protection. Know your rights.",
+    legal_disclaimer_title: "Legal Disclaimer",
+    legal_disclaimer_text: "This content is for informational purposes only and does not replace professional legal advice. Always consult a specialized lawyer.",
     flash_title: "I INVOKE MY RIGHT\nTO REMAIN SILENT.\nI WANT A LAWYER.",
     flash_msg_title: "MESSAGE TO POLICE (Salduz Law)",
     flash_msg_body: "\"I declare nothing. I invoke my right to remain silent. I request immediate confidential consultation with a lawyer before any questioning, in accordance with the Salduz law.\"",
@@ -581,6 +646,42 @@ const en: Translation = {
     food_collectives_text: "Join the self-management network and receive training.",
     food_collectives_btn: "Join the network",
     food_contact_cta: "Contact us to build autonomy.",
+    food_image_alt: "Food solidarity and distribution",
+    
+    // FORMS
+    form_supplier_title: "Supplier & Donor Space",
+    form_supplier_subtitle: "Offer your products and participate in autonomy.",
+    form_network_title: "Join the Autonomy Network",
+    form_network_subtitle: "Register your collective or squat.",
+    form_name_label: "Full Name",
+    form_org_label: "Organization / Company",
+    form_email_label: "Email Address",
+    form_phone_label: "Phone",
+    form_donation_type_label: "Donation Type (Dry, Fresh...)",
+    form_location_label: "Location",
+    form_quantity_label: "Estimated quantity / People",
+    form_message_label: "Message",
+    form_submit_btn: "Open Email Client",
+    form_success_title: "Action Initiated!",
+    form_success_desc: "Your email client will open with pre-filled info. Please click 'Send' to finalize.",
+    form_back_btn: "Back to Project",
+    form_demo_warning: "DEMO MODE: This form prepares an email on your device. No data is sent to a third-party server.",
+    form_consent_gdpr: "I consent to using my email client to send this information to Ballal ASBL.",
+    form_error_required: "This field is required.",
+    form_error_email: "Invalid email address.",
+    form_error_consent: "Your consent is mandatory.",
+    form_privacy_link: "Privacy Policy",
+    
+    // Contact Form
+    contact_form_title: "Contact Us",
+    contact_form_subtitle: "A question, proposal or request? Do not hesitate.",
+    contact_subject_label: "Subject",
+    contact_subject_general: "General Information",
+    contact_subject_partnership: "Partnership / Press",
+    contact_subject_press: "Press / Media",
+    contact_subject_support: "Social Support Request",
+    contact_send_btn: "Send Message",
+
     donate_title: "Support Ballal ASBL",
     donate_subtitle: "Your generosity funds our legal, social, and cultural actions.",
     donate_iban_label: "Bank Account (IBAN)",
@@ -601,6 +702,12 @@ const en: Translation = {
     share_via: "Share via...",
     share_whatsapp: "Send on WhatsApp",
     share_facebook: "Share on Facebook",
+    share_privacy_warning: "Privacy Note: Direct sharing via social networks allows these platforms to track your activity.",
+    share_qr_alt: "QR Code to access Ballal ASBL website",
+    share_qr_inst: "Scan this code with your camera to open the site.",
+    share_copy_error: "Unable to copy. Please select text manually.",
+
+    // Team
     team_title: "Board of Directors",
     team_subtitle: "Administrators serving the community.",
     members_title: "Our Members",
@@ -619,6 +726,9 @@ const en: Translation = {
     footer_resources: "Resources",
     footer_report: "Annual Report",
     footer_member: "Become a Member",
+    footer_bce: "BCE: 1016.925.333 (Business Number)",
+    footer_privacy: "Privacy Policy",
+    footer_terms: "Terms of Use",
 
     // EMAILS & ACTIONS
     email_subject_member: "Ballal ASBL Membership Request",
@@ -627,28 +737,12 @@ const en: Translation = {
     email_body_food_donor: "Hello,\n\nI wish to offer a donation or food partnership.\n\nName:\nOrganization:\nDonation Type:\nContact:",
     email_subject_food_network: "Food Autonomy Network Integration",
     email_body_food_network: "Hello,\n\nWe are a collective/squat and wish to join the project.\n\nLocation:\nNumber of people:\nContact:",
-    action_copied: "Copied!",
-
-    // FORMS
-    form_supplier_title: "Supplier & Donor Space",
-    form_supplier_subtitle: "Offer your products and participate in autonomy.",
-    form_network_title: "Join the Autonomy Network",
-    form_network_subtitle: "Register your collective or squat.",
-    form_name_label: "Full Name",
-    form_org_label: "Organization / Company",
-    form_email_label: "Email Address",
-    form_phone_label: "Phone",
-    form_donation_type_label: "Donation Type (Dry, Fresh...)",
-    form_location_label: "Location",
-    form_quantity_label: "Estimated quantity / People",
-    form_message_label: "Message",
-    form_submit_btn: "Send Request",
-    form_success_title: "Message Sent!",
-    form_success_desc: "Thank you. We will contact you shortly.",
-    form_back_btn: "Back to Project"
+    email_subject_contact: "Contact via ballal.be",
+    action_copied: "Copied!"
 };
 
 const nl: Translation = {
+    ...fr, // Fallback safe
     nav_home: "Startpagina",
     nav_directory: "Gids",
     nav_news: "Nieuws",
@@ -661,6 +755,7 @@ const nl: Translation = {
     nav_solidarity: "Solidariteit",
     nav_member_access: "Leden",
     nav_food_project: "Voedselproject",
+    nav_contact: "Contact",
     meta_desc_home: "De referentie voor de Guineese gemeenschap in België.",
     meta_desc_news: "Geverifieerd nieuws uit Guinee en de diaspora.",
     meta_desc_events: "Agenda van culturele evenementen.",
@@ -682,6 +777,8 @@ const nl: Translation = {
     urgent_title: "Solidariteit & Rechten",
     urgent_alert: "Bij arrestatie: Teken NIETS zonder advocaat.",
     legal_intro: "In België is zwijgen uw beste bescherming bij arrestatie. Ken uw rechten.",
+    legal_disclaimer_title: "Wettelijke disclaimer",
+    legal_disclaimer_text: "Deze inhoud is uitsluitend ter informatie en vervangt geen professioneel juridisch advies. Raadpleeg altijd een gespecialiseerde advocaat.",
     flash_title: "IK BEROEP ME OP\nMIJN ZWIJGRECHT.\nIK WIL EEN ADVOCAAT.",
     flash_msg_title: "BERICHT AAN POLITIE (Salduz-wet)",
     flash_msg_body: "\"Ik verklaar niets. Ik beroep me op mijn zwijgrecht. Ik vraag om onmiddellijke vertrouwelijke bijstand van een advocaat voorafgaand aan elk verhoor, conform de Salduz-wet.\"",
@@ -712,7 +809,7 @@ const nl: Translation = {
     health_desc: "Dringende Medische Hulp (DMH) garandeert zorg voor mensen zonder papieren.",
     health_steps_title: "OCMW / DMH Procedure:",
     health_step1: "Ga naar het OCMW van uw gemeente.",
-    health_step2: "Vraag 'Dringende Medische Hulp' (DMH) aan met een doktersattest.",
+    health_step2: "Vraag 'Dringende Medische Hulp' (DMH) met een doktersattest.",
     health_step3: "Het OCMW voert een sociaal onderzoek uit (behoeftigheid).",
     health_step4: "Het OCMW betaalt de dokter rechtstreeks. Ze melden u niet aan Vreemdelingenzaken.",
     allies_title: "Strategische Bondgenoten",
@@ -777,6 +874,7 @@ const nl: Translation = {
     food_collectives_text: "Sluit je aan bij het netwerk.",
     food_collectives_btn: "Netwerk integreren",
     food_contact_cta: "Contacteer ons.",
+    food_image_alt: "Voedsel solidariteit en distributie",
     form_supplier_title: "Leveranciersruimte",
     form_supplier_subtitle: "Bied uw producten aan.",
     form_network_title: "Netwerk Vervolledigen",
@@ -789,10 +887,24 @@ const nl: Translation = {
     form_location_label: "Locatie",
     form_quantity_label: "Aantal personen",
     form_message_label: "Bericht",
-    form_submit_btn: "Aanvraag verzenden",
-    form_success_title: "Bericht verzonden!",
-    form_success_desc: "Bedankt.",
+    form_submit_btn: "E-mailclient openen",
+    form_success_title: "Actie Gestart!",
+    form_success_desc: "Uw e-mailclient wordt geopend. Klik op 'Verzenden' om te voltooien.",
     form_back_btn: "Terug",
+    form_demo_warning: "DEMO MODUS: Dit formulier opent uw e-mailclient. Er worden geen gegevens opgeslagen.",
+    form_consent_gdpr: "Ik stem in met het gebruik van mijn e-mailclient om deze gegevens te verzenden.",
+    form_error_required: "Dit veld is verplicht.",
+    form_error_email: "Ongeldig e-mailadres.",
+    form_error_consent: "Uw toestemming is verplicht.",
+    form_privacy_link: "Privacybeleid",
+    contact_form_title: "Contacteer Ons",
+    contact_form_subtitle: "Heeft u een vraag? Aarzel niet.",
+    contact_subject_label: "Onderwerp",
+    contact_subject_general: "Algemene info",
+    contact_subject_partnership: "Partnerschap / Pers",
+    contact_subject_press: "Pers / Media",
+    contact_subject_support: "Sociale hulp",
+    contact_send_btn: "Bericht verzenden",
     donate_title: "Steun Ballal VZW",
     donate_subtitle: "Uw vrijgevigheid financiert onze acties.",
     donate_iban_label: "Bankrekening (IBAN)",
@@ -813,6 +925,10 @@ const nl: Translation = {
     share_via: "Delen via...",
     share_whatsapp: "Verzenden via WhatsApp",
     share_facebook: "Delen op Facebook",
+    share_privacy_warning: "Privacy: Direct delen via sociale netwerken stelt platforms in staat uw activiteit te volgen.",
+    share_qr_alt: "QR-code om toegang te krijgen tot de Ballal ASBL-website",
+    share_qr_inst: "Scan deze code met uw camera om de site te openen.",
+    share_copy_error: "Kan niet kopiëren. Selecteer de tekst handmatig.",
     team_title: "Raad van Bestuur",
     team_subtitle: "Bestuurders ten dienste van de gemeenschap.",
     members_title: "Onze Leden",
@@ -829,16 +945,21 @@ const nl: Translation = {
     footer_resources: "Bronnen",
     footer_report: "Jaarverslag",
     footer_member: "Lid Worden",
+    footer_bce: "KBO: 1016.925.333",
+    footer_privacy: "Privacybeleid",
+    footer_terms: "Gebruiksvoorwaarden",
     email_subject_member: "Aanvraag Lidmaatschap Ballal VZW",
     email_body_member: "Hallo,\n\nIk wil graag lid worden van Ballal VZW.\n\nNaam:\nVoornaam:\nTelefoon:",
     email_subject_food_donor: "Voedseldonatie",
     email_body_food_donor: "Hallo,\n\nIk wil een donatie doen.\n\nNaam:\nOrganisatie:\nType:\nContact:",
     email_subject_food_network: "Integratie Voedselnetwerk",
     email_body_food_network: "Hallo,\n\nWij zijn een collectief.\n\nLocatie:\nAantal personen:\nContact:",
+    email_subject_contact: "Contact via ballal.be",
     action_copied: "Gekopieerd!"
 };
 
 const de: Translation = {
+    ...fr, // Fallback safe
     nav_home: "Startseite",
     nav_directory: "Verzeichnis",
     nav_news: "Nachrichten",
@@ -851,6 +972,7 @@ const de: Translation = {
     nav_solidarity: "Solidarität",
     nav_member_access: "Mitglieder",
     nav_food_project: "Ernährungsprojekt",
+    nav_contact: "Kontakt",
     meta_desc_home: "Die Referenz für die guineische Gemeinschaft in Belgien.",
     meta_desc_news: "Verifizierte Nachrichten aus Guinea und der Diaspora.",
     meta_desc_events: "Kulturveranstaltungskalender.",
@@ -872,6 +994,8 @@ const de: Translation = {
     urgent_title: "Solidarität & Rechte",
     urgent_alert: "Bei Festnahme: Unterschreiben Sie NICHTS ohne Anwalt.",
     legal_intro: "In Belgien ist Schweigen Ihr bester Schutz bei einer Festnahme. Kennen Sie Ihre Rechte.",
+    legal_disclaimer_title: "Haftungsausschluss",
+    legal_disclaimer_text: "Dieser Inhalt dient nur zu Informationszwecken und ersetzt keine professionelle Rechtsberatung. Konsultieren Sie immer einen spezialisierten Anwalt.",
     flash_title: "ICH BERUFE MICH AUF MEIN\nSCHWEIGERECHT.\nICH WILL EINEN ANWALT.",
     flash_msg_title: "NACHRICHT AN DIE POLIZEI (Salduz-Gesetz)",
     flash_msg_body: "\"Ich sage nichts aus. Ich berufe mich auf mein Schweigerecht. Ich verlange sofortigen vertraulichen Beistand eines Anwalts vor jeder Vernehmung, gemäß dem Salduz-Gesetz.\"",
@@ -967,6 +1091,7 @@ const de: Translation = {
     food_collectives_text: "Treten Sie dem Netzwerk bei.",
     food_collectives_btn: "Netzwerk beitreten",
     food_contact_cta: "Kontaktieren Sie uns.",
+    food_image_alt: "Lebensmittelsolidarität und Verteilung",
     form_supplier_title: "Lieferantenbereich",
     form_supplier_subtitle: "Bieten Sie Ihre Produkte an.",
     form_network_title: "Netzwerk beitreten",
@@ -979,10 +1104,24 @@ const de: Translation = {
     form_location_label: "Standort",
     form_quantity_label: "Anzahl der Personen",
     form_message_label: "Nachricht",
-    form_submit_btn: "Anfrage senden",
-    form_success_title: "Nachricht gesendet!",
-    form_success_desc: "Danke.",
+    form_submit_btn: "E-Mail-Client öffnen",
+    form_success_title: "Aktion gestartet!",
+    form_success_desc: "Ihr E-Mail-Client wird mit vorausgefüllten Infos geöffnet.",
     form_back_btn: "Zurück",
+    form_demo_warning: "DEMO-MODUS: Dieses Formular bereitet eine E-Mail auf Ihrem Gerät vor. Keine Daten werden gespeichert.",
+    form_consent_gdpr: "Ich stimme der Nutzung meines E-Mail-Clients zu.",
+    form_error_required: "Dies ist ein Pflichtfeld.",
+    form_error_email: "Ungültige E-Mail-Adresse.",
+    form_error_consent: "Ihre Zustimmung ist erforderlich.",
+    form_privacy_link: "Datenschutzrichtlinie",
+    contact_form_title: "Kontakt",
+    contact_form_subtitle: "Eine Frage? Zögern Sie nicht.",
+    contact_subject_label: "Betreff",
+    contact_subject_general: "Allgemeine Info",
+    contact_subject_partnership: "Partnerschaft / Presse",
+    contact_subject_press: "Presse",
+    contact_subject_support: "Sozialhilfe",
+    contact_send_btn: "Nachricht senden",
     donate_title: "Unterstützen Sie Ballal VoG",
     donate_subtitle: "Ihre Großzügigkeit finanziert unsere Aktionen.",
     donate_iban_label: "Bankkonto (IBAN)",
@@ -1003,6 +1142,10 @@ const de: Translation = {
     share_via: "Teilen via...",
     share_whatsapp: "Senden via WhatsApp",
     share_facebook: "Auf Facebook teilen",
+    share_privacy_warning: "Datenschutzhinweis: Direktes Teilen über soziale Netzwerke ermöglicht diesen Plattformen, Ihre Aktivität zu verfolgen.",
+    share_qr_alt: "QR-Code für den Zugriff auf die Website von Ballal VoG",
+    share_qr_inst: "Scannen Sie diesen Code mit Ihrer Kamera, um die Website zu öffnen.",
+    share_copy_error: "Kopieren nicht möglich. Bitte Text manuell auswählen.",
     team_title: "Verwaltungsrat",
     team_subtitle: "Verwalter im Dienste der Gemeinschaft.",
     members_title: "Unsere Mitglieder",
@@ -1019,12 +1162,16 @@ const de: Translation = {
     footer_resources: "Ressourcen",
     footer_report: "Jahresbericht",
     footer_member: "Mitglied werden",
+    footer_bce: "ZNE: 1016.925.333",
+    footer_privacy: "Datenschutz",
+    footer_terms: "Nutzungsbedingungen",
     email_subject_member: "Antrag auf Mitgliedschaft Ballal VoG",
     email_body_member: "Hallo,\n\nIch möchte Mitglied werden.\n\nName:\nVorname:\nTelefon:",
     email_subject_food_donor: "Lebensmittelspende",
     email_body_food_donor: "Hallo,\n\nIch möchte spenden.\n\nName:\nOrganisation:\nArt:\nKontakt:",
     email_subject_food_network: "Integration Lebensmittelnetzwerk",
     email_body_food_network: "Hallo,\n\nWir sind ein Kollektiv.\n\nOrt:\nPersonenanzahl:\nKontakt:",
+    email_subject_contact: "Kontakt via ballal.be",
     action_copied: "Kopiert!"
 };
 
@@ -1043,6 +1190,15 @@ const es: Translation = {
     legal_flash_btn: "EMERGENCIA POLICIAL",
     health_title: "Derecho a la Salud (AMU)",
     form_submit_btn: "Enviar solicitud",
+    form_demo_warning: "MODO DEMO: Este formulario prepara un correo. No se guardan datos.",
+    form_consent_gdpr: "Acepto usar mi cliente de correo.",
+    nav_contact: "Contacto",
+    footer_bce: "BCE: 1016.925.333",
+    legal_disclaimer_title: "Descargo de responsabilidad legal",
+    legal_disclaimer_text: "Este contenido es solo para fines informativos y no reemplaza el asesoramiento legal profesional. Consulte siempre a un abogado especializado.",
+    share_privacy_warning: "Nota de privacidad: Compartir directamente a través de redes sociales permite a estas plataformas rastrear su actividad.",
+    share_qr_alt: "Código QR para acceder al sitio web de Ballal ASBL",
+    share_qr_inst: "Escanee este código con su cámara para abrir el sitio.",
 };
 
 // FALLBACK SAFEGUARD: African languages default to FRENCH for legal safety

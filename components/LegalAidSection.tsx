@@ -1,6 +1,7 @@
 
-import React, { useState } from 'react';
-import { Shield, HeartPulse, Scale, AlertTriangle, Gavel, Home, Camera, X, Zap, GraduationCap, Lock, EyeOff } from 'lucide-react';
+
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Shield, HeartPulse, Scale, AlertTriangle, Gavel, Home, Camera, X, Zap, GraduationCap, Lock, EyeOff, Info } from 'lucide-react';
 import { LanguageCode } from '../types';
 import { translations } from '../utils/translations';
 
@@ -8,75 +9,102 @@ interface LegalAidSectionProps {
   language?: LanguageCode;
 }
 
+// --- SUB-COMPONENT: FLASH MODE (ACCESSIBLE & SAFE) ---
+const FlashMode = ({ onClose, t }: { onClose: () => void, t: any }) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+  
+  // 1. Lock Body Scroll & Handle Escape
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    
+    // Focus management (simple focus on mount)
+    if (modalRef.current) {
+        modalRef.current.focus();
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onClose]);
+
+  return (
+    <div 
+        ref={modalRef}
+        className="fixed inset-0 z-[100] bg-[#CE1126] flex flex-col items-center justify-center p-4 text-center animate-in fade-in duration-200 cursor-pointer focus:outline-none"
+        onClick={onClose}
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="flash-title"
+        aria-describedby="flash-desc"
+        tabIndex={-1}
+    >
+        <button 
+            className="absolute top-8 right-8 text-white hover:bg-white/20 focus:bg-white/20 rounded-full p-2 transition-colors focus:outline-none focus:ring-2 focus:ring-white"
+            onClick={(e) => { e.stopPropagation(); onClose(); }}
+            aria-label={t.flash_close}
+        >
+            <X className="h-10 w-10" aria-hidden="true" />
+        </button>
+        
+        <Shield className="h-24 w-24 text-white mb-8" aria-hidden="true" />
+        
+        <h1 id="flash-title" className="text-3xl sm:text-5xl md:text-6xl font-black text-white leading-tight uppercase tracking-tighter mb-8 drop-shadow-md whitespace-pre-line">
+            {t.flash_title}
+        </h1>
+
+        <div id="flash-desc" className="bg-white text-black p-6 rounded-xl max-w-md shadow-2xl transform rotate-1">
+            <p className="font-bold text-lg mb-2 border-b-2 border-black pb-2 uppercase">{t.flash_msg_title}</p>
+            <p className="text-sm font-mono leading-relaxed whitespace-pre-line">
+                {t.flash_msg_body}
+            </p>
+            <p className="text-xs font-mono mt-2 text-right">Art. 47bis Code Instruction Criminelle</p>
+        </div>
+
+        <p className="text-white/90 mt-12 text-sm font-bold uppercase animate-pulse">
+            {t.flash_close}
+        </p>
+    </div>
+  );
+};
+
+// --- SUB-COMPONENT: LEGAL DISCLAIMER ---
+const LegalDisclaimer = ({ t }: { t: any }) => (
+  <div className="bg-amber-50 border-l-4 border-amber-500 p-4 mb-8 rounded-r-lg shadow-sm" role="note" aria-label="Avertissement juridique">
+    <div className="flex items-start">
+      <AlertTriangle className="h-5 w-5 text-amber-600 mr-3 flex-shrink-0 mt-0.5" aria-hidden="true" />
+      <div>
+        <h4 className="text-amber-800 font-bold text-sm uppercase mb-1">{t.legal_disclaimer_title || "Avis de non-responsabilité"}</h4>
+        <p className="text-amber-900 text-sm leading-relaxed">
+          {t.legal_disclaimer_text || "Ce contenu est fourni à titre informatif uniquement. Consultez un avocat pour des conseils juridiques."}
+        </p>
+      </div>
+    </div>
+  </div>
+);
+
+// --- MAIN COMPONENT ---
 const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) => {
   const [isFlashMode, setIsFlashMode] = useState(false);
-  const [lastOpenTime, setLastOpenTime] = useState(0);
   const t = translations[language];
-
-  // Empêcher le scroll quand le mode Flash est activé
-  if (typeof document !== 'undefined') {
-    document.body.style.overflow = isFlashMode ? 'hidden' : 'unset';
-  }
-
-  const openFlashMode = () => {
-    setIsFlashMode(true);
-    setLastOpenTime(Date.now());
-  };
-
-  const closeFlashMode = (e?: React.MouseEvent) => {
-    // Prevent closing if opened less than 500ms ago (avoids accidental close on double click)
-    if (Date.now() - lastOpenTime > 500) {
-        setIsFlashMode(false);
-    }
-  };
 
   return (
     <div className="min-h-screen pb-12 bg-slate-50" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       
-      {/* --- MODE FLASH (PLEIN ÉCRAN) --- */}
-      {isFlashMode && (
-        <div 
-            className="fixed inset-0 z-[100] bg-[#CE1126] flex flex-col items-center justify-center p-4 text-center animate-in fade-in duration-200 cursor-pointer focus:outline-none"
-            onClick={closeFlashMode}
-            role="alertdialog"
-            aria-modal="true"
-            aria-labelledby="flash-title"
-            aria-describedby="flash-desc"
-        >
-            <button 
-                className="absolute top-8 right-8 text-white/50 hover:text-white focus:text-white focus:outline-none focus:ring-2 focus:ring-white rounded-full p-2"
-                onClick={(e) => { e.stopPropagation(); setIsFlashMode(false); }}
-                aria-label={t.flash_close}
-                autoFocus
-            >
-                <X className="h-10 w-10" aria-hidden="true" />
-            </button>
-            
-            <Shield className="h-24 w-24 text-white mb-8 animate-pulse" aria-hidden="true" />
-            
-            <h1 id="flash-title" className="text-4xl sm:text-6xl font-black text-white leading-tight uppercase tracking-tighter mb-8 drop-shadow-md whitespace-pre-line">
-                {t.flash_title}
-            </h1>
-
-            <div id="flash-desc" className="bg-white text-black p-6 rounded-xl max-w-md shadow-2xl transform rotate-1">
-                <p className="font-bold text-lg mb-2 border-b-2 border-black pb-2 uppercase">{t.flash_msg_title}</p>
-                <p className="text-sm font-mono leading-relaxed whitespace-pre-line">
-                    {t.flash_msg_body}
-                </p>
-                <p className="text-xs font-mono mt-2 text-right">Art. 47bis Code Instruction Criminelle</p>
-            </div>
-
-            <p className="text-white/80 mt-12 text-sm font-bold animate-bounce uppercase">
-                {t.flash_close}
-            </p>
-        </div>
-      )}
+      {/* MODE FLASH */}
+      {isFlashMode && <FlashMode onClose={() => setIsFlashMode(false)} t={t} />}
 
       {/* HEADER ACTIVISTE */}
       <div className="bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-800 via-slate-900 to-black text-white py-16 relative overflow-hidden border-b-8 border-[#CE1126]">
         <div className="absolute top-0 right-0 w-64 h-64 bg-[#CE1126] opacity-10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <div className="inline-flex items-center justify-center p-4 bg-[#CE1126] rounded-full mb-8 shadow-lg shadow-red-900/50 animate-pulse">
+            <div className="inline-flex items-center justify-center p-4 bg-[#CE1126] rounded-full mb-8 shadow-lg shadow-red-900/50">
                 <Gavel className="h-12 w-12 text-white" aria-hidden="true" />
             </div>
             {/* H1 SEO Optimization */}
@@ -92,21 +120,18 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20">
         
         {/* LA FLASH CARD - DÉCLENCHEUR */}
-        <div 
-            className="mb-20 transform transition-all duration-300 hover:scale-[1.01] cursor-pointer focus:outline-none focus:ring-4 focus:ring-yellow-400 rounded-2xl shadow-2xl"
-            onClick={openFlashMode}
-            onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && openFlashMode()}
-            role="button"
-            tabIndex={0}
+        <button 
+            className="w-full text-left mb-12 transform transition-all duration-300 hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-yellow-400 rounded-2xl shadow-2xl group"
+            onClick={() => setIsFlashMode(true)}
             aria-label="Ouvrir le mode urgence police (Carte Flash)"
         >
-            <div className="bg-white rounded-2xl overflow-hidden border-4 border-[#CE1126] relative max-w-3xl mx-auto group">
+            <div className="bg-white rounded-2xl overflow-hidden border-4 border-[#CE1126] relative max-w-3xl mx-auto">
                 
                 {/* Bandeau clignotant */}
-                <div className="bg-[#CE1126] text-white py-5 px-4 text-center font-black text-lg uppercase tracking-widest flex items-center justify-center animate-pulse">
-                    <Zap className="h-8 w-8 mr-3 fill-yellow-400 text-yellow-400" aria-hidden="true" />
+                <div className="bg-[#CE1126] text-white py-5 px-4 text-center font-black text-lg uppercase tracking-widest flex items-center justify-center">
+                    <Zap className="h-8 w-8 mr-3 fill-yellow-400 text-yellow-400 animate-pulse" aria-hidden="true" />
                     {t.legal_flash_btn}
-                    <Zap className="h-8 w-8 ml-3 fill-yellow-400 text-yellow-400" aria-hidden="true" />
+                    <Zap className="h-8 w-8 ml-3 fill-yellow-400 text-yellow-400 animate-pulse" aria-hidden="true" />
                 </div>
 
                 <div className="p-8 md:p-14 text-center space-y-8 bg-gradient-to-b from-red-50 to-white group-hover:from-red-100 group-hover:to-red-50 transition-colors">
@@ -114,7 +139,7 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                          {t.flash_title.split('\n')[0]}...
                     </h3>
                     
-                    <div className="inline-block bg-black text-white px-6 py-3 text-base font-bold rounded shadow-lg uppercase transform -rotate-1 hover:rotate-0 transition-transform">
+                    <div className="inline-block bg-black text-white px-6 py-3 text-base font-bold rounded shadow-lg uppercase transform -rotate-1 group-hover:rotate-0 transition-transform">
                         {t.click_for_flash}
                     </div>
                 </div>
@@ -124,12 +149,15 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                     <span className="flex items-center text-gray-400"><Camera className="h-4 w-4 mr-2" aria-hidden="true"/> {t.legal_flash_screenshot}</span>
                 </div>
             </div>
-        </div>
+        </button>
+
+        {/* DISCLAIMER JURIDIQUE */}
+        <LegalDisclaimer t={t} />
 
         <div className="grid md:grid-cols-2 gap-8 mb-16">
             
             {/* 9bis vs 9ter - CLARIFICATION */}
-            <div className="bg-white rounded-2xl shadow-lg border-t-8 border-blue-600 overflow-hidden hover:shadow-xl transition-all h-full flex flex-col">
+            <article className="bg-white rounded-2xl shadow-lg border-t-8 border-blue-600 overflow-hidden hover:shadow-xl transition-all h-full flex flex-col">
                 <div className="p-8 flex-grow">
                     <div className="flex items-center mb-6 border-b border-gray-100 pb-4">
                         <div className="bg-blue-50 p-3 rounded-lg mr-4">
@@ -169,10 +197,10 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                         </div>
                     </div>
                 </div>
-            </div>
+            </article>
 
             {/* L'ÉCOLE - SANCTUAIRE */}
-            <div className="bg-white rounded-2xl shadow-lg border-t-8 border-[#FCD116] overflow-hidden hover:shadow-xl transition-all h-full flex flex-col">
+            <article className="bg-white rounded-2xl shadow-lg border-t-8 border-[#FCD116] overflow-hidden hover:shadow-xl transition-all h-full flex flex-col">
                 <div className="p-8 flex-grow">
                     <div className="flex items-center mb-6 border-b border-gray-100 pb-4">
                         <div className="bg-yellow-50 p-3 rounded-lg mr-4">
@@ -211,10 +239,10 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                         </ul>
                     </div>
                 </div>
-            </div>
+            </article>
 
             {/* LOGEMENT & DOMICILE - INVIOLABLE */}
-            <div className="bg-white rounded-2xl shadow-lg border-t-8 border-slate-800 overflow-hidden hover:shadow-xl transition-all h-full flex flex-col">
+            <article className="bg-white rounded-2xl shadow-lg border-t-8 border-slate-800 overflow-hidden hover:shadow-xl transition-all h-full flex flex-col">
                 <div className="p-8 flex-grow">
                     <div className="flex items-center mb-6 border-b border-gray-100 pb-4">
                         <div className="bg-slate-100 p-3 rounded-lg mr-4">
@@ -241,15 +269,15 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                         </div>
                         
                         <div className="bg-red-600 text-white p-4 rounded-xl shadow-md flex items-start">
-                            <AlertTriangle className="h-6 w-6 mr-3 flex-shrink-0 animate-pulse" aria-hidden="true" />
+                            <AlertTriangle className="h-6 w-6 mr-3 flex-shrink-0" aria-hidden="true" />
                             <span className="font-bold text-sm">{t.legal_home_action}</span>
                         </div>
                     </div>
                 </div>
-            </div>
+            </article>
 
              {/* SANTÉ (AMU) */}
-             <div className="bg-white rounded-2xl shadow-lg border-t-8 border-[#009460] overflow-hidden hover:shadow-xl transition-all h-full flex flex-col">
+             <article className="bg-white rounded-2xl shadow-lg border-t-8 border-[#009460] overflow-hidden hover:shadow-xl transition-all h-full flex flex-col">
                 <div className="p-8 flex-grow">
                     <div className="flex items-center mb-6 border-b border-gray-100 pb-4">
                         <div className="bg-green-50 p-3 rounded-lg mr-4">
@@ -274,7 +302,7 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                         </div>
                     </div>
                 </div>
-            </div>
+            </article>
         </div>
 
         {/* ALLIÉS & EXPERTS */}
@@ -288,15 +316,15 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
             </div>
 
             <div className="grid md:grid-cols-3 gap-6 relative z-10">
-                <a href="https://www.cire.be/" target="_blank" rel="noreferrer" className="bg-white/5 backdrop-blur-sm p-6 rounded-2xl hover:bg-[#CE1126] transition-all duration-300 border border-slate-700 hover:border-red-500 group text-center focus:outline-none focus:ring-2 focus:ring-white flex flex-col h-full transform hover:-translate-y-1">
+                <a href="https://www.cire.be/" target="_blank" rel="noreferrer nofollow" className="bg-white/5 backdrop-blur-sm p-6 rounded-2xl hover:bg-[#CE1126] transition-all duration-300 border border-slate-700 hover:border-red-500 group text-center focus:outline-none focus:ring-2 focus:ring-white flex flex-col h-full transform hover:-translate-y-1">
                     <h4 className="font-black text-white text-2xl mb-2">CIRÉ</h4>
                     <p className="text-xs text-slate-400 group-hover:text-red-100 font-medium leading-relaxed flex-grow">{t.legal_ally_cire}</p>
                 </a>
-                <a href="https://www.adde.be/" target="_blank" rel="noreferrer" className="bg-white/5 backdrop-blur-sm p-6 rounded-2xl hover:bg-blue-600 transition-all duration-300 border border-slate-700 hover:border-blue-400 group text-center focus:outline-none focus:ring-2 focus:ring-white flex flex-col h-full transform hover:-translate-y-1">
+                <a href="https://www.adde.be/" target="_blank" rel="noreferrer nofollow" className="bg-white/5 backdrop-blur-sm p-6 rounded-2xl hover:bg-blue-600 transition-all duration-300 border border-slate-700 hover:border-blue-400 group text-center focus:outline-none focus:ring-2 focus:ring-white flex flex-col h-full transform hover:-translate-y-1">
                     <h4 className="font-black text-white text-2xl mb-2">ADDE</h4>
                     <p className="text-xs text-slate-400 group-hover:text-blue-100 font-medium leading-relaxed flex-grow">{t.legal_ally_adde}</p>
                 </a>
-                <a href="https://www.liguedh.be/" target="_blank" rel="noreferrer" className="bg-white/5 backdrop-blur-sm p-6 rounded-2xl hover:bg-[#FCD116] hover:text-black transition-all duration-300 border border-slate-700 hover:border-yellow-400 group text-center focus:outline-none focus:ring-2 focus:ring-white flex flex-col h-full transform hover:-translate-y-1">
+                <a href="https://www.liguedh.be/" target="_blank" rel="noreferrer nofollow" className="bg-white/5 backdrop-blur-sm p-6 rounded-2xl hover:bg-[#FCD116] hover:text-black transition-all duration-300 border border-slate-700 hover:border-yellow-400 group text-center focus:outline-none focus:ring-2 focus:ring-white flex flex-col h-full transform hover:-translate-y-1">
                     <h4 className="font-black text-white text-2xl mb-2 group-hover:text-black">LDH</h4>
                     <p className="text-xs text-slate-400 group-hover:text-black font-medium leading-relaxed flex-grow">{t.legal_ally_ldh}</p>
                 </a>

@@ -1,5 +1,4 @@
 
-
 import React, { useState, useEffect } from 'react';
 import { ShieldCheck, Heart, Wand2, Share2 } from 'lucide-react';
 import { fetchHeroImage } from '../services/geminiService';
@@ -10,13 +9,12 @@ interface HeroProps {
   onExplore: () => void;
   language?: LanguageCode;
   onShare: () => void;
-  onDonate?: () => void; // New prop
+  onDonate?: () => void;
 }
 
 const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDonate }) => {
-  // Image par défaut changée pour quelque chose de plus chaleureux/communautaire (Concert/Foule/Lumière chaude)
   const defaultImage = "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=1600&auto=format&fit=crop";
-  const fallbackImage = "https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=1600&auto=format&fit=crop"; // Fallback image (Paysage)
+  const fallbackImage = "https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=1600&auto=format&fit=crop";
 
   const [bgImage, setBgImage] = useState(defaultImage);
   const [heroLabel, setHeroLabel] = useState<string | null>(null);
@@ -26,14 +24,9 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDona
 
   useEffect(() => {
     const loadHero = async () => {
-      // fetchHeroImage now returns a fallback object if quota is exceeded,
-      // avoiding infinite retry loops.
       const result = await fetchHeroImage();
       if (result && result.imageUrl) {
-        // Only use AI image if it's distinctly better, otherwise keep our new default
-        // For now, we trust the fallback logic or AI if active.
-        // setBgImage(result.imageUrl); 
-        // setHeroLabel(result.label); 
+        // AI image logic
       }
     };
     loadHero();
@@ -46,7 +39,6 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDona
     }
   };
 
-  // SEO: Structured Data for NGO
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "NGO",
@@ -73,13 +65,11 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDona
     <div className="relative bg-[#FFFBF0] overflow-hidden border-b border-orange-100">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       
-      {/* Background Pattern Overlay */}
       <div className="absolute inset-0 bg-african-pattern opacity-50 z-0 pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="relative z-10 pb-8 bg-[#FFFBF0]/90 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32 backdrop-blur-sm lg:backdrop-blur-none">
           
-          {/* Diagonal Slice for larger screens */}
           <svg className="hidden lg:block absolute right-0 inset-y-0 h-full w-48 text-[#FFFBF0] transform translate-x-1/2" fill="currentColor" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
             <polygon points="50,0 100,0 50,100 0,100" />
           </svg>
@@ -131,7 +121,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDona
                 </div>
               </div>
 
-              <div className="mt-8 flex items-center justify-center lg:justify-start space-x-4 text-xs font-bold uppercase tracking-widest text-gray-400">
+              <div className="mt-8 flex items-center justify-center lg:justify-start space-x-4 text-xs font-bold uppercase tracking-widest text-gray-500">
                 <span>{t.hero_city_conakry}</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-[#CE1126]"></span>
                 <span>{t.hero_city_brussels}</span>
@@ -143,19 +133,16 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDona
         </div>
       </div>
       <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 bg-gray-50 flex items-center justify-center overflow-hidden relative border-l-4 border-white">
-        {/* Image spécifique plus vibrante - Fallback managed via onError */}
         <img
           className="h-56 w-full object-cover object-center sm:h-72 md:h-96 lg:w-full lg:h-full transition-transform hover:scale-105 duration-[10s]"
           src={bgImage}
           alt={t.hero_subtitle}
           onError={handleImageError}
-          // Priority High for above the fold
           fetchPriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#FFFBF0] via-[#FFFBF0]/20 to-transparent lg:via-[#FFFBF0]/10"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
         
-        {/* Indicateur IA */}
         {heroLabel && (
             <div className="absolute bottom-6 right-6 bg-black/50 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-[10px] font-bold flex items-center border border-white/20 shadow-lg">
                 <Wand2 className="h-3 w-3 mr-1.5 text-[#FCD116]" />

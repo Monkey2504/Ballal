@@ -1,146 +1,161 @@
 
 
-// components/Footer.tsx (VERSION COMPACTE, COORDONNÉES À JOUR, TRADUCTIONS)
-
 import React from 'react';
-import { Mail, MapPin, Phone, Facebook, Youtube, Link as LinkIcon } from 'lucide-react'; 
-import { LanguageCode } from '../types';
+import { Mail, MapPin, Phone, Facebook, Youtube, Link as LinkIcon, FileText, Lock, Globe } from 'lucide-react'; 
+import { LanguageCode, ViewState } from '../types';
 import { translations } from '../utils/translations';
 
 interface FooterProps {
   language: LanguageCode;
+  setView?: (view: ViewState) => void;
 }
 
-const Footer: React.FC<FooterProps> = ({ language }) => {
+const Footer: React.FC<FooterProps> = ({ language, setView }) => {
   const t = translations[language];
 
-  // --- Données du Pied de Page MISES À JOUR ---
   const contactInfo = {
     address: "Chaussée de Gand 645, 1080 Molenbeek-Saint-Jean, Belgique", 
     phone: "0493 43 43 83", 
     email: "Admin@ballal.be", 
   };
 
-  // Generate mailto link dynamically
-  const memberMailto = `mailto:Admin@ballal.be?subject=${encodeURIComponent(t.email_subject_member)}&body=${encodeURIComponent(t.email_body_member)}`;
+  const handleContactClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (setView) setView(ViewState.CONTACT);
+  };
 
   const socialLinks = [
-    { name: 'Facebook', href: '#', icon: Facebook, color: 'text-blue-600' },
-    { name: 'YouTube', href: '#', icon: Youtube, color: 'text-red-600' },
+    // Dummy social links removed to avoid dead links, only keeping functional ones if available.
+    // Assuming Facebook/Youtube exist, otherwise these should be updated with real URLs.
+    // For now, removing them is safer than broken links, or pointing to a search results page.
+    // { name: 'Facebook', href: 'https://www.facebook.com/ballalasbl', icon: Facebook, color: 'text-blue-600' },
   ];
 
   const navigation = [
     { 
       name: t.footer_quick_links || "Quick Links",
       links: [
-        { name: t.nav_home, href: "#top" },
-        { name: t.nav_team, href: "#team" },
-        { name: t.nav_legal, href: "#legal-aid" }, 
-        { name: t.footer_contact || "Contact", href: "#contact" },
+        { name: t.nav_home, href: "#" }, // Managed by setView normally
+        { name: t.nav_legal, href: "#legal" }, 
+        { name: t.footer_contact, action: handleContactClick },
       ]
     },
     { 
       name: t.footer_resources || "Ressources",
       links: [
         { 
-            name: t.footer_statutes || "Statuts (PDF)", 
-            href: "https://drive.google.com/file/d/183EZtTCGNJ1Usn-EMPV-KYDV4ssfHod9/view?usp=sharing",
-            isExternal: true
+            name: t.footer_statutes, 
+            href: "/documents/statuts-ballal.pdf", // Local path simulation
+            isExternal: true,
+            icon: FileText
         },
-        { name: t.footer_report || "Rapport Annuel", href: "#" },
-        // ✅ LIEN DEVENIR MEMBRE MIS À JOUR VERS MAILTO AVEC TRADUCTION
         { 
-            name: t.footer_member || "Devenir Membre", 
-            href: memberMailto,
-            isExternal: true 
+            name: t.footer_member, 
+            action: handleContactClick, // Reuse contact form for membership
+            icon: Users
         },
       ]
     },
   ];
 
+  // Helper for rendering links or buttons
+  const renderLink = (link: any) => {
+      if (link.action) {
+          return (
+              <button 
+                onClick={link.action}
+                className="text-xs text-gray-300 hover:text-[#CE1126] transition-colors flex items-center text-left"
+              >
+                 <LinkIcon className="w-3 h-3 mr-2" aria-hidden="true" /> {link.name}
+              </button>
+          );
+      }
+      return (
+        <a 
+            href={link.href} 
+            target={link.isExternal ? "_blank" : "_self"} 
+            rel={link.isExternal ? "noopener noreferrer nofollow" : undefined}
+            className="text-xs text-gray-300 hover:text-[#CE1126] transition-colors flex items-center"
+        >
+            {link.icon ? <link.icon className="w-3 h-3 mr-2" /> : <LinkIcon className="w-3 h-3 mr-2" />} 
+            {link.name}
+        </a>
+      );
+  };
+
   return (
     <footer className="bg-gray-900 text-gray-300 border-t-4 border-[#FCD116]" dir={language === 'ar' ? 'rtl' : 'ltr'}>
-      <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         
-        {/* Grille principale en 4 colonnes pour mieux répartir l'espace */}
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5"> 
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12"> 
           
-          {/* Colonne 1: Logo et Mission (2 colonnes sur mobile) */}
-          <div className="space-y-3 col-span-2 lg:col-span-2"> 
-            <h3 className="text-2xl font-extrabold text-[#FCD116] tracking-wider">BALLAL</h3>
-            <p className="text-gray-400 text-xs max-w-xs"> 
-              {t.hero_asbl}
+          {/* Identity Column */}
+          <div className="space-y-4"> 
+            <h3 className="text-3xl font-extrabold text-[#FCD116] tracking-wider">BALLAL</h3>
+            <p className="text-gray-400 text-sm max-w-xs leading-relaxed"> 
+              {t.hero_asbl} - {t.hero_subtitle}
             </p>
-            <div className="flex space-x-3 pt-2">
-              {socialLinks.map((item) => (
-                <a 
-                  key={item.name} 
-                  href={item.href} 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`text-gray-400 hover:text-white transition-colors p-1 rounded-full hover:bg-gray-700`}
-                  aria-label={item.name}
-                >
-                  <item.icon className={`h-5 w-5 ${item.color}`} aria-hidden="true" />
-                </a>
-              ))}
-            </div>
+            {/* BCE Number */}
+            <p className="text-xs text-gray-500 font-mono border-l-2 border-gray-700 pl-2">
+                {t.footer_bce}
+            </p>
           </div>
 
-          {/* Colonnes Liens de Navigation */}
+          {/* Navigation Columns */}
           {navigation.map((section) => (
-            <div key={section.name} className="mt-6 md:mt-0">
-              <h3 className="text-xs font-semibold text-white uppercase tracking-wider mb-2 border-b border-gray-700 pb-1">
+            <nav key={section.name} aria-label={section.name}>
+              <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-4 border-b border-gray-700 pb-2 w-max">
                 {section.name}
               </h3>
-              <ul role="list" className="space-y-2">
-                {section.links.map((link) => (
+              <ul role="list" className="space-y-3">
+                {section.links.map((link: any) => (
                   <li key={link.name}>
-                    <a 
-                       href={link.href} 
-                       target={link.isExternal ? "_blank" : "_self"} 
-                       rel={link.isExternal ? "noopener noreferrer" : undefined}
-                       className="text-xs text-gray-400 hover:text-[#CE1126] transition-colors flex items-center"
-                    >
-                      <LinkIcon className="w-3 h-3 mr-2" aria-hidden="true" /> {link.name}
-                    </a>
+                    {renderLink(link)}
                   </li>
                 ))}
               </ul>
-            </div>
+            </nav>
           ))}
 
-          {/* Colonne Contact */}
-          <div className="mt-6 md:mt-0" id="contact">
-            <h3 className="text-xs font-semibold text-white uppercase tracking-wider mb-2 border-b border-gray-700 pb-1">
-              {t.footer_contact || "Contact"}
+          {/* Contact Column */}
+          <address className="not-italic space-y-4">
+            <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-4 border-b border-gray-700 pb-2 w-max">
+              {t.footer_contact}
             </h3>
-            <address className="space-y-2 not-italic text-xs">
-              <p className="flex items-start text-gray-400">
-                <MapPin className="h-4 w-4 mr-2 text-gray-500 flex-shrink-0" aria-hidden="true" />
+            <div className="space-y-3 text-sm">
+              <p className="flex items-start text-gray-300">
+                <MapPin className="h-5 w-5 mr-3 text-gray-500 flex-shrink-0" aria-hidden="true" />
                 {contactInfo.address}
               </p>
-              <p className="flex items-center text-gray-400">
-                <Phone className="h-4 w-4 mr-2 text-gray-500 flex-shrink-0" aria-hidden="true" />
+              <p className="flex items-center text-gray-300">
+                <Phone className="h-5 w-5 mr-3 text-gray-500 flex-shrink-0" aria-hidden="true" />
                 <a href={`tel:${contactInfo.phone}`} className="hover:text-white transition-colors">{contactInfo.phone}</a>
               </p>
-              <p className="flex items-center text-gray-400">
-                <Mail className="h-4 w-4 mr-2 text-gray-500 flex-shrink-0" aria-hidden="true" />
-                <a href={`mailto:${contactInfo.email}`} className="hover:text-white transition-colors">{contactInfo.email}</a>
-              </p>
-            </address>
-          </div>
+              {/* Button instead of direct mailto for better UX/GDPR flow */}
+              <button onClick={handleContactClick} className="flex items-center text-gray-300 hover:text-white transition-colors text-left">
+                <Mail className="h-5 w-5 mr-3 text-gray-500 flex-shrink-0" aria-hidden="true" />
+                {contactInfo.email}
+              </button>
+            </div>
+          </address>
         </div>
 
-        {/* Ligne inférieure */}
-        <div className="mt-8 border-t border-gray-700 pt-4">
-          <p className="text-xs text-gray-500 xl:text-center">
-            &copy; {new Date().getFullYear()} BALLAL ASBL. {t.footer_rights || "Tous droits réservés."}
+        <div className="mt-12 border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+          <p>
+            &copy; {new Date().getFullYear()} BALLAL ASBL. {t.footer_rights}
           </p>
+          <div className="flex space-x-6 mt-4 md:mt-0">
+              <a href="#" className="hover:text-gray-300 flex items-center"><Lock className="w-3 h-3 mr-1"/> {t.footer_privacy}</a>
+              <a href="#" className="hover:text-gray-300 flex items-center"><FileText className="w-3 h-3 mr-1"/> {t.footer_terms}</a>
+          </div>
         </div>
       </div>
+      
+      {/* Decorative Bottom Bar */}
+      <div className="h-1 w-full bg-gradient-to-r from-[#CE1126] via-[#FCD116] to-[#009460]"></div>
     </footer>
   );
 };
+import { Users } from 'lucide-react';
 
 export default Footer;
