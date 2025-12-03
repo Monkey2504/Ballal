@@ -37,7 +37,7 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
       links: [
         { 
             name: t.footer_statutes, 
-            href: "/documents/statuts-ballal.pdf", // Local path simulation
+            href: "https://kbopub.economie.fgov.be/kbopub/toonondernemingps.html?ondernemingsnummer=1016925333", // Lien officiel BCE
             isExternal: true,
             icon: FileText
         },

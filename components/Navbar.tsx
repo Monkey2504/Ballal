@@ -1,4 +1,6 @@
 
+
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Menu, X, HeartHandshake, Share2, LogOut, User as UserIcon, ChevronDown, Check, Globe } from 'lucide-react';
 import { ViewState, LanguageCode } from '../types';
@@ -92,6 +94,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
     { label: t.nav_news, value: ViewState.NEWS },
     { label: t.nav_history, value: ViewState.HISTORY },
     { label: t.nav_forum, value: ViewState.FORUM },
+    { label: t.nav_festival, value: ViewState.FESTIVAL },
   ];
 
   // Liste des langues avec icônes culturelles appropriées

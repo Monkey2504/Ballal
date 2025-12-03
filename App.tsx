@@ -1,6 +1,6 @@
 
 
-import React, { useState, useEffect, Suspense, lazy, Component, ErrorInfo, ReactNode } from 'react';
+import React, { useState, useEffect, Suspense, lazy, ErrorInfo, ReactNode } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Footer from './components/Footer';
@@ -21,6 +21,7 @@ const TeamSection = lazy(() => import('./components/TeamSection'));
 const FoodAutonomySection = lazy(() => import('./components/FoodAutonomySection'));
 const DirectorySection = lazy(() => import('./components/DirectorySection')); 
 const ContactSection = lazy(() => import('./components/ContactSection'));
+const FestivalSection = lazy(() => import('./components/FestivalSection'));
 
 // Note: FoodForms importés dynamiquement ou gardés ici s'ils sont légers. 
 // Pour simplifier l'exemple, importons-les normalement s'ils sont petits, sinon lazy.
@@ -29,13 +30,21 @@ const FoodFormsImport = lazy(() => import('./components/FoodForms').then(module 
 const FoodNetworkFormImport = lazy(() => import('./components/FoodForms').then(module => ({ default: module.FoodNetworkForm })));
 
 // --- ERROR BOUNDARY (ROBUSTESSE P2/Yellow 3) ---
-class ErrorBoundary extends Component<{ children: ReactNode, t: any }, { hasError: boolean }> {
-  constructor(props: any) {
-    super(props);
-    this.state = { hasError: false };
-  }
+interface ErrorBoundaryProps {
+  children: ReactNode;
+  t: any;
+}
 
-  static getDerivedStateFromError(_: Error) {
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
+
+class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  state: ErrorBoundaryState = {
+    hasError: false
+  };
+
+  static getDerivedStateFromError(_: Error): ErrorBoundaryState {
     return { hasError: true };
   }
 
@@ -90,6 +99,7 @@ const useHashRouting = (initialView: ViewState) => {
       case ViewState.FOOD_SUPPLIER: return 'food-supplier';
       case ViewState.FOOD_NETWORK: return 'food-network';
       case ViewState.CONTACT: return 'contact';
+      case ViewState.FESTIVAL: return 'festival';
       // case ViewState.DIRECTORY: return 'directory'; // Si on réactive l'annuaire
       default: return '';
     }
@@ -108,6 +118,7 @@ const useHashRouting = (initialView: ViewState) => {
       case 'food-supplier': return ViewState.FOOD_SUPPLIER;
       case 'food-network': return ViewState.FOOD_NETWORK;
       case 'contact': return ViewState.CONTACT;
+      case 'festival': return ViewState.FESTIVAL;
       // case 'directory': return ViewState.DIRECTORY;
       default: return ViewState.HOME;
     }
@@ -180,6 +191,7 @@ const useSEO = (view: ViewState, t: any) => {
       [ViewState.FOOD_SUPPLIER]: t.form_supplier_title,
       [ViewState.FOOD_NETWORK]: t.form_network_title,
       [ViewState.CONTACT]: t.nav_contact,
+      [ViewState.FESTIVAL]: t.nav_festival,
     };
 
     const descriptions: Record<string, string> = {
@@ -192,6 +204,7 @@ const useSEO = (view: ViewState, t: any) => {
       [ViewState.DONATE]: t.donate_subtitle,
       [ViewState.FOOD_AUTONOMY]: t.meta_desc_food,
       [ViewState.CONTACT]: t.meta_desc_contact,
+      [ViewState.FESTIVAL]: t.meta_desc_festival,
     };
 
     const pageTitle = titles[view] || t.hero_title;
@@ -284,6 +297,8 @@ const AppContent: React.FC = () => {
         return <FoodNetworkFormImport language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />;
       case ViewState.CONTACT:
         return <ContactSection language={language} />;
+      case ViewState.FESTIVAL:
+        return <FestivalSection language={language} />;
       // case ViewState.DIRECTORY: return <DirectorySection language={language} />;
       default:
         return <NewsSection language={language} />; // Fallback safe

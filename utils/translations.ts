@@ -1,5 +1,6 @@
 
 
+
 import { LanguageCode } from '../types';
 
 export interface Translation {
@@ -17,6 +18,7 @@ export interface Translation {
   nav_member_access: string;
   nav_food_project: string; 
   nav_contact: string;
+  nav_festival: string;
   
   // SEO Meta Descriptions
   meta_desc_home: string;
@@ -29,6 +31,7 @@ export interface Translation {
   meta_desc_share: string;
   meta_desc_food: string;
   meta_desc_contact: string;
+  meta_desc_festival: string;
 
   // Hero
   hero_title: string;
@@ -277,6 +280,7 @@ const fr: Translation = {
     nav_member_access: "Accès Membre",
     nav_food_project: "Projet Alimentaire",
     nav_contact: "Contact",
+    nav_festival: "Festival Sans-Papiers",
     meta_desc_home: "La structure de référence pour la communauté guinéenne en Belgique.",
     meta_desc_news: "Actualités vérifiées de la Guinée et de la diaspora en Belgique.",
     meta_desc_events: "Agenda des événements culturels, fêtes et meetups de la communauté guinéenne.",
@@ -287,6 +291,7 @@ const fr: Translation = {
     meta_desc_share: "Partagez l'application Ballal ASBL pour renforcer notre communauté.",
     meta_desc_food: "Projet d'autonomie et de sécurité alimentaire pour les collectifs et squats.",
     meta_desc_contact: "Contactez l'ASBL Ballal pour toute question ou demande de partenariat.",
+    meta_desc_festival: "Festival des Sans-Papiers : Célébrer l'identité, revendiquer les droits.",
     hero_title: "Solidarité Guinée-Belgique",
     hero_subtitle: "Accueillir. Protéger. Unir.",
     hero_desc: "La structure de référence pour la communauté guinéenne en Belgique. Assistance juridique, soutien social et promotion de notre culture.",
@@ -503,6 +508,7 @@ const fr: Translation = {
 };
 
 const en: Translation = {
+    ...fr, 
     nav_home: "Home",
     nav_directory: "Directory",
     nav_news: "News",
@@ -516,6 +522,7 @@ const en: Translation = {
     nav_member_access: "Member Access",
     nav_food_project: "Food Project",
     nav_contact: "Contact",
+    nav_festival: "Festival Sans-Papiers",
     meta_desc_home: "The reference for the Guinean community in Belgium.",
     meta_desc_news: "Verified news from Guinea and the diaspora in Belgium.",
     meta_desc_events: "Agenda of cultural events, parties and meetups of the Guinean community.",
@@ -526,6 +533,7 @@ const en: Translation = {
     meta_desc_share: "Share the Ballal ASBL app to strengthen our community.",
     meta_desc_food: "Food autonomy and security project for collectives and squats.",
     meta_desc_contact: "Contact Ballal ASBL for any questions or partnership requests.",
+    meta_desc_festival: "Festival des Sans-Papiers: Celebrating identity, claiming rights.",
     hero_title: "Guinea-Belgium Solidarity",
     hero_subtitle: "Welcome. Protect. Unite.",
     hero_desc: "The reference for the Guinean community in Belgium. Legal assistance, social support, and cultural promotion.",
@@ -756,6 +764,7 @@ const nl: Translation = {
     nav_member_access: "Leden",
     nav_food_project: "Voedselproject",
     nav_contact: "Contact",
+    nav_festival: "Festival Sans-Papiers",
     meta_desc_home: "De referentie voor de Guineese gemeenschap in België.",
     meta_desc_news: "Geverifieerd nieuws uit Guinee en de diaspora.",
     meta_desc_events: "Agenda van culturele evenementen.",
@@ -765,6 +774,7 @@ const nl: Translation = {
     meta_desc_history: "Geschiedenis van de gemeenschap.",
     meta_desc_share: "Deel de Ballal-app.",
     meta_desc_food: "Voedselautonomie project.",
+    meta_desc_festival: "Festival des Sans-Papiers: Identiteit vieren, rechten claimen.",
     hero_title: "Solidariteit Guinee-België",
     hero_subtitle: "Onthalen. Beschermen. Verenigen.",
     hero_desc: "De referentie voor de Guineese gemeenschap in België. Juridische bijstand, sociale steun en culturele promotie.",
@@ -973,6 +983,7 @@ const de: Translation = {
     nav_member_access: "Mitglieder",
     nav_food_project: "Ernährungsprojekt",
     nav_contact: "Kontakt",
+    nav_festival: "Festival Sans-Papiers",
     meta_desc_home: "Die Referenz für die guineische Gemeinschaft in Belgien.",
     meta_desc_news: "Verifizierte Nachrichten aus Guinea und der Diaspora.",
     meta_desc_events: "Kulturveranstaltungskalender.",
@@ -982,6 +993,7 @@ const de: Translation = {
     meta_desc_history: "Geschichte der Gemeinschaft.",
     meta_desc_share: "Teilen Sie die Ballal-App.",
     meta_desc_food: "Projekt für Ernährungssouveränität.",
+    meta_desc_festival: "Festival des Sans-Papiers: Identität feiern, Rechte einfordern.",
     hero_title: "Solidarität Guinea-Belgien",
     hero_subtitle: "Aufnehmen. Schützen. Vereinen.",
     hero_desc: "Die Referenz für die guineische Gemeinschaft in Belgien. Rechtshilfe, soziale Unterstützung und Kulturförderung.",
