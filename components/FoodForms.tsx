@@ -169,7 +169,7 @@ ${isSupplier ? '' : `${t.form_quantity_label}: ${formData.quantity}`}
 ${t.form_message_label}: ${formData.message}
       `;
       
-      window.location.href = `mailto:Admin@ballal.be?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = `mailto:admin@ballal.be?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       setSubmitted(true);
     }
   };

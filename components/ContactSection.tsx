@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Mail, MessageSquare, Send, ShieldCheck, AlertTriangle } from 'lucide-react';
 import { LanguageCode } from '../types';
@@ -53,7 +54,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ language }) => {
     // Construct Mailto
     const subject = formData.subject || t.email_subject_contact;
     const body = `De: ${formData.name} (${formData.email})\n\nMessage:\n${formData.message}`;
-    window.location.href = `mailto:Admin@ballal.be?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:admin@ballal.be?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setSubmitted(true);
   };
 

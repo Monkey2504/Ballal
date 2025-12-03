@@ -57,7 +57,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDona
       "@type": "ContactPoint",
       "telephone": "+32493434383",
       "contactType": "customer service",
-      "email": "Admin@ballal.be"
+      "email": "admin@ballal.be"
     }
   };
 
