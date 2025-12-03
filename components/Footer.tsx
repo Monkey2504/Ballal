@@ -1,7 +1,6 @@
 
-
 import React from 'react';
-import { Mail, MapPin, Phone, Facebook, Youtube, Link as LinkIcon, FileText, Lock, Globe } from 'lucide-react'; 
+import { Mail, MapPin, Phone, Facebook, Youtube, Link as LinkIcon, FileText, Lock, Globe, Users } from 'lucide-react'; 
 import { LanguageCode, ViewState } from '../types';
 import { translations } from '../utils/translations';
 
@@ -156,6 +155,5 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
     </footer>
   );
 };
-import { Users } from 'lucide-react';
 
 export default Footer;
