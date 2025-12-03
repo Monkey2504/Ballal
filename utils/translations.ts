@@ -1,6 +1,7 @@
 
 
 
+
 import { LanguageCode } from '../types';
 
 export interface Translation {
@@ -316,7 +317,7 @@ const fr: Translation = {
     legal_flash_screenshot: "Prenez une capture d'écran, le texte est votre bouclier légal.",
     legal_strategy_title: "La Stratégie Papiers : Différencier vos recours (9bis vs 9ter)",
     legal_warning: "Attention ! Les procédures '9bis' et '9ter' sont des recours distincts avec des objectifs et des risques différents. Les confondre ou mal les documenter peut anéantir vos chances de régularisation.",
-    legal_9bis_title: "Art. 9bis : L'Humanitaire - Une brèche nécessaire",
+    legal_9bis_title: "Art. 9bis (Humanitaire - Une brèche nécessaire",
     legal_9bis_desc: "Ce recours vise à obtenir une régularisation pour raisons humanitaires exceptionnelles (liens familiaux intenses, maladie grave, attaches locales profondes et irréversibles). Il ne doit pas être utilisé comme une solution par défaut.",
     legal_9ter_title: "Art. 9ter : L'État de Santé - L'Urgence Vitale",
     legal_9ter_desc: "Réservé aux cas où votre état de santé nécessite des soins en Belgique non disponibles dans votre pays d'origine, entraînant un risque réel et imminent pour votre vie. Les preuves médicales doivent être récentes, détaillées et incontestables.",
@@ -1211,6 +1212,8 @@ const es: Translation = {
     share_privacy_warning: "Nota de privacidad: Compartir directamente a través de redes sociales permite a estas plataformas rastrear su actividad.",
     share_qr_alt: "Código QR para acceder al sitio web de Ballal ASBL",
     share_qr_inst: "Escanee este código con su cámara para abrir el sitio.",
+    nav_festival: "Festival Sin Papeles",
+    meta_desc_festival: "Festival Sin Papeles: Celebrando la identidad, reivindicando derechos."
 };
 
 // FALLBACK SAFEGUARD: African languages default to FRENCH for legal safety

@@ -1,5 +1,7 @@
 
 
+
+
 import React, { useState, useEffect, Suspense, lazy, ErrorInfo, ReactNode } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
