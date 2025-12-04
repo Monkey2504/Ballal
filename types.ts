@@ -77,5 +77,6 @@ export enum ViewState {
   FOOD_NETWORK = 'FOOD_NETWORK',
   CONTACT = 'CONTACT',
   PRIVACY = 'PRIVACY',
+  TERMS = 'TERMS',
   FESTIVAL = 'FESTIVAL',
 }

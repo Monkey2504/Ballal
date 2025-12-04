@@ -2,6 +2,7 @@
 
 
 
+
 import { LanguageCode } from '../types';
 
 export interface Translation {
@@ -1213,7 +1214,9 @@ const es: Translation = {
     share_qr_alt: "Código QR para acceder al sitio web de Ballal ASBL",
     share_qr_inst: "Escanee este código con su cámara para abrir el sitio.",
     nav_festival: "Festival Sin Papeles",
-    meta_desc_festival: "Festival Sin Papeles: Celebrando la identidad, reivindicando derechos."
+    meta_desc_festival: "Festival Sin Papeles: Celebrando la identidad, reivindicando derechos.",
+    footer_privacy: "Política de privacidad",
+    footer_terms: "Términos de uso"
 };
 
 // FALLBACK SAFEGUARD: African languages default to FRENCH for legal safety

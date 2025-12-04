@@ -1,7 +1,3 @@
-
-
-
-
 import React, { useState, useEffect, Suspense, lazy, ErrorInfo, ReactNode } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -12,7 +8,6 @@ import { AuthProvider } from './contexts/AuthContext';
 import { Loader2, AlertTriangle, RefreshCcw } from 'lucide-react';
 
 // --- LAZY LOADING DES SECTIONS (PERFORMANCE P2) ---
-// Réduit la taille du bundle initial.
 const NewsSection = lazy(() => import('./components/NewsSection'));
 const ForumSection = lazy(() => import('./components/ForumSection'));
 const LegalAidSection = lazy(() => import('./components/LegalAidSection'));
@@ -24,16 +19,15 @@ const FoodAutonomySection = lazy(() => import('./components/FoodAutonomySection'
 const DirectorySection = lazy(() => import('./components/DirectorySection')); 
 const ContactSection = lazy(() => import('./components/ContactSection'));
 const FestivalSection = lazy(() => import('./components/FestivalSection'));
+const LegalDocSection = lazy(() => import('./components/LegalDocSection')); // New generic legal doc component
 
-// Note: FoodForms importés dynamiquement ou gardés ici s'ils sont légers. 
-// Pour simplifier l'exemple, importons-les normalement s'ils sont petits, sinon lazy.
-// Ici, on va lazy load les forms aussi.
+// Note: FoodForms importés dynamiquement
 const FoodFormsImport = lazy(() => import('./components/FoodForms').then(module => ({ default: module.FoodSupplierForm })));
 const FoodNetworkFormImport = lazy(() => import('./components/FoodForms').then(module => ({ default: module.FoodNetworkForm })));
 
 // --- ERROR BOUNDARY (ROBUSTESSE P2/Yellow 3) ---
 interface ErrorBoundaryProps {
-  children: ReactNode;
+  children?: ReactNode;
   t: any;
 }
 
@@ -41,10 +35,12 @@ interface ErrorBoundaryState {
   hasError: boolean;
 }
 
+// Explicitly extending React.Component to fix type errors
 class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  state: ErrorBoundaryState = {
-    hasError: false
-  };
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
 
   static getDerivedStateFromError(_: Error): ErrorBoundaryState {
     return { hasError: true };
@@ -85,9 +81,7 @@ const LoadingFallback = () => (
 
 // --- HOOKS PERSONNALISÉS ---
 
-// 1. Gestion du Routing via Hash (P1)
 const useHashRouting = (initialView: ViewState) => {
-  // Mapping ViewState <-> Hash slug
   const getHashFromView = (view: ViewState) => {
     switch(view) {
       case ViewState.HOME: return '';
@@ -102,7 +96,8 @@ const useHashRouting = (initialView: ViewState) => {
       case ViewState.FOOD_NETWORK: return 'food-network';
       case ViewState.CONTACT: return 'contact';
       case ViewState.FESTIVAL: return 'festival';
-      // case ViewState.DIRECTORY: return 'directory'; // Si on réactive l'annuaire
+      case ViewState.PRIVACY: return 'privacy';
+      case ViewState.TERMS: return 'terms';
       default: return '';
     }
   };
@@ -121,7 +116,8 @@ const useHashRouting = (initialView: ViewState) => {
       case 'food-network': return ViewState.FOOD_NETWORK;
       case 'contact': return ViewState.CONTACT;
       case 'festival': return ViewState.FESTIVAL;
-      // case 'directory': return ViewState.DIRECTORY;
+      case 'privacy': return ViewState.PRIVACY;
+      case 'terms': return ViewState.TERMS;
       default: return ViewState.HOME;
     }
   };
@@ -139,27 +135,22 @@ const useHashRouting = (initialView: ViewState) => {
   const navigate = (newView: ViewState) => {
     const hash = getHashFromView(newView);
     if (hash === '') {
-       // Clean URL for home
        history.pushState(null, '', window.location.pathname + window.location.search);
-       // Manually trigger update since pushState doesn't fire hashchange
        setView(ViewState.HOME);
     } else {
        window.location.hash = hash;
     }
-    // Scroll top logic is handled in focus management
   };
 
   return { view, navigate };
 };
 
-// 2. Gestion de la Langue avec Persistance (Yellow 2)
 const usePersistedLanguage = () => {
   const getInitialLang = (): LanguageCode => {
     const saved = localStorage.getItem('ballal_lang');
     if (saved && ['fr', 'en', 'nl', 'de', 'es', 'ar', 'pe', 'ma', 'su'].includes(saved)) {
       return saved as LanguageCode;
     }
-    // Détection navigateur simple
     const browserLang = navigator.language.split('-')[0];
     if (['fr', 'en', 'nl', 'de', 'es', 'ar'].includes(browserLang)) {
       return browserLang as LanguageCode;
@@ -178,7 +169,6 @@ const usePersistedLanguage = () => {
   return { language, setLanguage };
 };
 
-// 3. Gestion SEO Dynamique (P3)
 const useSEO = (view: ViewState, t: any) => {
   useEffect(() => {
     const titles: Record<string, string> = {
@@ -194,6 +184,8 @@ const useSEO = (view: ViewState, t: any) => {
       [ViewState.FOOD_NETWORK]: t.form_network_title,
       [ViewState.CONTACT]: t.nav_contact,
       [ViewState.FESTIVAL]: t.nav_festival,
+      [ViewState.PRIVACY]: t.footer_privacy,
+      [ViewState.TERMS]: t.footer_terms,
     };
 
     const descriptions: Record<string, string> = {
@@ -207,12 +199,13 @@ const useSEO = (view: ViewState, t: any) => {
       [ViewState.FOOD_AUTONOMY]: t.meta_desc_food,
       [ViewState.CONTACT]: t.meta_desc_contact,
       [ViewState.FESTIVAL]: t.meta_desc_festival,
+      [ViewState.PRIVACY]: t.footer_privacy,
+      [ViewState.TERMS]: t.footer_terms,
     };
 
     const pageTitle = titles[view] || t.hero_title;
     document.title = `BALLAL | ${pageTitle}`;
 
-    // Meta Description
     let metaDesc = document.querySelector('meta[name="description"]');
     if (!metaDesc) {
       metaDesc = document.createElement('meta');
@@ -221,7 +214,6 @@ const useSEO = (view: ViewState, t: any) => {
     }
     metaDesc.setAttribute('content', descriptions[view] || t.hero_desc);
 
-    // Open Graph (Basic)
     const setMetaTag = (property: string, content: string) => {
       let tag = document.querySelector(`meta[property="${property}"]`);
       if (!tag) {
@@ -235,12 +227,10 @@ const useSEO = (view: ViewState, t: any) => {
     setMetaTag('og:title', `BALLAL - ${pageTitle}`);
     setMetaTag('og:description', descriptions[view] || t.hero_desc);
     setMetaTag('og:url', window.location.href);
-    // On pourrait ajouter og:image dynamiquement ici selon la vue
 
   }, [view, t]);
 };
 
-// 4. Gestion Accessibilité & Focus (P4)
 const useFocusManagement = (view: ViewState) => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -251,8 +241,6 @@ const useFocusManagement = (view: ViewState) => {
   }, [view]);
 };
 
-// --- COMPOSANT PRINCIPAL ---
-
 const AppContent: React.FC = () => {
   const { view, navigate } = useHashRouting(ViewState.HOME);
   const { language, setLanguage } = usePersistedLanguage();
@@ -261,7 +249,6 @@ const AppContent: React.FC = () => {
   useSEO(view, t);
   useFocusManagement(view);
 
-  // Rendu conditionnel optimisé (Switch)
   const renderView = () => {
     switch (view) {
       case ViewState.HOME:
@@ -273,7 +260,6 @@ const AppContent: React.FC = () => {
               onShare={() => navigate(ViewState.SHARE)}
               onDonate={() => navigate(ViewState.DONATE)}
             />
-            {/* Team est lazy loaded mais visible en bas de home */}
             <Suspense fallback={<div className="h-64 bg-gray-50 animate-pulse"></div>}>
                <TeamSection language={language} />
             </Suspense>
@@ -301,9 +287,12 @@ const AppContent: React.FC = () => {
         return <ContactSection language={language} />;
       case ViewState.FESTIVAL:
         return <FestivalSection language={language} />;
-      // case ViewState.DIRECTORY: return <DirectorySection language={language} />;
+      case ViewState.PRIVACY:
+        return <LegalDocSection language={language} mode="privacy" />;
+      case ViewState.TERMS:
+        return <LegalDocSection language={language} mode="terms" />;
       default:
-        return <NewsSection language={language} />; // Fallback safe
+        return <NewsSection language={language} />;
     }
   };
 
@@ -325,7 +314,7 @@ const AppContent: React.FC = () => {
       
       <main 
         id="main-content" 
-        tabIndex={-1} // Permet le focus programmatique (useFocusManagement) sans être dans le tab order naturel
+        tabIndex={-1} 
         className="outline-none flex-grow focus:outline-none"
         role="main"
       >

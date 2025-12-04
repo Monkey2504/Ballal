@@ -1,9 +1,8 @@
-
-
 import { GoogleGenAI } from "@google/genai";
 import { NewsItem, CommunityEvent } from '../types';
 
-const apiKey = process.env.API_KEY || '';
+// Safe access to process.env for browser environments
+const apiKey = (typeof process !== 'undefined' && process.env && process.env.API_KEY) || '';
 const ai = new GoogleGenAI({ apiKey });
 
 // --- SMART IMAGE BANK (HIGH QUALITY & DIVERSE) ---

@@ -1,5 +1,4 @@
 
-
 import React from 'react';
 import { Flag, Megaphone, Users, Calendar, MapPin, Target, Wallet, Lightbulb, CheckCircle, HeartHandshake } from 'lucide-react';
 import { LanguageCode } from '../types';
@@ -36,6 +35,23 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 -mt-10 relative z-20">
         
+        {/* FESTIVAL IMAGE BANNER */}
+        <div className="relative rounded-3xl overflow-hidden shadow-2xl mb-12 border-4 border-white h-64 md:h-96 group">
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10"></div>
+            <img 
+                src="https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=1600&auto=format&fit=crop"
+                alt="Ambiance festival et concert solidaire"
+                className="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-105"
+                loading="lazy"
+            />
+             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-8 z-20">
+                 <div className="flex items-center text-white font-bold text-xl md:text-2xl">
+                    <Megaphone className="h-8 w-8 text-[#FCD116] mr-3" />
+                    <span className="drop-shadow-md">Une célébration de la dignité</span>
+                 </div>
+            </div>
+        </div>
+
         {/* RÉSUMÉ GÉNÉRAL */}
         <article className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-12 border-t-8 border-[#009460]">
             <h2 className="text-3xl font-black text-slate-900 mb-6 flex items-center">

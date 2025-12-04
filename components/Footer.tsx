@@ -23,12 +23,17 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
     if (setView) setView(ViewState.CONTACT);
   };
 
+  const handleNavClick = (e: React.MouseEvent, view: ViewState) => {
+    e.preventDefault();
+    if (setView) setView(view);
+  };
+
   const navigation = [
     { 
       name: t.footer_quick_links || "Quick Links",
       links: [
-        { name: t.nav_home, href: "#" }, // Managed by setView normally
-        { name: t.nav_legal, href: "#legal" }, 
+        { name: t.nav_home, href: "#", action: (e: any) => handleNavClick(e, ViewState.HOME) },
+        { name: t.nav_legal, href: "#legal", action: (e: any) => handleNavClick(e, ViewState.LEGAL_AID) }, 
         { name: t.footer_contact, action: handleContactClick },
       ]
     },
@@ -137,8 +142,8 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
             &copy; {new Date().getFullYear()} BALLAL ASBL. {t.footer_rights}
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="hover:text-gray-300 flex items-center"><Lock className="w-3 h-3 mr-1"/> {t.footer_privacy}</a>
-              <a href="#" className="hover:text-gray-300 flex items-center"><FileText className="w-3 h-3 mr-1"/> {t.footer_terms}</a>
+              <button onClick={(e) => handleNavClick(e, ViewState.PRIVACY)} className="hover:text-gray-300 flex items-center"><Lock className="w-3 h-3 mr-1"/> {t.footer_privacy}</button>
+              <button onClick={(e) => handleNavClick(e, ViewState.TERMS)} className="hover:text-gray-300 flex items-center"><FileText className="w-3 h-3 mr-1"/> {t.footer_terms}</button>
           </div>
         </div>
       </div>
