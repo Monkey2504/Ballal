@@ -1,8 +1,30 @@
 import { GoogleGenAI } from "@google/genai";
 import { NewsItem, CommunityEvent } from '../types';
 
-// The API key must be obtained exclusively from the environment variable process.env.API_KEY
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// --- ROBUST API KEY HANDLING ---
+let ai: GoogleGenAI | null = null;
+let apiKey = '';
+
+try {
+  // Safe access to process.env to prevent "ReferenceError" in browser
+  if (typeof process !== 'undefined' && process.env && process.env.API_KEY) {
+    apiKey = process.env.API_KEY;
+  }
+} catch (e) {
+  console.warn("Environment access failed");
+}
+
+// Only initialize AI if key is present
+if (apiKey && apiKey.trim().length > 0) {
+    try {
+        ai = new GoogleGenAI({ apiKey });
+    } catch (e) {
+        console.error("Failed to initialize Google GenAI client:", e);
+        ai = null;
+    }
+} else {
+    // console.warn("⚠️ API Key missing. Application running in Mock mode.");
+}
 
 // --- SMART IMAGE BANK (HIGH QUALITY & DIVERSE) ---
 // Banque d'images enrichie et diversifiée pour éviter les répétitions
@@ -297,16 +319,17 @@ export interface NewsResult {
 }
 
 export const fetchLatestNews = async (language: string = 'fr'): Promise<NewsResult> => {
-  // Use apiKey check via process.env directly if needed, but here we assume it works or handle error via quota
-  if (!process.env.API_KEY || isQuotaExceededRaw()) return { articles: getMockNews(), sourceUrls: [] };
+  // CRITICAL FIX: Ensure we have a valid AI instance before proceeding.
+  if (!ai || !apiKey || isQuotaExceededRaw()) {
+      return { articles: getMockNews(), sourceUrls: [] };
+  }
 
   const cacheKey = `news_${language}_v3`;
 
   return fetchWithDedup(cacheKey, async () => {
     try {
       return await retryWithBackoff(async () => {
-        // Prompt optimisé pour la qualité et les images
-        const response = await ai.models.generateContent({
+        const response = await ai!.models.generateContent({
           model: "gemini-2.5-flash",
           contents: `Agis comme un rédacteur en chef expert sur la Guinée (Conakry).
           Cherche les 6 actualités MAJEURES et VÉRIFIÉES des dernières 48 heures.
@@ -336,10 +359,8 @@ export const fetchLatestNews = async (language: string = 'fr'): Promise<NewsResu
 
         const rawArticles = cleanAndParseJSON(response.text || '') || getMockNews();
         
-        // Enrichissement intelligent des images
         const articles = Array.isArray(rawArticles) ? rawArticles.map((article: any) => ({
           ...article,
-          // On force l'utilisation de notre banque d'images HD basée sur le topic retourné par l'IA
           imageUrl: getRandomImageForTopic(article.visual_topic || mapCategoryToTopic(article.category))
         })) : getMockNews();
         
@@ -362,7 +383,6 @@ export const fetchLatestNews = async (language: string = 'fr'): Promise<NewsResu
   });
 };
 
-// Fallback mapping if AI forgets visual_topic
 const mapCategoryToTopic = (category: string): string => {
     const c = category?.toUpperCase() || '';
     if (c.includes('POLITIQUE') || c.includes('POLITI')) return 'POLITICS';
@@ -375,12 +395,12 @@ const mapCategoryToTopic = (category: string): string => {
 };
 
 export const fetchCommunityEvents = async (): Promise<CommunityEvent[]> => {
-    if (!process.env.API_KEY || isQuotaExceededRaw()) return getMockEvents();
+    if (!ai || !apiKey || isQuotaExceededRaw()) return getMockEvents();
 
     return fetchWithDedup('events_v3', async () => {
         try {
             return await retryWithBackoff(async () => {
-                const response = await ai.models.generateContent({
+                const response = await ai!.models.generateContent({
                     model: "gemini-2.5-flash",
                     contents: `Trouve des événements pour la diaspora guinéenne en Belgique (Bruxelles/Liège) ou des événements africains majeurs à venir.
                     Priorité aux événements réels futurs (Concerts, Conférences, Fêtes nationales). Si rien de spécifique, propose des événements génériques réalistes (Réunion mensuelle, Permanence, etc.).
@@ -424,6 +444,6 @@ export interface HeroImageResult {
 }
 
 export const fetchHeroImage = async (): Promise<HeroImageResult> => {
-    if (!process.env.API_KEY || isQuotaExceededRaw()) return FALLBACK_HERO;
+    if (!ai || !apiKey || isQuotaExceededRaw()) return FALLBACK_HERO;
     return FALLBACK_HERO;
 };

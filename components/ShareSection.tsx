@@ -1,8 +1,7 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Share2, Copy, Smartphone, Facebook, Check, Link as LinkIcon, AlertTriangle, Shield, Info } from 'lucide-react';
+import React, { useState, useCallback } from 'react';
+import { Share2, Copy, Smartphone, Facebook, Check, Link as LinkIcon, Info } from 'lucide-react';
 import { LanguageCode } from '../types';
 import { translations } from '../utils/translations';
-import QRCode from 'qrcode';
 
 interface ShareSectionProps {
   language: LanguageCode;
@@ -10,9 +9,6 @@ interface ShareSectionProps {
 
 const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
   const [copied, setCopied] = useState(false);
-  const [qrError, setQrError] = useState(false);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  
   const appUrl = typeof window !== 'undefined' ? window.location.href : 'https://ballal-asbl.be';
   const canShare = typeof navigator !== 'undefined' && !!navigator.share;
   const t = translations[language];
@@ -21,37 +17,12 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + appUrl)}`;
   const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(appUrl)}`;
 
-  // --- CLIENT-SIDE QR CODE GENERATION (SECURE P0) ---
-  useEffect(() => {
-    if (canvasRef.current && QRCode) {
-        try {
-            QRCode.toCanvas(canvasRef.current, appUrl, {
-                width: 200,
-                margin: 2,
-                color: {
-                    dark: '#009460',
-                    light: '#ffffff'
-                }
-            }, (error) => {
-                if (error) {
-                    console.error("QR Generation failed", error);
-                    setQrError(true);
-                }
-            });
-        } catch (e) {
-            console.error("QR Library error", e);
-            setQrError(true);
-        }
-    }
-  }, [appUrl]);
-
   // --- ROBUST CLIPBOARD COPY (P1) ---
   const handleCopy = useCallback(async () => {
     try {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         await navigator.clipboard.writeText(appUrl);
         setCopied(true);
-        // Announce to screen readers logic would go here via live region
       } else {
         throw new Error("Clipboard API unavailable");
       }
@@ -110,7 +81,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
           </p>
         </div>
 
-        {/* QR CODE SECTION (SECURE) */}
+        {/* QR CODE SECTION (SECURE STATIC IMAGE) */}
         <div className="bg-white rounded-2xl shadow-lg border-t-8 border-[#FCD116] overflow-hidden mb-8">
             <div className="p-8 flex flex-col items-center">
                 <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6" id="qr-label">
@@ -118,21 +89,12 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
                 </p>
                 
                 <div className="bg-white p-4 rounded-xl border-2 border-gray-100 shadow-inner mb-6 flex items-center justify-center min-h-[200px] min-w-[200px]">
-                    {!qrError ? (
-                        <>
-                            <canvas 
-                                ref={canvasRef} 
-                                className="max-w-full h-auto"
-                                role="img"
-                                aria-label={t.share_qr_alt || "QR Code"}
-                            />
-                            <div className="sr-only">{t.share_qr_inst}</div>
-                        </>
-                    ) : (
-                        <div className="text-gray-400 text-xs text-center p-4">
-                            QR Code indisponible<br/>(Erreur de génération)
-                        </div>
-                    )}
+                    <img 
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(appUrl)}&color=009460`} 
+                        alt={t.share_qr_alt || "QR Code"} 
+                        className="max-w-full h-auto"
+                        loading="lazy"
+                    />
                 </div>
                 
                 <div className="w-full max-w-md">
