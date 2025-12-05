@@ -1,8 +1,20 @@
 import { GoogleGenAI } from "@google/genai";
 import { NewsItem, CommunityEvent } from '../types';
 
-// Safe access to process.env for browser environments
-const apiKey = (typeof process !== 'undefined' && process.env && process.env.API_KEY) || '';
+// Safe access to process.env for browser environments using a try-catch block
+const getApiKey = () => {
+  try {
+    if (typeof process !== 'undefined' && process.env) {
+      return process.env.API_KEY || '';
+    }
+  } catch (e) {
+    // Ignore ReferenceError if process is not defined
+    return '';
+  }
+  return '';
+};
+
+const apiKey = getApiKey();
 const ai = new GoogleGenAI({ apiKey });
 
 // --- SMART IMAGE BANK (HIGH QUALITY & DIVERSE) ---

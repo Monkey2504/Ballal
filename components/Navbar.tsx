@@ -1,10 +1,5 @@
-
-
-
-
-
 import React, { useState, useRef, useEffect } from 'react';
-import { Menu, X, HeartHandshake, Share2, LogOut, User as UserIcon, ChevronDown, Check, Globe } from 'lucide-react';
+import { Menu, X, HeartHandshake, Share2, LogOut, User as UserIcon, ChevronDown, Check } from 'lucide-react';
 import { ViewState, LanguageCode } from '../types';
 import { translations } from '../utils/translations';
 import { useAuth } from '../contexts/AuthContext';
@@ -116,7 +111,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
 
   return (
     <>
-    <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-orange-100/50 shadow-sm transition-all duration-200">
+    <header className="bg-white/95 backdrop-blur-md fixed top-0 w-full z-50 border-b border-orange-100/50 shadow-sm transition-all duration-200">
       {/* Decorative Top Line */}
       <div className="h-1.5 w-full guinea-gradient-bg" role="presentation"></div>
       
@@ -152,7 +147,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                     <button
                         onClick={() => setView(item.value)}
                         aria-current={currentView === item.value ? 'page' : undefined}
-                        className={`px-4 py-2 rounded-full text-xs font-bold transition-all duration-200 uppercase tracking-wide focus:outline-none focus:ring-2 focus:ring-[#CE1126] ${
+                        className={`px-3 py-2 rounded-full text-[11px] font-bold transition-all duration-200 uppercase tracking-wide focus:outline-none focus:ring-2 focus:ring-[#CE1126] ${
                             currentView === item.value
                             ? 'text-white bg-[#CE1126] shadow-md'
                             : 'text-gray-600 hover:text-[#CE1126] hover:bg-white hover:shadow-sm'

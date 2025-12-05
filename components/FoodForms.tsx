@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle, Send, ShoppingBag, Users, AlertTriangle, ShieldCheck } from 'lucide-react';
 import { LanguageCode } from '../types';
@@ -27,6 +26,17 @@ interface FormData {
   consent: boolean;
 }
 
+interface FormInputProps {
+  id: string;
+  label: string;
+  type?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
+  placeholder?: string;
+  required?: boolean;
+}
+
 // --- SHARED COMPONENTS (DRY & A11Y) ---
 
 const FormInput = ({ 
@@ -38,16 +48,7 @@ const FormInput = ({
   error, 
   placeholder,
   required = true
-}: {
-  id: string,
-  label: string,
-  type?: string,
-  value: string,
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-  error?: string,
-  placeholder?: string,
-  required?: boolean
-}) => (
+}: FormInputProps) => (
   <div>
     <label htmlFor={id} className="block text-sm font-bold text-gray-700 mb-2">
       {label} {required && <span className="text-red-500">*</span>}

@@ -1,5 +1,3 @@
-
-
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Share2, Copy, Smartphone, Facebook, Check, Link as LinkIcon, AlertTriangle, Shield, Info } from 'lucide-react';
 import { LanguageCode } from '../types';
@@ -25,20 +23,25 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
 
   // --- CLIENT-SIDE QR CODE GENERATION (SECURE P0) ---
   useEffect(() => {
-    if (canvasRef.current) {
-        QRCode.toCanvas(canvasRef.current, appUrl, {
-            width: 200,
-            margin: 2,
-            color: {
-                dark: '#009460',
-                light: '#ffffff'
-            }
-        }, (error) => {
-            if (error) {
-                console.error("QR Generation failed", error);
-                setQrError(true);
-            }
-        });
+    if (canvasRef.current && QRCode) {
+        try {
+            QRCode.toCanvas(canvasRef.current, appUrl, {
+                width: 200,
+                margin: 2,
+                color: {
+                    dark: '#009460',
+                    light: '#ffffff'
+                }
+            }, (error) => {
+                if (error) {
+                    console.error("QR Generation failed", error);
+                    setQrError(true);
+                }
+            });
+        } catch (e) {
+            console.error("QR Library error", e);
+            setQrError(true);
+        }
     }
   }, [appUrl]);
 
