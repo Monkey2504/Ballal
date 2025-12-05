@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, Suspense, lazy, ErrorInfo, ReactNode } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -8,22 +9,21 @@ import { AuthProvider } from './contexts/AuthContext';
 import { Loader2, AlertTriangle, RefreshCcw } from 'lucide-react';
 import TeamSection from './components/TeamSection';
 
-// --- LAZY LOADING DES SECTIONS (PERFORMANCE P2) ---
+// --- LAZY LOADING DES SECTIONS ---
 const LegalAidSection = lazy(() => import('./components/LegalAidSection'));
 const HistorySection = lazy(() => import('./components/HistorySection'));
 const ShareSection = lazy(() => import('./components/ShareSection'));
 const DonationSection = lazy(() => import('./components/DonationSection'));
 const FoodAutonomySection = lazy(() => import('./components/FoodAutonomySection'));
-const DirectorySection = lazy(() => import('./components/DirectorySection')); 
 const ContactSection = lazy(() => import('./components/ContactSection'));
 const FestivalSection = lazy(() => import('./components/FestivalSection'));
-const LegalDocSection = lazy(() => import('./components/LegalDocSection')); // New generic legal doc component
+const LegalDocSection = lazy(() => import('./components/LegalDocSection'));
 
 // Note: FoodForms importés dynamiquement
 const FoodFormsImport = lazy(() => import('./components/FoodForms').then(module => ({ default: module.FoodSupplierForm })));
 const FoodNetworkFormImport = lazy(() => import('./components/FoodForms').then(module => ({ default: module.FoodNetworkForm })));
 
-// --- ERROR BOUNDARY (ROBUSTESSE P2/Yellow 3) ---
+// --- ERROR BOUNDARY ---
 interface ErrorBoundaryProps {
   children?: ReactNode;
   t: any;
@@ -33,7 +33,6 @@ interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-// Explicitly extending React.Component to fix type errors
 class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
@@ -83,7 +82,6 @@ const useHashRouting = (initialView: ViewState) => {
   const getHashFromView = (view: ViewState) => {
     switch(view) {
       case ViewState.HOME: return '';
-      // News et Forum supprimés
       case ViewState.LEGAL_AID: return 'legal';
       case ViewState.HISTORY: return 'history';
       case ViewState.SHARE: return 'share';
@@ -102,7 +100,6 @@ const useHashRouting = (initialView: ViewState) => {
   const getViewFromHash = () => {
     const hash = window.location.hash.replace('#', '');
     switch(hash) {
-      // News et Forum supprimés
       case 'legal': return ViewState.LEGAL_AID;
       case 'history': return ViewState.HISTORY;
       case 'share': return ViewState.SHARE;
@@ -169,7 +166,6 @@ const useSEO = (view: ViewState, t: any) => {
   useEffect(() => {
     const titles: Record<string, string> = {
       [ViewState.HOME]: t.hero_title,
-      // News et Forum supprimés
       [ViewState.LEGAL_AID]: t.nav_legal,
       [ViewState.HISTORY]: t.nav_history,
       [ViewState.SHARE]: t.nav_share,
@@ -185,7 +181,6 @@ const useSEO = (view: ViewState, t: any) => {
 
     const descriptions: Record<string, string> = {
       [ViewState.HOME]: t.meta_desc_home || t.hero_desc,
-      // News et Forum supprimés
       [ViewState.LEGAL_AID]: t.meta_desc_legal,
       [ViewState.HISTORY]: t.meta_desc_history,
       [ViewState.SHARE]: t.meta_desc_share,
@@ -259,7 +254,6 @@ const AppContent: React.FC = () => {
             </Suspense>
           </>
         );
-      // News et Forum supprimés
       case ViewState.LEGAL_AID:
         return <LegalAidSection language={language} />;
       case ViewState.HISTORY:
@@ -283,7 +277,6 @@ const AppContent: React.FC = () => {
       case ViewState.TERMS:
         return <LegalDocSection language={language} mode="terms" />;
       default:
-        // Par défaut, retourner à l'accueil
         return (
           <>
             <Hero 

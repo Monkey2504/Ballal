@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Menu, X, HeartHandshake, Share2, LogOut, User as UserIcon, ChevronDown, Check } from 'lucide-react';
 import { ViewState, LanguageCode } from '../types';
@@ -62,7 +63,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
 
   const t = translations[language];
 
-  // Scroll Sécurisé (requestAnimationFrame)
+  // Scroll Sécurisé
   const handleTeamClick = () => {
     setView(ViewState.HOME);
     setIsMobileMenuOpen(false);
@@ -71,7 +72,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
         const teamSection = document.getElementById('team-section');
         if (teamSection) {
             teamSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            // Focus pour accessibilité
             teamSection.setAttribute('tabindex', '-1');
             teamSection.focus();
         }
@@ -88,20 +88,18 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
     { label: t.nav_home, value: ViewState.HOME },
     { label: t.nav_legal, value: ViewState.LEGAL_AID },
     { label: t.nav_food_project, value: ViewState.FOOD_AUTONOMY },
-    // Actualités et Forum supprimés
     { label: t.nav_history, value: ViewState.HISTORY },
     { label: t.nav_festival, value: ViewState.FESTIVAL },
   ];
 
-  // Liste des langues avec icônes culturelles appropriées
   const languages: {code: LanguageCode; label: string; icon: string}[] = [
     { code: 'fr', label: 'Français', icon: '🇫🇷' },
     { code: 'en', label: 'English', icon: '🇬🇧' },
-    { code: 'nl', label: 'Nederlands', icon: '🇧🇪' }, // Drapeau BE pour le contexte local
+    { code: 'nl', label: 'Nederlands', icon: '🇧🇪' },
     { code: 'de', label: 'Deutsch', icon: '🇩🇪' },
     { code: 'es', label: 'Español', icon: '🇪🇸' },
-    { code: 'ar', label: 'العربية', icon: '🌍' }, // Globe pour neutralité
-    { code: 'pe', label: 'Pular', icon: '🗣️' }, // Symbole oralité
+    { code: 'ar', label: 'العربية', icon: '🌍' },
+    { code: 'pe', label: 'Pular', icon: '🗣️' },
     { code: 'ma', label: 'Malinké', icon: '🗣️' },
     { code: 'su', label: 'Soussou', icon: '🗣️' }
   ];
@@ -111,7 +109,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
   return (
     <>
     <header className="bg-white/95 backdrop-blur-md fixed top-0 w-full z-50 border-b border-orange-100/50 shadow-sm transition-all duration-200">
-      {/* Decorative Top Line */}
       <div className="h-1.5 w-full guinea-gradient-bg" role="presentation"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -158,7 +155,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                 ))}
             </ul>
 
-             {/* Secondary Actions */}
              <div className="flex items-center space-x-3 ml-4 border-l border-gray-200 pl-4 h-10">
                 <button
                     onClick={handleTeamClick}

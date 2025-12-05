@@ -1,25 +1,4 @@
 
-
-export interface NewsItem {
-  id: string;
-  title: string;
-  summary: string;
-  category: 'Politique' | 'Culture' | 'Sport' | 'Économie' | 'Société' | 'Santé' | 'Justice';
-  date: string;
-  imageUrl?: string;
-  source?: string; // Nom du média (ex: Guineenews, RFI)
-}
-
-export interface CommunityEvent {
-  id: string;
-  title: string;
-  date: string;
-  location: string;
-  description: string;
-  type: 'Meetup' | 'Fête' | 'Culture' | 'Business' | 'Sport';
-  imageUrl?: string;
-}
-
 export interface User {
   id: string;
   name: string;
@@ -29,45 +8,10 @@ export interface User {
   joinedAt: string;
 }
 
-export interface Comment {
-  id: string;
-  authorId: string;
-  author: string;
-  content: string;
-  date: string;
-}
-
-export interface ForumPost {
-  id: string;
-  authorId: string;
-  author: string;
-  title: string;
-  content: string;
-  likes: number;
-  comments: number;
-  commentsList?: Comment[];
-  timeAgo: string;
-  timestamp: number; // Pour le tri
-  isReported?: boolean;
-}
-
-export interface DirectoryItem {
-  id: string;
-  name: string;
-  category: 'Gastronomie' | 'Beauté & Mode' | 'Services' | 'Artisanat' | 'Santé';
-  location: string;
-  description: string;
-  phone?: string;
-  website?: string;
-  isVerified: boolean;
-}
-
 export type LanguageCode = 'fr' | 'en' | 'nl' | 'pe' | 'ma' | 'su' | 'es' | 'ar' | 'de';
 
 export enum ViewState {
   HOME = 'HOME',
-  // NEWS = 'NEWS', // Supprimé
-  // FORUM = 'FORUM', // Supprimé
   LEGAL_AID = 'LEGAL_AID',
   HISTORY = 'HISTORY',
   SHARE = 'SHARE',
@@ -78,5 +22,5 @@ export enum ViewState {
   CONTACT = 'CONTACT',
   PRIVACY = 'PRIVACY',
   TERMS = 'TERMS',
-  FESTIVAL = 'FESTIVAL',
+  FESTIVAL = 'FESTIVAL'
 }
