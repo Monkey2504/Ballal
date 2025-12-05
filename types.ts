@@ -66,8 +66,8 @@ export type LanguageCode = 'fr' | 'en' | 'nl' | 'pe' | 'ma' | 'su' | 'es' | 'ar'
 
 export enum ViewState {
   HOME = 'HOME',
-  NEWS = 'NEWS',
-  FORUM = 'FORUM',
+  // NEWS = 'NEWS', // Supprimé
+  // FORUM = 'FORUM', // Supprimé
   LEGAL_AID = 'LEGAL_AID',
   HISTORY = 'HISTORY',
   SHARE = 'SHARE',

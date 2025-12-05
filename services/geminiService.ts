@@ -1,30 +1,4 @@
-import { GoogleGenAI } from "@google/genai";
 import { NewsItem, CommunityEvent } from '../types';
-
-// --- ROBUST API KEY HANDLING ---
-let ai: GoogleGenAI | null = null;
-let apiKey = '';
-
-try {
-  // Safe access to process.env to prevent "ReferenceError" in browser
-  if (typeof process !== 'undefined' && process.env && process.env.API_KEY) {
-    apiKey = process.env.API_KEY;
-  }
-} catch (e) {
-  console.warn("Environment access failed");
-}
-
-// Only initialize AI if key is present
-if (apiKey && apiKey.trim().length > 0) {
-    try {
-        ai = new GoogleGenAI({ apiKey });
-    } catch (e) {
-        console.error("Failed to initialize Google GenAI client:", e);
-        ai = null;
-    }
-} else {
-    // console.warn("⚠️ API Key missing. Application running in Mock mode.");
-}
 
 // --- SMART IMAGE BANK (HIGH QUALITY & DIVERSE) ---
 // Banque d'images enrichie et diversifiée pour éviter les répétitions
@@ -94,7 +68,7 @@ const getRandomImageForTopic = (topic: string | undefined): string => {
   return images[index];
 };
 
-// --- MOCK DATA (UPDATED) ---
+// --- MOCK DATA ---
 
 const getMockNews = (): NewsItem[] => [
   {
@@ -215,227 +189,21 @@ const FALLBACK_HERO = {
   label: null
 };
 
-// --- CACHING & DEDUP UTILS ---
-const CACHE_PREFIX = 'ballal_cache_v3_';
-const QUOTA_ERROR_MARKER = 'ballal_quota_exceeded';
-const pendingRequests: Record<string, Promise<any>> = {};
-
-const getCached = <T>(key: string): T | null => {
-  try {
-    const cached = sessionStorage.getItem(CACHE_PREFIX + key);
-    if (cached) return JSON.parse(cached);
-  } catch (e) { return null; }
-  return null;
-};
-
-const setCached = (key: string, data: any) => {
-  try {
-    sessionStorage.setItem(CACHE_PREFIX + key, JSON.stringify(data));
-  } catch (e) {}
-};
-
-const isQuotaExceededRaw = () => {
-  try {
-    return sessionStorage.getItem(QUOTA_ERROR_MARKER) === 'true';
-  } catch { return false; }
-};
-
-const markQuotaExceeded = () => {
-  try {
-    console.warn("Global Quota Exceeded detected - switching to offline mode for this session.");
-    sessionStorage.setItem(QUOTA_ERROR_MARKER, 'true');
-  } catch {}
-};
-
-const isQuotaError = (e: any) => {
-  const msg = e?.message || JSON.stringify(e);
-  return msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED') || e?.status === 429;
-};
-
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-async function retryWithBackoff<T>(
-  operation: () => Promise<T>,
-  retries: number = 3,
-  backoff: number = 1000,
-  name: string = 'Operation'
-): Promise<T> {
-  try {
-    return await operation();
-  } catch (error: any) {
-    if (isQuotaError(error) || error?.status === 400 || error?.status === 403) {
-      throw error;
-    }
-    if (retries <= 0) {
-      console.warn(`[${name}] Failed after all retries. Last error: ${error.message}`);
-      throw error;
-    }
-    const jitter = Math.random() * 200;
-    const waitTime = backoff + jitter;
-    await delay(waitTime);
-    return retryWithBackoff(operation, retries - 1, backoff * 1.5, name);
-  }
-}
-
-const fetchWithDedup = async <T>(key: string, fetcher: () => Promise<T>): Promise<T> => {
-  const cached = getCached<T>(key);
-  if (cached) return cached;
-
-  if (pendingRequests[key]) {
-    return pendingRequests[key];
-  }
-
-  const promise = fetcher().then(data => {
-    if (data !== null && data !== undefined) setCached(key, data);
-    delete pendingRequests[key];
-    return data;
-  }).catch(err => {
-    delete pendingRequests[key];
-    throw err;
-  });
-
-  pendingRequests[key] = promise;
-  return promise;
-};
-
-const cleanAndParseJSON = (text: string): any => {
-  try {
-    if (!text) return null;
-    const jsonArrayMatch = text.match(/\[\s*\{[\s\S]*\}\s*\]/);
-    if (jsonArrayMatch) return JSON.parse(jsonArrayMatch[0]);
-    const jsonObjectMatch = text.match(/\{[\s\S]*\}/);
-    if (jsonObjectMatch) return JSON.parse(jsonObjectMatch[0]);
-    const cleaned = text.replace(/```json/g, '').replace(/```/g, '').trim();
-    return JSON.parse(cleaned);
-  } catch (e) {
-    console.error("JSON Parsing Failed. Raw text sample:", text.substring(0, 50) + "...");
-    return null;
-  }
-};
-
 export interface NewsResult {
   articles: NewsItem[];
   sourceUrls: string[];
 }
 
+// --- STATIC SERVICE METHODS (NO API) ---
+
 export const fetchLatestNews = async (language: string = 'fr'): Promise<NewsResult> => {
-  // CRITICAL FIX: Ensure we have a valid AI instance before proceeding.
-  if (!ai || !apiKey || isQuotaExceededRaw()) {
-      return { articles: getMockNews(), sourceUrls: [] };
-  }
-
-  const cacheKey = `news_${language}_v3`;
-
-  return fetchWithDedup(cacheKey, async () => {
-    try {
-      return await retryWithBackoff(async () => {
-        const response = await ai!.models.generateContent({
-          model: "gemini-2.5-flash",
-          contents: `Agis comme un rédacteur en chef expert sur la Guinée (Conakry).
-          Cherche les 6 actualités MAJEURES et VÉRIFIÉES des dernières 48 heures.
-          
-          Règles strictes :
-          1. Pas de rumeurs, que des faits.
-          2. Cite EXPLICITEMENT la source principale (ex: Guineenews, Africaguinee, RFI, Mosaiqueguinee) dans le champ 'source'.
-          3. Assigne un 'visual_topic' précis pour l'illustration.
-          4. Évite les faits divers mineurs. Concentre-toi sur la politique, l'économie, les grands événements sociétaux et sportifs.
-          
-          Langue de réponse : ${language === 'fr' ? 'Français' : language === 'en' ? 'Anglais' : language === 'ar' ? 'Arabe' : language === 'de' ? 'Allemand' : 'Français'}.
-          
-          Format JSON strict (Tableau) :
-          [
-            {
-              "id": "string",
-              "title": "string (Titre accrocheur et court)",
-              "summary": "string (Résumé informatif max 25 mots)",
-              "category": "Politique" | "Culture" | "Sport" | "Économie" | "Société" | "Justice" | "Santé",
-              "date": "string (ex: 'Il y a 2h', 'Ce matin')",
-              "source": "string (Nom du média source)",
-              "visual_topic": "POLITICS" | "SOCCER" | "ECONOMY" | "CULTURE" | "JUSTICE" | "SOCIETY" | "MINING" | "HEALTH"
-            }
-          ]`,
-          config: { tools: [{googleSearch: {}}] }
-        });
-
-        const rawArticles = cleanAndParseJSON(response.text || '') || getMockNews();
-        
-        const articles = Array.isArray(rawArticles) ? rawArticles.map((article: any) => ({
-          ...article,
-          imageUrl: getRandomImageForTopic(article.visual_topic || mapCategoryToTopic(article.category))
-        })) : getMockNews();
-        
-        const sourceUrls = response.candidates?.[0]?.groundingMetadata?.groundingChunks
-          ?.map(chunk => chunk.web?.uri)
-          .filter((uri): uri is string => typeof uri === 'string')
-          .slice(0, 3) || [];
-
-        if (articles.length === 0) {
-            throw new Error("Invalid news data format");
-        }
-
-        return { articles, sourceUrls };
-      }, 3, 1000, 'fetchLatestNews');
-    } catch (error) {
-        console.error("News Fetch Failed (Fallback used):", error);
-        if (isQuotaError(error)) markQuotaExceeded();
-        return { articles: getMockNews(), sourceUrls: [] };
-    }
-  });
-};
-
-const mapCategoryToTopic = (category: string): string => {
-    const c = category?.toUpperCase() || '';
-    if (c.includes('POLITIQUE') || c.includes('POLITI')) return 'POLITICS';
-    if (c.includes('SPORT') || c.includes('FOOT') || c.includes('MATCH')) return 'SOCCER';
-    if (c.includes('ECONOM') || c.includes('MINE') || c.includes('FINANCE') || c.includes('ARGENT')) return 'ECONOMY';
-    if (c.includes('CULTURE') || c.includes('ART') || c.includes('MUSIQUE') || c.includes('CONCERT')) return 'CULTURE';
-    if (c.includes('JUSTICE') || c.includes('TRIBUNAL') || c.includes('DROIT')) return 'JUSTICE';
-    if (c.includes('SANTE') || c.includes('SANTÉ') || c.includes('HOPITAL') || c.includes('MALADIE')) return 'HEALTH';
-    return 'SOCIETY';
+  // Retourne toujours les données mockées (statique)
+  return { articles: getMockNews(), sourceUrls: [] };
 };
 
 export const fetchCommunityEvents = async (): Promise<CommunityEvent[]> => {
-    if (!ai || !apiKey || isQuotaExceededRaw()) return getMockEvents();
-
-    return fetchWithDedup('events_v3', async () => {
-        try {
-            return await retryWithBackoff(async () => {
-                const response = await ai!.models.generateContent({
-                    model: "gemini-2.5-flash",
-                    contents: `Trouve des événements pour la diaspora guinéenne en Belgique (Bruxelles/Liège) ou des événements africains majeurs à venir.
-                    Priorité aux événements réels futurs (Concerts, Conférences, Fêtes nationales). Si rien de spécifique, propose des événements génériques réalistes (Réunion mensuelle, Permanence, etc.).
-                    
-                    Format JSON strict :
-                    [
-                      {
-                        "id": "string",
-                        "title": "string",
-                        "date": "string",
-                        "location": "string",
-                        "description": "string",
-                        "type": "Meetup" | "Fête" | "Culture" | "Business" | "Sport",
-                        "visual_topic": "SOCIETY" | "CULTURE" | "ECONOMY" | "SOCCER"
-                      }
-                    ]`,
-                    config: { tools: [{googleSearch: {}}] }
-                });
-
-                const rawEvents = cleanAndParseJSON(response.text || '');
-                
-                const events = Array.isArray(rawEvents) ? rawEvents.map((event: any) => ({
-                  ...event,
-                  imageUrl: getRandomImageForTopic(event.visual_topic || mapCategoryToTopic(event.type))
-                })) : getMockEvents();
-
-                if (events.length === 0) throw new Error("Invalid events format");
-                return events;
-            }, 3, 1000, 'fetchCommunityEvents');
-        } catch (error) {
-            console.error("Events Fetch Failed (Fallback used):", error);
-            if (isQuotaError(error)) markQuotaExceeded();
-            return getMockEvents();
-        }
-    });
+    // Retourne toujours les données mockées (statique)
+    return getMockEvents();
 };
 
 export interface HeroImageResult {
@@ -444,6 +212,5 @@ export interface HeroImageResult {
 }
 
 export const fetchHeroImage = async (): Promise<HeroImageResult> => {
-    if (!ai || !apiKey || isQuotaExceededRaw()) return FALLBACK_HERO;
     return FALLBACK_HERO;
 };
