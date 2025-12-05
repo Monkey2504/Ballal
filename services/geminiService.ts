@@ -1,5 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-import { NewsItem, CommunityEvent } from '../types';
+import { CommunityEvent } from '../types';
 
 // The API key must be obtained exclusively from the environment variable process.env.API_KEY
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
@@ -73,63 +73,6 @@ const getRandomImageForTopic = (topic: string | undefined): string => {
 };
 
 // --- MOCK DATA (UPDATED) ---
-
-const getMockNews = (): NewsItem[] => [
-  {
-    id: 'fallback-1',
-    title: 'Transition : Le CNT adopte le volet budgétaire',
-    summary: 'Les conseillers nationaux ont validé hier la loi de finances rectificative, mettant l\'accent sur les infrastructures routières.',
-    category: 'Politique',
-    date: 'Aujourd\'hui',
-    source: 'Guineenews',
-    imageUrl: getRandomImageForTopic('POLITICS')
-  },
-  {
-    id: 'fallback-2',
-    title: 'Syli National : Liste des convoqués dévoilée',
-    summary: 'Le sélectionneur a publié la liste des 23 joueurs pour la prochaine trêve internationale. Quelques surprises en attaque.',
-    category: 'Sport',
-    date: 'Il y a 2h',
-    source: 'Foot224',
-    imageUrl: getRandomImageForTopic('SOCCER')
-  },
-  {
-    id: 'fallback-3',
-    title: 'Boké : Reprise des exportations de bauxite',
-    summary: 'Après une brève interruption technique, le train minéralier a repris ses rotations vers le port de Kamsar.',
-    category: 'Économie',
-    date: 'Hier',
-    source: 'Mines Guinée',
-    imageUrl: getRandomImageForTopic('MINING')
-  },
-  {
-    id: 'fallback-4',
-    title: 'Concert géant sur l\'Esplanade',
-    summary: 'Les stars de la musique urbaine guinéenne se sont produites devant une foule immense pour la paix.',
-    category: 'Culture',
-    date: 'Ce week-end',
-    source: 'Africaguinee',
-    imageUrl: getRandomImageForTopic('CULTURE')
-  },
-  {
-    id: 'fallback-5',
-    title: 'Justice : Ouverture du procès des événements',
-    summary: 'Le tribunal de Dixinn a ouvert ce matin l\'audience tant attendue. Sécurité renforcée autour du tribunal.',
-    category: 'Justice',
-    date: 'Il y a 4h',
-    source: 'Kaloumpresse',
-    imageUrl: getRandomImageForTopic('JUSTICE')
-  },
-  {
-    id: 'fallback-6',
-    title: 'Rentrée scolaire : Les dates confirmées',
-    summary: 'Le Ministère de l\'Enseignement Pré-Universitaire confirme la date de la rentrée et annonce de nouvelles mesures.',
-    category: 'Société',
-    date: 'Hier',
-    source: 'MEPU-A',
-    imageUrl: getRandomImageForTopic('SOCIETY')
-  }
-];
 
 const getMockEvents = (): CommunityEvent[] => [
   {
@@ -289,77 +232,6 @@ const cleanAndParseJSON = (text: string): any => {
     console.error("JSON Parsing Failed. Raw text sample:", text.substring(0, 50) + "...");
     return null;
   }
-};
-
-export interface NewsResult {
-  articles: NewsItem[];
-  sourceUrls: string[];
-}
-
-export const fetchLatestNews = async (language: string = 'fr'): Promise<NewsResult> => {
-  // Use apiKey check via process.env directly if needed, but here we assume it works or handle error via quota
-  if (!process.env.API_KEY || isQuotaExceededRaw()) return { articles: getMockNews(), sourceUrls: [] };
-
-  const cacheKey = `news_${language}_v3`;
-
-  return fetchWithDedup(cacheKey, async () => {
-    try {
-      return await retryWithBackoff(async () => {
-        // Prompt optimisé pour la qualité et les images
-        const response = await ai.models.generateContent({
-          model: "gemini-2.5-flash",
-          contents: `Agis comme un rédacteur en chef expert sur la Guinée (Conakry).
-          Cherche les 6 actualités MAJEURES et VÉRIFIÉES des dernières 48 heures.
-          
-          Règles strictes :
-          1. Pas de rumeurs, que des faits.
-          2. Cite EXPLICITEMENT la source principale (ex: Guineenews, Africaguinee, RFI, Mosaiqueguinee) dans le champ 'source'.
-          3. Assigne un 'visual_topic' précis pour l'illustration.
-          4. Évite les faits divers mineurs. Concentre-toi sur la politique, l'économie, les grands événements sociétaux et sportifs.
-          
-          Langue de réponse : ${language === 'fr' ? 'Français' : language === 'en' ? 'Anglais' : language === 'ar' ? 'Arabe' : language === 'de' ? 'Allemand' : 'Français'}.
-          
-          Format JSON strict (Tableau) :
-          [
-            {
-              "id": "string",
-              "title": "string (Titre accrocheur et court)",
-              "summary": "string (Résumé informatif max 25 mots)",
-              "category": "Politique" | "Culture" | "Sport" | "Économie" | "Société" | "Justice" | "Santé",
-              "date": "string (ex: 'Il y a 2h', 'Ce matin')",
-              "source": "string (Nom du média source)",
-              "visual_topic": "POLITICS" | "SOCCER" | "ECONOMY" | "CULTURE" | "JUSTICE" | "SOCIETY" | "MINING" | "HEALTH"
-            }
-          ]`,
-          config: { tools: [{googleSearch: {}}] }
-        });
-
-        const rawArticles = cleanAndParseJSON(response.text || '') || getMockNews();
-        
-        // Enrichissement intelligent des images
-        const articles = Array.isArray(rawArticles) ? rawArticles.map((article: any) => ({
-          ...article,
-          // On force l'utilisation de notre banque d'images HD basée sur le topic retourné par l'IA
-          imageUrl: getRandomImageForTopic(article.visual_topic || mapCategoryToTopic(article.category))
-        })) : getMockNews();
-        
-        const sourceUrls = response.candidates?.[0]?.groundingMetadata?.groundingChunks
-          ?.map(chunk => chunk.web?.uri)
-          .filter((uri): uri is string => typeof uri === 'string')
-          .slice(0, 3) || [];
-
-        if (articles.length === 0) {
-            throw new Error("Invalid news data format");
-        }
-
-        return { articles, sourceUrls };
-      }, 3, 1000, 'fetchLatestNews');
-    } catch (error) {
-        console.error("News Fetch Failed (Fallback used):", error);
-        if (isQuotaError(error)) markQuotaExceeded();
-        return { articles: getMockNews(), sourceUrls: [] };
-    }
-  });
 };
 
 // Fallback mapping if AI forgets visual_topic

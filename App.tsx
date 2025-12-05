@@ -8,8 +8,6 @@ import { AuthProvider } from './contexts/AuthContext';
 import { Loader2, AlertTriangle, RefreshCcw } from 'lucide-react';
 
 // --- LAZY LOADING DES SECTIONS (PERFORMANCE P2) ---
-const NewsSection = lazy(() => import('./components/NewsSection'));
-const ForumSection = lazy(() => import('./components/ForumSection'));
 const LegalAidSection = lazy(() => import('./components/LegalAidSection'));
 const HistorySection = lazy(() => import('./components/HistorySection'));
 const ShareSection = lazy(() => import('./components/ShareSection'));
@@ -85,8 +83,6 @@ const useHashRouting = (initialView: ViewState) => {
   const getHashFromView = (view: ViewState) => {
     switch(view) {
       case ViewState.HOME: return '';
-      case ViewState.NEWS: return 'news';
-      case ViewState.FORUM: return 'forum';
       case ViewState.LEGAL_AID: return 'legal';
       case ViewState.HISTORY: return 'history';
       case ViewState.SHARE: return 'share';
@@ -105,8 +101,6 @@ const useHashRouting = (initialView: ViewState) => {
   const getViewFromHash = () => {
     const hash = window.location.hash.replace('#', '');
     switch(hash) {
-      case 'news': return ViewState.NEWS;
-      case 'forum': return ViewState.FORUM;
       case 'legal': return ViewState.LEGAL_AID;
       case 'history': return ViewState.HISTORY;
       case 'share': return ViewState.SHARE;
@@ -173,8 +167,6 @@ const useSEO = (view: ViewState, t: any) => {
   useEffect(() => {
     const titles: Record<string, string> = {
       [ViewState.HOME]: t.hero_title,
-      [ViewState.NEWS]: t.news_section_title,
-      [ViewState.FORUM]: t.nav_forum,
       [ViewState.LEGAL_AID]: t.nav_legal,
       [ViewState.HISTORY]: t.nav_history,
       [ViewState.SHARE]: t.nav_share,
@@ -190,8 +182,6 @@ const useSEO = (view: ViewState, t: any) => {
 
     const descriptions: Record<string, string> = {
       [ViewState.HOME]: t.meta_desc_home || t.hero_desc,
-      [ViewState.NEWS]: t.meta_desc_news,
-      [ViewState.FORUM]: t.meta_desc_forum,
       [ViewState.LEGAL_AID]: t.meta_desc_legal,
       [ViewState.HISTORY]: t.meta_desc_history,
       [ViewState.SHARE]: t.meta_desc_share,
@@ -265,10 +255,6 @@ const AppContent: React.FC = () => {
             </Suspense>
           </>
         );
-      case ViewState.NEWS:
-        return <NewsSection language={language} />;
-      case ViewState.FORUM:
-        return <ForumSection language={language} />;
       case ViewState.LEGAL_AID:
         return <LegalAidSection language={language} />;
       case ViewState.HISTORY:
@@ -292,7 +278,7 @@ const AppContent: React.FC = () => {
       case ViewState.TERMS:
         return <LegalDocSection language={language} mode="terms" />;
       default:
-        return <NewsSection language={language} />;
+        return <LegalAidSection language={language} />;
     }
   };
 
