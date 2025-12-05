@@ -1,8 +1,10 @@
 import { GoogleGenAI } from "@google/genai";
 import { NewsItem, CommunityEvent } from '../types';
 
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+
 // The API key must be obtained exclusively from the environment variable process.env.API_KEY
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
 // --- SMART IMAGE BANK (HIGH QUALITY & DIVERSE) ---
 // Banque d'images enrichie et diversifiée pour éviter les répétitions
@@ -298,7 +300,7 @@ export interface NewsResult {
 
 export const fetchLatestNews = async (language: string = 'fr'): Promise<NewsResult> => {
   // Use apiKey check via process.env directly if needed, but here we assume it works or handle error via quota
-  if (!process.env.API_KEY || isQuotaExceededRaw()) return { articles: getMockNews(), sourceUrls: [] };
+  if (!GEMINI_API_KEY || isQuotaExceededRaw()) return { articles: getMockNews(), sourceUrls: [] };
 
   const cacheKey = `news_${language}_v3`;
 
@@ -375,7 +377,7 @@ const mapCategoryToTopic = (category: string): string => {
 };
 
 export const fetchCommunityEvents = async (): Promise<CommunityEvent[]> => {
-    if (!process.env.API_KEY || isQuotaExceededRaw()) return getMockEvents();
+    if (!GEMINI_API_KEY || isQuotaExceededRaw()) return getMockEvents();
 
     return fetchWithDedup('events_v3', async () => {
         try {
@@ -424,6 +426,6 @@ export interface HeroImageResult {
 }
 
 export const fetchHeroImage = async (): Promise<HeroImageResult> => {
-    if (!process.env.API_KEY || isQuotaExceededRaw()) return FALLBACK_HERO;
+    if (!GEMINI_API_KEY || isQuotaExceededRaw()) return FALLBACK_HERO;
     return FALLBACK_HERO;
 };
