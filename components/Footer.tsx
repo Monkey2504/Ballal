@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { 
   Mail, MapPin, Phone, Link as LinkIcon, FileText, Lock, Users, 
   Heart, Globe, ChevronRight, ExternalLink, Shield, Building,
-  Facebook, Instagram, Twitter, Youtube, Linkedin
+  Facebook, Instagram, Twitter, Youtube, Linkedin, Clock
 } from 'lucide-react'; 
 import { LanguageCode, ViewState } from '../types.ts';
 import { translations } from '../utils/translations.ts';
