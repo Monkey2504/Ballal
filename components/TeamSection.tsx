@@ -1,5 +1,4 @@
 
-
 import React from 'react';
 import { Phone, Mail, User, Shield, Users } from 'lucide-react';
 import { LanguageCode } from '../types';
@@ -32,11 +31,27 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
     },
     {
       name: "Kadiatou Sow",
-      role: t.role_admin_f, 
-      image: "https://i.imgur.com/THTzMBW.jpg",
+      role: t.role_admin_f,
+      image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&q=80&w=800",
       phone: "",
       email: "",
       color: "border-[#009460]" // Vert
+    },
+    {
+      name: "Cissé, Abdoulaye",
+      role: t.role_admin, 
+      image: "https://i.imgur.com/7FduSwY.jpg",
+      phone: "",
+      email: "",
+      color: "border-slate-800" // Slate/Noir pour le 4ème
+    },
+    {
+      name: "Francois Halleux",
+      role: "Conseiller en stratégie & Innovation sociale",
+      image: "https://i.imgur.com/1qqkroP.jpg",
+      phone: "",
+      email: "",
+      color: "border-blue-600" // Bleu pour le conseiller
     }
   ];
 
@@ -58,49 +73,56 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
         </div>
 
         {/* GRILLE BUREAU EXÉCUTIF */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-          {teamMembers.map((member, index) => (
-            <div 
-                key={index} 
-                className={`bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border-t-4 ${member.color}`}
-            >
-              <div className="relative h-80 overflow-hidden bg-gray-100">
-                <img 
-                    className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-110" 
-                    src={member.image} 
-                    alt={member.name} 
-                    loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                <div className="absolute bottom-4 left-4 text-white">
-                    <p className="font-bold text-xl">{member.name}</p>
-                    <p className="text-sm uppercase tracking-wider font-medium text-gray-300">{member.role}</p>
+        {/* Utilisation de Flexbox pour centrer parfaitement les éléments, quel que soit leur nombre */}
+        <div className="flex flex-wrap justify-center gap-8 mb-20">
+          {teamMembers.map((member, index) => {
+            const isAdmin = member.role === t.role_admin || member.role === t.role_admin_f;
+            
+            return (
+              <div 
+                  key={index} 
+                  className={`bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border-t-4 ${member.color} w-full md:w-[calc(50%-2rem)] lg:w-[calc(25%-2rem)] flex-grow-0 flex-shrink-0`}
+              >
+                <div className="relative h-80 overflow-hidden bg-gray-100">
+                  <img 
+                      className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-110" 
+                      src={member.image} 
+                      alt={member.name} 
+                      loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                  <div className="absolute bottom-4 left-4 text-white w-full pr-4">
+                      <p className="font-bold text-xl">{member.name}</p>
+                      <p className={`text-sm uppercase tracking-wider ${isAdmin ? 'font-black guinea-gradient-text' : 'font-medium text-blue-200'}`}>
+                        {member.role}
+                      </p>
+                  </div>
+                </div>
+                
+                <div className="p-6">
+                  <div className="space-y-4">
+                      {member.phone && (
+                          <a href={`tel:${member.phone}`} className="flex items-center text-gray-600 hover:text-[#CE1126] transition-colors group">
+                              <div className="p-2 bg-gray-100 rounded-full mr-3 group-hover:bg-red-50">
+                                  <Phone className="h-4 w-4" />
+                              </div>
+                              <span className="text-sm font-bold">{member.phone}</span>
+                          </a>
+                      )}
+                      
+                      {member.email && (
+                          <a href={`mailto:${member.email}`} className="flex items-center text-gray-600 hover:text-[#009460] transition-colors group">
+                              <div className="p-2 bg-gray-100 rounded-full mr-3 group-hover:bg-green-50">
+                                  <Mail className="h-4 w-4" />
+                              </div>
+                              <span className="text-sm truncate">{member.email}</span>
+                          </a>
+                      )}
+                  </div>
                 </div>
               </div>
-              
-              <div className="p-6">
-                <div className="space-y-4">
-                    {member.phone && (
-                        <a href={`tel:${member.phone}`} className="flex items-center text-gray-600 hover:text-[#CE1126] transition-colors group">
-                            <div className="p-2 bg-gray-100 rounded-full mr-3 group-hover:bg-red-50">
-                                <Phone className="h-4 w-4" />
-                            </div>
-                            <span className="text-sm font-bold">{member.phone}</span>
-                        </a>
-                    )}
-                    
-                    {member.email && (
-                        <a href={`mailto:${member.email}`} className="flex items-center text-gray-600 hover:text-[#009460] transition-colors group">
-                            <div className="p-2 bg-gray-100 rounded-full mr-3 group-hover:bg-green-50">
-                                <Mail className="h-4 w-4" />
-                            </div>
-                            <span className="text-sm truncate">{member.email}</span>
-                        </a>
-                    )}
-                </div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* SECTION NOS MEMBRES (PHOTO DE GROUPE) */}

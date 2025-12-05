@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense, lazy, ErrorInfo, ReactNode } from 'react';
+import React, { useState, useEffect, Suspense, lazy, ErrorInfo, ReactNode, Component } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Footer from './components/Footer';
@@ -35,8 +35,8 @@ interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-// Explicitly extending React.Component to fix type errors
-class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+// Explicitly extending Component to fix type errors
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
