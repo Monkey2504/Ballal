@@ -1,5 +1,4 @@
-
-import { LanguageCode } from '../types';
+import { LanguageCode } from '../types.ts';
 
 export interface Translation {
   // Navigation

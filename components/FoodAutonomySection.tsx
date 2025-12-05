@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
 import { Wheat, Handshake, ShieldCheck, Users, Mail, ArrowRight, ExternalLink, HeartHandshake } from 'lucide-react';
-import { LanguageCode, ViewState } from '../types';
-import { translations } from '../utils/translations';
+import { LanguageCode, ViewState } from '../types.ts';
+import { translations } from '../utils/translations.ts';
 
 interface FoodAutonomySectionProps {
   language: LanguageCode;

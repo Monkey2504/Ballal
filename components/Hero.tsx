@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
 import { ShieldCheck, Heart, Wand2, Share2 } from 'lucide-react';
-import { LanguageCode } from '../types';
-import { translations } from '../utils/translations';
+import { LanguageCode } from '../types.ts';
+import { translations } from '../utils/translations.ts';
 
 interface HeroProps {
   onExplore: () => void;

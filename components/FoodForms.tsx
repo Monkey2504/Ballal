@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle, Send, ShoppingBag, Users, AlertTriangle, ShieldCheck } from 'lucide-react';
-import { LanguageCode } from '../types';
-import { translations, Translation } from '../utils/translations';
+import { LanguageCode } from '../types.ts';
+import { translations, Translation } from '../utils/translations.ts';
 
 // --- TYPES ---
 

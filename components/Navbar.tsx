@@ -1,10 +1,9 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Menu, X, HeartHandshake, Share2, LogOut, User as UserIcon, ChevronDown, Check } from 'lucide-react';
-import { ViewState, LanguageCode } from '../types';
-import { translations } from '../utils/translations';
-import { useAuth } from '../contexts/AuthContext';
-import { AuthModal } from './AuthModals';
+import { ViewState, LanguageCode } from '../types.ts';
+import { translations } from '../utils/translations.ts';
+import { useAuth } from '../contexts/AuthContext.tsx';
+import { AuthModal } from './AuthModals.tsx';
 
 interface NavbarProps {
   currentView: ViewState;

@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Share2, Copy, Smartphone, Facebook, Check, Link as LinkIcon, Info } from 'lucide-react';
-import { LanguageCode } from '../types';
-import { translations } from '../utils/translations';
+import { LanguageCode } from '../types.ts';
+import { translations } from '../utils/translations.ts';
 
 interface ShareSectionProps {
   language: LanguageCode;

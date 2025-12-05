@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { Flag, Megaphone, Users, Calendar, MapPin, Target, Wallet, Lightbulb, CheckCircle, HeartHandshake } from 'lucide-react';
-import { LanguageCode } from '../types';
-import { translations } from '../utils/translations';
+import { LanguageCode } from '../types.ts';
+import { translations } from '../utils/translations.ts';
 
 interface FestivalSectionProps {
   language: LanguageCode;

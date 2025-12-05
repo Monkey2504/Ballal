@@ -1,9 +1,7 @@
-
-
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Shield, HeartPulse, Scale, AlertTriangle, Gavel, Home, Camera, X, Zap, GraduationCap, Lock, EyeOff, Info } from 'lucide-react';
-import { LanguageCode } from '../types';
-import { translations } from '../utils/translations';
+import { LanguageCode } from '../types.ts';
+import { translations } from '../utils/translations.ts';
 
 interface LegalAidSectionProps {
   language?: LanguageCode;

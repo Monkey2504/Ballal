@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { Mail, MapPin, Phone, Link as LinkIcon, FileText, Lock, Users } from 'lucide-react'; 
-import { LanguageCode, ViewState } from '../types';
-import { translations } from '../utils/translations';
+import { LanguageCode, ViewState } from '../types.ts';
+import { translations } from '../utils/translations.ts';
 
 interface FooterProps {
   language: LanguageCode;

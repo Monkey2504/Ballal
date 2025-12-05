@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
 import { Mail, MessageSquare, Send, ShieldCheck, AlertTriangle } from 'lucide-react';
-import { LanguageCode } from '../types';
-import { translations } from '../utils/translations';
+import { LanguageCode } from '../types.ts';
+import { translations } from '../utils/translations.ts';
 
 interface ContactSectionProps {
   language: LanguageCode;

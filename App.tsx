@@ -1,24 +1,23 @@
-
 import React, { useState, useEffect, ErrorInfo, ReactNode } from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Footer from './components/Footer';
-import TeamSection from './components/TeamSection';
-import { ViewState, LanguageCode } from './types';
-import { translations } from './utils/translations';
-import { AuthProvider } from './contexts/AuthContext';
+import Navbar from './components/Navbar.tsx';
+import Hero from './components/Hero.tsx';
+import Footer from './components/Footer.tsx';
+import TeamSection from './components/TeamSection.tsx';
+import { ViewState, LanguageCode } from './types.ts';
+import { translations } from './utils/translations.ts';
+import { AuthProvider } from './contexts/AuthContext.tsx';
 import { AlertTriangle, RefreshCcw } from 'lucide-react';
 
 // --- IMPORTS STATIQUES POUR STABILITÉ ---
-import LegalAidSection from './components/LegalAidSection';
-import HistorySection from './components/HistorySection';
-import ShareSection from './components/ShareSection';
-import DonationSection from './components/DonationSection';
-import FoodAutonomySection from './components/FoodAutonomySection';
-import ContactSection from './components/ContactSection';
-import FestivalSection from './components/FestivalSection';
-import LegalDocSection from './components/LegalDocSection';
-import { FoodSupplierForm, FoodNetworkForm } from './components/FoodForms';
+import LegalAidSection from './components/LegalAidSection.tsx';
+import HistorySection from './components/HistorySection.tsx';
+import ShareSection from './components/ShareSection.tsx';
+import DonationSection from './components/DonationSection.tsx';
+import FoodAutonomySection from './components/FoodAutonomySection.tsx';
+import ContactSection from './components/ContactSection.tsx';
+import FestivalSection from './components/FestivalSection.tsx';
+import LegalDocSection from './components/LegalDocSection.tsx';
+import { FoodSupplierForm, FoodNetworkForm } from './components/FoodForms.tsx';
 
 // --- ERROR BOUNDARY ---
 interface ErrorBoundaryProps {
@@ -84,7 +83,13 @@ const useAppNavigation = () => {
   };
 
   const getViewFromHash = (): ViewState => {
-    const hash = window.location.hash.replace('#', '');
+    // Robust hash parsing
+    const hash = window.location.hash.replace(/^#/, '');
+    
+    if (hash === '' || hash === '#') {
+      return ViewState.HOME;
+    }
+    
     switch(hash) {
       case 'legal': return ViewState.LEGAL_AID;
       case 'history': return ViewState.HISTORY;
@@ -105,33 +110,69 @@ const useAppNavigation = () => {
 
   // Listen to hash changes
   useEffect(() => {
-    const handleHashChange = () => setView(getViewFromHash());
+    const handleHashChange = () => {
+      const newView = getViewFromHash();
+      setView(newView);
+      
+      // Scroll to top on view change
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 50);
+    };
+    
     window.addEventListener('hashchange', handleHashChange);
+    
+    // Initial check (in case of deep linking or reload)
+    const currentView = getViewFromHash();
+    if (currentView !== view) {
+      setView(currentView);
+    }
+
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
   const navigate = (newView: ViewState) => {
     // Si on est déjà sur la page, on scroll en haut
     if (newView === view) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        return;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
     }
 
     const hash = getHashFromView(newView);
+    
+    // IMPORTANT: Dans AI Studio, on utilise seulement window.location.hash
+    // On évite complètement window.history.pushState()
+    
     if (hash === '') {
-       // Pour l'accueil, on nettoie l'URL proprement
-       history.pushState(null, '', window.location.pathname + window.location.search);
-       setView(ViewState.HOME);
-       window.scrollTo(0, 0);
+      // Pour l'accueil, on nettoie le hash
+      window.location.hash = '';
+      setView(ViewState.HOME);
     } else {
-       window.location.hash = hash;
-       // Le hashchange s'occupera du setView et du scroll
+      // Pour les autres pages, on met à jour le hash
+      window.location.hash = hash;
+      // La mise à jour de 'view' se fera via l'événement hashchange
     }
+    
+    // Fallback: si hashchange ne se déclenche pas (peut arriver dans AI Studio)
+    setTimeout(() => {
+      const currentHash = window.location.hash.replace(/^#/, '');
+      const expectedHash = getHashFromView(newView);
+      
+      if ((currentHash === '' && newView === ViewState.HOME) || 
+          currentHash === expectedHash) {
+        setView(newView);
+      }
+    }, 100);
   };
 
   // Scroll automatique au changement de vue
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // Petit délai pour laisser le DOM se mettre à jour
+    const timer = setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 50);
+    
+    return () => clearTimeout(timer);
   }, [view]);
 
   return { view, navigate };

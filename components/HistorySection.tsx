@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { BookOpen, Flag, GraduationCap, Globe, Home, Users, ArrowDown } from 'lucide-react';
-import { LanguageCode } from '../types';
-import { translations } from '../utils/translations';
+import { LanguageCode } from '../types.ts';
+import { translations } from '../utils/translations.ts';
 
 interface HistorySectionProps {
   language: LanguageCode;
