@@ -1,19 +1,11 @@
 
-
-
-
-
 import { LanguageCode } from '../types';
 
 export interface Translation {
   // Navigation
   nav_home: string;
-  nav_directory: string;
-  nav_news: string;
-  nav_events: string;
   nav_legal: string;
   nav_history: string;
-  nav_forum: string;
   nav_share: string;
   nav_team: string; 
   nav_solidarity: string;
@@ -24,10 +16,6 @@ export interface Translation {
   
   // SEO Meta Descriptions
   meta_desc_home: string;
-  meta_desc_news: string;
-  meta_desc_events: string;
-  meta_desc_forum: string;
-  meta_desc_directory: string;
   meta_desc_legal: string;
   meta_desc_history: string;
   meta_desc_share: string;
@@ -90,54 +78,6 @@ export interface Translation {
   legal_ally_cire: string;
   legal_ally_adde: string;
   legal_ally_ldh: string;
-
-  // News
-  news_section_title: string;
-  news_section_subtitle: string;
-  read_article: string;
-  verified_sources: string;
-  refresh_btn: string;
-
-  // Events
-  events_title: string;
-  events_subtitle: string;
-  events_refresh: string;
-  events_participate: string;
-  events_empty: string;
-  events_empty_desc: string;
-  events_ai_disclaimer: string;
-  
-  // Forum
-  forum_title: string;
-  forum_subtitle: string;
-  forum_placeholder: string;
-  forum_public_warning: string;
-  forum_publish_btn: string;
-  forum_like: string;
-  forum_comments: string;
-  forum_no_comments: string;
-  forum_write_comment: string;
-
-  // Directory
-  dir_title: string;
-  dir_subtitle: string;
-  dir_search_placeholder: string;
-  dir_filter_all: string;
-  dir_filters: string;
-  dir_verified: string;
-  dir_visit_site: string;
-  dir_map: string;
-  dir_empty_title: string;
-  dir_empty_desc: string;
-  dir_reset_btn: string;
-  dir_contrib_title: string;
-  dir_contrib_desc: string;
-  dir_suggest_btn: string;
-  dir_cat_gastronomy: string;
-  dir_cat_beauty: string;
-  dir_cat_services: string;
-  dir_cat_artisanat: string;
-  dir_cat_health: string;
 
   // History
   hist_title: string;
@@ -270,12 +210,8 @@ export interface Translation {
 
 const fr: Translation = {
     nav_home: "Accueil",
-    nav_directory: "Annuaire",
-    nav_news: "Actualités",
-    nav_events: "Agenda",
     nav_legal: "Aide & Droits",
     nav_history: "Histoire",
-    nav_forum: "Forum",
     nav_share: "Partager",
     nav_team: "Équipe",
     nav_solidarity: "Solidarité",
@@ -284,10 +220,6 @@ const fr: Translation = {
     nav_contact: "Contact",
     nav_festival: "Festival Sans-Papiers",
     meta_desc_home: "La structure de référence pour la communauté guinéenne en Belgique.",
-    meta_desc_news: "Actualités vérifiées de la Guinée et de la diaspora en Belgique.",
-    meta_desc_events: "Agenda des événements culturels, fêtes et meetups de la communauté guinéenne.",
-    meta_desc_forum: "Espace de discussion, d'entraide et de partage pour les Guinéens de Belgique.",
-    meta_desc_directory: "Annuaire des commerces, entrepreneurs et services guinéens en Belgique.",
     meta_desc_legal: "Assistance juridique urgente et droits des étrangers en Belgique.",
     meta_desc_history: "Découvrez l'histoire de la communauté guinéenne en Belgique, de 1958 à nos jours.",
     meta_desc_share: "Partagez l'application Ballal ASBL pour renforcer notre communauté.",
@@ -346,46 +278,6 @@ const fr: Translation = {
     legal_ally_cire: "Expert en régularisation 9bis/9ter, accompagnement juridique pour les demandeurs d'asile et lutte contre les discriminations.",
     legal_ally_adde: "Avocats pour les Droits des Étrangers. Action en justice, formation et défense des libertés individuelles.",
     legal_ally_ldh: "Ligue des Droits Humains. Veille politique, dénonciation des abus et plaidoyer pour une société plus juste.",
-    news_section_title: "Les Nouvelles du Pays",
-    news_section_subtitle: "Actualités vérifiées en provenance de Conakry",
-    read_article: "Lire l'article",
-    verified_sources: "Sources vérifiées :",
-    refresh_btn: "Actualiser",
-    events_title: "Agenda de la Communauté",
-    events_subtitle: "Les événements incontournables : Fêtes, Business et Culture.",
-    events_refresh: "Actualiser l'agenda",
-    events_participate: "Je participe",
-    events_empty: "Aucun événement trouvé",
-    events_empty_desc: "Revenez plus tard ou proposez le vôtre.",
-    events_ai_disclaimer: "Résultats agrégés via IA.",
-    forum_title: "Entraide & Discussions",
-    forum_subtitle: "Posez vos questions et échangez avec la communauté.",
-    forum_placeholder: "Quoi de neuf ? Posez une question...",
-    forum_public_warning: "Votre message sera visible par tous.",
-    forum_publish_btn: "Publier",
-    forum_like: "J'aime",
-    forum_comments: "Commentaires",
-    forum_no_comments: "Aucun commentaire.",
-    forum_write_comment: "Écrivez un commentaire...",
-    dir_title: "Annuaire Pro",
-    dir_subtitle: "Retrouvez les commerces et services de la communauté.",
-    dir_search_placeholder: "Ex: Restaurant, Coiffeur, Avocat...",
-    dir_filter_all: "Tout",
-    dir_filters: "Filtres",
-    dir_verified: "Vérifié",
-    dir_visit_site: "Visiter",
-    dir_map: "Plan",
-    dir_empty_title: "Aucune adresse",
-    dir_empty_desc: "Essayez une autre recherche.",
-    dir_reset_btn: "Réinitialiser",
-    dir_contrib_title: "Vous connaissez une pépite ?",
-    dir_contrib_desc: "Aidez-nous à compléter cet annuaire.",
-    dir_suggest_btn: "Suggérer une adresse",
-    dir_cat_gastronomy: "Gastronomy",
-    dir_cat_beauty: "Beauté & Mode",
-    dir_cat_services: "Services",
-    dir_cat_artisanat: "Artisanat",
-    dir_cat_health: "Santé",
     hist_title: "Notre Histoire",
     hist_subtitle: "De la dignité de 1958 à l'intégration d'aujourd'hui : l'épopée d'une communauté résiliente au cœur de l'Europe.",
     hist_did_you_know: "Le saviez-vous ?",
@@ -512,12 +404,8 @@ const fr: Translation = {
 const en: Translation = {
     ...fr, 
     nav_home: "Home",
-    nav_directory: "Directory",
-    nav_news: "News",
-    nav_events: "Events",
     nav_legal: "Rights & Aid",
     nav_history: "History",
-    nav_forum: "Forum",
     nav_share: "Share",
     nav_team: "Team",
     nav_solidarity: "Solidarity",
@@ -526,10 +414,6 @@ const en: Translation = {
     nav_contact: "Contact",
     nav_festival: "Festival Sans-Papiers",
     meta_desc_home: "The reference for the Guinean community in Belgium.",
-    meta_desc_news: "Verified news from Guinea and the diaspora in Belgium.",
-    meta_desc_events: "Agenda of cultural events, parties and meetups of the Guinean community.",
-    meta_desc_forum: "Discussion, mutual aid and sharing space for Guineans in Belgium.",
-    meta_desc_directory: "Directory of Guinean businesses, entrepreneurs and services in Belgium.",
     meta_desc_legal: "Urgent legal assistance and rights of foreigners in Belgium.",
     meta_desc_history: "Discover the history of the Guinean community in Belgium, from 1958 to today.",
     meta_desc_share: "Share the Ballal ASBL app to strengthen our community.",
@@ -588,46 +472,6 @@ const en: Translation = {
     legal_ally_cire: "Coordination for refugees and foreigners. Experts in regularisation.",
     legal_ally_adde: "Association for the Law of Foreigners. Legal expertise and defense.",
     legal_ally_ldh: "League of Human Rights. Fighting police violence and abuse.",
-    news_section_title: "News from Home",
-    news_section_subtitle: "Verified news from Conakry",
-    read_article: "Read article",
-    verified_sources: "Verified sources:",
-    refresh_btn: "Refresh",
-    events_title: "Community Agenda",
-    events_subtitle: "Key events: Parties, Business, and Culture.",
-    events_refresh: "Refresh Agenda",
-    events_participate: "Join",
-    events_empty: "No events found",
-    events_empty_desc: "Come back later or suggest yours.",
-    events_ai_disclaimer: "Results aggregated via AI.",
-    forum_title: "Help & Discussions",
-    forum_subtitle: "Ask questions and chat with the community.",
-    forum_placeholder: "What's new? Ask a question...",
-    forum_public_warning: "Your message will be visible to all.",
-    forum_publish_btn: "Post",
-    forum_like: "Like",
-    forum_comments: "Comments",
-    forum_no_comments: "No comments.",
-    forum_write_comment: "Write a comment...",
-    dir_title: "Pro Directory",
-    dir_subtitle: "Find community businesses and services.",
-    dir_search_placeholder: "Ex: Restaurant, Barber, Lawyer...",
-    dir_filter_all: "All",
-    dir_filters: "Filters",
-    dir_verified: "Verified",
-    dir_visit_site: "Visit",
-    dir_map: "Map",
-    dir_empty_title: "No address",
-    dir_empty_desc: "Try another search.",
-    dir_reset_btn: "Reset",
-    dir_contrib_title: "Know a hidden gem?",
-    dir_contrib_desc: "Help us complete this directory.",
-    dir_suggest_btn: "Suggest an address",
-    dir_cat_gastronomy: "Gastronomy",
-    dir_cat_beauty: "Beauty & Fashion",
-    dir_cat_services: "Services",
-    dir_cat_artisanat: "Crafts",
-    dir_cat_health: "Health",
     hist_title: "Our History",
     hist_subtitle: "From the struggle for independence to integration in Belgium: the epic of a resilient community.",
     hist_did_you_know: "Did you know?",
@@ -754,12 +598,8 @@ const en: Translation = {
 const nl: Translation = {
     ...fr, // Fallback safe
     nav_home: "Startpagina",
-    nav_directory: "Gids",
-    nav_news: "Nieuws",
-    nav_events: "Agenda",
     nav_legal: "Rechtshulp",
     nav_history: "Geschiedenis",
-    nav_forum: "Forum",
     nav_share: "Delen",
     nav_team: "Team",
     nav_solidarity: "Solidariteit",
@@ -768,10 +608,6 @@ const nl: Translation = {
     nav_contact: "Contact",
     nav_festival: "Festival Sans-Papiers",
     meta_desc_home: "De referentie voor de Guineese gemeenschap in België.",
-    meta_desc_news: "Geverifieerd nieuws uit Guinee en de diaspora.",
-    meta_desc_events: "Agenda van culturele evenementen.",
-    meta_desc_forum: "Discussie- en hulpruimte.",
-    meta_desc_directory: "Gids van Guineese ondernemingen.",
     meta_desc_legal: "Dringende juridische bijstand.",
     meta_desc_history: "Geschiedenis van de gemeenschap.",
     meta_desc_share: "Deel de Ballal-app.",
@@ -829,46 +665,6 @@ const nl: Translation = {
     legal_ally_cire: "Coördinatie en initiatieven voor vluchtelingen en vreemdelingen.",
     legal_ally_adde: "Vereniging voor Vreemdelingenrecht. Juridische expertise.",
     legal_ally_ldh: "Liga voor Mensenrechten.",
-    news_section_title: "Nieuws uit het Land",
-    news_section_subtitle: "Geverifieerd nieuws uit Conakry",
-    read_article: "Lees artikel",
-    verified_sources: "Geverifieerde bronnen:",
-    refresh_btn: "Verversen",
-    events_title: "Gemeenschapsagenda",
-    events_subtitle: "Belangrijke evenementen: Feesten, Business en Cultuur.",
-    events_refresh: "Agenda verversen",
-    events_participate: "Deelnemen",
-    events_empty: "Geen evenementen gevonden",
-    events_empty_desc: "Kom later terug of stel er een voor.",
-    events_ai_disclaimer: "Resultaten via AI.",
-    forum_title: "Hulp & Discussies",
-    forum_subtitle: "Stel vragen en chat met de gemeenschap.",
-    forum_placeholder: "Wat is er nieuw? Stel een vraag...",
-    forum_public_warning: "Uw bericht is zichtbaar voor iedereen.",
-    forum_publish_btn: "Plaatsen",
-    forum_like: "Vind ik leuk",
-    forum_comments: "Reacties",
-    forum_no_comments: "Geen reacties.",
-    forum_write_comment: "Schrijf een reactie...",
-    dir_title: "Pro Gids",
-    dir_subtitle: "Vind bedrijven en diensten.",
-    dir_search_placeholder: "Bv: Restaurant, Kapper, Advocaat...",
-    dir_filter_all: "Alles",
-    dir_filters: "Filtres",
-    dir_verified: "Geverifieerd",
-    dir_visit_site: "Bezoek",
-    dir_map: "Kaart",
-    dir_empty_title: "Geen adres",
-    dir_empty_desc: "Probeer een andere zoekopdracht.",
-    dir_reset_btn: "Reset",
-    dir_contrib_title: "Ken je een verborgen parel?",
-    dir_contrib_desc: "Help ons deze gids aan te vullen.",
-    dir_suggest_btn: "Adres voorstellen",
-    dir_cat_gastronomy: "Gastronomie",
-    dir_cat_beauty: "Schoonheid & Mode",
-    dir_cat_services: "Diensten",
-    dir_cat_artisanat: "Ambacht",
-    dir_cat_health: "Gezondheid",
     hist_title: "Onze Geschiedenis",
     hist_subtitle: "Van onafhankelijkheidsstrijd tot integratie.",
     hist_did_you_know: "Wist je dat?",
@@ -973,12 +769,8 @@ const nl: Translation = {
 const de: Translation = {
     ...fr, // Fallback safe
     nav_home: "Startseite",
-    nav_directory: "Verzeichnis",
-    nav_news: "Nachrichten",
-    nav_events: "Veranstaltungen",
     nav_legal: "Rechtshilfe",
     nav_history: "Geschichte",
-    nav_forum: "Forum",
     nav_share: "Teilen",
     nav_team: "Team",
     nav_solidarity: "Solidarität",
@@ -987,15 +779,11 @@ const de: Translation = {
     nav_contact: "Kontakt",
     nav_festival: "Festival Sans-Papiers",
     meta_desc_home: "Die Referenz für die guineische Gemeinschaft in Belgien.",
-    meta_desc_news: "Verifizierte Nachrichten aus Guinea und der Diaspora.",
-    meta_desc_events: "Kulturveranstaltungskalender.",
-    meta_desc_forum: "Diskussions- und Hilfeforum.",
-    meta_desc_directory: "Verzeichnis guineischer Unternehmen.",
     meta_desc_legal: "Dringende Rechtshilfe.",
     meta_desc_history: "Geschichte der Gemeinschaft.",
     meta_desc_share: "Teilen Sie die Ballal-App.",
     meta_desc_food: "Projekt für Ernährungssouveränität.",
-    meta_desc_festival: "Festival des Sans-Papiers: Identität feiern, Rechte einfordern.",
+    meta_desc_festival: "Festival des Sans-Papiers: Identiteit feiern, Rechte einfordern.",
     hero_title: "Solidarität Guinea-Belgien",
     hero_subtitle: "Aufnehmen. Schützen. Vereinen.",
     hero_desc: "Die Referenz für die guineische Gemeinschaft in Belgien. Rechtshilfe, soziale Unterstützung und Kulturförderung.",
@@ -1048,46 +836,6 @@ const de: Translation = {
     legal_ally_cire: "Koordination für Flüchtlinge und Ausländer. Experten für Regularisierung.",
     legal_ally_adde: "Verband für Ausländerrecht. Juristische Expertise.",
     legal_ally_ldh: "Liga für Menschenrechte.",
-    news_section_title: "Nachrichten aus der Heimat",
-    news_section_subtitle: "Verifizierte Nachrichten aus Conakry",
-    read_article: "Artikel lesen",
-    verified_sources: "Verifizierte Quellen:",
-    refresh_btn: "Aktualisieren",
-    events_title: "Gemeinschaftsagenda",
-    events_subtitle: "Wichtige Ereignisse: Feiern, Business und Kultur.",
-    events_refresh: "Agenda aktualisieren",
-    events_participate: "Teilnehmen",
-    events_empty: "Keine Veranstaltungen gefunden",
-    events_empty_desc: "Kommen Sie später wieder.",
-    events_ai_disclaimer: "Ergebnisse via KI.",
-    forum_title: "Hilfe & Diskussionen",
-    forum_subtitle: "Stellen Sie Fragen und chatten Sie.",
-    forum_placeholder: "Was gibt es Neues? Stellen Sie eine Frage...",
-    forum_public_warning: "Ihre Nachricht ist für alle sichtbar.",
-    forum_publish_btn: "Posten",
-    forum_like: "Gefällt mir",
-    forum_comments: "Kommentare",
-    forum_no_comments: "Keine Kommentare.",
-    forum_write_comment: "Schreiben Sie einen Kommentar...",
-    dir_title: "Pro Verzeichnis",
-    dir_subtitle: "Finden Sie Unternehmen und Dienstleistungen.",
-    dir_search_placeholder: "Bsp: Restaurant, Friseur, Anwalt...",
-    dir_filter_all: "Alle",
-    dir_filters: "Filter",
-    dir_verified: "Verifiziert",
-    dir_visit_site: "Besuchen",
-    dir_map: "Karte",
-    dir_empty_title: "Keine Adresse",
-    dir_empty_desc: "Versuchen Sie eine andere Suche.",
-    dir_reset_btn: "Zurücksetzen",
-    dir_contrib_title: "Kennen Sie einen Geheimtipp?",
-    dir_contrib_desc: "Helfen Sie uns, dieses Verzeichnis zu vervollständigen.",
-    dir_suggest_btn: "Adresse vorschlagen",
-    dir_cat_gastronomy: "Gastronomie",
-    dir_cat_beauty: "Schönheit & Mode",
-    dir_cat_services: "Dienstleistungen",
-    dir_cat_artisanat: "Handwerk",
-    dir_cat_health: "Gesundheit",
     hist_title: "Unsere Geschichte",
     hist_subtitle: "Vom Unabhängigkeitskampf zur Integration.",
     hist_did_you_know: "Wussten Sie schon?",
@@ -1192,8 +940,6 @@ const de: Translation = {
 const es: Translation = {
     ...en,
     nav_home: "Inicio",
-    nav_directory: "Directorio",
-    nav_news: "Noticias",
     nav_legal: "Derechos",
     nav_food_project: "Proyecto Alimentario",
     hero_title: "Solidaridad Guinea-Bélgica",

@@ -1,7 +1,6 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ShieldCheck, Heart, Wand2, Share2 } from 'lucide-react';
-import { fetchHeroImage } from '../services/geminiService';
 import { LanguageCode } from '../types';
 import { translations } from '../utils/translations';
 
@@ -17,20 +16,9 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDona
   const fallbackImage = "https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=1600&auto=format&fit=crop";
 
   const [bgImage, setBgImage] = useState(defaultImage);
-  const [heroLabel, setHeroLabel] = useState<string | null>(null);
   const [imgError, setImgError] = useState(false);
 
   const t = translations[language];
-
-  useEffect(() => {
-    const loadHero = async () => {
-      const result = await fetchHeroImage();
-      if (result && result.imageUrl) {
-        // AI image logic
-      }
-    };
-    loadHero();
-  }, []);
 
   const handleImageError = () => {
     if (!imgError) {
@@ -142,13 +130,6 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDona
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#FFFBF0] via-[#FFFBF0]/20 to-transparent lg:via-[#FFFBF0]/10"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-        
-        {heroLabel && (
-            <div className="absolute bottom-6 right-6 bg-black/50 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-[10px] font-bold flex items-center border border-white/20 shadow-lg">
-                <Wand2 className="h-3 w-3 mr-1.5 text-[#FCD116]" />
-                {heroLabel}
-            </div>
-        )}
       </div>
       <div className="absolute bottom-0 w-full h-2 guinea-gradient-bg"></div>
     </div>

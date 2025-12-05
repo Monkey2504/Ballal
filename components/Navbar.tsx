@@ -13,7 +13,6 @@ interface NavbarProps {
   setLanguage: (lang: LanguageCode) => void;
 }
 
-// Hook pour gérer le clic extérieur (Fermeture des menus)
 function useClickOutside(ref: React.RefObject<HTMLElement>, handler: () => void) {
   useEffect(() => {
     const listener = (event: MouseEvent | TouchEvent) => {
@@ -48,34 +47,18 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
   useClickOutside(profileMenuRef, () => setIsProfileMenuOpen(false));
   useClickOutside(mobileMenuRef, () => setIsMobileMenuOpen(false));
 
-  // Gestion touche Escape
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setIsLangMenuOpen(false);
-        setIsProfileMenuOpen(false);
-        setIsMobileMenuOpen(false);
-      }
-    };
-    document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
-  }, []);
+  const t = translations[language] || translations['fr'];
 
-  const t = translations[language];
-
-  // Scroll Sécurisé
   const handleTeamClick = () => {
     setView(ViewState.HOME);
     setIsMobileMenuOpen(false);
     
-    requestAnimationFrame(() => {
+    setTimeout(() => {
         const teamSection = document.getElementById('team-section');
         if (teamSection) {
             teamSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            teamSection.setAttribute('tabindex', '-1');
-            teamSection.focus();
         }
-    });
+    }, 100);
   };
 
   const openAuth = (mode: 'login' | 'register') => {
@@ -117,6 +100,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
           {/* LOGO */}
           <div className="flex-shrink-0 flex items-center">
             <button 
+                type="button"
                 onClick={() => setView(ViewState.HOME)}
                 className="flex items-center group focus:outline-none focus:ring-2 focus:ring-[#CE1126] rounded-lg p-1"
                 aria-label="Ballal ASBL - Retour à l'accueil"
@@ -124,7 +108,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                 <div className="p-2 bg-red-50 rounded-xl mr-3 group-hover:bg-red-100 transition-colors">
                     <HeartHandshake className="h-8 w-8 text-[#CE1126]" aria-hidden="true" />
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col text-left">
                     <span className="font-black text-2xl tracking-tighter text-gray-900 leading-none group-hover:text-[#CE1126] transition-colors">
                         BALLAL<span className="text-gray-400 font-light ml-1">ASBL</span>
                     </span>
@@ -141,6 +125,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                 {navItems.map((item) => (
                 <li key={item.value}>
                     <button
+                        type="button"
                         onClick={() => setView(item.value)}
                         aria-current={currentView === item.value ? 'page' : undefined}
                         className={`px-3 py-2 rounded-full text-[11px] font-bold transition-all duration-200 uppercase tracking-wide focus:outline-none focus:ring-2 focus:ring-[#CE1126] ${
@@ -157,6 +142,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
 
              <div className="flex items-center space-x-3 ml-4 border-l border-gray-200 pl-4 h-10">
                 <button
+                    type="button"
                     onClick={handleTeamClick}
                     className="text-gray-500 hover:text-[#CE1126] font-bold text-xs uppercase tracking-wide px-3 py-2 rounded-lg hover:bg-red-50 transition-colors focus:outline-none focus:ring-2 focus:ring-[#CE1126]"
                 >
@@ -164,6 +150,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                 </button>
 
                 <button
+                    type="button"
                     onClick={() => setView(ViewState.SHARE)}
                     aria-label={t.nav_share}
                     className={`p-2 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-[#CE1126] ${
@@ -176,6 +163,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                 {/* LANGUAGE SELECTOR */}
                 <div className="relative" ref={langMenuRef}>
                     <button 
+                        type="button"
                         onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
                         aria-expanded={isLangMenuOpen}
                         aria-haspopup="true"
@@ -196,6 +184,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                                 {languages.map((lang) => (
                                     <button
                                         key={lang.code}
+                                        type="button"
                                         onClick={() => { setLanguage(lang.code); setIsLangMenuOpen(false); }}
                                         className={`w-full text-left px-4 py-2.5 text-sm flex items-center justify-between group hover:bg-gray-50 transition-colors ${language === lang.code ? 'bg-orange-50/50' : ''}`}
                                     >
@@ -218,6 +207,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                     {user ? (
                         <>
                             <button 
+                                type="button"
                                 onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
                                 aria-expanded={isProfileMenuOpen}
                                 aria-haspopup="true"
@@ -237,6 +227,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                                     </div>
                                     <div className="p-2">
                                         <button 
+                                            type="button"
                                             onClick={() => { logout(); setIsProfileMenuOpen(false); }}
                                             className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-xl flex items-center font-bold transition-colors"
                                         >
@@ -249,6 +240,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                         </>
                     ) : (
                         <button 
+                            type="button"
                             onClick={() => openAuth('login')}
                             className="flex items-center bg-slate-900 text-white px-5 py-2 rounded-full text-xs font-bold hover:bg-black transition-all shadow-lg shadow-slate-200 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900"
                         >
@@ -263,6 +255,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
           {/* MOBILE MENU BUTTON */}
           <div className="xl:hidden flex items-center space-x-3">
              <button 
+                type="button"
                 onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
                 className="flex items-center bg-gray-50 text-gray-900 px-3 py-2 rounded-lg text-sm font-bold border border-gray-100"
                 aria-label="Changer de langue"
@@ -272,6 +265,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
              </button>
 
             <button
+              type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="text-gray-500 hover:text-[#CE1126] focus:outline-none focus:ring-2 focus:ring-[#CE1126] p-2 rounded-lg bg-gray-50 hover:bg-red-50 transition-colors"
               aria-expanded={isMobileMenuOpen}
@@ -294,6 +288,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
             {navItems.map((item) => (
               <button
                 key={item.value}
+                type="button"
                 onClick={() => { setView(item.value); setIsMobileMenuOpen(false); }}
                 className={`block w-full text-left px-4 py-3 rounded-xl text-base font-bold transition-all ${
                   currentView === item.value 
@@ -306,6 +301,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
             ))}
              
              <button
+                type="button"
                 onClick={handleTeamClick}
                 className="block w-full text-left px-4 py-3 rounded-xl text-base font-bold text-gray-600 hover:text-[#CE1126] hover:bg-gray-50"
              >
@@ -320,6 +316,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                         {languages.map(lang => (
                             <button
                                 key={lang.code}
+                                type="button"
                                 onClick={() => { setLanguage(lang.code); setIsLangMenuOpen(false); }}
                                 className={`flex items-center px-3 py-2 rounded-lg text-sm font-medium ${language === lang.code ? 'bg-white text-[#CE1126] shadow-sm' : 'text-gray-600'}`}
                             >
@@ -341,6 +338,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                       </div>
                     </div>
                     <button 
+                      type="button"
                       onClick={() => { logout(); setIsMobileMenuOpen(false); }}
                       className="w-full bg-white/10 hover:bg-white/20 text-white py-3 rounded-xl text-sm font-bold flex items-center justify-center transition-colors"
                     >
@@ -349,6 +347,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                  </div>
               ) : (
                 <button 
+                  type="button"
                   onClick={() => openAuth('login')}
                   className="w-full text-left px-4 py-4 text-white bg-slate-900 font-bold rounded-xl flex items-center justify-center shadow-lg hover:bg-black transition-colors"
                 >
