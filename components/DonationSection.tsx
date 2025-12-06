@@ -8,7 +8,7 @@ interface DonationSectionProps {
 }
 
 const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
-  const t = translations[language];
+  const t = translations[language] || translations['fr'];
   const [copied, setCopied] = useState(false);
   const [activeMethod, setActiveMethod] = useState<'iban' | 'crypto' | 'paypal'>('iban');
   const [annualDonations, setAnnualDonations] = useState<number>(0);

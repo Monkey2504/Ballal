@@ -159,7 +159,7 @@ const MilestoneCard: React.FC<MilestoneProps> = ({ event, index, isActive, onAct
           {isActive && (
             <div className="mt-6 flex items-center justify-center">
               <div className="flex items-center gap-2 text-sm text-slate-600">
-                <Sparkles className="h-4 w-4 text-[#FCD116] animate-pulse" aria-hidden="true" />
+                <Sparkles className="h-4 w-4 text-[#FCD116]" aria-hidden="true" />
                 <span className="font-medium">Période active</span>
               </div>
             </div>
@@ -187,7 +187,7 @@ const MilestoneCard: React.FC<MilestoneProps> = ({ event, index, isActive, onAct
 };
 
 const HistorySection: React.FC<HistorySectionProps> = ({ language }) => {
-  const t = translations[language];
+  const t = translations[language] || translations['fr'];
   const isRtl = language === 'ar';
   const [activeIndex, setActiveIndex] = useState(0);
   const [animateIn, setAnimateIn] = useState(false);

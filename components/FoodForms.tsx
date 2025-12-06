@@ -251,7 +251,7 @@ const BaseFoodForm: React.FC<{
   onBack: () => void,
   mode: 'supplier' | 'network'
 }> = ({ language, onBack, mode }) => {
-  const t = translations[language];
+  const t = translations[language] || translations['fr'];
   const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState<FormData>({
     name: '',

@@ -134,7 +134,8 @@ const BrowserCheck = ({ children }: { children: React.ReactNode }) => {
       }
 
       // Vérifier la version d'Internet Explorer
-      const isIE = /*@cc_on!@*/false || !!document.documentMode;
+      // Utilisation d'un check sécurisé sans commentaires conditionnels
+      const isIE = !!(document as any).documentMode;
       if (isIE) unsupportedFeatures.push('Internet Explorer');
 
       setIsSupported(unsupportedFeatures.length === 0);

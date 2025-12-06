@@ -12,7 +12,7 @@ interface FestivalSectionProps {
 }
 
 const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
-  const t = translations[language];
+  const t = translations[language] || translations['fr'];
   const [countdown, setCountdown] = useState({
     days: 0,
     hours: 0,

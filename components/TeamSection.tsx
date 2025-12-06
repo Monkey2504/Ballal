@@ -23,7 +23,7 @@ interface TeamMember {
 }
 
 const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
-  const t = translations[language];
+  const t = translations[language] || translations['fr'];
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
 
   const handleCopyEmail = (email: string) => {

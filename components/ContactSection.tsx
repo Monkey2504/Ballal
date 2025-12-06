@@ -8,7 +8,7 @@ interface ContactSectionProps {
 }
 
 const ContactSection: React.FC<ContactSectionProps> = ({ language }) => {
-  const t = translations[language];
+  const t = translations[language] || translations['fr'];
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -180,7 +180,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ language }) => {
                             </label>
                             <p className="text-xs text-gray-500 mt-1 flex items-center">
                                 <ShieldCheck className="h-3 w-3 mr-1" />
-                                <a href="#" className="underline hover:text-black">{t.form_privacy_link}</a>
+                                <a href="#privacy" className="underline hover:text-black">{t.form_privacy_link}</a>
                             </p>
                         </div>
                     </div>

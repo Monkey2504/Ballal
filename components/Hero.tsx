@@ -11,7 +11,7 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDonate }) => {
-  const t = translations[language];
+  const t = translations[language] || translations['fr'];
   
   // Multiple background images for rotation
   const heroImages = [

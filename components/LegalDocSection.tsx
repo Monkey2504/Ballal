@@ -9,7 +9,7 @@ interface LegalDocSectionProps {
 }
 
 const LegalDocSection: React.FC<LegalDocSectionProps> = ({ language, mode }) => {
-  const t = translations[language];
+  const t = translations[language] || translations['fr'];
 
   const content = mode === 'privacy' ? (
     <div className="space-y-6">

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
-import { User, UserRole } from '../types.ts';
+import { User, UserRole, DEFAULT_USER_PREFERENCES } from '../types.ts';
 
 interface AuthContextType {
   user: User | null;
@@ -175,11 +175,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         role: 'member' as UserRole,
         joinedAt: new Date().toISOString(),
         avatar: (name || email.split('@')[0]).charAt(0).toUpperCase(),
-        preferences: {
-          language: 'fr',
-          notifications: true
-        },
+        preferences: DEFAULT_USER_PREFERENCES,
         lastLogin: new Date().toISOString(),
+        isActive: true,
+        emailVerified: true,
         sessionExpiry: getSessionExpiry(),
         refreshToken: `refresh-${Date.now()}`
       };
@@ -239,11 +238,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         role: 'member' as UserRole,
         joinedAt: new Date().toISOString(),
         avatar: name.trim().charAt(0).toUpperCase(),
-        preferences: {
-          language: 'fr',
-          notifications: true
-        },
+        preferences: DEFAULT_USER_PREFERENCES,
         lastLogin: new Date().toISOString(),
+        isActive: true,
+        emailVerified: true,
         sessionExpiry: getSessionExpiry(),
         refreshToken: `refresh-${Date.now()}`
       };

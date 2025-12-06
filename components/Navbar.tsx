@@ -3,7 +3,7 @@ import { Menu, X, HeartHandshake, Share2, LogOut, User as UserIcon, ChevronDown,
 import { ViewState, LanguageCode } from '../types.ts';
 import { translations } from '../utils/translations.ts';
 import { useAuth } from '../contexts/AuthContext.tsx';
-import { AuthModal } from './AuthModal.tsx';
+import { AuthModal } from './AuthModals.tsx';
 
 interface NavbarProps {
   currentView: ViewState;
@@ -50,7 +50,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
   useClickOutside(mobileMenuRef, () => setIsMobileMenuOpen(false));
 
   // Fallback si les traductions ne sont pas chargées
-  const t = translations[language] || translations['fr'] || {};
+  const t = translations[language] || translations['fr'];
 
   const handleTeamClick = () => {
     setView(ViewState.HOME);

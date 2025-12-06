@@ -13,7 +13,7 @@ interface FoodAutonomySectionProps {
 }
 
 const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, setView }) => {
-  const t = translations[language];
+  const t = translations[language] || translations['fr'];
   const [imgError, setImgError] = useState(false);
   const [metrics, setMetrics] = useState({
     foodSaved: 0,

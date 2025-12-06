@@ -20,7 +20,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
   const appUrl = typeof window !== 'undefined' ? window.location.href : 'https://ballal-asbl.be';
   const canShare = typeof navigator !== 'undefined' && !!navigator.share;
   
-  const t = translations[language] || {};
+  const t = translations[language] || translations['fr'];
   
   const shareText = t.share_text || "Ballal ASBL - Solidarité Guinée-Belgique • Justice, Culture, Autonomie Alimentaire";
   const shareHashtags = "BallalASBL,Solidarité,GuinéeBelgique,JusticeSociale";

@@ -1,20 +1,3 @@
-
-// --- BANQUE D'IMAGES STATIQUES (OPTIMISÉE) ---
-const FALLBACK_HERO = {
-  imageUrl: "https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=1600&auto=format&fit=crop",
-  label: null
-};
-
-export interface HeroImageResult {
-    imageUrl: string;
-    label: string | null;
-}
-
-// --- STATIC SERVICE METHODS (NO API) ---
-
-export const fetchHeroImage = async (): Promise<HeroImageResult> => {
-    return FALLBACK_HERO;
-};
 // --- BANQUE D'IMAGES STATIQUES OPTIMISÉE POUR BALLAL ASBL ---
 
 // Interface pour les images héro
@@ -86,7 +69,7 @@ const GUINEAN_THEMED_IMAGES: HeroImageResult[] = [
     category: "guinea"
   },
   {
-    imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?q=80&w-1600&auto=format&fit=crop",
+    imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?q=80&w=1600&auto=format&fit=crop",
     label: "Traditions africaines",
     credit: "Unsplash",
     aspectRatio: "16:9",

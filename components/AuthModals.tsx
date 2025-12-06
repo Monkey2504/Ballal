@@ -137,7 +137,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, mode, swi
         await login(email, name.trim() || 'Membre');
       } else {
         // Register with email and name
-        await register(email, name.trim());
+        await register(email, password, name.trim());
       }
       onClose();
     } catch (error: any) {
