@@ -3,36 +3,109 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BALLAL ASBL | Solidarité Guinée-Belgique</title>
+    <title>BALLAL ASBL | Solidarité Guinée-Belgique - Association humanitaire</title>
+    
+    <!-- Meta tags SEO améliorés -->
+    <meta name="description" content="BALLAL ASBL : Association de solidarité entre la Guinée et la Belgique. Actions humanitaires, développement communautaire et soutien aux projets sociaux.">
+    <meta name="keywords" content="ASBL, Guinée, Belgique, solidarité, humanitaire, association, développement, BALLAL, Conakry, Bruxelles">
+    <meta name="author" content="BALLAL ASBL">
+    <meta property="og:title" content="BALLAL ASBL | Solidarité Guinée-Belgique">
+    <meta property="og:description" content="Association de solidarité entre la Guinée et la Belgique">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://i.imgur.com/T2LT1pB.jpg">
+    <link rel="apple-touch-icon" href="https://i.imgur.com/T2LT1pB.jpg">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
+        darkMode: 'class',
         theme: {
           extend: {
             colors: {
               'guinea-red': '#CE1126',
               'guinea-yellow': '#FCD116',
               'guinea-green': '#009460',
-            }
+              'warm-bg': '#FFFBF0',
+              'text-dark': '#1F2937',
+            },
+            fontFamily: {
+              'poppins': ['Poppins', 'sans-serif'],
+              'inter': ['Inter', 'sans-serif'],
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.5s ease-in-out',
+              'slide-up': 'slideUp 0.3s ease-out',
+              'pulse-slow': 'pulse 3s infinite',
+              'bounce-slow': 'bounce 2s infinite',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideUp: {
+                '0%': { transform: 'translateY(10px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+            },
+            backgroundImage: {
+              'guinea-gradient': 'linear-gradient(90deg, #CE1126 0%, #FCD116 50%, #009460 100%)',
+              'guinea-diagonal': 'linear-gradient(45deg, #CE1126 25%, #FCD116 25% 50%, #009460 50% 75%, #FFF 75%)',
+              'african-pattern': 'radial-gradient(#E5E0D0 1.5px, transparent 1.5px), radial-gradient(#E5E0D0 1.5px, #FFFBF0 1.5px)',
+            },
           }
         }
       }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Styles -->
     <style>
       :root {
         --color-guinea-red: #CE1126;
         --color-guinea-yellow: #FCD116;
         --color-guinea-green: #009460;
-        --color-warm-bg: #FFFBF0; /* Crème chaleureux */
+        --color-warm-bg: #FFFBF0;
         --color-text-dark: #1F2937;
+        --color-text-light: #6B7280;
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 80px; /* Pour compenser le header fixe */
       }
       
       body {
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Inter', sans-serif;
         background-color: var(--color-warm-bg);
         color: var(--color-text-dark);
-        scroll-behavior: smooth;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+      
+      h1, h2, h3, h4, h5, h6 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        line-height: 1.2;
       }
       
       /* Guinean Flag Gradient Text */
@@ -41,54 +114,310 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.1));
+        text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
       }
 
       /* Guinean Flag Gradient Background */
       .guinea-gradient-bg {
         background: linear-gradient(90deg, #CE1126 0%, #FCD116 50%, #009460 100%);
       }
+      
+      /* Diagonal flag pattern */
+      .guinea-diagonal-bg {
+        background: linear-gradient(45deg, 
+          #CE1126 25%, 
+          #FCD116 25% 50%, 
+          #009460 50% 75%, 
+          #FFFBF0 75%
+        );
+        background-size: 40px 40px;
+      }
 
       /* Subtle African Geometric Pattern (Bogolan style) */
       .bg-african-pattern {
         background-color: #FFFBF0;
-        background-image: radial-gradient(#E5E0D0 1.5px, transparent 1.5px), radial-gradient(#E5E0D0 1.5px, #FFFBF0 1.5px);
+        background-image: 
+          radial-gradient(#E5E0D0 1.5px, transparent 1.5px), 
+          radial-gradient(#E5E0D0 1.5px, #FFFBF0 1.5px);
         background-size: 20px 20px;
         background-position: 0 0, 10px 10px;
       }
 
-      /* More intense pattern for headers */
-      .bg-wax-pattern {
-        background-color: #ffffff;
-        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f0f0f0' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-      }
-
+      /* Modern card hover effect */
       .card-hover-effect {
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid rgba(255, 255, 255, 0.2);
       }
+      
       .card-hover-effect:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 14px 28px rgba(0,0,0,0.1), 0 10px 10px rgba(0,0,0,0.05);
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      }
+      
+      /* Loading skeleton animation */
+      .skeleton {
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+      }
+      
+      @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+      
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 5px;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #CE1126, #FCD116, #009460);
+        border-radius: 5px;
+      }
+      
+      ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(180deg, #B01020, #E5B800, #007A4D);
+      }
+      
+      /* Print styles */
+      @media print {
+        .no-print {
+          display: none !important;
+        }
+        
+        body {
+          background: white !important;
+          color: black !important;
+        }
+        
+        a {
+          color: black !important;
+          text-decoration: underline !important;
+        }
+      }
+      
+      /* Reduced motion preference */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+      
+      /* High contrast mode support */
+      @media (prefers-contrast: high) {
+        .guinea-gradient-text {
+          -webkit-text-fill-color: #000;
+          text-shadow: none;
+        }
+      }
+      
+      /* Dark mode support */
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --color-warm-bg: #1a1a1a;
+          --color-text-dark: #f3f4f6;
+        }
+        
+        body {
+          background-color: var(--color-warm-bg);
+          color: var(--color-text-dark);
+        }
       }
     </style>
-    <!-- Babel Standalone for in-browser compilation -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Import map pour les modules ES -->
     <script type="importmap">
-{
-  "imports": {
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom": "https://aistudiocdn.com/react-dom@^19.2.0",
-    "react-dom/client": "https://aistudiocdn.com/react-dom@^19.2.0/client",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
-    "react/": "https://aistudiocdn.com/react@^19.2.1/"
-  }
-}
-</script>
-</head>
-  <body class="bg-[#FFFBF0] text-slate-900">
-    <div id="root"></div>
-    <script type="text/babel" data-type="module" src="./index.tsx"></script>
+      {
+        "imports": {
+          "react": "https://esm.sh/react@18.2.0",
+          "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+          "lucide-react": "https://esm.sh/lucide-react@0.263.1",
+          "react-dom": "https://esm.sh/react-dom@18.2.0"
+        }
+      }
+    </script>
+  </head>
+  
+  <body class="bg-warm-bg text-text-dark font-inter min-h-screen">
+    
+    <!-- Loading overlay -->
+    <div id="loading-overlay" class="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center transition-opacity duration-300">
+      <div class="relative">
+        <!-- Animated Guinea flag -->
+        <div class="flex items-center justify-center mb-8">
+          <div class="w-12 h-20 bg-guinea-red animate-pulse rounded-l-lg"></div>
+          <div class="w-12 h-20 bg-guinea-yellow animate-pulse"></div>
+          <div class="w-12 h-20 bg-guinea-green animate-pulse rounded-r-lg"></div>
+        </div>
+        
+        <!-- Loading spinner -->
+        <div class="relative">
+          <div class="w-16 h-16 border-4 border-guinea-red/20 rounded-full"></div>
+          <div class="absolute top-0 left-0 w-16 h-16 border-4 border-transparent border-t-guinea-red rounded-full animate-spin"></div>
+        </div>
+        
+        <!-- Loading text -->
+        <p class="mt-6 text-lg font-poppins font-semibold text-guinea-red animate-pulse">
+          BALLAL ASBL
+        </p>
+        <p class="mt-2 text-sm text-text-dark/60">
+          Chargement de l'application...
+        </p>
+      </div>
+    </div>
+    
+    <!-- Main app container -->
+    <div id="root" class="min-h-screen"></div>
+    
+    <!-- Footer avec informations importantes -->
+    <footer class="bg-slate-900 text-white py-8 mt-16 no-print" style="display: none;" id="main-footer">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <h3 class="text-xl font-poppins font-bold mb-4 guinea-gradient-text">
+              BALLAL ASBL
+            </h3>
+            <p class="text-slate-300">
+              Association de solidarité entre la Guinée et la Belgique.<br>
+              Agissons ensemble pour un avenir meilleur.
+            </p>
+          </div>
+          
+          <div>
+            <h4 class="font-semibold mb-4">Contact</h4>
+            <ul class="space-y-2 text-slate-300">
+              <li><i class="fas fa-envelope mr-2"></i>contact@ballal-asbl.org</li>
+              <li><i class="fas fa-phone mr-2"></i>+32 XXX XX XX XX</li>
+              <li><i class="fas fa-map-marker-alt mr-2"></i>Bruxelles, Belgique</li>
+            </ul>
+          </div>
+          
+          <div>
+            <h4 class="font-semibold mb-4">Suivez-nous</h4>
+            <div class="flex space-x-4">
+              <a href="#" class="text-slate-300 hover:text-white transition-colors" aria-label="Facebook">
+                <i class="fab fa-facebook fa-lg"></i>
+              </a>
+              <a href="#" class="text-slate-300 hover:text-white transition-colors" aria-label="Twitter">
+                <i class="fab fa-twitter fa-lg"></i>
+              </a>
+              <a href="#" class="text-slate-300 hover:text-white transition-colors" aria-label="LinkedIn">
+                <i class="fab fa-linkedin fa-lg"></i>
+              </a>
+              <a href="#" class="text-slate-300 hover:text-white transition-colors" aria-label="Instagram">
+                <i class="fab fa-instagram fa-lg"></i>
+              </a>
+            </div>
+            <p class="mt-4 text-sm text-slate-400">
+              © 2024 BALLAL ASBL. Tous droits réservés.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+    <!-- Back to top button -->
+    <button 
+      id="back-to-top"
+      class="fixed bottom-8 right-8 bg-guinea-red text-white p-3 rounded-full shadow-lg hover:bg-[#B01020] transition-all duration-300 transform translate-y-20 opacity-0 z-40 no-print"
+      aria-label="Retour en haut"
+    >
+      <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <!-- Analytics et scripts utiles -->
+    <script>
+      // Masquer le loading overlay quand la page est chargée
+      window.addEventListener('load', function() {
+        const loadingOverlay = document.getElementById('loading-overlay');
+        if (loadingOverlay) {
+          loadingOverlay.style.opacity = '0';
+          setTimeout(() => {
+            loadingOverlay.style.display = 'none';
+          }, 300);
+        }
+        
+        // Afficher le footer
+        const footer = document.getElementById('main-footer');
+        if (footer) footer.style.display = 'block';
+        
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+        if (backToTopButton) {
+          window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+              backToTopButton.style.transform = 'translateY(0)';
+              backToTopButton.style.opacity = '1';
+            } else {
+              backToTopButton.style.transform = 'translateY(20px)';
+              backToTopButton.style.opacity = '0';
+            }
+          });
+          
+          backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+            });
+          });
+        }
+        
+        // Gestion du thème sombre
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.classList.add('dark');
+        }
+        
+        // Performance monitoring
+        if ('performance' in window) {
+          window.addEventListener('load', () => {
+            const timing = performance.timing;
+            const loadTime = timing.loadEventEnd - timing.navigationStart;
+            console.log(`Temps de chargement: ${loadTime}ms`);
+          });
+        }
+      });
+      
+      // Service Worker registration (optionnel)
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(err => {
+            console.log('ServiceWorker registration failed: ', err);
+          });
+        });
+      }
+      
+      // Error tracking
+      window.addEventListener('error', function(e) {
+        console.error('Erreur JavaScript:', e.error);
+        // Ici, vous pourriez envoyer l'erreur à un service de tracking
+      });
+    </script>
+    
+    <!-- Script principal React -->
+    <script type="module" src="./index.jsx"></script>
+    
+    <!-- Fallback pour les navigateurs sans support ES modules -->
+    <script nomodule>
+      document.getElementById('loading-overlay').innerHTML = `
+        <div class="text-center p-8">
+          <h2 class="text-2xl font-bold text-guinea-red mb-4">Navigateur non supporté</h2>
+          <p class="mb-4">Votre navigateur ne supporte pas les fonctionnalités nécessaires.</p>
+          <p class="text-sm text-slate-600">
+            Veuillez utiliser une version récente de Chrome, Firefox, Safari ou Edge.
+          </p>
+        </div>
+      `;
+    </script>
   </body>
 </html>

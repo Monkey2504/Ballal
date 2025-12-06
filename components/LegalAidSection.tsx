@@ -452,7 +452,103 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
 
         {/* MAIN CONTENT GRID */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
-          {/* 9bis vs 9ter */}
+          {/* Card 1: 9bis/9ter */}
           <LegalCard
             icon={Scale}
-            title="9bis
+            title={t.legal_strategy_title || "Stratégie de Séjour"}
+            subtitle="Art. 9bis & 9ter"
+            description={t.legal_intro || "Comprendre les procédures de régularisation pour raisons humanitaires ou médicales est essentiel."}
+            warning={t.legal_warning}
+            borderColor="border-purple-600"
+            bgColor="bg-purple-50"
+            iconColor="text-purple-600"
+          >
+             <div className="space-y-4 mt-4">
+                <div className="p-3 bg-gray-50 rounded-lg">
+                    <h5 className="font-bold text-sm text-purple-700 mb-1">9bis (Humanitaire)</h5>
+                    <p className="text-xs text-gray-600">{t.legal_9bis_desc}</p>
+                </div>
+                <div className="p-3 bg-gray-50 rounded-lg">
+                    <h5 className="font-bold text-sm text-purple-700 mb-1">9ter (Médical)</h5>
+                    <p className="text-xs text-gray-600">{t.legal_9ter_desc}</p>
+                </div>
+             </div>
+          </LegalCard>
+
+          {/* Card 2: School */}
+          <LegalCard
+            icon={GraduationCap}
+            title={t.legal_school_title}
+            subtitle={t.legal_school_subtitle}
+            description={t.legal_school_desc}
+            points={[
+                t.legal_school_point1,
+                t.legal_school_point2,
+                t.legal_school_point3
+            ]}
+            borderColor="border-blue-600"
+            bgColor="bg-blue-50"
+            iconColor="text-blue-600"
+          />
+
+          {/* Card 3: Home */}
+          <LegalCard
+            icon={Home}
+            title={t.legal_home_title}
+            subtitle={t.legal_home_subtitle}
+            description={t.legal_home_police}
+            warning={t.legal_home_warrant}
+            borderColor="border-orange-600"
+            bgColor="bg-orange-50"
+            iconColor="text-orange-600"
+          >
+              <div className="bg-orange-50 p-3 rounded-lg mt-2">
+                  <p className="text-xs text-orange-800 font-bold">{t.legal_home_action}</p>
+              </div>
+          </LegalCard>
+
+          {/* Card 4: Health */}
+          <LegalCard
+            icon={HeartPulse}
+            title={t.health_title}
+            description={t.health_desc}
+            points={[
+                t.health_step1,
+                t.health_step2,
+                t.health_step3
+            ]}
+            borderColor="border-green-600"
+            bgColor="bg-green-50"
+            iconColor="text-green-600"
+          />
+        </div>
+
+        {/* Allies Section */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+            <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                <Users className="h-6 w-6 text-slate-600" />
+                {t.allies_title}
+            </h3>
+            <p className="text-gray-600 mb-6">{t.allies_desc}</p>
+            <div className="grid md:grid-cols-3 gap-6">
+                {[
+                    { name: "CIRÉ", desc: t.legal_ally_cire, color: "bg-red-50 text-red-700" },
+                    { name: "ADDE", desc: t.legal_ally_adde, color: "bg-blue-50 text-blue-700" },
+                    { name: "LDH", desc: t.legal_ally_ldh, color: "bg-orange-50 text-orange-700" }
+                ].map((ally, i) => (
+                    <div key={i} className="p-4 rounded-xl border border-gray-100 hover:border-gray-200 hover:shadow-md transition-all">
+                        <div className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-2 ${ally.color}`}>
+                            {ally.name}
+                        </div>
+                        <p className="text-sm text-gray-600">{ally.desc}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
+export default LegalAidSection;
