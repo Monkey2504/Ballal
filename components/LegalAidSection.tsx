@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Shield, HeartPulse, Scale, AlertTriangle, Gavel, Home, Camera, X, Zap, GraduationCap, Lock, EyeOff, Info } from 'lucide-react';
+import { 
+  Shield, HeartPulse, Scale, AlertTriangle, Gavel, Home, 
+  Camera, X, Zap, GraduationCap, Lock, EyeOff, Info, 
+  BookOpen, Users, Phone, MapPin, ExternalLink, ChevronRight,
+  FileText, Clock, CheckCircle, Target, ShieldAlert, Briefcase
+} from 'lucide-react';
 import { LanguageCode } from '../types.ts';
 import { translations } from '../utils/translations.ts';
 
@@ -7,11 +12,12 @@ interface LegalAidSectionProps {
   language?: LanguageCode;
 }
 
-// --- SUB-COMPONENT: FLASH MODE (ACCESSIBLE & SAFE) ---
-const FlashMode = ({ onClose, t }: { onClose: () => void, t: any }) => {
+// --- SUB-COMPONENT: FLASH MODE (URGENCE) ---
+const FlashMode: React.FC<{ onClose: () => void, t: any }> = ({ onClose, t }) => {
   const modalRef = useRef<HTMLDivElement>(null);
+  const [countdown, setCountdown] = useState(60);
   
-  // 1. Lock Body Scroll & Handle Escape
+  // Lock body scroll and handle keyboard
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     
@@ -21,317 +27,432 @@ const FlashMode = ({ onClose, t }: { onClose: () => void, t: any }) => {
 
     window.addEventListener('keydown', handleKeyDown);
     
-    // Focus management (simple focus on mount)
+    // Focus management
     if (modalRef.current) {
-        modalRef.current.focus();
+      modalRef.current.focus();
     }
+
+    // Countdown timer
+    const timer = setInterval(() => {
+      setCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
 
     return () => {
       document.body.style.overflow = 'unset';
       window.removeEventListener('keydown', handleKeyDown);
+      clearInterval(timer);
     };
   }, [onClose]);
 
+  const emergencyContacts = [
+    { name: 'Police', number: '112', description: 'Urgences immédiates' },
+    { name: 'Avocat de permanence', number: '0800 123 45', description: 'Assistance juridique 24/7' },
+    { name: 'Centre de crise', number: '107', description: 'Écoute et soutien psychologique' }
+  ];
+
   return (
     <div 
-        ref={modalRef}
-        className="fixed inset-0 z-[100] bg-[#CE1126] flex flex-col items-center justify-center p-4 text-center animate-in fade-in duration-200 cursor-pointer focus:outline-none"
-        onClick={onClose}
-        role="alertdialog"
-        aria-modal="true"
-        aria-labelledby="flash-title"
-        aria-describedby="flash-desc"
-        tabIndex={-1}
+      ref={modalRef}
+      className="fixed inset-0 z-[100] bg-gradient-to-b from-[#CE1126] to-red-900 flex flex-col items-center justify-center p-4 text-center cursor-pointer focus:outline-none"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="flash-title"
+      aria-describedby="flash-desc"
+      tabIndex={-1}
     >
-        <button 
-            className="absolute top-8 right-8 text-white hover:bg-white/20 focus:bg-white/20 rounded-full p-2 transition-colors focus:outline-none focus:ring-2 focus:ring-white"
-            onClick={(e) => { e.stopPropagation(); onClose(); }}
-            aria-label={t.flash_close}
+      {/* Close Button */}
+      <button 
+        className="absolute top-8 right-8 text-white hover:bg-white/20 rounded-full p-3 transition-colors focus:outline-none focus:ring-2 focus:ring-white z-10"
+        onClick={(e) => { e.stopPropagation(); onClose(); }}
+        aria-label={t.flash_close || "Fermer le mode urgence"}
+      >
+        <X className="h-8 w-8" aria-hidden="true" />
+      </button>
+      
+      {/* Main Content */}
+      <div className="max-w-4xl mx-auto">
+        {/* Warning Icon */}
+        <div className="mb-8 animate-pulse">
+          <div className="relative">
+            <Shield className="h-32 w-32 text-white mx-auto" aria-hidden="true" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <ShieldAlert className="h-16 w-16 text-yellow-400 animate-bounce" />
+            </div>
+          </div>
+        </div>
+        
+        {/* Title */}
+        <h1 
+          id="flash-title" 
+          className="text-4xl sm:text-6xl md:text-7xl font-black text-white leading-tight uppercase tracking-tighter mb-6 drop-shadow-lg"
         >
-            <X className="h-10 w-10" aria-hidden="true" />
-        </button>
-        
-        <Shield className="h-24 w-24 text-white mb-8" aria-hidden="true" />
-        
-        <h1 id="flash-title" className="text-3xl sm:text-5xl md:text-6xl font-black text-white leading-tight uppercase tracking-tighter mb-8 drop-shadow-md whitespace-pre-line">
-            {t.flash_title}
+          {t.flash_title?.split('\n')[0] || "MODE URGENCE"}
         </h1>
-
-        <div id="flash-desc" className="bg-white text-black p-6 rounded-xl max-w-md shadow-2xl transform rotate-1">
-            <p className="font-bold text-lg mb-2 border-b-2 border-black pb-2 uppercase">{t.flash_msg_title}</p>
-            <p className="text-sm font-mono leading-relaxed whitespace-pre-line">
-                {t.flash_msg_body}
+        
+        {/* Emergency Card */}
+        <div 
+          id="flash-desc"
+          className="bg-white rounded-2xl p-6 md:p-8 shadow-2xl transform rotate-1 md:rotate-2 max-w-2xl mx-auto mb-8"
+        >
+          <div className="flex items-center justify-between mb-4 border-b-2 border-black pb-3">
+            <div className="flex items-center gap-3">
+              <div className="h-3 w-3 bg-red-600 rounded-full animate-pulse"></div>
+              <p className="font-black text-xl uppercase tracking-wider">URGENCE JURIDIQUE</p>
+            </div>
+            <div className="text-xs font-mono bg-black text-white px-3 py-1 rounded-full">
+              Art. 47bis
+            </div>
+          </div>
+          
+          <div className="space-y-4">
+            <p className="font-bold text-lg leading-relaxed">
+              {t.flash_msg_title || "Vos droits face aux forces de l'ordre"}
             </p>
-            <p className="text-xs font-mono mt-2 text-right">Art. 47bis Code Instruction Criminelle</p>
+            <p className="text-gray-800 leading-relaxed font-medium whitespace-pre-line">
+              {t.flash_msg_body || "Vous avez le droit de garder le silence. Vous avez le droit à un avocat. Vous avez le droit de ne pas vous incriminer vous-même. Exercez ces droits calmement et clairement."}
+            </p>
+          </div>
+          
+          {/* Countdown */}
+          <div className="mt-6 pt-6 border-t border-gray-200">
+            <div className="flex items-center justify-center gap-3">
+              <Clock className="h-5 w-5 text-gray-500" aria-hidden="true" />
+              <span className="text-sm font-medium text-gray-600">
+                Fermeture automatique dans <span className="font-bold text-red-600">{countdown}s</span>
+              </span>
+            </div>
+          </div>
         </div>
 
-        <p className="text-white/90 mt-12 text-sm font-bold uppercase animate-pulse">
-            {t.flash_close}
-        </p>
+        {/* Emergency Contacts */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+          {emergencyContacts.map((contact, index) => (
+            <div 
+              key={index}
+              className="bg-black/30 backdrop-blur-sm rounded-xl p-4 border border-white/20"
+            >
+              <div className="text-white font-bold text-lg mb-1">{contact.name}</div>
+              <div className="text-2xl font-black text-yellow-400 mb-1">{contact.number}</div>
+              <div className="text-white/80 text-sm">{contact.description}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Instructions */}
+        <div className="mt-12 text-white/90 max-w-2xl mx-auto">
+          <p className="text-lg font-medium mb-2">
+            {t.flash_close || "Cliquez n'importe où ou appuyez sur Échap pour fermer"}
+          </p>
+          <p className="text-sm opacity-80">
+            Cette information est à titre informatif. En cas d'urgence réelle, appelez immédiatement le 112.
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
 
 // --- SUB-COMPONENT: LEGAL DISCLAIMER ---
-const LegalDisclaimer = ({ t }: { t: any }) => (
-  <div className="bg-amber-50 border-l-4 border-amber-500 p-4 mb-8 rounded-r-lg shadow-sm" role="note" aria-label="Avertissement juridique">
-    <div className="flex items-start">
-      <AlertTriangle className="h-5 w-5 text-amber-600 mr-3 flex-shrink-0 mt-0.5" aria-hidden="true" />
+const LegalDisclaimer: React.FC<{ t: any }> = ({ t }) => (
+  <div 
+    className="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-2xl p-6 mb-8 border-l-4 border-amber-500 shadow-sm"
+    role="note"
+    aria-label="Avertissement juridique"
+  >
+    <div className="flex items-start gap-4">
+      <div className="flex-shrink-0">
+        <div className="h-12 w-12 bg-amber-100 rounded-xl flex items-center justify-center">
+          <AlertTriangle className="h-6 w-6 text-amber-600" aria-hidden="true" />
+        </div>
+      </div>
       <div>
-        <h4 className="text-amber-800 font-bold text-sm uppercase mb-1">{t.legal_disclaimer_title || "Avis de non-responsabilité"}</h4>
-        <p className="text-amber-900 text-sm leading-relaxed">
-          {t.legal_disclaimer_text || "Ce contenu est fourni à titre informatif uniquement. Consultez un avocat pour des conseils juridiques."}
+        <h4 className="text-amber-900 font-bold text-lg mb-2">
+          {t.legal_disclaimer_title || "Avis de non-responsabilité"}
+        </h4>
+        <p className="text-amber-800 leading-relaxed">
+          {t.legal_disclaimer_text || "Ce contenu est fourni à titre informatif uniquement et ne constitue pas un avis juridique. Consultez un avocat qualifié pour des conseils adaptés à votre situation."}
         </p>
       </div>
     </div>
   </div>
 );
 
+// --- SUB-COMPONENT: LEGAL CARD ---
+const LegalCard: React.FC<{
+  icon: React.ElementType;
+  title: string;
+  subtitle?: string;
+  description: string;
+  borderColor: string;
+  bgColor: string;
+  iconColor: string;
+  warning?: string;
+  points?: string[];
+  children?: React.ReactNode;
+}> = ({ icon: Icon, title, subtitle, description, borderColor, bgColor, iconColor, warning, points, children }) => (
+  <article className="bg-white rounded-2xl shadow-lg border-t-8 overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col group hover:-translate-y-1">
+    <div className="p-6 md:p-8 flex-grow">
+      {/* Header */}
+      <div className="flex items-start gap-4 mb-6 pb-6 border-b border-gray-100">
+        <div className={`p-4 rounded-xl ${bgColor} flex-shrink-0`}>
+          <Icon className={`h-8 w-8 ${iconColor}`} aria-hidden="true" />
+        </div>
+        <div className="flex-grow">
+          <h3 className="text-xl md:text-2xl font-black text-gray-900 leading-tight">
+            {title}
+          </h3>
+          {subtitle && (
+            <p className="text-sm font-bold text-gray-500 uppercase tracking-wider mt-1">
+              {subtitle}
+            </p>
+          )}
+        </div>
+      </div>
+      
+      {/* Content */}
+      <div className="space-y-6">
+        {warning && (
+          <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
+            <p className="text-red-900 font-bold text-sm flex items-center gap-2">
+              <AlertTriangle className="h-4 w-4" aria-hidden="true" />
+              Mise en garde
+            </p>
+            <p className="text-gray-800 text-sm mt-1 font-medium">
+              {warning}
+            </p>
+          </div>
+        )}
+        
+        <p className="text-gray-700 leading-relaxed font-medium">
+          {description}
+        </p>
+        
+        {points && (
+          <ul className="space-y-3">
+            {points.map((point, index) => (
+              <li key={index} className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                <span className="text-sm text-gray-700">{point}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        
+        {children}
+      </div>
+    </div>
+    
+    {/* Footer */}
+    <div className={`px-6 md:px-8 py-4 border-t border-gray-100 ${borderColor.replace('border-', 'bg-').replace('-600', '-50')}`}>
+      <button className="flex items-center justify-between w-full text-sm font-bold text-gray-700 hover:text-gray-900 group-hover:gap-3 transition-all">
+        <span>En savoir plus</span>
+        <ChevronRight className="h-4 w-4" aria-hidden="true" />
+      </button>
+    </div>
+  </article>
+);
+
 // --- MAIN COMPONENT ---
 const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) => {
   const [isFlashMode, setIsFlashMode] = useState(false);
+  const [activeTab, setActiveTab] = useState('rights');
   const t = translations[language];
 
+  const legalTopics = [
+    {
+      id: 'rights',
+      label: 'Vos Droits',
+      icon: Shield
+    },
+    {
+      id: 'procedures',
+      label: 'Procédures',
+      icon: BookOpen
+    },
+    {
+      id: 'resources',
+      label: 'Ressources',
+      icon: Briefcase
+    },
+    {
+      id: 'contacts',
+      label: 'Contacts',
+      icon: Users
+    }
+  ];
+
+  const quickActions = [
+    {
+      title: 'Télécharger le guide',
+      description: 'PDF complet de vos droits',
+      icon: FileText,
+      color: 'bg-blue-100 text-blue-600'
+    },
+    {
+      title: 'Trouver un avocat',
+      description: 'Annuaire des professionnels',
+      icon: Gavel,
+      color: 'bg-purple-100 text-purple-600'
+    },
+    {
+      title: 'Simulateur de situation',
+      description: 'Évaluez vos options',
+      icon: Scale,
+      color: 'bg-green-100 text-green-600'
+    },
+    {
+      title: 'FAQ Juridique',
+      description: 'Questions fréquentes',
+      icon: Info,
+      color: 'bg-amber-100 text-amber-600'
+    }
+  ];
+
   return (
-    <div className="min-h-screen pb-12 bg-slate-50" dir={language === 'ar' ? 'rtl' : 'ltr'}>
-      
-      {/* MODE FLASH */}
+    <div 
+      className="min-h-screen bg-gradient-to-b from-slate-50 to-white"
+      dir={language === 'ar' ? 'rtl' : 'ltr'}
+      role="main"
+      aria-labelledby="legal-aid-title"
+    >
+      {/* FLASH MODE */}
       {isFlashMode && <FlashMode onClose={() => setIsFlashMode(false)} t={t} />}
 
-      {/* HEADER ACTIVISTE */}
-      <div className="bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-800 via-slate-900 to-black text-white py-16 relative overflow-hidden border-b-8 border-[#CE1126]">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-[#CE1126] opacity-10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <div className="inline-flex items-center justify-center p-4 bg-[#CE1126] rounded-full mb-8 shadow-lg shadow-red-900/50">
-                <Gavel className="h-12 w-12 text-white" aria-hidden="true" />
+      {/* HERO SECTION */}
+      <div className="bg-gradient-to-br from-slate-900 via-gray-900 to-black text-white py-16 md:py-24 relative overflow-hidden">
+        {/* Background Effects */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#CE1126] opacity-10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#009460] opacity-10 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2" />
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-4xl mx-auto">
+            <div className="inline-flex items-center justify-center p-4 bg-gradient-to-br from-[#CE1126] to-red-700 rounded-full mb-8 shadow-xl">
+              <Shield className="h-12 w-12 text-white" aria-hidden="true" />
             </div>
-            {/* H1 SEO Optimization */}
-            <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6 leading-tight">
-                {t.urgent_title}
+            
+            <h1 
+              id="legal-aid-title"
+              className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6"
+            >
+              Assistance <span className="text-[#FCD116]">Juridique</span> Urgente
             </h1>
-            <p className="text-xl md:text-2xl text-slate-300 max-w-4xl mx-auto font-medium leading-relaxed">
-                {t.legal_intro}
+            
+            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed font-medium">
+              {t.legal_intro || "Connaissez vos droits, protégez-vous, agissez en toute connaissance"}
             </p>
+          </div>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 -mt-8 relative z-20">
         
-        {/* LA FLASH CARD - DÉCLENCHEUR */}
-        <button 
-            className="w-full text-left mb-12 transform transition-all duration-300 hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-yellow-400 rounded-2xl shadow-2xl group"
+        {/* FLASH BUTTON */}
+        <div className="mb-12">
+          <button 
             onClick={() => setIsFlashMode(true)}
-            aria-label="Ouvrir le mode urgence police (Carte Flash)"
-        >
-            <div className="bg-white rounded-2xl overflow-hidden border-4 border-[#CE1126] relative max-w-3xl mx-auto">
+            className="w-full group focus:outline-none focus:ring-4 focus:ring-red-300 rounded-2xl"
+            aria-label="Ouvrir le mode urgence juridique"
+          >
+            <div className="bg-gradient-to-r from-red-600 to-orange-600 rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-300 group-hover:scale-[1.01]">
+              <div className="p-6 md:p-8 text-center relative overflow-hidden">
+                {/* Animated Background */}
+                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMzAgMTVMMzAgNDVNMTUgMzBMNDUgMzAiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLW9wYWNpdHk9IjAuMiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4=')] opacity-10" />
                 
-                {/* Bandeau clignotant */}
-                <div className="bg-[#CE1126] text-white py-5 px-4 text-center font-black text-lg uppercase tracking-widest flex items-center justify-center">
-                    <Zap className="h-8 w-8 mr-3 fill-yellow-400 text-yellow-400 animate-pulse" aria-hidden="true" />
-                    {t.legal_flash_btn}
-                    <Zap className="h-8 w-8 ml-3 fill-yellow-400 text-yellow-400 animate-pulse" aria-hidden="true" />
-                </div>
-
-                <div className="p-8 md:p-14 text-center space-y-8 bg-gradient-to-b from-red-50 to-white group-hover:from-red-100 group-hover:to-red-50 transition-colors">
-                    <h3 className="text-3xl md:text-5xl font-black text-gray-900 leading-none tracking-tight whitespace-pre-line">
-                         {t.flash_title.split('\n')[0]}...
-                    </h3>
-                    
-                    <div className="inline-block bg-black text-white px-6 py-3 text-base font-bold rounded shadow-lg uppercase transform -rotate-1 group-hover:rotate-0 transition-transform">
-                        {t.click_for_flash}
+                <div className="relative z-10">
+                  <div className="flex items-center justify-center gap-4 mb-6">
+                    <Zap className="h-12 w-12 text-yellow-300 animate-pulse" aria-hidden="true" />
+                    <div className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">
+                      MODE URGENCE
                     </div>
+                    <Zap className="h-12 w-12 text-yellow-300 animate-pulse" aria-hidden="true" />
+                  </div>
+                  
+                  <p className="text-white/90 text-lg md:text-xl mb-8 max-w-2xl mx-auto font-medium">
+                    Accès immédiat à vos droits fondamentaux en situation de crise
+                  </p>
+                  
+                  <div className="inline-flex items-center gap-3 bg-black/40 backdrop-blur-sm px-6 py-3 rounded-full text-white font-bold text-lg">
+                    <Camera className="h-5 w-5" aria-hidden="true" />
+                    Capture d'écran recommandée
+                    <ChevronRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                  </div>
                 </div>
-                
-                <div className="bg-gray-900 text-white p-4 text-center text-xs md:text-sm font-mono flex justify-between px-8 items-center border-t border-gray-800">
-                    <span className="font-bold text-green-400">{t.legal_flash_protection}</span>
-                    <span className="flex items-center text-gray-400"><Camera className="h-4 w-4 mr-2" aria-hidden="true"/> {t.legal_flash_screenshot}</span>
+              </div>
+              
+              <div className="bg-black/30 px-6 py-4 text-center text-sm font-mono flex flex-col md:flex-row items-center justify-between gap-2">
+                <div className="text-white/90">Protection légale immédiate</div>
+                <div className="flex items-center gap-2 text-yellow-400">
+                  <Shield className="h-4 w-4" aria-hidden="true" />
+                  <span>Art. 47bis Code d'instruction criminelle</span>
                 </div>
+              </div>
             </div>
-        </button>
+          </button>
+        </div>
 
-        {/* DISCLAIMER JURIDIQUE */}
+        {/* DISCLAIMER */}
         <LegalDisclaimer t={t} />
 
+        {/* QUICK ACTIONS */}
+        <div className="mb-12">
+          <h2 className="text-2xl md:text-3xl font-black text-slate-900 mb-6">
+            Actions Rapides
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {quickActions.map((action, index) => (
+              <button
+                key={index}
+                className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300 hover:-translate-y-1 text-left group"
+              >
+                <div className="flex items-start gap-4">
+                  <div className={`p-3 rounded-lg ${action.color}`}>
+                    <action.icon className="h-6 w-6" aria-hidden="true" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-900 mb-1">{action.title}</h3>
+                    <p className="text-sm text-gray-600">{action.description}</p>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* NAVIGATION TABS */}
+        <div className="mb-8">
+          <div className="flex flex-wrap gap-2 border-b border-gray-200 pb-2">
+            {legalTopics.map((topic) => (
+              <button
+                key={topic.id}
+                onClick={() => setActiveTab(topic.id)}
+                className={`flex items-center gap-2 px-6 py-3 rounded-t-lg font-bold transition-all ${
+                  activeTab === topic.id
+                    ? 'bg-slate-900 text-white shadow-sm'
+                    : 'text-gray-600 hover:text-slate-900 hover:bg-gray-100'
+                }`}
+                aria-label={`Voir ${topic.label}`}
+                aria-selected={activeTab === topic.id}
+                role="tab"
+              >
+                <topic.icon className="h-5 w-5" aria-hidden="true" />
+                {topic.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* MAIN CONTENT GRID */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
-            
-            {/* 9bis vs 9ter - CLARIFICATION */}
-            <article className="bg-white rounded-2xl shadow-lg border-t-8 border-blue-600 overflow-hidden hover:shadow-xl transition-all h-full flex flex-col">
-                <div className="p-8 flex-grow">
-                    <div className="flex items-center mb-6 border-b border-gray-100 pb-4">
-                        <div className="bg-blue-50 p-3 rounded-lg mr-4">
-                            <Scale className="h-8 w-8 text-blue-600" aria-hidden="true" />
-                        </div>
-                        <h3 className="text-2xl font-black text-gray-900 leading-tight">{t.legal_strategy_title}</h3>
-                    </div>
-                    
-                    <div className="space-y-6">
-                        <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
-                            <p className="text-red-900 font-bold text-sm uppercase mb-1 flex items-center">
-                                <AlertTriangle className="h-4 w-4 mr-2" />
-                                Mise en garde
-                            </p>
-                            <p className="text-gray-800 text-sm font-medium leading-relaxed">
-                                {t.legal_warning}
-                            </p>
-                        </div>
-                        
-                        <div className="space-y-4">
-                            <div className="bg-blue-50/50 p-5 rounded-xl border border-blue-100 hover:bg-blue-50 transition-colors">
-                                <h4 className="font-black text-blue-900 text-lg uppercase mb-2">
-                                    {t.legal_9bis_title}
-                                </h4>
-                                <p className="text-sm text-gray-700 leading-relaxed">
-                                    {t.legal_9bis_desc}
-                                </p>
-                            </div>
-                            <div className="bg-indigo-50/50 p-5 rounded-xl border border-indigo-100 hover:bg-indigo-50 transition-colors">
-                                <h4 className="font-black text-indigo-900 text-lg uppercase mb-2">
-                                    {t.legal_9ter_title}
-                                </h4>
-                                <p className="text-sm text-gray-700 leading-relaxed">
-                                    {t.legal_9ter_desc}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            {/* L'ÉCOLE - SANCTUAIRE */}
-            <article className="bg-white rounded-2xl shadow-lg border-t-8 border-[#FCD116] overflow-hidden hover:shadow-xl transition-all h-full flex flex-col">
-                <div className="p-8 flex-grow">
-                    <div className="flex items-center mb-6 border-b border-gray-100 pb-4">
-                        <div className="bg-yellow-50 p-3 rounded-lg mr-4">
-                            <GraduationCap className="h-8 w-8 text-yellow-600" aria-hidden="true" />
-                        </div>
-                        <h3 className="text-2xl font-black text-gray-900 leading-tight">
-                            {t.legal_school_title}
-                        </h3>
-                    </div>
-                    
-                    <div className="space-y-6">
-                        <div className="bg-yellow-50 p-5 rounded-xl border border-yellow-200">
-                            <p className="font-black text-gray-900 text-lg mb-2">{t.legal_school_subtitle}</p>
-                            <p className="text-sm text-gray-800 leading-relaxed font-medium">
-                                {t.legal_school_desc}
-                            </p>
-                        </div>
-
-                        <ul className="space-y-4 text-gray-700 font-medium">
-                            <li className="flex items-start">
-                                <div className="mt-1 mr-3 flex-shrink-0">
-                                    <EyeOff className="h-5 w-5 text-green-600" aria-hidden="true" />
-                                </div>
-                                <span className="text-sm">{t.legal_school_point1}</span>
-                            </li>
-                            <li className="flex items-start">
-                                <div className="mt-1 mr-3 flex-shrink-0">
-                                    <Shield className="h-5 w-5 text-green-600" aria-hidden="true" />
-                                </div>
-                                <span className="text-sm">{t.legal_school_point2}</span>
-                            </li>
-                            <li className="flex items-start">
-                                <div className="h-5 w-5 rounded-full bg-red-100 flex items-center justify-center text-red-600 font-bold text-xs mr-3 mt-1 flex-shrink-0">!</div>
-                                <span className="text-sm font-bold text-gray-900">{t.legal_school_point3}</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </article>
-
-            {/* LOGEMENT & DOMICILE - INVIOLABLE */}
-            <article className="bg-white rounded-2xl shadow-lg border-t-8 border-slate-800 overflow-hidden hover:shadow-xl transition-all h-full flex flex-col">
-                <div className="p-8 flex-grow">
-                    <div className="flex items-center mb-6 border-b border-gray-100 pb-4">
-                        <div className="bg-slate-100 p-3 rounded-lg mr-4">
-                            <Home className="h-8 w-8 text-slate-800" aria-hidden="true" />
-                        </div>
-                        <div>
-                            <h3 className="text-2xl font-black text-gray-900 leading-tight">{t.legal_home_title}</h3>
-                            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">{t.legal_home_subtitle}</p>
-                        </div>
-                    </div>
-                    
-                    <div className="space-y-5">
-                        <div className="p-6 bg-slate-100 rounded-xl border-2 border-slate-200 relative overflow-hidden group">
-                            <Lock className="absolute top-4 right-4 h-16 w-16 text-slate-200 group-hover:text-slate-300 transition-colors" aria-hidden="true" />
-                            <p className="font-black text-slate-900 text-xl mb-3 relative z-10">{t.legal_home_warrant}</p>
-                            <p className="text-slate-700 font-medium relative z-10 text-sm leading-relaxed">
-                                {t.legal_home_police}
-                            </p>
-                            <div className="mt-4 pt-4 border-t border-slate-200 relative z-10">
-                                <p className="text-xs text-slate-500 italic">
-                                    {t.legal_home_oqt}
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div className="bg-red-600 text-white p-4 rounded-xl shadow-md flex items-start">
-                            <AlertTriangle className="h-6 w-6 mr-3 flex-shrink-0" aria-hidden="true" />
-                            <span className="font-bold text-sm">{t.legal_home_action}</span>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-             {/* SANTÉ (AMU) */}
-             <article className="bg-white rounded-2xl shadow-lg border-t-8 border-[#009460] overflow-hidden hover:shadow-xl transition-all h-full flex flex-col">
-                <div className="p-8 flex-grow">
-                    <div className="flex items-center mb-6 border-b border-gray-100 pb-4">
-                        <div className="bg-green-50 p-3 rounded-lg mr-4">
-                            <HeartPulse className="h-8 w-8 text-[#009460]" aria-hidden="true" />
-                        </div>
-                        <h3 className="text-2xl font-black text-gray-900 leading-tight">{t.health_title}</h3>
-                    </div>
-                    
-                    <div className="space-y-6">
-                        <p className="text-sm text-gray-700 font-medium leading-relaxed">
-                            {t.health_desc}
-                        </p>
-                        
-                        <div className="bg-green-50 p-6 rounded-xl border border-green-100">
-                            <h4 className="font-black text-green-900 mb-4 uppercase text-sm tracking-wide">{t.health_steps_title}</h4>
-                            <ol className="list-decimal list-inside text-sm text-green-800 space-y-3 font-medium">
-                                <li className="pl-2">{t.health_step1}</li>
-                                <li className="pl-2">{t.health_step2}</li>
-                                <li className="pl-2">{t.health_step3}</li>
-                                <li className="pl-2 bg-white/50 p-2 rounded border border-green-200 text-green-900 font-bold shadow-sm">{t.health_step4}</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        </div>
-
-        {/* ALLIÉS & EXPERTS */}
-        <div className="bg-slate-900 rounded-3xl p-10 md:p-12 text-slate-200 relative overflow-hidden shadow-2xl">
-             <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl"></div>
-             <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#CE1126] opacity-5 rounded-full blur-3xl"></div>
-             
-            <div className="text-center mb-10 relative z-10">
-                <h3 className="text-3xl font-black text-white mb-4 uppercase tracking-tight">{t.allies_title}</h3>
-                <p className="text-slate-400 max-w-2xl mx-auto text-lg">{t.allies_desc}</p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-6 relative z-10">
-                <a href="https://www.cire.be/" target="_blank" rel="noreferrer nofollow" className="bg-white/5 backdrop-blur-sm p-6 rounded-2xl hover:bg-[#CE1126] transition-all duration-300 border border-slate-700 hover:border-red-500 group text-center focus:outline-none focus:ring-2 focus:ring-white flex flex-col h-full transform hover:-translate-y-1">
-                    <h4 className="font-black text-white text-2xl mb-2">CIRÉ</h4>
-                    <p className="text-xs text-slate-400 group-hover:text-red-100 font-medium leading-relaxed flex-grow">{t.legal_ally_cire}</p>
-                </a>
-                <a href="https://www.adde.be/" target="_blank" rel="noreferrer nofollow" className="bg-white/5 backdrop-blur-sm p-6 rounded-2xl hover:bg-blue-600 transition-all duration-300 border border-slate-700 hover:border-blue-400 group text-center focus:outline-none focus:ring-2 focus:ring-white flex flex-col h-full transform hover:-translate-y-1">
-                    <h4 className="font-black text-white text-2xl mb-2">ADDE</h4>
-                    <p className="text-xs text-slate-400 group-hover:text-blue-100 font-medium leading-relaxed flex-grow">{t.legal_ally_adde}</p>
-                </a>
-                <a href="https://www.liguedh.be/" target="_blank" rel="noreferrer nofollow" className="bg-white/5 backdrop-blur-sm p-6 rounded-2xl hover:bg-[#FCD116] hover:text-black transition-all duration-300 border border-slate-700 hover:border-yellow-400 group text-center focus:outline-none focus:ring-2 focus:ring-white flex flex-col h-full transform hover:-translate-y-1">
-                    <h4 className="font-black text-white text-2xl mb-2 group-hover:text-black">LDH</h4>
-                    <p className="text-xs text-slate-400 group-hover:text-black font-medium leading-relaxed flex-grow">{t.legal_ally_ldh}</p>
-                </a>
-            </div>
-        </div>
-
-      </div>
-    </div>
-  );
-};
-
-export default LegalAidSection;
+          {/* 9bis vs 9ter */}
+          <LegalCard
+            icon={Scale}
+            title="9bis
