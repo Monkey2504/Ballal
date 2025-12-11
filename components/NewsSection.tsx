@@ -4,6 +4,14 @@ import {
   ExternalLink, Share2, Heart, Bookmark, Filter, Search, 
   TrendingUp, Eye, MessageCircle, ArrowRight, Sparkles
 } from 'lucide-react';
+import { translations } from '../utils/translations.ts';
+// Import LanguageCode if available from context, otherwise default to prop or hook
+import { useAuth } from '../contexts/AuthContext.tsx'; // Assuming auth context might hold language or passing it via props
+
+// Fix: Add language prop to component to receive current language
+interface NewsSectionProps {
+    language?: string; // Optional prop
+}
 
 interface NewsArticle {
   id: string;
@@ -23,7 +31,8 @@ interface NewsArticle {
   tags: string[];
 }
 
-const NewsSection: React.FC = () => {
+const NewsSection: React.FC<NewsSectionProps> = ({ language = 'fr' }) => {
+  const t = translations[language] || translations['fr'];
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -137,7 +146,7 @@ const NewsSection: React.FC = () => {
   ];
 
   const categories = [
-    { id: 'all', label: 'Toutes les actualités', count: articles.length },
+    { id: 'all', label: t.news_filter_all || 'Toutes les actualités', count: articles.length },
     { id: 'event', label: 'Événements', count: articles.filter(a => a.category === 'event').length },
     { id: 'announcement', label: 'Annonces', count: articles.filter(a => a.category === 'announcement').length },
     { id: 'success', label: 'Succès', count: articles.filter(a => a.category === 'success').length },
@@ -206,25 +215,24 @@ const NewsSection: React.FC = () => {
             <Newspaper className="h-12 w-12 text-blue-600" aria-hidden="true" />
           </div>
           <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4">
-            Actualités & <span className="text-[#CE1126]">Événements</span>
+            {t.news_title || "Actualités & Événements"}
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Restez informé des dernières nouvelles, événements et succès de notre communauté
+            {t.news_subtitle || "Restez informé des dernières nouvelles, événements et succès de notre communauté"}
           </p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-          {/* ... keeping stats display ... */}
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center">
             <div className="text-3xl font-black text-slate-900 mb-2">{articles.length}</div>
-            <div className="text-gray-600 font-medium">Articles publiés</div>
+            <div className="text-gray-600 font-medium">{t.news_stats_articles || "Articles publiés"}</div>
           </div>
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center">
             <div className="text-3xl font-black text-slate-900 mb-2">
               {articles.reduce((sum, article) => sum + article.views, 0).toLocaleString()}
             </div>
-            <div className="text-gray-600 font-medium">Vues totales</div>
+            <div className="text-gray-600 font-medium">{t.news_stats_views || "Vues totales"}</div>
           </div>
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center">
             <div className="text-3xl font-black text-slate-900 mb-2">
@@ -288,7 +296,7 @@ const NewsSection: React.FC = () => {
                         <span>{article.author}</span>
                       </div>
                       <button className="text-[#CE1126] font-bold flex items-center hover:translate-x-1 transition-transform">
-                        Lire la suite <ChevronRight className="h-4 w-4 ml-1" />
+                        {t.news_read_more || "Lire la suite"} <ChevronRight className="h-4 w-4 ml-1" />
                       </button>
                     </div>
                   </div>
@@ -309,7 +317,7 @@ const NewsSection: React.FC = () => {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Rechercher des actualités..."
+                  placeholder={t.news_search_placeholder || "Rechercher des actualités..."}
                   className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-[#CE1126] focus:ring-2 focus:ring-[#CE1126]/20 outline-none transition-all"
                 />
               </div>
@@ -426,7 +434,7 @@ const NewsSection: React.FC = () => {
                     </div>
                   </div>
                   <button className="text-[#CE1126] font-bold flex items-center group-hover:translate-x-1 transition-transform">
-                    Lire <ChevronRight className="h-4 w-4 ml-1" />
+                    {t.news_read_more || "Lire"} <ChevronRight className="h-4 w-4 ml-1" />
                   </button>
                 </div>
               </div>
@@ -439,7 +447,7 @@ const NewsSection: React.FC = () => {
           <div className="text-center py-16">
             <Newspaper className="h-16 w-16 text-gray-300 mx-auto mb-6" aria-hidden="true" />
             <h3 className="text-2xl font-bold text-gray-900 mb-3">
-              Aucun article trouvé
+              {t.news_no_results || "Aucun article trouvé"}
             </h3>
             <p className="text-gray-600 max-w-md mx-auto mb-6">
               Essayez de modifier vos critères de recherche ou de réinitialiser les filtres
@@ -505,10 +513,10 @@ const NewsSection: React.FC = () => {
         <div className="mt-16 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-3xl p-8 md:p-12 text-center border border-blue-100">
           <div className="max-w-2xl mx-auto">
             <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-4">
-              Restez informé
+              {t.news_subscribe_title || "Restez informé"}
             </h3>
             <p className="text-gray-600 mb-8">
-              Inscrivez-vous à notre newsletter pour recevoir les dernières actualités directement dans votre boîte mail
+              {t.news_subscribe_desc || "Inscrivez-vous à notre newsletter pour recevoir les dernières actualités directement dans votre boîte mail"}
             </p>
             <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
               <input
@@ -517,7 +525,7 @@ const NewsSection: React.FC = () => {
                 className="flex-grow px-6 py-3 rounded-xl border-2 border-gray-200 focus:border-[#CE1126] focus:ring-2 focus:ring-[#CE1126]/20 outline-none"
               />
               <button className="px-8 py-3 bg-[#CE1126] text-white font-bold rounded-xl hover:bg-red-700 transition-colors active:scale-95">
-                S'abonner
+                {t.news_subscribe_btn || "S'abonner"}
               </button>
             </div>
             <p className="text-sm text-gray-500 mt-4">

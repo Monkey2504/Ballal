@@ -42,10 +42,11 @@
     <!-- Gestionnaire d'erreurs de démarrage (Sécurité) -->
     <script>
       window.onerror = function(msg, url, line, col, error) {
-        // Si l'application ne démarre pas, on affiche l'erreur à l'utilisateur
+        // Si l'application ne démarre pas après 3s, on affiche l'erreur
         setTimeout(function() {
           var root = document.getElementById('root');
           var loader = document.getElementById('initial-loader');
+          // On vérifie si React n'a pas pris le relais (root vide)
           if (root && (!root.innerHTML || root.innerHTML.trim() === '')) {
             if(loader) loader.style.display = 'none';
             var errorBox = document.createElement('div');
@@ -53,7 +54,7 @@
             errorBox.innerHTML = '<h2 style="font-size:24px;margin-bottom:20px;">Oups ! Un problème technique empêche le chargement.</h2><p style="color:#333;background:#fff;padding:20px;border-radius:10px;box-shadow:0 4px 6px rgba(0,0,0,0.1);max-width:600px;">' + msg + '</p><button onclick="window.location.reload()" style="margin-top:20px;padding:10px 20px;background:#009460;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;">Recharger la page</button>';
             document.body.appendChild(errorBox);
           }
-        }, 3000); // Délai de 3s pour laisser React essayer de charger
+        }, 3000); 
       };
     </script>
 
@@ -95,18 +96,5 @@
 
     <!-- Script de démarrage -->
     <script type="module" src="./index.tsx"></script>
-
-    <script>
-      // Suppression du loader une fois l'app chargée
-      window.onload = () => {
-        setTimeout(() => {
-          const loader = document.getElementById('initial-loader');
-          if(loader) {
-            loader.style.opacity = '0';
-            setTimeout(() => loader.style.display = 'none', 500);
-          }
-        }, 1500);
-      };
-    </script>
   </body>
 </html>

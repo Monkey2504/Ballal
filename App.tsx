@@ -148,6 +148,25 @@ const usePersistedLanguage = () => {
 const AppContent: React.FC = () => {
   const { view, navigate } = useAppNavigation();
   const { language, setLanguage } = usePersistedLanguage();
+
+  // UX IMPROVEMENT: Remove Initial Loader when React is fully mounted
+  useEffect(() => {
+    const loader = document.getElementById('initial-loader');
+    if (loader) {
+      // Smooth fade out
+      loader.style.transition = 'opacity 0.5s ease-out';
+      loader.style.opacity = '0';
+      
+      // Remove from DOM after transition
+      const timer = setTimeout(() => {
+        if (loader.parentNode) {
+          loader.parentNode.removeChild(loader);
+        }
+      }, 500);
+      
+      return () => clearTimeout(timer);
+    }
+  }, []);
   
   const renderView = () => {
     switch (view) {
@@ -161,7 +180,7 @@ const AppContent: React.FC = () => {
               onShare={() => navigate(ViewState.SHARE)}
               onDonate={() => navigate(ViewState.DONATE)}
             />
-            <NewsSection />
+            <NewsSection language={language} />
             <TeamSection language={language} />
           </>
         );
@@ -174,7 +193,7 @@ const AppContent: React.FC = () => {
       case ViewState.FOOD_NETWORK: return <FoodNetworkForm language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />;
       case ViewState.CONTACT: return <ContactSection language={language} />;
       case ViewState.FESTIVAL: return <FestivalSection language={language} />;
-      case ViewState.NEWS: return <NewsSection />;
+      case ViewState.NEWS: return <NewsSection language={language} />;
       case ViewState.PRIVACY: return <LegalDocSection language={language} mode="privacy" />;
       case ViewState.TERMS: return <LegalDocSection language={language} mode="terms" />;
       
