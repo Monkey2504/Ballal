@@ -180,6 +180,9 @@ export interface Translation {
   share_via: string;
   share_whatsapp: string;
   share_facebook: string;
+  share_twitter: string;
+  share_linkedin: string;
+  share_telegram: string;
   share_text?: string;
   share_email_subject?: string;
   share_email?: string;
@@ -187,6 +190,9 @@ export interface Translation {
   share_qr_alt: string;
   share_qr_inst: string;
   share_copy_error: string;
+  share_download_qr: string;
+  share_downloading: string;
+  share_download_success: string;
 
   // Team
   team_title: string;
@@ -410,8 +416,11 @@ const fr: Translation = {
     share_copy: "Copier",
     share_copied: "Copié !",
     share_via: "Partager via...",
-    share_whatsapp: "Envoyer sur WhatsApp",
-    share_facebook: "Partager sur Facebook",
+    share_whatsapp: "WhatsApp",
+    share_facebook: "Facebook",
+    share_twitter: "Twitter",
+    share_linkedin: "LinkedIn",
+    share_telegram: "Telegram",
     share_text: "Ballal ASBL - Solidarité Guinée-Belgique • Justice, Culture, Autonomie Alimentaire",
     share_email_subject: "Découvrez Ballal ASBL",
     share_email: "Envoyer par email",
@@ -419,6 +428,9 @@ const fr: Translation = {
     share_qr_alt: "Code QR pour accéder au site Ballal ASBL",
     share_qr_inst: "Scannez ce code avec votre appareil photo pour ouvrir le site.",
     share_copy_error: "Impossible de copier. Veuillez sélectionner le texte manuellement.",
+    share_download_qr: "Télécharger",
+    share_downloading: "Génération...",
+    share_download_success: "Téléchargé !",
 
     // Team
     team_title: "Le Conseil d'Administration",
@@ -536,6 +548,9 @@ const en: Translation = {
     donate_goal_annual_desc: "To fund our 2024 actions",
     donate_goal_previous: "Collected in 2023",
     donate_goal_previous_desc: "Thank you for your generosity",
+    share_download_qr: "Download",
+    share_downloading: "Generating...",
+    share_download_success: "Downloaded!",
 };
 
 // Export translations object

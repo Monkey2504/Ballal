@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { 
   Share2, Copy, Smartphone, Facebook, Check, Link as LinkIcon, Info, 
   Twitter, Mail, QrCode, Download, Globe, Shield, Users, 
-  ExternalLink, Heart, Sparkles, MessageSquare
+  ExternalLink, Heart, Sparkles, MessageSquare, Loader
 } from 'lucide-react';
 import { LanguageCode } from '../types.ts';
 import { translations } from '../utils/translations.ts';
@@ -14,7 +14,7 @@ interface ShareSectionProps {
 const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
   const [copied, setCopied] = useState(false);
   const [shareCount, setShareCount] = useState(1428);
-  const [isGeneratingQR, setIsGeneratingQR] = useState(false);
+  const [qrStatus, setQrStatus] = useState<'idle' | 'generating' | 'success'>('idle');
   const [activePlatform, setActivePlatform] = useState<string | null>(null);
   
   const appUrl = typeof window !== 'undefined' ? window.location.href : 'https://ballal-asbl.be';
@@ -30,34 +30,35 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
     facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(appUrl)}&quote=${encodeURIComponent(shareText)}`,
     twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(appUrl)}&hashtags=${shareHashtags}`,
     email: `mailto:?subject=${encodeURIComponent(t.share_email_subject || 'Découvrez Ballal ASBL')}&body=${encodeURIComponent(shareText + '\n\n' + appUrl)}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(appUrl)}`,
     telegram: `https://t.me/share/url?url=${encodeURIComponent(appUrl)}&text=${encodeURIComponent(shareText)}`
   };
 
   const socialPlatforms = [
     {
       id: 'whatsapp',
-      name: 'WhatsApp',
+      name: t.share_whatsapp || 'WhatsApp',
       icon: Smartphone,
       color: 'bg-[#25D366] hover:bg-[#20bd5a]',
       label: t.share_whatsapp || 'Partager sur WhatsApp'
     },
     {
       id: 'facebook',
-      name: 'Facebook',
+      name: t.share_facebook || 'Facebook',
       icon: Facebook,
       color: 'bg-[#1877F2] hover:bg-[#166fe5]',
       label: t.share_facebook || 'Partager sur Facebook'
     },
     {
       id: 'twitter',
-      name: 'Twitter',
+      name: t.share_twitter || 'Twitter',
       icon: Twitter,
       color: 'bg-[#1DA1F2] hover:bg-[#1a91da]',
       label: 'Twitter'
     },
     {
       id: 'email',
-      name: 'Email',
+      name: t.share_email || 'Email',
       icon: Mail,
       color: 'bg-gray-600 hover:bg-gray-700',
       label: t.share_email || 'Envoyer par email'
@@ -78,20 +79,23 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(appUrl);
       } else {
-        // Fallback
+        // Fallback robust
         const textArea = document.createElement('textarea');
         textArea.value = appUrl;
+        textArea.style.position = 'fixed'; // Avoid scrolling to bottom
         document.body.appendChild(textArea);
+        textArea.focus();
         textArea.select();
-        document.execCommand('copy');
+        try {
+          document.execCommand('copy');
+        } catch (err) {
+          console.error('Fallback copy failed', err);
+        }
         document.body.removeChild(textArea);
       }
       
       setCopied(true);
       setActivePlatform('copy');
-      
-      // Track success
-      console.log('Link copied:', appUrl);
       
       setTimeout(() => {
         setCopied(false);
@@ -111,7 +115,6 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
           text: shareText,
           url: appUrl,
         });
-        // Track successful share
         setShareCount(prev => prev + 1);
       } catch (err: any) {
         if (err.name !== 'AbortError') {
@@ -123,22 +126,42 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
 
   const handlePlatformShare = (platformId: string) => {
     setActivePlatform(platformId);
-    setTimeout(() => setActivePlatform(null), 1000);
+    // Visual feedback delay
+    setTimeout(() => setActivePlatform(null), 800);
     setShareCount(prev => prev + 1);
   };
 
-  const downloadQRCode = () => {
-    setIsGeneratingQR(true);
-    // Simulate QR generation
-    setTimeout(() => {
+  const downloadQRCode = async () => {
+    if (qrStatus === 'generating') return;
+    
+    setQrStatus('generating');
+    
+    try {
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(appUrl)}&format=png&color=009460&bgcolor=ffffff&margin=10`;
+      
+      // Fetch as blob to ensure download works (bypassing generic cross-origin link issues)
+      const response = await fetch(qrUrl);
+      const blob = await response.blob();
+      const localUrl = URL.createObjectURL(blob);
+      
       const link = document.createElement('a');
-      link.href = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(appUrl)}&format=png&color=009460&bgcolor=ffffff`;
+      link.href = localUrl;
       link.download = 'ballal-qrcode.png';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      setIsGeneratingQR(false);
-    }, 500);
+      
+      // Cleanup
+      setTimeout(() => URL.revokeObjectURL(localUrl), 100);
+      
+      setQrStatus('success');
+      setTimeout(() => setQrStatus('idle'), 3000);
+      
+    } catch (error) {
+      console.error("Erreur lors du téléchargement du QR code:", error);
+      setQrStatus('idle');
+      alert("Le téléchargement a échoué. Veuillez réessayer.");
+    }
   };
 
   const shareStats = [
@@ -194,7 +217,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
           {/* Left Column: QR Code & Link */}
           <div className="space-y-8">
             {/* QR Code Card */}
-            <div className="bg-white rounded-3xl shadow-lg border border-gray-200 p-8">
+            <div className="bg-white rounded-3xl shadow-lg border border-gray-200 p-8 transform transition-all hover:shadow-xl">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-3">
                   <QrCode className="h-6 w-6 text-[#009460]" aria-hidden="true" />
@@ -202,49 +225,51 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
                 </h2>
                 <button
                   onClick={downloadQRCode}
-                  disabled={isGeneratingQR}
-                  className="flex items-center gap-2 text-sm font-bold text-[#009460] hover:text-green-700 disabled:opacity-50"
+                  disabled={qrStatus === 'generating'}
+                  className={`flex items-center gap-2 text-sm font-bold px-3 py-2 rounded-lg transition-colors ${
+                    qrStatus === 'success' ? 'text-green-600 bg-green-50' : 'text-[#009460] hover:text-green-700 hover:bg-green-50'
+                  } disabled:opacity-50`}
                 >
-                  <Download className="h-4 w-4" aria-hidden="true" />
-                  Télécharger
+                  {qrStatus === 'generating' ? (
+                    <Loader className="h-4 w-4 animate-spin" />
+                  ) : qrStatus === 'success' ? (
+                    <Check className="h-4 w-4" />
+                  ) : (
+                    <Download className="h-4 w-4" aria-hidden="true" />
+                  )}
+                  {qrStatus === 'generating' ? t.share_downloading : qrStatus === 'success' ? t.share_download_success : t.share_download_qr}
                 </button>
               </div>
               
               <div className="flex flex-col items-center">
                 <div 
-                  className="bg-white p-6 rounded-2xl border-2 border-gray-100 shadow-inner mb-6 relative"
+                  className="bg-white p-6 rounded-2xl border-2 border-gray-100 shadow-inner mb-6 relative group"
                   aria-label="QR Code de partage"
                 >
-                  {isGeneratingQR ? (
-                    <div className="w-48 h-48 flex items-center justify-center">
-                      <div className="animate-spin h-8 w-8 border-2 border-[#009460] border-t-transparent rounded-full"></div>
-                    </div>
-                  ) : (
-                    <img 
-                      src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(appUrl)}&color=009460&bgcolor=ffffff&margin=10&format=svg`}
-                      alt="QR Code pour partager le site Ballal ASBL"
-                      className="w-48 h-48"
-                      loading="lazy"
-                    />
-                  )}
+                  <img 
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(appUrl)}&color=009460&bgcolor=ffffff&margin=10&format=png`}
+                    alt="QR Code pour partager le site Ballal ASBL"
+                    className="w-48 h-48 transition-opacity duration-300 group-hover:opacity-90"
+                    loading="lazy"
+                  />
                   <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2">
-                    <div className="bg-[#009460] text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                    <div className="bg-[#009460] text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg whitespace-nowrap">
                       BALLAL ASBL
                     </div>
                   </div>
                 </div>
                 
                 <p className="text-sm text-gray-500 text-center max-w-sm mb-6">
-                  Scannez ce code avec votre smartphone pour accéder instantanément au site
+                  {t.share_qr_inst}
                 </p>
               </div>
             </div>
 
             {/* Link Sharing Card */}
-            <div className="bg-white rounded-3xl shadow-lg border border-gray-200 p-8">
+            <div className="bg-white rounded-3xl shadow-lg border border-gray-200 p-8 transform transition-all hover:shadow-xl">
               <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3">
                 <LinkIcon className="h-5 w-5 text-gray-500" aria-hidden="true" />
-                Lien de partage
+                {t.share_link_label}
               </h3>
               
               <div className="space-y-4">
@@ -267,34 +292,25 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
                         className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-700 font-mono text-sm focus:outline-none focus:border-[#CE1126] focus:ring-2 focus:ring-[#CE1126]/20"
                         aria-label="Lien à partager"
                       />
-                      {copied && activePlatform === 'copy' && (
-                        <div 
-                          className="absolute -top-10 right-0 bg-green-600 text-white text-sm font-bold py-2 px-3 rounded-lg shadow-xl animate-in slide-in-from-bottom-2 flex items-center gap-2"
-                          role="alert"
-                        >
-                          <Check className="h-4 w-4" aria-hidden="true" />
-                          Lien copié !
-                        </div>
-                      )}
                     </div>
                     <button
                       onClick={handleCopy}
-                      aria-label={copied ? 'Lien copié' : 'Copier le lien'}
-                      className={`px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 whitespace-nowrap ${
-                        copied && activePlatform === 'copy'
-                          ? 'bg-green-600 text-white'
-                          : 'bg-slate-900 text-white hover:bg-black'
+                      aria-label={copied ? t.share_copied : t.share_copy}
+                      className={`px-6 py-3 rounded-xl font-bold transition-all duration-200 flex items-center gap-2 whitespace-nowrap shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                        copied
+                          ? 'bg-green-600 text-white ring-green-500 transform scale-105'
+                          : 'bg-slate-900 text-white hover:bg-black ring-slate-900'
                       }`}
                     >
-                      {copied && activePlatform === 'copy' ? (
+                      {copied ? (
                         <>
                           <Check className="h-5 w-5" aria-hidden="true" />
-                          Copié
+                          {t.share_copied}
                         </>
                       ) : (
                         <>
                           <Copy className="h-5 w-5" aria-hidden="true" />
-                          Copier
+                          {t.share_copy}
                         </>
                       )}
                     </button>
@@ -305,7 +321,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
                   <div className="flex items-start gap-3">
                     <Info className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
                     <p className="text-sm text-blue-800">
-                      {t.share_privacy_warning || "Votre partage nous aide à atteindre plus de personnes. Merci pour votre soutien !"}
+                      {t.share_privacy_warning}
                     </p>
                   </div>
                 </div>
@@ -317,7 +333,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
           <div className="space-y-8">
             {/* Native Share Button */}
             {canShare && (
-              <div className="bg-gradient-to-r from-slate-900 to-black rounded-3xl p-8 text-white">
+              <div className="bg-gradient-to-r from-slate-900 to-black rounded-3xl p-8 text-white shadow-xl">
                 <div className="flex items-center gap-3 mb-6">
                   <Share2 className="h-8 w-8 text-[#FCD116]" aria-hidden="true" />
                   <div>
@@ -328,7 +344,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
                 
                 <button 
                   onClick={handleNativeShare}
-                  className="w-full bg-gradient-to-r from-[#FCD116] to-yellow-500 text-slate-900 font-bold py-4 px-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-3"
+                  className="w-full bg-gradient-to-r from-[#FCD116] to-yellow-500 text-slate-900 font-bold py-4 px-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:brightness-110 flex items-center justify-center gap-3 focus:outline-none focus:ring-4 focus:ring-yellow-300/30"
                   aria-label="Partager via votre appareil"
                 >
                   <Share2 className="h-6 w-6" aria-hidden="true" />
@@ -352,19 +368,15 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => handlePlatformShare(platform.id)}
-                    className={`${platform.color} text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-3 ${
-                      activePlatform === platform.id ? 'ring-4 ring-opacity-50 ring-current' : ''
+                    className={`${platform.color} text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex items-center justify-center gap-3 relative overflow-hidden focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-gray-200 ${
+                      activePlatform === platform.id ? 'scale-95 ring-4 ring-offset-2 ring-current' : ''
                     }`}
                     aria-label={platform.label}
                   >
                     <platform.icon className="h-6 w-6" aria-hidden="true" />
                     <span>{platform.name}</span>
                     {activePlatform === platform.id && (
-                      <div className="absolute -top-2 -right-2">
-                        <div className="bg-white text-green-600 rounded-full p-1">
-                          <Check className="h-4 w-4" aria-hidden="true" />
-                        </div>
-                      </div>
+                      <span className="absolute inset-0 bg-white/20 animate-pulse" />
                     )}
                   </a>
                 ))}
@@ -377,21 +389,21 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
                 </h4>
                 <div className="flex flex-wrap gap-3">
                   <a
-                    href={`https://t.me/share/url?url=${encodeURIComponent(appUrl)}&text=${encodeURIComponent(shareText)}`}
+                    href={shareLinks.telegram}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2 bg-[#0088cc] text-white rounded-lg text-sm font-medium hover:bg-[#0077b5] transition-colors flex items-center gap-2"
-                    aria-label="Partager sur Telegram"
+                    className="px-4 py-2 bg-[#0088cc] text-white rounded-lg text-sm font-medium hover:bg-[#0077b5] transition-colors flex items-center gap-2 hover:shadow-md"
+                    aria-label={t.share_telegram || "Partager sur Telegram"}
                   >
                     <MessageSquare className="h-4 w-4" aria-hidden="true" />
                     Telegram
                   </a>
                   <a
-                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(appUrl)}`}
+                    href={shareLinks.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2 bg-[#0A66C2] text-white rounded-lg text-sm font-medium hover:bg-[#004182] transition-colors flex items-center gap-2"
-                    aria-label="Partager sur LinkedIn"
+                    className="px-4 py-2 bg-[#0A66C2] text-white rounded-lg text-sm font-medium hover:bg-[#004182] transition-colors flex items-center gap-2 hover:shadow-md"
+                    aria-label={t.share_linkedin || "Partager sur LinkedIn"}
                   >
                     <ExternalLink className="h-4 w-4" aria-hidden="true" />
                     LinkedIn
@@ -409,7 +421,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
               
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
-                  <div className="h-6 w-6 bg-[#CE1126] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                  <div className="h-6 w-6 bg-[#CE1126] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">
                     1
                   </div>
                   <p className="text-gray-700">
@@ -417,7 +429,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
                   </p>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="h-6 w-6 bg-[#FCD116] text-slate-900 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                  <div className="h-6 w-6 bg-[#FCD116] text-slate-900 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">
                     2
                   </div>
                   <p className="text-gray-700">
@@ -425,7 +437,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
                   </p>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="h-6 w-6 bg-[#009460] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                  <div className="h-6 w-6 bg-[#009460] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">
                     3
                   </div>
                   <p className="text-gray-700">
@@ -439,7 +451,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
 
         {/* CTA */}
         <div className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-slate-900 to-black rounded-3xl p-8 md:p-12 text-white">
+          <div className="bg-gradient-to-r from-slate-900 to-black rounded-3xl p-8 md:p-12 text-white shadow-2xl">
             <h3 className="text-2xl md:text-3xl font-black mb-6">
               Chaque partage compte
             </h3>
@@ -449,7 +461,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
                 onClick={handleNativeShare}
-                className="px-8 py-4 bg-gradient-to-r from-[#CE1126] to-red-700 text-white font-bold rounded-xl hover:shadow-xl transition-all flex items-center justify-center gap-3"
+                className="px-8 py-4 bg-gradient-to-r from-[#CE1126] to-red-700 text-white font-bold rounded-xl hover:shadow-xl transition-all flex items-center justify-center gap-3 transform hover:-translate-y-1"
               >
                 <Share2 className="h-5 w-5" aria-hidden="true" />
                 Partager maintenant
