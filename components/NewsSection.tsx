@@ -31,6 +31,7 @@ const NewsSection: React.FC = () => {
   const [likedArticles, setLikedArticles] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Sample data (same as before)
   const articles: NewsArticle[] = [
     {
       id: '1',
@@ -49,6 +50,7 @@ const NewsSection: React.FC = () => {
       featured: true,
       tags: ['festival', 'culture', 'solidarité', 'événement']
     },
+    // ... other articles (keeping existing data for brevity)
     {
       id: '2',
       title: 'Nouveau Partenaire : La Ferme Bio du Hainaut',
@@ -213,6 +215,7 @@ const NewsSection: React.FC = () => {
 
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+          {/* ... keeping stats display ... */}
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center">
             <div className="text-3xl font-black text-slate-900 mb-2">{articles.length}</div>
             <div className="text-gray-600 font-medium">Articles publiés</div>
@@ -248,7 +251,7 @@ const NewsSection: React.FC = () => {
               {featuredArticles.map((article) => (
                 <article 
                   key={article.id}
-                  className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 group cursor-pointer"
+                  className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 group cursor-pointer hover:-translate-y-1 transition-all duration-300"
                   onClick={() => openArticleModal(article)}
                 >
                   <div className="relative h-64 overflow-hidden">
@@ -284,7 +287,7 @@ const NewsSection: React.FC = () => {
                         <User className="h-4 w-4 mr-1" aria-hidden="true" />
                         <span>{article.author}</span>
                       </div>
-                      <button className="text-[#CE1126] font-bold flex items-center">
+                      <button className="text-[#CE1126] font-bold flex items-center hover:translate-x-1 transition-transform">
                         Lire la suite <ChevronRight className="h-4 w-4 ml-1" />
                       </button>
                     </div>
@@ -318,7 +321,7 @@ const NewsSection: React.FC = () => {
                 <button
                   key={category.id}
                   onClick={() => setSelectedCategory(category.id)}
-                  className={`px-4 py-2 rounded-full border-2 transition-all flex items-center gap-2 ${
+                  className={`px-4 py-2 rounded-full border-2 transition-all flex items-center gap-2 active:scale-95 ${
                     selectedCategory === category.id
                       ? 'border-[#CE1126] bg-red-50 text-[#CE1126] font-bold'
                       : 'border-gray-200 text-gray-600 hover:border-gray-300'
@@ -339,7 +342,7 @@ const NewsSection: React.FC = () => {
           {filteredArticles.map((article) => (
             <article 
               key={article.id}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 group cursor-pointer"
+              className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 group cursor-pointer hover:-translate-y-1"
               onClick={() => openArticleModal(article)}
             >
               {/* Image */}
@@ -355,7 +358,7 @@ const NewsSection: React.FC = () => {
                       e.stopPropagation();
                       handleBookmark(article.id);
                     }}
-                    className={`p-2 rounded-full backdrop-blur-sm ${
+                    className={`p-2 rounded-full backdrop-blur-sm transition-transform active:scale-90 ${
                       bookmarkedArticles.includes(article.id)
                         ? 'bg-yellow-500 text-white'
                         : 'bg-white/90 text-gray-600 hover:bg-white'
@@ -406,7 +409,7 @@ const NewsSection: React.FC = () => {
                         e.stopPropagation();
                         handleLike(article.id);
                       }}
-                      className={`flex items-center gap-1 ${
+                      className={`flex items-center gap-1 active:scale-90 transition-transform ${
                         likedArticles.includes(article.id) ? 'text-red-500' : 'hover:text-red-500'
                       }`}
                     >
@@ -422,7 +425,7 @@ const NewsSection: React.FC = () => {
                       <span>{article.comments}</span>
                     </div>
                   </div>
-                  <button className="text-[#CE1126] font-bold flex items-center">
+                  <button className="text-[#CE1126] font-bold flex items-center group-hover:translate-x-1 transition-transform">
                     Lire <ChevronRight className="h-4 w-4 ml-1" />
                   </button>
                 </div>
@@ -446,7 +449,7 @@ const NewsSection: React.FC = () => {
                 setSelectedCategory('all');
                 setSearchQuery('');
               }}
-              className="px-6 py-3 bg-[#CE1126] text-white font-bold rounded-xl hover:bg-red-700 transition-colors"
+              className="px-6 py-3 bg-[#CE1126] text-white font-bold rounded-xl hover:bg-red-700 transition-colors active:scale-95"
             >
               Réinitialiser les filtres
             </button>
@@ -464,7 +467,7 @@ const NewsSection: React.FC = () => {
             {recentArticles.map((article) => (
               <div 
                 key={article.id}
-                className="bg-white/5 backdrop-blur-sm rounded-xl p-4 hover:bg-white/10 transition-colors cursor-pointer group"
+                className="bg-white/5 backdrop-blur-sm rounded-xl p-4 hover:bg-white/10 transition-colors cursor-pointer group active:scale-[0.99]"
                 onClick={() => openArticleModal(article)}
               >
                 <div className="flex items-start gap-3">
@@ -491,7 +494,7 @@ const NewsSection: React.FC = () => {
           </div>
 
           <div className="mt-8 pt-8 border-t border-white/10">
-            <button className="w-full py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-2">
+            <button className="w-full py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-2 active:scale-95">
               Voir toutes les actualités
               <ArrowRight className="h-5 w-5" aria-hidden="true" />
             </button>
@@ -513,7 +516,7 @@ const NewsSection: React.FC = () => {
                 placeholder="Votre adresse email"
                 className="flex-grow px-6 py-3 rounded-xl border-2 border-gray-200 focus:border-[#CE1126] focus:ring-2 focus:ring-[#CE1126]/20 outline-none"
               />
-              <button className="px-8 py-3 bg-[#CE1126] text-white font-bold rounded-xl hover:bg-red-700 transition-colors">
+              <button className="px-8 py-3 bg-[#CE1126] text-white font-bold rounded-xl hover:bg-red-700 transition-colors active:scale-95">
                 S'abonner
               </button>
             </div>
@@ -527,17 +530,20 @@ const NewsSection: React.FC = () => {
       {/* Article Modal */}
       {isModalOpen && selectedArticle && (
         <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
           role="dialog"
           aria-modal="true"
           aria-labelledby="article-title"
-          onClick={(e) => e.target === e.currentTarget && closeArticleModal()}
+          onClick={closeArticleModal} // Click outside to close
         >
-          <div className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-3xl overflow-hidden">
+          <div 
+            className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()} // Prevent close on content click
+          >
             {/* Close Button */}
             <button
               onClick={closeArticleModal}
-              className="absolute top-4 right-4 z-10 p-3 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors"
+              className="absolute top-4 right-4 z-10 p-3 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors hover:scale-110 active:scale-90"
               aria-label="Fermer l'article"
             >
               <X className="h-6 w-6" aria-hidden="true" />
@@ -588,18 +594,18 @@ const NewsSection: React.FC = () => {
                 <div className="flex items-center gap-4">
                   <button
                     onClick={() => handleLike(selectedArticle.id)}
-                    className={`flex items-center gap-1 ${likedArticles.includes(selectedArticle.id) ? 'text-red-500' : 'text-gray-500 hover:text-red-500'}`}
+                    className={`flex items-center gap-1 transition-transform active:scale-90 ${likedArticles.includes(selectedArticle.id) ? 'text-red-500' : 'text-gray-500 hover:text-red-500'}`}
                   >
                     <Heart className="h-5 w-5" aria-hidden="true" />
                     <span>{selectedArticle.likes + (likedArticles.includes(selectedArticle.id) ? 1 : 0)}</span>
                   </button>
                   <button
                     onClick={() => handleBookmark(selectedArticle.id)}
-                    className={`${bookmarkedArticles.includes(selectedArticle.id) ? 'text-yellow-500' : 'text-gray-500 hover:text-yellow-500'}`}
+                    className={`transition-transform active:scale-90 ${bookmarkedArticles.includes(selectedArticle.id) ? 'text-yellow-500' : 'text-gray-500 hover:text-yellow-500'}`}
                   >
                     <Bookmark className="h-5 w-5" aria-hidden="true" />
                   </button>
-                  <button className="text-gray-500 hover:text-blue-500">
+                  <button className="text-gray-500 hover:text-blue-500 transition-transform active:scale-90">
                     <Share2 className="h-5 w-5" aria-hidden="true" />
                   </button>
                 </div>
@@ -635,7 +641,7 @@ const NewsSection: React.FC = () => {
   );
 };
 
-// Missing X icon component
+// Missing X icon component (defined inline here to avoid import error if lucide missing)
 const X = ({ className }: { className?: string }) => (
   <svg 
     className={className} 

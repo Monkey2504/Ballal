@@ -27,7 +27,10 @@ interface NavigationSection {
 }
 
 const Footer: React.FC<FooterProps> = ({ language, setView }) => {
-  const t = translations[language];
+  // CORRECTION CRITIQUE : Fallback sur 'fr' si la langue sélectionnée n'a pas de fichier de traduction complet
+  // Cela empêche le crash "Cannot read properties of undefined"
+  const t = translations[language] || translations['fr'];
+  
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
 
@@ -60,7 +63,6 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (newsletterEmail) {
-      // Simulate newsletter subscription
       console.log('Newsletter subscription:', newsletterEmail);
       setNewsletterSubmitted(true);
       setTimeout(() => {
@@ -70,26 +72,24 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
     }
   };
 
-  // Suppression des icônes ChevronRight explicites pour les liens internes
-  // car renderLink ajoute déjà une flèche pour les actions.
   const navigationSections: NavigationSection[] = [
     { 
       name: t.footer_quick_links || "Navigation rapide",
       links: [
         { 
-          name: t.nav_home, 
+          name: t.nav_home || "Accueil", 
           action: (e) => handleNavClick(e, ViewState.HOME)
         },
         { 
-          name: t.nav_legal, 
+          name: t.nav_legal || "Aide Juridique", 
           action: (e) => handleNavClick(e, ViewState.LEGAL_AID)
         },
         { 
-          name: t.nav_food_project, 
+          name: t.nav_food_project || "Projet Alimentaire", 
           action: (e) => handleNavClick(e, ViewState.FOOD_AUTONOMY)
         },
         { 
-          name: t.nav_history, 
+          name: t.nav_history || "Histoire", 
           action: (e) => handleNavClick(e, ViewState.HISTORY)
         }
       ]
@@ -98,16 +98,16 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
       name: t.footer_resources || "Ressources",
       links: [
         { 
-          name: t.footer_member, 
+          name: t.footer_member || "Devenir Membre", 
           action: handleContactClick,
-          icon: Users // Icône spécifique conservée
+          icon: Users
         },
         { 
-          name: t.nav_festival, 
+          name: t.nav_festival || "Festival", 
           action: (e) => handleNavClick(e, ViewState.FESTIVAL)
         },
         { 
-          name: t.nav_share, 
+          name: t.nav_share || "Partager", 
           action: (e) => handleNavClick(e, ViewState.SHARE)
         }
       ]
@@ -116,18 +116,18 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
       name: "Légal",
       links: [
         { 
-          name: t.footer_privacy, 
+          name: t.footer_privacy || "Confidentialité", 
           action: (e) => handleNavClick(e, ViewState.PRIVACY),
           icon: Shield
         },
         { 
-          name: t.footer_terms, 
+          name: t.footer_terms || "Conditions", 
           action: (e) => handleNavClick(e, ViewState.TERMS),
           icon: FileText
         },
         { 
           name: "Mentions légales", 
-          href: "#legal-notice", // Lien externe simulé (ancre)
+          href: "#", 
           action: (e) => handleNavClick(e, ViewState.PRIVACY),
           icon: Building
         },
@@ -141,7 +141,6 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
   ];
 
   const renderLink = (link: FooterLink, index: number) => {
-    // Contenu commun du lien (Icône spécifique + Texte + Badge)
     const LinkContent = (
       <>
         {link.icon && <link.icon className="w-4 h-4 mr-2 flex-shrink-0" aria-hidden="true" />}
@@ -154,13 +153,12 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
       </>
     );
 
-    // Si c'est une action (navigation interne), on utilise un bouton avec une flèche automatique
     if (link.action) {
       return (
         <button 
           key={index}
           onClick={link.action}
-          className="flex items-center text-sm text-gray-400 hover:text-white transition-colors py-2 group w-full text-left"
+          className="flex items-center text-sm text-gray-400 hover:text-white hover:translate-x-1 transition-all duration-200 py-2 group w-full text-left focus:outline-none focus:text-white"
           aria-label={link.name}
         >
           <ChevronRight className="w-3 h-3 mr-2 text-gray-600 group-hover:text-[#FCD116] transition-colors flex-shrink-0" aria-hidden="true" />
@@ -171,17 +169,16 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
       );
     }
 
-    // Si c'est un lien externe (href), on utilise une balise <a>
     return (
       <a
         key={index}
         href={link.href}
         target={link.isExternal ? "_blank" : "_self"}
         rel={link.isExternal ? "noopener noreferrer" : undefined}
-        className="flex items-center text-sm text-gray-400 hover:text-white transition-colors py-2 group"
+        className="flex items-center text-sm text-gray-400 hover:text-white hover:translate-x-1 transition-all duration-200 py-2 group focus:outline-none focus:text-white"
         aria-label={link.name}
       >
-        <div className="flex items-center pl-5"> {/* Padding pour aligner avec les boutons qui ont ChevronRight */}
+        <div className="flex items-center pl-5">
            {LinkContent}
            {link.isExternal && <ExternalLink className="w-3 h-3 ml-2 opacity-70" aria-hidden="true" />}
         </div>
@@ -195,15 +192,13 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
       role="contentinfo"
       aria-label="Pied de page"
     >
-      {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           
-          {/* Identity & Mission Column */}
           <div className="lg:col-span-2 space-y-6">
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-[#CE1126] rounded-lg">
+                <div className="p-2 bg-[#CE1126] rounded-lg shadow-lg shadow-red-900/20">
                   <Heart className="h-8 w-8 text-white" aria-hidden="true" />
                 </div>
                 <h2 className="text-3xl font-black text-white tracking-tight">BALLAL</h2>
@@ -213,7 +208,6 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
               </p>
             </div>
 
-            {/* BCE & Recognition */}
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <Building className="h-4 w-4 text-gray-500" aria-hidden="true" />
@@ -224,7 +218,6 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
               </p>
             </div>
 
-            {/* Social Media Links */}
             <div className="pt-4">
               <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
                 Suivez-nous
@@ -236,7 +229,7 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`p-2 bg-gray-800 rounded-lg ${social.color} transition-all hover:scale-110`}
+                    className={`p-2 bg-gray-800 rounded-lg ${social.color} transition-all hover:scale-110 active:scale-95`}
                     aria-label={`Suivez-nous sur ${social.name}`}
                   >
                     <social.icon className="h-5 w-5" aria-hidden="true" />
@@ -246,7 +239,6 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
             </div>
           </div>
 
-          {/* Navigation Columns */}
           {navigationSections.map((section, index) => (
             <nav 
               key={index}
@@ -269,11 +261,10 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
             </nav>
           ))}
 
-          {/* Contact & Newsletter Column */}
           <div className="space-y-6">
             <div className="space-y-4">
               <h3 className="text-sm font-bold text-white uppercase tracking-wider pb-2 border-b border-gray-800">
-                {t.footer_contact}
+                {t.footer_contact || "Contact"}
               </h3>
               <address className="not-italic space-y-4">
                 <div className="flex items-start space-x-3">
@@ -290,7 +281,7 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
                   <Mail className="h-5 w-5 text-gray-500 flex-shrink-0" aria-hidden="true" />
                   <button 
                     onClick={handleContactClick}
-                    className="text-sm text-gray-400 hover:text-white transition-colors text-left"
+                    className="text-sm text-gray-400 hover:text-white transition-colors text-left focus:outline-none focus:underline"
                   >
                     {contactInfo.email}
                   </button>
@@ -302,7 +293,6 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
               </address>
             </div>
 
-            {/* Newsletter Subscription */}
             <div className="space-y-4">
               <h3 className="text-sm font-bold text-white uppercase tracking-wider">
                 Newsletter
@@ -315,14 +305,14 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
                     value={newsletterEmail}
                     onChange={(e) => setNewsletterEmail(e.target.value)}
                     placeholder="Votre email"
-                    className="w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FCD116] focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FCD116] focus:border-transparent transition-all"
                     required
                     aria-label="Adresse email pour la newsletter"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-[#CE1126] to-red-700 text-white font-bold py-3 rounded-lg hover:from-red-700 hover:to-[#CE1126] transition-all focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full bg-gradient-to-r from-[#CE1126] to-red-700 text-white font-bold py-3 rounded-lg hover:from-red-700 hover:to-[#CE1126] transition-all focus:outline-none focus:ring-2 focus:ring-red-500 active:scale-95"
                 >
                   {newsletterSubmitted ? 'Merci !' : "S'abonner"}
                 </button>
@@ -336,10 +326,8 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
           </div>
         </div>
 
-        {/* Divider */}
         <div className="mt-12 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            {/* Copyright & Legal */}
             <div className="text-center md:text-left">
               <p className="text-sm text-gray-500">
                 &copy; {new Date().getFullYear()} BALLAL ASBL. {t.footer_rights}
@@ -349,10 +337,9 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
               </p>
             </div>
 
-            {/* Back to Top */}
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="flex items-center text-sm text-gray-400 hover:text-white transition-colors"
+              className="flex items-center text-sm text-gray-400 hover:text-white transition-colors p-2 active:scale-95"
               aria-label="Retour en haut de la page"
             >
               <ChevronRight className="h-4 w-4 mr-1 transform rotate-90" aria-hidden="true" />
@@ -362,13 +349,11 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
         </div>
       </div>
 
-      {/* Decorative Bottom Bar */}
       <div className="relative h-2 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-[#CE1126] via-[#FCD116] to-[#009460] animate-gradient"></div>
         <div className="absolute inset-0 bg-black opacity-10"></div>
       </div>
 
-      {/* Accessibility Statement */}
       <div className="bg-black py-4 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <p className="text-xs text-gray-600">

@@ -34,8 +34,8 @@ function useClickOutside(ref: React.RefObject<HTMLElement>, handler: () => void)
 
 const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLanguage }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false); // Pour Desktop
-  const [isMobileLangMenuOpen, setIsMobileLangMenuOpen] = useState(false); // Nouveau : Pour Mobile Header
+  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false); 
+  const [isMobileLangMenuOpen, setIsMobileLangMenuOpen] = useState(false); 
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   
   const { user, logout } = useAuth();
@@ -43,7 +43,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
 
   const langMenuRef = useRef<HTMLDivElement>(null);
-  const mobileLangMenuRef = useRef<HTMLDivElement>(null); // Nouveau ref pour mobile
+  const mobileLangMenuRef = useRef<HTMLDivElement>(null);
   const profileMenuRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
@@ -52,7 +52,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
   useClickOutside(profileMenuRef, () => setIsProfileMenuOpen(false));
   useClickOutside(mobileMenuRef, () => setIsMobileMenuOpen(false));
 
-  // Fallback si les traductions ne sont pas chargées
   const t = translations[language] || translations['fr'];
 
   const handleTeamClick = () => {
@@ -74,7 +73,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
     setIsProfileMenuOpen(false);
   };
 
-  // Navigation items - AJOUT DU FESTIVAL ICI
   const navItems = [
     { label: t.nav_home || 'Accueil', value: ViewState.HOME },
     { label: t.nav_legal || 'Aide Juridique', value: ViewState.LEGAL_AID },
@@ -98,7 +96,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
 
   const currentLang = languages.find(l => l.code === language) || languages[0];
 
-  // Empêcher le scroll quand le menu mobile est ouvert
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -118,7 +115,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
         role="banner"
         aria-label="Navigation principale"
       >
-        {/* Top gradient line */}
         <div className="h-1 w-full bg-gradient-to-r from-[#CE1126] via-[#FCD116] to-[#009460]" aria-hidden="true"></div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -129,7 +125,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
               <button 
                 type="button"
                 onClick={() => setView(ViewState.HOME)}
-                className="flex items-center group focus:outline-none focus:ring-2 focus:ring-[#CE1126] rounded-lg p-1 transition-all duration-200"
+                className="flex items-center group focus:outline-none focus:ring-2 focus:ring-[#CE1126] rounded-lg p-1 transition-all duration-200 active:scale-95"
                 aria-label="Ballal ASBL - Retour à l'accueil"
               >
                 <div className="p-2 bg-gradient-to-br from-red-50 to-red-100 rounded-xl mr-3 group-hover:from-red-100 group-hover:to-red-200 transition-all duration-200 shadow-sm">
@@ -155,9 +151,9 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                       type="button"
                       onClick={() => setView(item.value)}
                       aria-current={currentView === item.value ? 'page' : undefined}
-                      className={`px-4 py-2.5 rounded-full text-xs font-bold transition-all duration-200 uppercase tracking-wider focus:outline-none focus:ring-2 focus:ring-[#CE1126] focus:ring-offset-2 ${
+                      className={`px-4 py-2.5 rounded-full text-xs font-bold transition-all duration-200 uppercase tracking-wider focus:outline-none focus:ring-2 focus:ring-[#CE1126] focus:ring-offset-2 active:scale-95 ${
                         currentView === item.value
-                          ? 'text-white bg-gradient-to-r from-[#CE1126] to-red-600 shadow-md'
+                          ? 'text-white bg-gradient-to-r from-[#CE1126] to-red-600 shadow-md transform scale-105'
                           : 'text-gray-600 hover:text-[#CE1126] hover:bg-white hover:shadow-sm'
                       }`}
                     >
@@ -171,7 +167,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                 <button
                   type="button"
                   onClick={handleTeamClick}
-                  className="text-gray-600 hover:text-[#CE1126] font-bold text-xs uppercase tracking-wide px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#CE1126]"
+                  className="text-gray-600 hover:text-[#CE1126] font-bold text-xs uppercase tracking-wide px-3 py-2 rounded-lg hover:bg-red-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#CE1126] active:scale-95"
                 >
                   {t.nav_team || 'Équipe'}
                 </button>
@@ -180,7 +176,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                   type="button"
                   onClick={() => setView(ViewState.SHARE)}
                   aria-label={t.nav_share || 'Partager'}
-                  className={`p-2 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#CE1126] focus:ring-offset-2 ${
+                  className={`p-2 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#CE1126] focus:ring-offset-2 active:scale-90 ${
                     currentView === ViewState.SHARE 
                       ? 'text-[#CE1126] bg-red-50 shadow-sm' 
                       : 'text-gray-400 hover:text-[#CE1126] hover:bg-gray-100'
@@ -197,7 +193,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                     aria-expanded={isLangMenuOpen}
                     aria-haspopup="true"
                     aria-label={`Langue actuelle : ${currentLang.label}. Changer de langue`}
-                    className="flex items-center gap-2 bg-white border border-gray-200 text-gray-700 px-3 py-1.5 rounded-full text-xs font-bold hover:border-gray-300 hover:bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#CE1126]"
+                    className="flex items-center gap-2 bg-white border border-gray-200 text-gray-700 px-3 py-1.5 rounded-full text-xs font-bold hover:border-gray-300 hover:bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#CE1126] active:scale-95"
                   >
                     <Globe className="h-3.5 w-3.5" aria-hidden="true" />
                     <span className="hidden 2xl:inline">{currentLang.code.toUpperCase()}</span>
@@ -206,7 +202,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                   
                   {isLangMenuOpen && (
                     <div 
-                      className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl z-50 border border-gray-100 py-2 overflow-hidden animate-in fade-in-50 slide-in-from-top-2 duration-200"
+                      className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl z-[100] border border-gray-100 py-2 overflow-hidden animate-in fade-in-50 slide-in-from-top-2 duration-200"
                       role="menu"
                       aria-orientation="vertical"
                     >
@@ -251,7 +247,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                         aria-expanded={isProfileMenuOpen}
                         aria-haspopup="true"
                         aria-label={`Profil de ${user.name}. Menu utilisateur`}
-                        className="flex items-center gap-2 pl-1 pr-3 py-1 rounded-full border border-transparent hover:border-gray-200 hover:bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#CE1126]"
+                        className="flex items-center gap-2 pl-1 pr-3 py-1 rounded-full border border-transparent hover:border-gray-200 hover:bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#CE1126] active:scale-95"
                       >
                         <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#CE1126] to-red-600 text-white flex items-center justify-center font-bold text-sm shadow-md">
                           {user.avatar || user.name.charAt(0)}
@@ -263,7 +259,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
 
                       {isProfileMenuOpen && (
                         <div 
-                          className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl z-50 border border-gray-100 py-2 overflow-hidden animate-in fade-in-50 slide-in-from-top-2 duration-200"
+                          className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl z-[100] border border-gray-100 py-2 overflow-hidden animate-in fade-in-50 slide-in-from-top-2 duration-200"
                           role="menu"
                           aria-orientation="vertical"
                         >
@@ -293,7 +289,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                     <button 
                       type="button"
                       onClick={() => openAuth('login')}
-                      className="flex items-center bg-gradient-to-r from-slate-900 to-black text-white px-5 py-2.5 rounded-full text-xs font-bold hover:from-black hover:to-slate-900 transition-all duration-200 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900"
+                      className="flex items-center bg-gradient-to-r from-slate-900 to-black text-white px-5 py-2.5 rounded-full text-xs font-bold hover:from-black hover:to-slate-900 transition-all duration-200 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 active:scale-95"
                       aria-label="Accès membre - Se connecter"
                     >
                       <UserIcon className="h-3.5 w-3.5 mr-2" aria-hidden="true" />
@@ -306,12 +302,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
 
             {/* MOBILE HEADER BUTTONS */}
             <div className="xl:hidden flex items-center space-x-3">
-              {/* MOBILE LANGUAGE SELECTOR (Dropdown dédié) */}
               <div className="relative" ref={mobileLangMenuRef}>
                 <button 
                   type="button"
                   onClick={() => setIsMobileLangMenuOpen(!isMobileLangMenuOpen)}
-                  className="flex items-center bg-gray-50 text-gray-900 px-3 py-2 rounded-lg text-sm font-bold border border-gray-100 hover:bg-gray-100 transition-colors duration-200"
+                  className="flex items-center bg-gray-50 text-gray-900 px-3 py-2 rounded-lg text-sm font-bold border border-gray-100 hover:bg-gray-100 transition-all duration-200 active:scale-95"
                   aria-label="Changer de langue"
                   aria-expanded={isMobileLangMenuOpen}
                 >
@@ -320,7 +315,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                 </button>
 
                 {isMobileLangMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl z-50 border border-gray-100 py-1 overflow-hidden animate-in fade-in-50 slide-in-from-top-2">
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl z-[100] border border-gray-100 py-1 overflow-hidden animate-in fade-in-50 slide-in-from-top-2">
                     {languages.map((lang) => (
                       <button
                         key={lang.code}
@@ -345,7 +340,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
               <button
                 type="button"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="text-gray-600 hover:text-[#CE1126] focus:outline-none focus:ring-2 focus:ring-[#CE1126] p-2.5 rounded-lg bg-gray-50 hover:bg-red-50 transition-colors duration-200"
+                className="text-gray-600 hover:text-[#CE1126] focus:outline-none focus:ring-2 focus:ring-[#CE1126] p-2.5 rounded-lg bg-gray-50 hover:bg-red-50 transition-all duration-200 active:scale-90"
                 aria-expanded={isMobileMenuOpen}
                 aria-label={isMobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
               >
@@ -363,7 +358,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
         {isMobileMenuOpen && (
           <div 
             ref={mobileMenuRef}
-            className="xl:hidden bg-white/98 backdrop-blur-xl border-t border-gray-100 fixed top-20 left-0 right-0 bottom-0 z-40 overflow-y-auto"
+            className="xl:hidden bg-white/98 backdrop-blur-xl border-t border-gray-100 fixed top-20 left-0 right-0 bottom-0 z-[100] overflow-y-auto"
             role="dialog"
             aria-modal="true"
             aria-label="Menu mobile"
@@ -377,7 +372,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                     setView(item.value); 
                     setIsMobileMenuOpen(false); 
                   }}
-                  className={`block w-full text-left px-5 py-3.5 rounded-xl text-base font-bold transition-all duration-150 ${
+                  className={`block w-full text-left px-5 py-3.5 rounded-xl text-base font-bold transition-all duration-150 active:scale-98 ${
                     currentView === item.value 
                       ? 'text-[#CE1126] bg-red-50 ring-2 ring-red-100' 
                       : 'text-gray-700 hover:text-[#CE1126] hover:bg-gray-50'
@@ -390,7 +385,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
               <button
                 type="button"
                 onClick={handleTeamClick}
-                className="block w-full text-left px-5 py-3.5 rounded-xl text-base font-bold text-gray-700 hover:text-[#CE1126] hover:bg-gray-50 transition-all duration-150"
+                className="block w-full text-left px-5 py-3.5 rounded-xl text-base font-bold text-gray-700 hover:text-[#CE1126] hover:bg-gray-50 transition-all duration-150 active:scale-98"
               >
                 {t.nav_team || 'Équipe'}
               </button>
@@ -413,7 +408,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                         logout(); 
                         setIsMobileMenuOpen(false); 
                       }}
-                      className="w-full bg-white/10 hover:bg-white/20 text-white py-3.5 rounded-xl text-base font-bold flex items-center justify-center transition-colors duration-150"
+                      className="w-full bg-white/10 hover:bg-white/20 text-white py-3.5 rounded-xl text-base font-bold flex items-center justify-center transition-all duration-150 active:scale-98"
                     >
                       <LogOut className="h-5 w-5 mr-2" aria-hidden="true" /> 
                       Se déconnecter
@@ -424,7 +419,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                     <button 
                       type="button"
                       onClick={() => openAuth('login')}
-                      className="w-full text-left px-5 py-4 text-white bg-gradient-to-r from-slate-900 to-black font-bold rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200"
+                      className="w-full text-left px-5 py-4 text-white bg-gradient-to-r from-slate-900 to-black font-bold rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 active:scale-95"
                     >
                       <UserIcon className="h-5 w-5 mr-2" aria-hidden="true" />
                       {t.nav_member_access || 'Connexion Membre'}
@@ -432,7 +427,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                     <button 
                       type="button"
                       onClick={() => openAuth('register')}
-                      className="w-full text-left px-5 py-4 text-[#CE1126] bg-white border-2 border-[#CE1126] font-bold rounded-xl flex items-center justify-center hover:bg-red-50 transition-colors duration-200"
+                      className="w-full text-left px-5 py-4 text-[#CE1126] bg-white border-2 border-[#CE1126] font-bold rounded-xl flex items-center justify-center hover:bg-red-50 transition-all duration-200 active:scale-95"
                     >
                       Créer un compte
                     </button>
