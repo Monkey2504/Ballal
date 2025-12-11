@@ -219,7 +219,8 @@ const AppContent: React.FC = () => {
         setLanguage={setLanguage} 
       />
       
-      <main id="main-content" className="flex-grow pt-20">
+      {/* Ajout de 'relative z-0' pour créer un contexte d'empilement qui ne dépasse pas la navbar fixe */}
+      <main id="main-content" className="flex-grow pt-20 relative z-0">
         <ErrorBoundary>
             {renderView()}
         </ErrorBoundary>

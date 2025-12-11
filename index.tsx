@@ -2,19 +2,28 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 
+interface GlobalErrorBoundaryProps {
+  children: React.ReactNode;
+}
+
+interface GlobalErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
+
 // Composant de sécurité global (ErrorBoundary)
 // Si une erreur grave survient n'importe où dans l'app, ceci s'affichera à la place d'un écran blanc.
-class GlobalErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean, error: Error | null }> {
-  constructor(props) {
+class GlobalErrorBoundary extends React.Component<GlobalErrorBoundaryProps, GlobalErrorBoundaryState> {
+  constructor(props: GlobalErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false, error: null };
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError(error: Error): GlobalErrorBoundaryState {
     return { hasError: true, error };
   }
 
-  componentDidCatch(error, errorInfo) {
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.error("Erreur critique Ballal App:", error, errorInfo);
   }
 

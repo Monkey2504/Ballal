@@ -50,13 +50,21 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
   useClickOutside(langMenuRef, () => setIsLangMenuOpen(false));
   useClickOutside(mobileLangMenuRef, () => setIsMobileLangMenuOpen(false));
   useClickOutside(profileMenuRef, () => setIsProfileMenuOpen(false));
-  useClickOutside(mobileMenuRef, () => setIsMobileMenuOpen(false));
+  
+  // Pas de useClickOutside sur mobileMenuRef car il prend tout l'écran, on gère la fermeture via les liens
 
   const t = translations[language] || translations['fr'];
 
+  // SÉCURITÉ : Fermer le menu mobile automatiquement dès que la vue change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    document.body.style.overflow = 'auto'; // Réactiver le scroll au cas où
+  }, [currentView]);
+
   const handleTeamClick = () => {
     setView(ViewState.HOME);
-    setIsMobileMenuOpen(false);
+    // Le useEffect ci-dessus fermera le menu, mais on le force ici aussi pour être sûr
+    setIsMobileMenuOpen(false); 
     
     setTimeout(() => {
       const teamSection = document.getElementById('team-section');
@@ -111,7 +119,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
   return (
     <>
       <header 
-        className="bg-white/95 backdrop-blur-md fixed top-0 w-full z-50 border-b border-gray-100 shadow-sm"
+        className="bg-white fixed top-0 w-full z-50 border-b border-gray-100 shadow-sm"
         role="banner"
         aria-label="Navigation principale"
       >
@@ -354,11 +362,12 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
           </div>
         </div>
 
-        {/* MOBILE NAVIGATION DROPDOWN (FULL SCREEN) */}
+        {/* MOBILE NAVIGATION DROPDOWN (FULL SCREEN) - FIXED BACKGROUND */}
         {isMobileMenuOpen && (
           <div 
             ref={mobileMenuRef}
-            className="xl:hidden bg-white/98 backdrop-blur-xl border-t border-gray-100 fixed top-20 left-0 right-0 bottom-0 z-[100] overflow-y-auto"
+            className="xl:hidden bg-white border-t border-gray-100 fixed top-20 left-0 right-0 bottom-0 z-[100] overflow-y-auto"
+            style={{ backgroundColor: '#ffffff' }} // Force solid white
             role="dialog"
             aria-modal="true"
             aria-label="Menu mobile"
