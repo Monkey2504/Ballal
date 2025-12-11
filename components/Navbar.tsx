@@ -34,7 +34,8 @@ function useClickOutside(ref: React.RefObject<HTMLElement>, handler: () => void)
 
 const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLanguage }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
+  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false); // Pour Desktop
+  const [isMobileLangMenuOpen, setIsMobileLangMenuOpen] = useState(false); // Nouveau : Pour Mobile Header
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   
   const { user, logout } = useAuth();
@@ -42,10 +43,12 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
 
   const langMenuRef = useRef<HTMLDivElement>(null);
+  const mobileLangMenuRef = useRef<HTMLDivElement>(null); // Nouveau ref pour mobile
   const profileMenuRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useClickOutside(langMenuRef, () => setIsLangMenuOpen(false));
+  useClickOutside(mobileLangMenuRef, () => setIsMobileLangMenuOpen(false));
   useClickOutside(profileMenuRef, () => setIsProfileMenuOpen(false));
   useClickOutside(mobileMenuRef, () => setIsMobileMenuOpen(false));
 
@@ -71,10 +74,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
     setIsProfileMenuOpen(false);
   };
 
-  // Navigation items avec fallback
+  // Navigation items - AJOUT DU FESTIVAL ICI
   const navItems = [
     { label: t.nav_home || 'Accueil', value: ViewState.HOME },
     { label: t.nav_legal || 'Aide Juridique', value: ViewState.LEGAL_AID },
+    { label: t.nav_festival || 'Festival', value: ViewState.FESTIVAL },
     { label: t.nav_news || 'Actualités', value: ViewState.NEWS },
     { label: t.nav_directory || 'Communauté', value: ViewState.DIRECTORY },
     { label: t.nav_food_project || 'Alimentation', value: ViewState.FOOD_AUTONOMY },
@@ -185,7 +189,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                   <Share2 className="h-5 w-5" aria-hidden="true" />
                 </button>
 
-                {/* LANGUAGE SELECTOR */}
+                {/* DESKTOP LANGUAGE SELECTOR */}
                 <div className="relative" ref={langMenuRef}>
                   <button 
                     type="button"
@@ -300,18 +304,44 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
               </div>
             </nav>
 
-            {/* MOBILE MENU BUTTON */}
+            {/* MOBILE HEADER BUTTONS */}
             <div className="xl:hidden flex items-center space-x-3">
-              <button 
-                type="button"
-                onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-                className="flex items-center bg-gray-50 text-gray-900 px-3 py-2 rounded-lg text-sm font-bold border border-gray-100 hover:bg-gray-100 transition-colors duration-200"
-                aria-label="Changer de langue"
-              >
-                <span className="mr-2" aria-hidden="true">{currentLang.icon}</span>
-                {currentLang.code.toUpperCase()}
-              </button>
+              {/* MOBILE LANGUAGE SELECTOR (Dropdown dédié) */}
+              <div className="relative" ref={mobileLangMenuRef}>
+                <button 
+                  type="button"
+                  onClick={() => setIsMobileLangMenuOpen(!isMobileLangMenuOpen)}
+                  className="flex items-center bg-gray-50 text-gray-900 px-3 py-2 rounded-lg text-sm font-bold border border-gray-100 hover:bg-gray-100 transition-colors duration-200"
+                  aria-label="Changer de langue"
+                  aria-expanded={isMobileLangMenuOpen}
+                >
+                  <span className="mr-2" aria-hidden="true">{currentLang.icon}</span>
+                  {currentLang.code.toUpperCase()}
+                </button>
 
+                {isMobileLangMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl z-50 border border-gray-100 py-1 overflow-hidden animate-in fade-in-50 slide-in-from-top-2">
+                    {languages.map((lang) => (
+                      <button
+                        key={lang.code}
+                        type="button"
+                        onClick={() => { 
+                          setLanguage(lang.code); 
+                          setIsMobileLangMenuOpen(false); 
+                        }}
+                        className={`w-full text-left px-4 py-3 text-sm flex items-center gap-3 hover:bg-gray-50 transition-colors ${
+                          language === lang.code ? 'bg-red-50 text-[#CE1126] font-bold' : 'text-gray-700'
+                        }`}
+                      >
+                        <span className="text-lg">{lang.icon}</span>
+                        {lang.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* MOBILE MENU TOGGLE */}
               <button
                 type="button"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -329,7 +359,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
           </div>
         </div>
 
-        {/* MOBILE NAVIGATION DROPDOWN */}
+        {/* MOBILE NAVIGATION DROPDOWN (FULL SCREEN) */}
         {isMobileMenuOpen && (
           <div 
             ref={mobileMenuRef}
@@ -364,33 +394,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
               >
                 {t.nav_team || 'Équipe'}
               </button>
-
-              {/* Mobile Language Selector */}
-              {isLangMenuOpen && (
-                <div className="mb-6 bg-gray-50 rounded-2xl p-4 mt-4">
-                  <h4 className="text-sm font-bold text-gray-600 mb-3 px-1">Choisir la langue</h4>
-                  <div className="grid grid-cols-2 gap-2">
-                    {languages.map(lang => (
-                      <button
-                        key={lang.code}
-                        type="button"
-                        onClick={() => { 
-                          setLanguage(lang.code); 
-                          setIsLangMenuOpen(false); 
-                        }}
-                        className={`flex items-center px-4 py-3 rounded-lg text-sm font-medium transition-all duration-150 ${
-                          language === lang.code 
-                            ? 'bg-white text-[#CE1126] shadow-md ring-1 ring-gray-200' 
-                            : 'text-gray-600 hover:bg-white hover:shadow-sm'
-                        }`}
-                      >
-                        <span className="mr-2 text-lg" aria-hidden="true">{lang.icon}</span> 
-                        {lang.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
 
               <div className="border-t border-gray-100 mt-6 pt-6">
                 {user ? (
