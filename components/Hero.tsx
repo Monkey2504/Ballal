@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldCheck, Heart, Share2, Sparkles, Target, Users, Globe, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Heart, Share2, Sparkles, Target, Users, Globe, ArrowRight, Newspaper } from 'lucide-react';
 import { LanguageCode } from '../types.ts';
 import { translations } from '../utils/translations.ts';
 
 interface HeroProps {
   onExplore: () => void;
+  onNews?: () => void;
   language?: LanguageCode;
   onShare: () => void;
   onDonate?: () => void;
 }
 
-const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDonate }) => {
+const Hero: React.FC<HeroProps> = ({ onExplore, onNews, language = 'fr', onShare, onDonate }) => {
   const t = translations[language] || translations['fr'];
   
   // Multiple background images for rotation
@@ -159,17 +160,16 @@ const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDona
                     >
                       <ShieldCheck className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform" aria-hidden="true" />
                       {t.btn_assist}
-                      <ArrowRight className="ml-2 h-5 w-5 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" aria-hidden="true" />
                     </button>
                     
-                    {onDonate && (
+                    {onNews && (
                       <button
-                        onClick={onDonate}
+                        onClick={onNews}
                         className="group flex-1 inline-flex items-center justify-center px-8 py-4 border-2 border-gray-200 text-base font-bold rounded-xl text-slate-700 bg-white hover:bg-gray-50 hover:border-[#FCD116] hover:text-slate-900 shadow-sm hover:shadow-md transition-all duration-300"
-                        aria-label={t.btn_donate}
+                        aria-label="Voir les actualités"
                       >
-                        <Heart className="mr-3 h-5 w-5 text-[#CE1126] group-hover:scale-110 transition-transform" aria-hidden="true" />
-                        {t.btn_donate}
+                        <Newspaper className="mr-3 h-5 w-5 text-[#009460] group-hover:scale-110 transition-transform" aria-hidden="true" />
+                        Actualités
                       </button>
                     )}
                   </div>

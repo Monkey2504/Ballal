@@ -237,6 +237,7 @@ export enum ViewState {
   BLOG = 'BLOG',
   NEWS = 'NEWS',
   RESOURCES = 'RESOURCES',
+  DIRECTORY = 'DIRECTORY',
   
   // Utilisateur
   PROFILE = 'PROFILE',

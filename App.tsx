@@ -8,7 +8,6 @@ import { translations } from './utils/translations.ts';
 import { AuthProvider } from './contexts/AuthContext.tsx';
 import { AlertTriangle, RefreshCcw } from 'lucide-react';
 
-// --- IMPORTS STATIQUES POUR STABILITÉ ---
 import LegalAidSection from './components/LegalAidSection.tsx';
 import HistorySection from './components/HistorySection.tsx';
 import ShareSection from './components/ShareSection.tsx';
@@ -17,9 +16,10 @@ import FoodAutonomySection from './components/FoodAutonomySection.tsx';
 import ContactSection from './components/ContactSection.tsx';
 import FestivalSection from './components/FestivalSection.tsx';
 import LegalDocSection from './components/LegalDocSection.tsx';
+import NewsSection from './components/NewsSection.tsx';
+import DirectorySection from './components/DirectorySection.tsx';
 import { FoodSupplierForm, FoodNetworkForm } from './components/FoodForms.tsx';
 
-// --- ERROR BOUNDARY ---
 interface ErrorBoundaryProps {
   children?: ReactNode;
 }
@@ -39,7 +39,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Uncaught error:", error, errorInfo);
+    console.error("App internal error:", error, errorInfo);
   }
 
   render() {
@@ -57,12 +57,10 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
         </div>
       );
     }
-
-    return this.props.children;
+    // Prevent Error #31: Ensure we don't return undefined
+    return this.props.children || null;
   }
 }
-
-// --- HOOKS ---
 
 const useAppNavigation = () => {
   const getHashFromView = (v: ViewState) => {
@@ -76,6 +74,8 @@ const useAppNavigation = () => {
       case ViewState.FOOD_NETWORK: return 'food-network';
       case ViewState.CONTACT: return 'contact';
       case ViewState.FESTIVAL: return 'festival';
+      case ViewState.NEWS: return 'news';
+      case ViewState.DIRECTORY: return 'community';
       case ViewState.PRIVACY: return 'privacy';
       case ViewState.TERMS: return 'terms';
       case ViewState.HOME: default: return '';
@@ -83,12 +83,8 @@ const useAppNavigation = () => {
   };
 
   const getViewFromHash = (): ViewState => {
-    // Robust hash parsing
     const hash = window.location.hash.replace(/^#/, '');
-    
-    if (hash === '' || hash === '#') {
-      return ViewState.HOME;
-    }
+    if (hash === '' || hash === '#') return ViewState.HOME;
     
     switch(hash) {
       case 'legal': return ViewState.LEGAL_AID;
@@ -100,6 +96,8 @@ const useAppNavigation = () => {
       case 'food-network': return ViewState.FOOD_NETWORK;
       case 'contact': return ViewState.CONTACT;
       case 'festival': return ViewState.FESTIVAL;
+      case 'news': return ViewState.NEWS;
+      case 'community': return ViewState.DIRECTORY;
       case 'privacy': return ViewState.PRIVACY;
       case 'terms': return ViewState.TERMS;
       default: return ViewState.HOME;
@@ -108,72 +106,23 @@ const useAppNavigation = () => {
 
   const [view, setView] = useState<ViewState>(getViewFromHash());
 
-  // Listen to hash changes
   useEffect(() => {
     const handleHashChange = () => {
-      const newView = getViewFromHash();
-      setView(newView);
-      
-      // Scroll to top on view change
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 50);
+      setView(getViewFromHash());
+      setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
     };
-    
     window.addEventListener('hashchange', handleHashChange);
-    
-    // Initial check (in case of deep linking or reload)
-    const currentView = getViewFromHash();
-    if (currentView !== view) {
-      setView(currentView);
-    }
-
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
   const navigate = (newView: ViewState) => {
-    // Si on est déjà sur la page, on scroll en haut
     if (newView === view) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
-
     const hash = getHashFromView(newView);
-    
-    // IMPORTANT: Dans AI Studio, on utilise seulement window.location.hash
-    // On évite complètement window.history.pushState()
-    
-    if (hash === '') {
-      // Pour l'accueil, on nettoie le hash
-      window.location.hash = '';
-      setView(ViewState.HOME);
-    } else {
-      // Pour les autres pages, on met à jour le hash
-      window.location.hash = hash;
-      // La mise à jour de 'view' se fera via l'événement hashchange
-    }
-    
-    // Fallback: si hashchange ne se déclenche pas (peut arriver dans AI Studio)
-    setTimeout(() => {
-      const currentHash = window.location.hash.replace(/^#/, '');
-      const expectedHash = getHashFromView(newView);
-      
-      if ((currentHash === '' && newView === ViewState.HOME) || 
-          currentHash === expectedHash) {
-        setView(newView);
-      }
-    }, 100);
+    window.location.hash = hash;
   };
-
-  // Scroll automatique au changement de vue
-  useEffect(() => {
-    // Petit délai pour laisser le DOM se mettre à jour
-    const timer = setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 50);
-    
-    return () => clearTimeout(timer);
-  }, [view]);
 
   return { view, navigate };
 };
@@ -208,10 +157,12 @@ const AppContent: React.FC = () => {
           <>
             <Hero 
               onExplore={() => navigate(ViewState.LEGAL_AID)} 
+              onNews={() => navigate(ViewState.NEWS)}
               language={language}
               onShare={() => navigate(ViewState.SHARE)}
               onDonate={() => navigate(ViewState.DONATE)}
             />
+            <NewsSection />
             <TeamSection language={language} />
           </>
         );
@@ -224,6 +175,8 @@ const AppContent: React.FC = () => {
       case ViewState.FOOD_NETWORK: return <FoodNetworkForm language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />;
       case ViewState.CONTACT: return <ContactSection language={language} />;
       case ViewState.FESTIVAL: return <FestivalSection language={language} />;
+      case ViewState.NEWS: return <NewsSection />;
+      case ViewState.DIRECTORY: return <DirectorySection />;
       case ViewState.PRIVACY: return <LegalDocSection language={language} mode="privacy" />;
       case ViewState.TERMS: return <LegalDocSection language={language} mode="terms" />;
       
@@ -231,6 +184,7 @@ const AppContent: React.FC = () => {
         return (
             <Hero 
               onExplore={() => navigate(ViewState.LEGAL_AID)} 
+              onNews={() => navigate(ViewState.NEWS)}
               language={language}
               onShare={() => navigate(ViewState.SHARE)}
               onDonate={() => navigate(ViewState.DONATE)}

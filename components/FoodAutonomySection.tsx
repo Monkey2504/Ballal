@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Wheat, Handshake, ShieldCheck, Users, Mail, ArrowRight, 
+  Wheat, ShieldCheck, Users, Mail, ArrowRight, 
   ExternalLink, HeartHandshake, Leaf, Truck, Award, Globe,
   Calendar, BarChart, CheckCircle, Target
 } from 'lucide-react';
@@ -73,7 +73,7 @@ const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, set
       description: "Valorisation des surplus alimentaires en circuits courts"
     },
     {
-      icon: <Handshake className="h-6 w-6" />,
+      icon: <HeartHandshake className="h-6 w-6" />,
       title: "Solidarité territoriale",
       description: "Renforcement des liens entre acteurs locaux"
     },
@@ -159,7 +159,7 @@ const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, set
             {[
               { value: metrics.foodSaved, label: "Kg de nourriture sauvés", icon: <Leaf className="h-5 w-5" /> },
               { value: metrics.mealsProvided, label: "Repas distribués", icon: <HeartHandshake className="h-5 w-5" /> },
-              { value: metrics.partners, label: "Partenaires engagés", icon: <Handshake className="h-5 w-5" /> },
+              { value: metrics.partners, label: "Partenaires engagés", icon: <HeartHandshake className="h-5 w-5" /> },
               { value: metrics.communities, label: "Communautés soutenues", icon: <Users className="h-5 w-5" /> }
             ].map((metric, index) => (
               <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
@@ -290,7 +290,7 @@ const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, set
             <div className="bg-gradient-to-r from-orange-500 to-amber-500 p-6">
               <div className="flex items-center justify-between">
                 <h3 className="text-xl font-black text-white">{t.food_partners_title}</h3>
-                <Handshake className="h-8 w-8 text-white" />
+                <HeartHandshake className="h-8 w-8 text-white" />
               </div>
             </div>
             

@@ -12,6 +12,8 @@ export interface Translation {
   nav_food_project: string; 
   nav_contact: string;
   nav_festival: string;
+  nav_news: string;
+  nav_directory: string;
   
   // SEO Meta Descriptions
   meta_desc_home: string;
@@ -224,6 +226,8 @@ const fr: Translation = {
     nav_food_project: "Projet Alimentaire",
     nav_contact: "Contact",
     nav_festival: "Festival Sans-Papiers",
+    nav_news: "Actualités",
+    nav_directory: "Communauté",
     meta_desc_home: "La structure de référence pour la communauté guinéenne en Belgique.",
     meta_desc_legal: "Assistance juridique urgente et droits des étrangers en Belgique.",
     meta_desc_history: "Découvrez l'histoire de la communauté guinéenne en Belgique, de 1958 à nos jours.",
@@ -424,6 +428,8 @@ const en: Translation = {
     nav_food_project: "Food Project",
     nav_contact: "Contact",
     nav_festival: "Festival Sans-Papiers",
+    nav_news: "News",
+    nav_directory: "Community",
     meta_desc_home: "The reference for the Guinean community in Belgium.",
     meta_desc_legal: "Urgent legal assistance and rights of foreigners in Belgium.",
     meta_desc_history: "Discover the history of the Guinean community in Belgium, from 1958 to today.",
