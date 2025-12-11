@@ -14,10 +14,7 @@ interface GlobalErrorBoundaryState {
 // Composant de sécurité global (ErrorBoundary)
 // Si une erreur grave survient n'importe où dans l'app, ceci s'affichera à la place d'un écran blanc.
 class GlobalErrorBoundary extends React.Component<GlobalErrorBoundaryProps, GlobalErrorBoundaryState> {
-  constructor(props: GlobalErrorBoundaryProps) {
-    super(props);
-    this.state = { hasError: false, error: null };
-  }
+  public state: GlobalErrorBoundaryState = { hasError: false, error: null };
 
   static getDerivedStateFromError(error: Error): GlobalErrorBoundaryState {
     return { hasError: true, error };

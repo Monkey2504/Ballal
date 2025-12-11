@@ -5,13 +5,12 @@ import { translations } from '../utils/translations.ts';
 
 interface HeroProps {
   onExplore: () => void;
-  onNews?: () => void;
   language?: LanguageCode;
   onShare: () => void;
   onDonate?: () => void;
 }
 
-const Hero: React.FC<HeroProps> = ({ onExplore, onNews, language = 'fr', onShare, onDonate }) => {
+const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDonate }) => {
   const t = translations[language] || translations['fr'];
   
   // Image "Arbre d'origine" (Baobab majestueux au coucher du soleil)
@@ -134,17 +133,6 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onNews, language = 'fr', onShare
                       <ShieldCheck className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform" aria-hidden="true" />
                       {t.btn_assist}
                     </button>
-                    
-                    {onNews && (
-                      <button
-                        onClick={onNews}
-                        className="group flex-1 inline-flex items-center justify-center px-8 py-4 border-2 border-gray-200 text-base font-bold rounded-xl text-slate-700 bg-white hover:bg-gray-50 hover:border-[#FCD116] hover:text-slate-900 shadow-sm hover:shadow-md transition-all duration-300"
-                        aria-label="Voir les actualités"
-                      >
-                        <Newspaper className="mr-3 h-5 w-5 text-[#009460] group-hover:scale-110 transition-transform" aria-hidden="true" />
-                        Actualités
-                      </button>
-                    )}
                   </div>
                   
                   <div className="flex items-center justify-start gap-4">

@@ -16,7 +16,6 @@ import FoodAutonomySection from './components/FoodAutonomySection.tsx';
 import ContactSection from './components/ContactSection.tsx';
 import FestivalSection from './components/FestivalSection.tsx';
 import LegalDocSection from './components/LegalDocSection.tsx';
-import NewsSection from './components/NewsSection.tsx';
 import { FoodSupplierForm, FoodNetworkForm } from './components/FoodForms.tsx';
 
 interface ErrorBoundaryProps {
@@ -28,10 +27,7 @@ interface ErrorBoundaryState {
 }
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  constructor(props: ErrorBoundaryProps) {
-    super(props);
-    this.state = { hasError: false };
-  }
+  public state: ErrorBoundaryState = { hasError: false };
 
   static getDerivedStateFromError(_: Error): ErrorBoundaryState {
     return { hasError: true };
@@ -73,8 +69,6 @@ const useAppNavigation = () => {
       case ViewState.FOOD_NETWORK: return 'food-network';
       case ViewState.CONTACT: return 'contact';
       case ViewState.FESTIVAL: return 'festival';
-      case ViewState.NEWS: return 'news';
-      case ViewState.DIRECTORY: return 'community';
       case ViewState.PRIVACY: return 'privacy';
       case ViewState.TERMS: return 'terms';
       case ViewState.HOME: default: return '';
@@ -95,8 +89,6 @@ const useAppNavigation = () => {
       case 'food-network': return ViewState.FOOD_NETWORK;
       case 'contact': return ViewState.CONTACT;
       case 'festival': return ViewState.FESTIVAL;
-      case 'news': return ViewState.NEWS;
-      case 'community': return ViewState.DIRECTORY;
       case 'privacy': return ViewState.PRIVACY;
       case 'terms': return ViewState.TERMS;
       default: return ViewState.HOME;
@@ -175,12 +167,10 @@ const AppContent: React.FC = () => {
           <>
             <Hero 
               onExplore={() => navigate(ViewState.LEGAL_AID)} 
-              onNews={() => navigate(ViewState.NEWS)}
               language={language}
               onShare={() => navigate(ViewState.SHARE)}
               onDonate={() => navigate(ViewState.DONATE)}
             />
-            <NewsSection language={language} />
             <TeamSection language={language} />
           </>
         );
@@ -193,7 +183,6 @@ const AppContent: React.FC = () => {
       case ViewState.FOOD_NETWORK: return <FoodNetworkForm language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />;
       case ViewState.CONTACT: return <ContactSection language={language} />;
       case ViewState.FESTIVAL: return <FestivalSection language={language} />;
-      case ViewState.NEWS: return <NewsSection language={language} />;
       case ViewState.PRIVACY: return <LegalDocSection language={language} mode="privacy" />;
       case ViewState.TERMS: return <LegalDocSection language={language} mode="terms" />;
       
@@ -201,7 +190,6 @@ const AppContent: React.FC = () => {
         return (
             <Hero 
               onExplore={() => navigate(ViewState.LEGAL_AID)} 
-              onNews={() => navigate(ViewState.NEWS)}
               language={language}
               onShare={() => navigate(ViewState.SHARE)}
               onDonate={() => navigate(ViewState.DONATE)}

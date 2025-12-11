@@ -85,8 +85,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
     { label: t.nav_home || 'Accueil', value: ViewState.HOME },
     { label: t.nav_legal || 'Aide Juridique', value: ViewState.LEGAL_AID },
     { label: t.nav_festival || 'Festival', value: ViewState.FESTIVAL },
-    { label: t.nav_news || 'Actualités', value: ViewState.NEWS },
-    { label: t.nav_directory || 'Communauté', value: ViewState.DIRECTORY },
     { label: t.nav_food_project || 'Alimentation', value: ViewState.FOOD_AUTONOMY },
   ];
 

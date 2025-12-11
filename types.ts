@@ -234,10 +234,6 @@ export enum ViewState {
   
   // Informations
   CONTACT = 'CONTACT',
-  BLOG = 'BLOG',
-  NEWS = 'NEWS',
-  RESOURCES = 'RESOURCES',
-  DIRECTORY = 'DIRECTORY',
   
   // Utilisateur
   PROFILE = 'PROFILE',
