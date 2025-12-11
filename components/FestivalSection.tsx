@@ -20,10 +20,10 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
     seconds: 0
   });
 
-  // Simulate countdown to next festival (example date: June 15, 2024)
+  // Countdown to next festival (September 15, 2026)
   useEffect(() => {
     const calculateCountdown = () => {
-      const targetDate = new Date('2024-06-15T18:00:00').getTime();
+      const targetDate = new Date('2026-09-15T18:00:00').getTime();
       const now = new Date().getTime();
       const difference = targetDate - now;
 
@@ -45,7 +45,7 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
   const festivalData = {
     title: "Festival des Sans-Papiers",
     tagline: "Célébrer la fierté, revendiquer la dignité.",
-    date: "15-16 Juin 2024",
+    date: "15-16 Septembre 2026",
     location: "Bruxelles, Belgique",
     expectedAttendance: 1000,
     mainObjectives: [
@@ -60,9 +60,9 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
       { name: "Ateliers", icon: <BookOpen className="h-5 w-5" />, color: "bg-yellow-100 text-yellow-600" }
     ],
     timeline: [
-      { month: "Septembre", tasks: ["Infos CoopCity", "RDV Innovate", "Canevas dossier Ville"] },
-      { month: "Octobre-Novembre", tasks: ["Budget détaillé", "Programmation artistique", "Méthodologie bénéficiaires"] },
-      { month: "Décembre-Janvier", tasks: ["Dépôt dossier Ville", "Affirmation légitimité politique"] }
+      { month: "Janvier 2026", tasks: ["Lancement de l'appel à projets", "Inscription des bénévoles", "Recherche de partenaires"] },
+      { month: "Juin 2026", tasks: ["Conférence de presse", "Annonce de la programmation", "Lancement de la campagne"] },
+      { month: "Septembre 2026", tasks: ["Montage du site", "Grand rassemblement", "Clôture festive"] }
     ],
     impacts: [
       { area: "Culturelles", description: "Enrichissement du tissu culturel bruxellois", value: "+15 événements" },

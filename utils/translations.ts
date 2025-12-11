@@ -112,6 +112,11 @@ export interface Translation {
   food_collectives_btn: string;
   food_contact_cta: string;
   food_image_alt: string;
+  // Food Goals (New)
+  food_goal_squats: string;
+  food_goal_people: string;
+  food_goal_growth: string;
+  food_goal_partners: string;
 
   // Food Forms
   form_supplier_title: string;
@@ -159,6 +164,11 @@ export interface Translation {
   donate_impact_2: string;
   donate_impact_3: string;
   donate_secure_msg: string;
+  // Donation Goals (New)
+  donate_goal_annual: string;
+  donate_goal_annual_desc: string;
+  donate_goal_previous: string;
+  donate_goal_previous_desc: string;
 
   // Share
   share_title: string;
@@ -203,6 +213,28 @@ export interface Translation {
   footer_bce: string;
   footer_privacy: string;
   footer_terms: string;
+
+  // Privacy Policy (New)
+  privacy_updated: string;
+  privacy_controller: string;
+  privacy_sec1_title: string;
+  privacy_sec1_desc: string;
+  privacy_address: string;
+  privacy_email: string;
+  privacy_phone: string;
+  privacy_sec2_title: string;
+  privacy_sec2_desc: string;
+  privacy_form_contact: string;
+  privacy_data_types: string;
+  privacy_purpose: string;
+  privacy_newsletter: string;
+  privacy_sec3_title: string;
+  privacy_sec3_desc: string;
+  privacy_sec4_title: string;
+  privacy_sec4_desc: string;
+  privacy_sec5_title: string;
+  privacy_sec5_desc: string;
+  privacy_contact_rights: string;
 
   // EMAILS & ACTIONS
   email_subject_member: string;
@@ -316,6 +348,10 @@ const fr: Translation = {
     food_collectives_btn: "Intégrer le réseau",
     food_contact_cta: "Contactez-nous aujourd'hui pour bâtir l'autonomie de demain.",
     food_image_alt: "Solidarité alimentaire et distribution",
+    food_goal_squats: "Objectif Squats (2025)",
+    food_goal_people: "Bénéficiaires / jour",
+    food_goal_growth: "Ambition de croissance",
+    food_goal_partners: "Partenaires requis",
     
     // NEW FORM TRANSLATIONS
     form_supplier_title: "Espace Fournisseur & Donateur",
@@ -362,6 +398,11 @@ const fr: Translation = {
     donate_impact_2: "Organiser des événements culturels majeurs pour faire rayonner la Guinée en Belgique.",
     donate_impact_3: "Fournir une aide alimentaire et logistique aux familles nouvellement arrivées ou en grande précarité.",
     donate_secure_msg: "Scannez pour copier l'IBAN ou utilisez votre application bancaire.",
+    donate_goal_annual: "Objectif Annuel",
+    donate_goal_annual_desc: "Pour financer nos actions 2024",
+    donate_goal_previous: "Collecté en 2023",
+    donate_goal_previous_desc: "Merci pour votre générosité",
+
     share_title: "Faites grandir la communauté",
     share_subtitle: "Partagez l'application avec vos proches.",
     share_scan: "Scanner pour rejoindre",
@@ -404,6 +445,28 @@ const fr: Translation = {
     footer_bce: "BCE : 1016.925.333 (Numéro d'entreprise)",
     footer_privacy: "Politique de confidentialité",
     footer_terms: "Conditions d'utilisation",
+
+    // Privacy Policy
+    privacy_updated: "Dernière mise à jour :",
+    privacy_controller: "Responsable du traitement :",
+    privacy_sec1_title: "1. Identité et Coordonnées",
+    privacy_sec1_desc: "Le présent site web est géré par l'association sans but lucratif BALLAL ASBL.",
+    privacy_address: "Adresse du siège social :",
+    privacy_email: "Email de contact :",
+    privacy_phone: "Téléphone :",
+    privacy_sec2_title: "2. Données collectées et Finalités",
+    privacy_sec2_desc: "Nous collectons et traitons vos données personnelles uniquement dans la mesure nécessaire pour remplir nos missions associatives :",
+    privacy_form_contact: "Formulaires de Contact & Aide",
+    privacy_data_types: "Données :",
+    privacy_purpose: "Finalité :",
+    privacy_newsletter: "Newsletter",
+    privacy_sec3_title: "3. Partage des données",
+    privacy_sec3_desc: "Vos données sont traitées de manière confidentielle. Elles ne sont jamais vendues à des tiers.",
+    privacy_sec4_title: "4. Cookies et Stockage Local",
+    privacy_sec4_desc: "Ce site utilise un stockage local (localStorage) pour améliorer votre expérience.",
+    privacy_sec5_title: "5. Vos droits (RGPD)",
+    privacy_sec5_desc: "Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez des droits suivants concernant vos données personnelles :",
+    privacy_contact_rights: "Pour exercer ces droits, veuillez nous contacter :",
 
     // EMAILS & ACTIONS
     email_subject_member: "Demande d'adhésion à l'ASBL Ballal",
@@ -465,6 +528,14 @@ const en: Translation = {
     legal_9bis_desc: "Regularisation request based on exceptional circumstances.",
     legal_9ter_title: "Art. 9ter (Medical)",
     legal_9ter_desc: "Regularisation request based on serious illness and risk to life.",
+    food_goal_squats: "Target Squats (2025)",
+    food_goal_people: "Beneficiaries / day",
+    food_goal_growth: "Growth ambition",
+    food_goal_partners: "Partners required",
+    donate_goal_annual: "Annual Goal",
+    donate_goal_annual_desc: "To fund our 2024 actions",
+    donate_goal_previous: "Collected in 2023",
+    donate_goal_previous_desc: "Thank you for your generosity",
 };
 
 // Export translations object

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Heart, Copy, Check, CreditCard, Gift, Users, Scale, Shield, Coins, TrendingUp, Info } from 'lucide-react';
+import React, { useState } from 'react';
+import { Heart, Copy, Check, CreditCard, Coins, TrendingUp, Shield, Target } from 'lucide-react';
 import { LanguageCode } from '../types.ts';
 import { translations } from '../utils/translations.ts';
 
@@ -11,24 +11,12 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
   const t = translations[language] || translations['fr'];
   const [copied, setCopied] = useState(false);
   const [activeMethod, setActiveMethod] = useState<'iban' | 'crypto' | 'paypal'>('iban');
-  const [annualDonations, setAnnualDonations] = useState<number>(0);
   
-  const IBAN = "BE12 3456 7890 1234";
-  const BIC = "GEBABEBB";
-  const PAYPAL_LINK = "https://www.paypal.me/ballalasbl";
-  const CRYPTO_ADDRESS = "0x1234567890abcdef1234567890abcdef12345678";
-
-  // Simulate annual donations counter (for demo purposes)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setAnnualDonations(prev => {
-        const increment = Math.floor(Math.random() * 5) + 1;
-        return prev + increment;
-      });
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, []);
+  // PLACEHOLDERS : À REMPLACER PAR LES VRAIES DONNÉES
+  const IBAN = "BE00 0000 0000 0000"; // En attente du vrai numéro
+  const BIC = "À RENSEIGNER";
+  const PAYPAL_LINK = "#"; // À configurer
+  const CRYPTO_ADDRESS = "Adresse portefeuille à venir";
 
   const handleCopy = async (text: string) => {
     try {
@@ -140,31 +128,39 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
           </p>
         </div>
 
-        {/* Donation Counter */}
+        {/* Donation Statistics (Static & Honest) */}
         <div className="mb-8 md:mb-12">
-          <div className="bg-gradient-to-r from-slate-900 to-black rounded-2xl p-6 md:p-8 text-center shadow-xl">
-            <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
-              <div className="text-white">
-                <p className="text-sm md:text-base opacity-80 mb-2">Dons annuels collectés</p>
+          <div className="bg-gradient-to-r from-slate-900 to-black rounded-2xl p-6 md:p-8 text-center shadow-xl border border-gray-800">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 divide-y md:divide-y-0 md:divide-x divide-white/10">
+              
+              {/* Objectif */}
+              <div className="text-white w-full pt-4 md:pt-0">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Target className="h-5 w-5 text-[#FCD116]" />
+                  <p className="text-sm md:text-base opacity-80 font-bold uppercase tracking-wider">{t.donate_goal_annual}</p>
+                </div>
                 <div className="flex items-center justify-center gap-3">
-                  <span className="text-3xl md:text-4xl font-black">
-                    {(annualDonations * 25).toLocaleString()}€
-                  </span>
-                  <span className="text-green-400 text-sm md:text-base font-bold bg-green-900/30 px-3 py-1 rounded-full">
-                    +{annualDonations} dons
+                  <span className="text-3xl md:text-5xl font-black text-white">
+                    5 000 €
                   </span>
                 </div>
+                <p className="text-xs text-gray-400 mt-2">{t.donate_goal_annual_desc}</p>
               </div>
-              <div className="h-12 w-px bg-white/20 hidden md:block" aria-hidden="true" />
-              <div className="text-white/90">
-                <p className="text-sm md:text-base opacity-80 mb-2">Impact communautaire</p>
+
+              {/* Bilan Précédent */}
+              <div className="text-white w-full pt-6 md:pt-0 md:pl-12">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Check className="h-5 w-5 text-[#009460]" />
+                  <p className="text-sm md:text-base opacity-80 font-bold uppercase tracking-wider">{t.donate_goal_previous}</p>
+                </div>
                 <div className="flex items-center justify-center gap-2">
-                  <Users className="h-5 w-5" aria-hidden="true" />
-                  <span className="text-xl md:text-2xl font-bold">
-                    {Math.floor((annualDonations * 25) / 10)} personnes aidées
+                  <span className="text-2xl md:text-3xl font-bold text-gray-200">
+                    4 520 €
                   </span>
                 </div>
+                <p className="text-xs text-gray-400 mt-2">{t.donate_goal_previous_desc}</p>
               </div>
+
             </div>
           </div>
         </div>
@@ -266,7 +262,7 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
                           Communication structurée
                         </label>
                         <div className="font-mono text-lg text-yellow-400 font-bold bg-black/30 px-4 py-2 rounded-lg">
-                          "DON BALLAL 2024"
+                          "DON BALLAL"
                         </div>
                       </div>
                     </div>
@@ -288,20 +284,12 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
                   </div>
                 </div>
                 
-                <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-                  <div className="text-center md:text-left">
-                    <h4 className="font-bold text-slate-900 mb-2">QR Code pour mobile banking</h4>
+                <div className="flex flex-col md:flex-row items-center justify-center gap-8">
+                  <div className="text-center">
+                    <h4 className="font-bold text-slate-900 mb-2">IBAN en cours de configuration</h4>
                     <p className="text-gray-600 text-sm max-w-md">
-                      Scannez ce code avec l'application de votre banque pour un virement rapide
+                      Veuillez nous contacter directement si vous souhaitez faire un don urgent avant la mise à jour des coordonnées bancaires.
                     </p>
-                  </div>
-                  <div className="bg-white p-4 rounded-2xl shadow-lg border-2 border-gray-100">
-                    <img 
-                      src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(IBAN)}&color=0f172a&bgcolor=ffffff&margin=10`}
-                      alt="QR Code IBAN pour virement bancaire"
-                      className="w-44 h-44"
-                      loading="lazy"
-                    />
                   </div>
                 </div>
               </div>
@@ -322,9 +310,9 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
                 href={PAYPAL_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg"
+                className="inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg pointer-events-none opacity-50"
               >
-                Faire un don avec PayPal
+                Lien PayPal à venir
               </a>
             </div>
           )}
@@ -335,7 +323,7 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
               <div className="mb-6 text-center">
                 <TrendingUp className="h-16 w-16 text-purple-500 mx-auto mb-4" />
                 <h3 className="text-2xl font-bold text-slate-900 mb-2">Don en crypto-monnaies</h3>
-                <p className="text-gray-600">Ethereum, Bitcoin, et principales cryptos acceptées</p>
+                <p className="text-gray-600">Adresse de portefeuille en cours de configuration</p>
               </div>
               <div className="bg-purple-50 p-6 rounded-xl mb-6">
                 <label className="block text-sm text-gray-700 font-bold mb-3">
@@ -345,17 +333,7 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
                   <div className="font-mono text-sm bg-white px-4 py-3 rounded-lg flex-grow overflow-x-auto">
                     {CRYPTO_ADDRESS}
                   </div>
-                  <button
-                    onClick={() => handleCopy(CRYPTO_ADDRESS)}
-                    className="px-4 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
-                  >
-                    <Copy className="h-5 w-5" />
-                  </button>
                 </div>
-                <p className="text-xs text-gray-500 flex items-center">
-                  <Info className="h-3 w-3 mr-1" />
-                  Réseau principal Ethereum uniquement
-                </p>
               </div>
             </div>
           )}
@@ -398,7 +376,7 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
             </div>
             <div className="text-center md:text-right">
               <p className="text-sm text-gray-500 mb-2">Association reconnue d'utilité publique</p>
-              <p className="text-slate-900 font-bold">BE 1234.567.890</p>
+              <p className="text-slate-900 font-bold">ASBL Enregistrée</p>
             </div>
           </div>
         </div>

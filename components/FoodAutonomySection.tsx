@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   Wheat, ShieldCheck, Users, Mail, ArrowRight, 
   ExternalLink, HeartHandshake, Leaf, Truck, Award, Globe,
-  Calendar, BarChart, CheckCircle, Target
+  Calendar, BarChart, CheckCircle, Target, Home, TrendingUp
 } from 'lucide-react';
 import { LanguageCode, ViewState } from '../types.ts';
 import { translations } from '../utils/translations.ts';
@@ -16,19 +16,19 @@ const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, set
   const t = translations[language] || translations['fr'];
   const [imgError, setImgError] = useState(false);
   const [metrics, setMetrics] = useState({
-    foodSaved: 0,
-    mealsProvided: 0,
-    partners: 0,
-    communities: 0
+    squats: 0,
+    people: 0,
+    growth: 0,
+    partners: 0
   });
 
-  // Animated counter effect for metrics
+  // Animated counter effect for metrics (Objectifs 2025)
   useEffect(() => {
     const targetMetrics = {
-      foodSaved: 12500, // kg
-      mealsProvided: 25000,
-      partners: 47,
-      communities: 12
+      squats: 10,
+      people: 1000,
+      growth: 10,
+      partners: 50
     };
 
     const duration = 2000; // 2 seconds
@@ -43,10 +43,10 @@ const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, set
         const progress = currentStep / steps;
         
         setMetrics({
-          foodSaved: Math.floor(targetMetrics.foodSaved * progress),
-          mealsProvided: Math.floor(targetMetrics.mealsProvided * progress),
-          partners: Math.floor(targetMetrics.partners * progress),
-          communities: Math.floor(targetMetrics.communities * progress)
+          squats: Math.floor(targetMetrics.squats * progress),
+          people: Math.floor(targetMetrics.people * progress),
+          growth: Math.floor(targetMetrics.growth * progress),
+          partners: Math.floor(targetMetrics.partners * progress)
         });
 
         if (currentStep >= steps) {
@@ -154,20 +154,22 @@ const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, set
             "{t.food_slogan}"
           </p>
 
-          {/* Metrics */}
+          {/* Metrics Goals */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
             {[
-              { value: metrics.foodSaved, label: "Kg de nourriture sauvés", icon: <Leaf className="h-5 w-5" /> },
-              { value: metrics.mealsProvided, label: "Repas distribués", icon: <HeartHandshake className="h-5 w-5" /> },
-              { value: metrics.partners, label: "Partenaires engagés", icon: <HeartHandshake className="h-5 w-5" /> },
-              { value: metrics.communities, label: "Communautés soutenues", icon: <Users className="h-5 w-5" /> }
+              { value: metrics.squats, label: t.food_goal_squats, icon: <Home className="h-5 w-5" /> },
+              { value: metrics.people, label: t.food_goal_people, icon: <Users className="h-5 w-5" /> },
+              { value: `x${metrics.growth}`, label: t.food_goal_growth, icon: <TrendingUp className="h-5 w-5" />, isText: true },
+              { value: metrics.partners, label: t.food_goal_partners, icon: <HeartHandshake className="h-5 w-5" /> }
             ].map((metric, index) => (
-              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
+              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center border border-white/10">
                 <div className="flex items-center justify-center gap-2 mb-2">
-                  {metric.icon}
-                  <span className="text-2xl md:text-3xl font-black">{metric.value.toLocaleString()}</span>
+                  <div className="text-[#FCD116]">{metric.icon}</div>
+                  <span className="text-2xl md:text-3xl font-black">
+                    {metric.isText ? metric.value : (typeof metric.value === 'number' ? metric.value.toLocaleString() : metric.value)}
+                  </span>
                 </div>
-                <div className="text-sm text-white/80">{metric.label}</div>
+                <div className="text-sm text-white/90 font-medium">{metric.label}</div>
               </div>
             ))}
           </div>

@@ -11,8 +11,7 @@ interface TeamMember {
   name: string;
   role: string;
   image: string;
-  phone: string;
-  email: string;
+  email?: string;
   color: string;
   bio?: string;
   social?: {
@@ -36,27 +35,24 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
     e.currentTarget.src = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?fit=crop&w=800&q=80";
   };
 
-  // Enhanced team members with contact info
+  // Enhanced team members - Removed fake phone numbers
   const teamMembers: TeamMember[] = [
     {
       name: "Thierno I. T. Diallo",
       role: t.role_admin,
       image: "https://i.imgur.com/T2LT1pB.jpg",
-      phone: "+224 123 456 789",
-      email: "thierno.diallo@ballal-asbl.org",
+      email: "thierno.diallo@ballal.be",
       color: "border-[#CE1126]",
       bio: t.member_bio_placeholder || "Président de Ballal ASBL",
       social: {
-        linkedin: "https://linkedin.com/in/thierno-diallo",
-        twitter: "https://twitter.com/thierno_diallo"
+        linkedin: "#",
       }
     },
     {
       name: "Bah Ibrahim",
       role: t.role_admin,
       image: "https://i.imgur.com/l3UdDov.jpg",
-      phone: "+224 987 654 321",
-      email: "bah.ibrahim@ballal-asbl.org",
+      email: "bah.ibrahim@ballal.be",
       color: "border-[#FCD116]",
       bio: t.member_bio_placeholder || "Vice-président de Ballal ASBL"
     },
@@ -64,8 +60,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
       name: "Kadiatou Sow",
       role: t.role_admin_f,
       image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&q=80&w=800",
-      phone: "+224 555 123 456",
-      email: "kadiatou.sow@ballal-asbl.org",
+      email: "kadiatou.sow@ballal.be",
       color: "border-[#009460]",
       bio: t.member_bio_placeholder || "Secrétaire générale de Ballal ASBL"
     },
@@ -73,8 +68,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
       name: "Cissé, Abdoulaye",
       role: t.role_admin,
       image: "https://i.imgur.com/7FduSwY.jpg",
-      phone: "+224 111 222 333",
-      email: "abdoulaye.cisse@ballal-asbl.org",
+      email: "abdoulaye.cisse@ballal.be",
       color: "border-slate-800",
       bio: t.member_bio_placeholder || "Trésorier de Ballal ASBL"
     },
@@ -82,13 +76,11 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
       name: "Francois Halleux",
       role: "Conseiller en stratégie & Innovation sociale",
       image: "https://i.imgur.com/1qqkroP.jpg",
-      phone: "+224 444 555 666",
-      email: "francois.halleux@ballal-asbl.org",
+      email: "francois.halleux@ballal.be",
       color: "border-blue-600",
       bio: t.member_bio_placeholder || "Conseiller en stratégie et innovation sociale",
       social: {
-        linkedin: "https://linkedin.com/in/francois-halleux",
-        website: "https://example.com"
+        linkedin: "#",
       }
     }
   ];
@@ -184,20 +176,6 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
                 
                 <div className="p-6">
                   <div className="space-y-4">
-                    {member.phone && (
-                      <div className="flex items-center justify-between">
-                        <a 
-                          href={`tel:${member.phone.replace(/\s/g, '')}`}
-                          className="flex items-center text-gray-700 hover:text-[#CE1126] transition-colors group/contact flex-1"
-                          aria-label={`Appeler ${member.name} au ${member.phone}`}
-                        >
-                          <div className="p-2 bg-gray-100 rounded-full mr-3 group-hover/contact:bg-red-50 transition-colors">
-                            <Phone className="h-4 w-4" aria-hidden="true" />
-                          </div>
-                          <span className="text-sm font-semibold truncate">{member.phone}</span>
-                        </a>
-                      </div>
-                    )}
                     
                     {member.email && (
                       <div className="flex items-center justify-between">
@@ -210,7 +188,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
                         
                         <div className="flex gap-2 ml-3">
                           <button
-                            onClick={() => handleCopyEmail(member.email)}
+                            onClick={() => handleCopyEmail(member.email!)}
                             className="p-2 text-gray-500 hover:text-[#009460] transition-colors relative"
                             aria-label={`Copier l'email de ${member.name}`}
                           >

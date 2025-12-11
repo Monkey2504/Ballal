@@ -39,40 +39,25 @@
       }
     </script>
 
-    <!-- Styles globaux -->
-    <style>
-      body {
-        background-color: #FFFBF0;
-        font-family: 'Inter', sans-serif;
-        overflow-x: hidden;
-      }
-      h1, h2, h3, h4, h5, h6 {
-        font-family: 'Poppins', sans-serif;
-      }
-      /* Scrollbar personnalisée aux couleurs de la Guinée */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #FFFBF0;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: linear-gradient(180deg, #CE1126, #FCD116, #009460);
-        border-radius: 4px;
-      }
-      
-      /* Animation du loader */
-      .loader-pulse {
-        animation: pulse-guinea 2s infinite;
-      }
-      @keyframes pulse-guinea {
-        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(206, 17, 38, 0.4); }
-        70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(206, 17, 38, 0); }
-        100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(206, 17, 38, 0); }
-      }
-    </style>
+    <!-- Gestionnaire d'erreurs de démarrage (Sécurité) -->
+    <script>
+      window.onerror = function(msg, url, line, col, error) {
+        // Si l'application ne démarre pas, on affiche l'erreur à l'utilisateur
+        setTimeout(function() {
+          var root = document.getElementById('root');
+          var loader = document.getElementById('initial-loader');
+          if (root && (!root.innerHTML || root.innerHTML.trim() === '')) {
+            if(loader) loader.style.display = 'none';
+            var errorBox = document.createElement('div');
+            errorBox.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:#FFFBF0;color:#CE1126;padding:40px;font-family:sans-serif;z-index:99999;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;';
+            errorBox.innerHTML = '<h2 style="font-size:24px;margin-bottom:20px;">Oups ! Un problème technique empêche le chargement.</h2><p style="color:#333;background:#fff;padding:20px;border-radius:10px;box-shadow:0 4px 6px rgba(0,0,0,0.1);max-width:600px;">' + msg + '</p><button onclick="window.location.reload()" style="margin-top:20px;padding:10px 20px;background:#009460;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;">Recharger la page</button>';
+            document.body.appendChild(errorBox);
+          }
+        }, 3000); // Délai de 3s pour laisser React essayer de charger
+      };
+    </script>
 
-    <!-- Import Map : CORRECTION DEFINITIVE - UNIQUEMENT REACT 18 -->
+    <!-- Import Map : CORRECTION (Version Robuste) -->
     <script type="importmap">
 {
   "imports": {
@@ -81,15 +66,15 @@
     "react-dom": "https://esm.sh/react-dom@18.2.0",
     "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
     "lucide-react": "https://esm.sh/lucide-react@0.263.1?deps=react@18.2.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.1/",
-    "react/": "https://esm.sh/react@^19.2.1/"
+    "react/": "https://esm.sh/react@18.2.0/",
+    "react-dom/": "https://esm.sh/react-dom@18.2.0/"
   }
 }
 </script>
   </head>
   
   <body>
-    <!-- Loader Screen (Disparaît quand React prend la main) -->
+    <!-- Loader Screen -->
     <div id="initial-loader" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-warm-bg transition-opacity duration-500">
       <div class="relative mb-6">
         <div class="w-24 h-24 rounded-full border-4 border-t-guinea-red border-r-guinea-yellow border-b-guinea-green border-l-guinea-red animate-spin"></div>
@@ -112,7 +97,7 @@
     <script type="module" src="./index.tsx"></script>
 
     <script>
-      // Suppression du loader une fois l'app chargée (backup si React est lent)
+      // Suppression du loader une fois l'app chargée
       window.onload = () => {
         setTimeout(() => {
           const loader = document.getElementById('initial-loader');
@@ -120,7 +105,7 @@
             loader.style.opacity = '0';
             setTimeout(() => loader.style.display = 'none', 500);
           }
-        }, 800);
+        }, 1500);
       };
     </script>
   </body>

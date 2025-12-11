@@ -32,19 +32,19 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
   const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
 
   const contactInfo = {
-    address: "Chaussée de Gand 645, 1080 Molenbeek-Saint-Jean, Belgique",
-    phone: "+32 493 43 43 83",
+    address: "Place Masui 9 Boîte 3, 1030 BRUXELLES",
+    phone: "0493 43 43 83",
     email: "admin@ballal.be",
-    bce: "BE 0799.999.999",
-    openingHours: "Lun-Ven: 9h-17h"
+    bce: "1016.925.333",
+    openingHours: "Sur rendez-vous"
   };
 
   const socialLinks = [
-    { name: 'Facebook', icon: Facebook, href: 'https://facebook.com/ballal', color: 'hover:text-blue-500' },
-    { name: 'Instagram', icon: Instagram, href: 'https://instagram.com/ballal', color: 'hover:text-pink-500' },
-    { name: 'Twitter', icon: Twitter, href: 'https://twitter.com/ballal', color: 'hover:text-sky-500' },
-    { name: 'YouTube', icon: Youtube, href: 'https://youtube.com/ballal', color: 'hover:text-red-500' },
-    { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/company/ballal', color: 'hover:text-blue-600' },
+    { name: 'Facebook', icon: Facebook, href: '#', color: 'hover:text-blue-500' },
+    { name: 'Instagram', icon: Instagram, href: '#', color: 'hover:text-pink-500' },
+    { name: 'Twitter', icon: Twitter, href: '#', color: 'hover:text-sky-500' },
+    { name: 'YouTube', icon: Youtube, href: '#', color: 'hover:text-red-500' },
+    { name: 'LinkedIn', icon: Linkedin, href: '#', color: 'hover:text-blue-600' },
   ];
 
   const handleContactClick = (e: React.MouseEvent) => {
@@ -70,29 +70,27 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
     }
   };
 
+  // Suppression des icônes ChevronRight explicites pour les liens internes
+  // car renderLink ajoute déjà une flèche pour les actions.
   const navigationSections: NavigationSection[] = [
     { 
       name: t.footer_quick_links || "Navigation rapide",
       links: [
         { 
           name: t.nav_home, 
-          action: (e) => handleNavClick(e, ViewState.HOME),
-          icon: ChevronRight
+          action: (e) => handleNavClick(e, ViewState.HOME)
         },
         { 
           name: t.nav_legal, 
-          action: (e) => handleNavClick(e, ViewState.LEGAL_AID),
-          icon: ChevronRight
+          action: (e) => handleNavClick(e, ViewState.LEGAL_AID)
         },
         { 
           name: t.nav_food_project, 
-          action: (e) => handleNavClick(e, ViewState.FOOD_AUTONOMY),
-          icon: ChevronRight
+          action: (e) => handleNavClick(e, ViewState.FOOD_AUTONOMY)
         },
         { 
           name: t.nav_history, 
-          action: (e) => handleNavClick(e, ViewState.HISTORY),
-          icon: ChevronRight
+          action: (e) => handleNavClick(e, ViewState.HISTORY)
         }
       ]
     },
@@ -100,26 +98,17 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
       name: t.footer_resources || "Ressources",
       links: [
         { 
-          name: t.footer_statutes, 
-          href: "https://kbopub.economie.fgov.be/kbopub/toonondernemingps.html?ondernemingsnummer=1016925333",
-          isExternal: true,
-          icon: FileText,
-          badge: "BCE"
-        },
-        { 
           name: t.footer_member, 
           action: handleContactClick,
-          icon: Users
+          icon: Users // Icône spécifique conservée
         },
         { 
           name: t.nav_festival, 
-          action: (e) => handleNavClick(e, ViewState.FESTIVAL),
-          icon: ChevronRight
+          action: (e) => handleNavClick(e, ViewState.FESTIVAL)
         },
         { 
           name: t.nav_share, 
-          action: (e) => handleNavClick(e, ViewState.SHARE),
-          icon: ChevronRight
+          action: (e) => handleNavClick(e, ViewState.SHARE)
         }
       ]
     },
@@ -138,7 +127,7 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
         },
         { 
           name: "Mentions légales", 
-          href: "#legal-notice",
+          href: "#legal-notice", // Lien externe simulé (ancre)
           action: (e) => handleNavClick(e, ViewState.PRIVACY),
           icon: Building
         },
@@ -152,11 +141,11 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
   ];
 
   const renderLink = (link: FooterLink, index: number) => {
+    // Contenu commun du lien (Icône spécifique + Texte + Badge)
     const LinkContent = (
       <>
         {link.icon && <link.icon className="w-4 h-4 mr-2 flex-shrink-0" aria-hidden="true" />}
         {link.name}
-        {link.isExternal && <ExternalLink className="w-3 h-3 ml-2" aria-hidden="true" />}
         {link.badge && (
           <span className="ml-2 px-2 py-0.5 text-xs bg-gray-800 text-gray-300 rounded-full">
             {link.badge}
@@ -165,20 +154,24 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
       </>
     );
 
+    // Si c'est une action (navigation interne), on utilise un bouton avec une flèche automatique
     if (link.action) {
       return (
         <button 
           key={index}
           onClick={link.action}
-          className="flex items-center text-sm text-gray-400 hover:text-white transition-colors py-2 group"
+          className="flex items-center text-sm text-gray-400 hover:text-white transition-colors py-2 group w-full text-left"
           aria-label={link.name}
         >
-          <ChevronRight className="w-3 h-3 mr-2 text-gray-600 group-hover:text-[#FCD116] transition-colors" aria-hidden="true" />
-          {LinkContent}
+          <ChevronRight className="w-3 h-3 mr-2 text-gray-600 group-hover:text-[#FCD116] transition-colors flex-shrink-0" aria-hidden="true" />
+          <div className="flex items-center">
+            {LinkContent}
+          </div>
         </button>
       );
     }
 
+    // Si c'est un lien externe (href), on utilise une balise <a>
     return (
       <a
         key={index}
@@ -188,7 +181,10 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
         className="flex items-center text-sm text-gray-400 hover:text-white transition-colors py-2 group"
         aria-label={link.name}
       >
-        {LinkContent}
+        <div className="flex items-center pl-5"> {/* Padding pour aligner avec les boutons qui ont ChevronRight */}
+           {LinkContent}
+           {link.isExternal && <ExternalLink className="w-3 h-3 ml-2 opacity-70" aria-hidden="true" />}
+        </div>
       </a>
     );
   };
@@ -221,7 +217,7 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <Building className="h-4 w-4 text-gray-500" aria-hidden="true" />
-                <span className="text-sm font-mono text-gray-500">{contactInfo.bce}</span>
+                <span className="text-sm font-mono text-gray-500">N° d'entreprise : {contactInfo.bce}</span>
               </div>
               <p className="text-sm text-gray-500">
                 Association reconnue d'utilité publique
@@ -286,12 +282,9 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
                 </div>
                 <div className="flex items-center space-x-3">
                   <Phone className="h-5 w-5 text-gray-500 flex-shrink-0" aria-hidden="true" />
-                  <a 
-                    href={`tel:${contactInfo.phone}`}
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
-                  >
+                  <span className="text-sm text-gray-400">
                     {contactInfo.phone}
-                  </a>
+                  </span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Mail className="h-5 w-5 text-gray-500 flex-shrink-0" aria-hidden="true" />
@@ -352,7 +345,7 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
                 &copy; {new Date().getFullYear()} BALLAL ASBL. {t.footer_rights}
               </p>
               <p className="text-xs text-gray-600 mt-1">
-                Tous droits réservés. Design avec ❤️ pour la justice sociale.
+                BCE: {contactInfo.bce} • Tous droits réservés.
               </p>
             </div>
 

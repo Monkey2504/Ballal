@@ -17,7 +17,6 @@ import ContactSection from './components/ContactSection.tsx';
 import FestivalSection from './components/FestivalSection.tsx';
 import LegalDocSection from './components/LegalDocSection.tsx';
 import NewsSection from './components/NewsSection.tsx';
-import DirectorySection from './components/DirectorySection.tsx';
 import { FoodSupplierForm, FoodNetworkForm } from './components/FoodForms.tsx';
 
 interface ErrorBoundaryProps {
@@ -176,7 +175,6 @@ const AppContent: React.FC = () => {
       case ViewState.CONTACT: return <ContactSection language={language} />;
       case ViewState.FESTIVAL: return <FestivalSection language={language} />;
       case ViewState.NEWS: return <NewsSection />;
-      case ViewState.DIRECTORY: return <DirectorySection />;
       case ViewState.PRIVACY: return <LegalDocSection language={language} mode="privacy" />;
       case ViewState.TERMS: return <LegalDocSection language={language} mode="terms" />;
       

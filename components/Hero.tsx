@@ -17,16 +17,8 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onNews, language = 'fr', onShare
   // Image "Arbre d'origine" (Baobab majestueux au coucher du soleil)
   const heroImage = "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=1600&auto=format&fit=crop";
   
-  const [animationComplete, setAnimationComplete] = useState(false);
-
-  // Trigger animation after component mounts
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setAnimationComplete(true);
-    }, 300);
-    
-    return () => clearTimeout(timer);
-  }, []);
+  // On initialise à true pour afficher le contenu immédiatement, sans attendre d'effet
+  const [animationComplete, setAnimationComplete] = useState(true);
 
   const stats = [
     { value: "50+", label: "Personnes aidées mensuellement", icon: <Users className="h-4 w-4" /> },
@@ -88,9 +80,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onNews, language = 'fr', onShare
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               
               {/* Left Column - Text Content */}
-              <div className={`space-y-8 transform transition-all duration-1000 ${
-                animationComplete ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-              }`}>
+              <div className="space-y-8">
                 {/* Badge */}
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-green-200 bg-gradient-to-r from-green-50 to-emerald-50 text-[#009460] text-sm font-bold uppercase tracking-wider shadow-sm animate-pulse">
                   <span className="w-2 h-2 bg-[#009460] rounded-full animate-ping"></span>
@@ -188,9 +178,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onNews, language = 'fr', onShare
               </div>
 
               {/* Right Column - Image */}
-              <div className={`relative h-[400px] md:h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl border-8 border-white transform transition-all duration-1000 ${
-                animationComplete ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-              }`}>
+              <div className="relative h-[400px] md:h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
                 {/* Image Unique - Sans condition de chargement masquante */}
                 <img
                   className="absolute inset-0 w-full h-full object-cover"
