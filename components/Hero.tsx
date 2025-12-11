@@ -14,27 +14,10 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ onExplore, onNews, language = 'fr', onShare, onDonate }) => {
   const t = translations[language] || translations['fr'];
   
-  // Multiple background images for rotation
-  const heroImages = [
-    "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=1600&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=1600&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1551836026-d5c2c5af78e4?q=80&w=1600&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=1600&auto=format&fit=crop"
-  ];
+  // Image "Arbre d'origine" (Baobab majestueux au coucher du soleil)
+  const heroImage = "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=1600&auto=format&fit=crop";
   
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [imgLoaded, setImgLoaded] = useState(false);
   const [animationComplete, setAnimationComplete] = useState(false);
-
-  // Auto-rotate images every 10 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
-      setImgLoaded(false);
-    }, 10000);
-    
-    return () => clearInterval(interval);
-  }, []);
 
   // Trigger animation after component mounts
   useEffect(() => {
@@ -208,50 +191,22 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onNews, language = 'fr', onShare
               <div className={`relative h-[400px] md:h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl border-8 border-white transform transition-all duration-1000 ${
                 animationComplete ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}>
-                {/* Image with rotation */}
+                {/* Image Unique - Sans condition de chargement masquante */}
                 <img
-                  className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${
-                    imgLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
-                  }`}
-                  src={heroImages[currentImageIndex]}
-                  alt={t.hero_subtitle}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  src={heroImage}
+                  alt="L'arbre à palabres - Symbole de nos racines et de notre unité"
                   loading="eager"
                   fetchPriority="high"
-                  onLoad={() => setImgLoaded(true)}
-                  onError={() => setImgLoaded(true)}
                 />
                 
-                {/* Loading overlay */}
-                {!imgLoaded && (
-                  <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse" />
-                )}
-                
                 {/* Gradient overlays */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/10" />
-                
-                {/* Image navigation dots */}
-                <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                  {heroImages.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => {
-                        setCurrentImageIndex(index);
-                        setImgLoaded(false);
-                      }}
-                      className={`w-3 h-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white ${
-                        index === currentImageIndex
-                          ? 'bg-white scale-125'
-                          : 'bg-white/50 hover:bg-white/75'
-                      }`}
-                      aria-label={`Voir l'image ${index + 1}`}
-                    />
-                  ))}
-                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/10 pointer-events-none" />
                 
                 {/* Decorative elements */}
-                <div className="absolute top-6 right-6">
-                  <div className="bg-gradient-to-br from-[#CE1126]/90 to-red-700/90 backdrop-blur-sm p-4 rounded-xl text-white">
+                <div className="absolute top-6 right-6 pointer-events-none">
+                  <div className="bg-gradient-to-br from-[#CE1126]/90 to-red-700/90 backdrop-blur-sm p-4 rounded-xl text-white shadow-lg">
                     <div className="text-sm font-bold uppercase tracking-wider">Solidarité</div>
                     <div className="text-2xl font-black">Active</div>
                   </div>
