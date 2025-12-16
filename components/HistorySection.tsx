@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { 
   BookOpen, Flag, GraduationCap, Globe, Home, Users, 
   ArrowDown, ChevronRight, Sparkles, MapPin, Quote, Camera, 
-  Newspaper, Coffee, ImageOff
+  Newspaper, Coffee, ImageOff, TrendingUp, AlertCircle
 } from 'lucide-react';
 import { LanguageCode } from '../types.ts';
 import { translations } from '../utils/translations.ts';
@@ -27,10 +27,10 @@ const HistorySection: React.FC<HistorySectionProps> = ({ language }) => {
 
   // Images d'illustration fiabilisées
   const images = {
-    independance: "https://images.unsplash.com/photo-1589705321653-240960ac0e94?q=80&w=1600&auto=format&fit=crop", // Noir et blanc, foule, ambiance historique
-    students: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1600&auto=format&fit=crop", // Université vintage
-    exil: "https://images.unsplash.com/photo-1532074205216-d0e1f4b87368?q=80&w=1600&auto=format&fit=crop", // Manifestation / Foule floue
-    matonge: "https://images.unsplash.com/photo-1596265371388-43edb10d5638?q=80&w=1600&auto=format&fit=crop", // Couleurs vives / Marché
+    independance: "https://i.imgur.com/EPEdzOF.png", // Photo historique De Gaulle / Guinée 1958
+    students: "https://i.imgur.com/9CxUOIj.png", // Photo historique Boursiers d'État
+    exil: "https://i.imgur.com/o9pUOZw.png", // Photo historique Exil / Asile
+    matonge: "https://i.imgur.com/EZdOQPM.png", // Nouvelle photo Vague 3
     route: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?q=80&w=1600&auto=format&fit=crop" // Espoir / Horizon
   };
 
@@ -215,67 +215,101 @@ const HistorySection: React.FC<HistorySectionProps> = ({ language }) => {
       </article>
 
       {/* --- CHAPITRE 3 : L'ENRACINEMENT (2000s) --- */}
-      <article className="relative py-24 bg-white overflow-hidden">
-        {/* Pattern de fond type tissu africain/wax stylisé */}
-        <div className="absolute inset-0 opacity-5" 
-             style={{ backgroundImage: 'radial-gradient(#CE1126 1px, transparent 1px)', backgroundSize: '20px 20px' }}>
-        </div>
-
+      <article className="relative py-24 bg-gradient-to-br from-amber-50 to-orange-100 overflow-hidden border-b border-orange-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16">
-            <span className="text-[#009460] font-black text-lg tracking-widest uppercase mb-2 block">Vague 3 : 2000-2010</span>
-            <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-6">
-              Matonge & La Famille
-            </h2>
-            <div className="w-24 h-2 bg-[#FCD116] mx-auto"></div>
-          </div>
+          <div className="flex flex-col lg:flex-row gap-12 items-start">
+            
+            {/* Colonne Gauche : Faits Historiques */}
+            <div className="lg:w-1/2 space-y-8">
+              <div>
+                <span className="text-orange-700 font-black text-lg tracking-widest uppercase mb-2 block flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5" /> Vague 3 : 2000-2010
+                </span>
+                <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 leading-tight">
+                  L'Ancrage & La Citoyenneté
+                </h2>
+                <div className="w-20 h-2 bg-orange-500 mb-6"></div>
+              </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Colonne 1 : Texte */}
-            <div className="md:col-span-1 space-y-6 text-gray-700">
-              <p className="first-letter:text-5xl first-letter:font-black first-letter:float-left first-letter:mr-3 first-letter:text-[#009460]">
-                C'est le temps des retrouvailles. Les régularisations (2000, 2009) permettent le regroupement familial. La communauté change de visage : elle se féminise, elle rajeunit.
-              </p>
-              <p>
-                Les enfants naissent belges. On ne vit plus dans l'attente du retour, on s'installe. On achète des maisons à Liège, à Charleroi. On ouvre des commerces.
-              </p>
-            </div>
-
-            {/* Colonne 2 : L'ambiance visuelle */}
-            <div className="md:col-span-1 relative">
-              <div className="absolute inset-0 bg-black rounded-full blur-xl opacity-20 transform translate-y-4"></div>
-              <img 
-                src={images.matonge} 
-                alt="Matonge Couleurs" 
-                className="relative rounded-2xl shadow-lg w-full h-80 object-cover rotate-2 hover:rotate-0 transition-transform duration-500 bg-gray-200"
-                onError={handleImageError}
-              />
-              <div className="absolute -right-4 top-10 bg-white p-3 shadow-lg rounded-lg max-w-[150px] text-xs font-bold text-slate-900 transform rotate-6">
-                <MapPin className="h-4 w-4 inline mr-1 text-red-500" />
-                Galerie d'Ixelles
+              <div className="prose prose-lg text-gray-800">
+                <p>
+                  Ce n'est plus seulement une immigration de passage, c'est une <strong>implantation durable</strong>. Les années 2000 marquent un tournant législatif et démographique majeur pour la communauté guinéenne en Belgique.
+                </p>
+                
+                <ul className="space-y-6 mt-6">
+                  <li className="flex items-start">
+                    <div className="flex-shrink-0 w-12 h-12 bg-white rounded-full flex items-center justify-center border-2 border-orange-200 shadow-sm mt-1">
+                      <span className="font-black text-orange-600">01</span>
+                    </div>
+                    <div className="ml-4">
+                      <h4 className="font-bold text-slate-900 text-lg">La Grande Régularisation (2000)</h4>
+                      <p className="text-sm text-gray-700 mt-1">
+                        La "Loi Golde" permet à des milliers de sans-papiers, dont une forte proportion de Guinéens, d'obtenir enfin un statut légal. C'est le début du regroupement familial massif et de la stabilisation des foyers.
+                      </p>
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <div className="flex-shrink-0 w-12 h-12 bg-white rounded-full flex items-center justify-center border-2 border-orange-200 shadow-sm mt-1">
+                      <span className="font-black text-orange-600">02</span>
+                    </div>
+                    <div className="ml-4">
+                      <h4 className="font-bold text-slate-900 text-lg">Le Choc du 28 Septembre 2009</h4>
+                      <p className="text-sm text-gray-700 mt-1">
+                        Suite aux événements tragiques du stade de Conakry, la diaspora belge organise des manifestations historiques à Bruxelles (Schuman). La communauté devient un acteur politique visible et structuré.
+                      </p>
+                    </div>
+                  </li>
+                </ul>
               </div>
             </div>
 
-            {/* Colonne 3 : L'ambiance sonore/goût */}
-            <div className="md:col-span-1 bg-slate-50 p-6 rounded-2xl border-2 border-dashed border-gray-300">
-              <h3 className="font-bold text-xl mb-4 flex items-center gap-2">
-                <Coffee className="h-5 w-5 text-brown-600" />
-                L'atmosphère
-              </h3>
-              <ul className="space-y-4 text-sm text-gray-600">
-                <li className="flex gap-3">
-                  <span className="font-bold text-slate-900">Le bruit :</span>
-                  Les coiffeurs de la Chaussée de Wavre, la musique guinéenne qui s'échappe des boutiques.
-                </li>
-                <li className="flex gap-3">
-                  <span className="font-bold text-slate-900">Le goût :</span>
-                  L'odeur du soupou kandia le dimanche, les maquis qui ouvrent discrètement.
-                </li>
-                <li className="flex gap-3">
-                  <span className="font-bold text-slate-900">Le lien :</span>
-                  Les tontines de femmes qui deviennent les banques solidaires de la communauté.
-                </li>
-              </ul>
+            {/* Colonne Droite : Visuel et Stats */}
+            <div className="lg:w-1/2 relative">
+              {/* Carte des Stats */}
+              <div className="absolute -left-8 top-12 z-20 bg-white p-6 rounded-xl shadow-2xl border-l-4 border-orange-500 max-w-xs hidden md:block transform -rotate-3">
+                <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">Impact Communautaire</h4>
+                <div className="space-y-4">
+                  <div>
+                    <div className="text-3xl font-black text-slate-900">35%</div>
+                    <div className="text-xs font-medium text-gray-600">Augmentation des commerces guinéens à Matonge</div>
+                  </div>
+                  <div className="w-full h-px bg-gray-100"></div>
+                  <div>
+                    <div className="text-3xl font-black text-slate-900">2009</div>
+                    <div className="text-xs font-medium text-gray-600">Année charnière de mobilisation politique</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Image Principale */}
+              <div className="relative rounded-2xl overflow-hidden shadow-xl border-4 border-white rotate-2 hover:rotate-0 transition-transform duration-500 group">
+                <img 
+                  src={images.matonge} 
+                  alt="Communauté Guinéenne années 2000" 
+                  className="w-full h-[500px] object-cover filter sepia-[0.15] contrast-110"
+                  onError={handleImageError}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent">
+                  <div className="absolute bottom-6 left-6 right-6 text-white">
+                    <div className="flex items-center gap-2 mb-2">
+                      <MapPin className="h-5 w-5 text-orange-400" />
+                      <span className="font-bold uppercase tracking-widest text-sm">Ixelles & Liège</span>
+                    </div>
+                    <p className="font-medium text-sm text-gray-200">
+                      Les familles s'installent, les enfants grandissent en Belgique. La communauté prend racine.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Note contextuelle */}
+              <div className="mt-8 bg-white/60 backdrop-blur-sm p-4 rounded-lg border border-orange-200 flex items-start gap-3">
+                <AlertCircle className="h-5 w-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                <p className="text-xs text-orange-900 font-medium">
+                  <strong>Le saviez-vous ?</strong> C'est durant cette décennie que naissent les principales fédérations d'associations guinéennes, unifiant les peuls, malinkés, soussous et forestiers sous une bannière solidaire en Belgique.
+                </p>
+              </div>
+
             </div>
           </div>
         </div>

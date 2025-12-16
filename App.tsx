@@ -207,7 +207,8 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-african-pattern text-slate-900 font-sans flex flex-col">
+    // CHANGEMENT MAJEUR: Application de bg-warm-bg (#FFFBF0) comme fond global pour unifier avec l'histoire
+    <div className="min-h-screen bg-[#FFFBF0] text-slate-900 font-sans flex flex-col">
       <Navbar 
         currentView={view} 
         setView={navigate} 
@@ -215,7 +216,6 @@ const AppContent: React.FC = () => {
         setLanguage={setLanguage} 
       />
       
-      {/* Ajout de 'relative z-0' pour créer un contexte d'empilement qui ne dépasse pas la navbar fixe */}
       <main id="main-content" className="flex-grow pt-20 relative z-0">
         <ErrorBoundary>
             {renderView()}

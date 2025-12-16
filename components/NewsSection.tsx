@@ -5,12 +5,9 @@ import {
   TrendingUp, Eye, MessageCircle, ArrowRight, Sparkles
 } from 'lucide-react';
 import { translations } from '../utils/translations.ts';
-// Import LanguageCode if available from context, otherwise default to prop or hook
-import { useAuth } from '../contexts/AuthContext.tsx'; // Assuming auth context might hold language or passing it via props
 
-// Fix: Add language prop to component to receive current language
 interface NewsSectionProps {
-    language?: string; // Optional prop
+    language?: string;
 }
 
 interface NewsArticle {
@@ -40,7 +37,7 @@ const NewsSection: React.FC<NewsSectionProps> = ({ language = 'fr' }) => {
   const [likedArticles, setLikedArticles] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Sample data (same as before)
+  // Sample data (conserved)
   const articles: NewsArticle[] = [
     {
       id: '1',
@@ -59,7 +56,6 @@ const NewsSection: React.FC<NewsSectionProps> = ({ language = 'fr' }) => {
       featured: true,
       tags: ['festival', 'culture', 'solidarité', 'événement']
     },
-    // ... other articles (keeping existing data for brevity)
     {
       id: '2',
       title: 'Nouveau Partenaire : La Ferme Bio du Hainaut',
@@ -146,7 +142,7 @@ const NewsSection: React.FC<NewsSectionProps> = ({ language = 'fr' }) => {
   ];
 
   const categories = [
-    { id: 'all', label: t.news_filter_all || 'Toutes les actualités', count: articles.length },
+    { id: 'all', label: t.news_filter_all || 'Tout', count: articles.length },
     { id: 'event', label: 'Événements', count: articles.filter(a => a.category === 'event').length },
     { id: 'announcement', label: 'Annonces', count: articles.filter(a => a.category === 'announcement').length },
     { id: 'success', label: 'Succès', count: articles.filter(a => a.category === 'success').length },
@@ -196,108 +192,73 @@ const NewsSection: React.FC<NewsSectionProps> = ({ language = 'fr' }) => {
 
   const getCategoryColor = (category: string) => {
     switch(category) {
-      case 'event': return 'bg-blue-100 text-blue-800';
-      case 'announcement': return 'bg-purple-100 text-purple-800';
-      case 'success': return 'bg-green-100 text-green-800';
-      case 'partner': return 'bg-orange-100 text-orange-800';
-      case 'community': return 'bg-pink-100 text-pink-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'event': return 'bg-blue-100 text-blue-900 border-blue-200';
+      case 'announcement': return 'bg-purple-100 text-purple-900 border-purple-200';
+      case 'success': return 'bg-green-100 text-green-900 border-green-200';
+      case 'partner': return 'bg-orange-100 text-orange-900 border-orange-200';
+      case 'community': return 'bg-pink-100 text-pink-900 border-pink-200';
+      default: return 'bg-gray-100 text-gray-900 border-gray-200';
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12 md:py-20">
+    // FOND HARMONISÉ
+    <div className="min-h-screen bg-[#FFFBF0] py-12 md:py-20 font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Header */}
-        <div className="text-center mb-12 md:mb-20">
-          <div className="inline-flex items-center justify-center p-4 bg-gradient-to-br from-blue-100 to-blue-50 rounded-full mb-6 shadow-lg">
-            <Newspaper className="h-12 w-12 text-blue-600" aria-hidden="true" />
-          </div>
-          <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4">
-            {t.news_title || "Actualités & Événements"}
+        {/* Header Magazine Style */}
+        <div className="text-center mb-16 md:mb-24">
+          <span className="inline-block py-1 px-3 border-2 border-black font-black text-xs uppercase tracking-[0.2em] mb-4 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-slate-900">
+            Journal
+          </span>
+          <h1 className="text-5xl md:text-7xl font-black text-slate-900 mb-6 tracking-tight">
+            {t.news_title || "ACTUALITÉS"}
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            {t.news_subtitle || "Restez informé des dernières nouvelles, événements et succès de notre communauté"}
+          <p className="text-xl text-gray-700 font-serif italic max-w-3xl mx-auto leading-relaxed border-l-4 border-[#CE1126] pl-6 text-left">
+            "{t.news_subtitle || "Le pouls de notre communauté. Histoires, événements et victoires."}"
           </p>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center">
-            <div className="text-3xl font-black text-slate-900 mb-2">{articles.length}</div>
-            <div className="text-gray-600 font-medium">{t.news_stats_articles || "Articles publiés"}</div>
-          </div>
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center">
-            <div className="text-3xl font-black text-slate-900 mb-2">
-              {articles.reduce((sum, article) => sum + article.views, 0).toLocaleString()}
-            </div>
-            <div className="text-gray-600 font-medium">{t.news_stats_views || "Vues totales"}</div>
-          </div>
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center">
-            <div className="text-3xl font-black text-slate-900 mb-2">
-              {articles.reduce((sum, article) => sum + article.likes, 0)}
-            </div>
-            <div className="text-gray-600 font-medium">Réactions</div>
-          </div>
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center">
-            <div className="text-3xl font-black text-slate-900 mb-2">
-              {new Set(articles.map(a => a.category)).size}
-            </div>
-            <div className="text-gray-600 font-medium">Catégories</div>
-          </div>
-        </div>
-
-        {/* Featured Articles */}
+        {/* Featured Articles - Grande Carte */}
         {featuredArticles.length > 0 && (
-          <div className="mb-16">
-            <h2 className="text-2xl md:text-3xl font-black text-slate-900 mb-8 flex items-center gap-3">
-              <Sparkles className="h-7 w-7 text-yellow-500" aria-hidden="true" />
-              Articles à la une
+          <div className="mb-20">
+            <h2 className="text-2xl font-black text-slate-900 mb-8 flex items-center gap-3 uppercase tracking-wider">
+              <Sparkles className="h-6 w-6 text-[#FCD116]" aria-hidden="true" />
+              À la une
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
               {featuredArticles.map((article) => (
                 <article 
                   key={article.id}
-                  className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 group cursor-pointer hover:-translate-y-1 transition-all duration-300"
+                  className="bg-white rounded-2xl shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] border-2 border-slate-900 overflow-hidden group cursor-pointer hover:-translate-y-1 transition-all duration-300"
                   onClick={() => openArticleModal(article)}
                 >
-                  <div className="relative h-64 overflow-hidden">
+                  <div className="relative h-72 overflow-hidden border-b-2 border-slate-900">
                     <img 
                       src={article.imageUrl}
                       alt={article.title}
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 grayscale group-hover:grayscale-0"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     <div className="absolute top-4 left-4">
-                      <span className={`px-3 py-1 rounded-full text-xs font-bold ${getCategoryColor(article.category)}`}>
+                      <span className={`px-3 py-1 rounded-full text-xs font-bold border ${getCategoryColor(article.category)}`}>
                         {categories.find(c => c.id === article.category)?.label}
                       </span>
                     </div>
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <h3 className="text-xl font-black text-white mb-2 line-clamp-2">
-                        {article.title}
-                      </h3>
-                      <div className="flex items-center text-white/90 text-sm">
-                        <Calendar className="h-4 w-4 mr-1" aria-hidden="true" />
-                        <span className="mr-3">{article.date}</span>
-                        <Clock className="h-4 w-4 mr-1" aria-hidden="true" />
-                        <span>{article.readTime}</span>
-                      </div>
-                    </div>
                   </div>
-                  <div className="p-6">
-                    <p className="text-gray-600 mb-4 line-clamp-2">
+                  <div className="p-8">
+                    <h3 className="text-2xl font-black text-slate-900 mb-4 leading-tight group-hover:text-[#CE1126] transition-colors">
+                      {article.title}
+                    </h3>
+                    <p className="text-gray-600 mb-6 line-clamp-2 font-serif text-lg">
                       {article.excerpt}
                     </p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center text-sm text-gray-500">
-                        <User className="h-4 w-4 mr-1" aria-hidden="true" />
-                        <span>{article.author}</span>
+                    <div className="flex items-center justify-between border-t border-gray-100 pt-4">
+                      <div className="flex items-center text-sm font-bold text-gray-500">
+                        <span className="uppercase tracking-wide">{article.date}</span>
                       </div>
-                      <button className="text-[#CE1126] font-bold flex items-center hover:translate-x-1 transition-transform">
-                        {t.news_read_more || "Lire la suite"} <ChevronRight className="h-4 w-4 ml-1" />
-                      </button>
+                      <span className="text-[#CE1126] font-bold flex items-center group-hover:translate-x-2 transition-transform">
+                        Lire <ArrowRight className="h-4 w-4 ml-2" />
+                      </span>
                     </div>
                   </div>
                 </article>
@@ -307,38 +268,33 @@ const NewsSection: React.FC<NewsSectionProps> = ({ language = 'fr' }) => {
         )}
 
         {/* Filters & Search */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 border border-gray-200">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            {/* Search */}
+        <div className="bg-white rounded-2xl border-2 border-slate-900 shadow-sm p-6 mb-12">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="flex-1">
-              <div className="relative max-w-md">
+              <div className="relative">
                 <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" aria-hidden="true" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder={t.news_search_placeholder || "Rechercher des actualités..."}
-                  className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-[#CE1126] focus:ring-2 focus:ring-[#CE1126]/20 outline-none transition-all"
+                  placeholder={t.news_search_placeholder || "Rechercher..."}
+                  className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-slate-900 focus:ring-0 outline-none transition-all font-bold text-slate-900 placeholder:font-normal"
                 />
               </div>
             </div>
 
-            {/* Category Filters */}
             <div className="flex flex-wrap gap-2">
               {categories.map((category) => (
                 <button
                   key={category.id}
                   onClick={() => setSelectedCategory(category.id)}
-                  className={`px-4 py-2 rounded-full border-2 transition-all flex items-center gap-2 active:scale-95 ${
+                  className={`px-4 py-2 rounded-lg border-2 transition-all flex items-center gap-2 active:scale-95 font-bold text-sm ${
                     selectedCategory === category.id
-                      ? 'border-[#CE1126] bg-red-50 text-[#CE1126] font-bold'
-                      : 'border-gray-200 text-gray-600 hover:border-gray-300'
+                      ? 'border-slate-900 bg-slate-900 text-white'
+                      : 'border-transparent bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
                 >
                   {category.label}
-                  <span className="text-xs bg-gray-100 px-2 py-0.5 rounded-full">
-                    {category.count}
-                  </span>
                 </button>
               ))}
             </div>
@@ -350,295 +306,149 @@ const NewsSection: React.FC<NewsSectionProps> = ({ language = 'fr' }) => {
           {filteredArticles.map((article) => (
             <article 
               key={article.id}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 group cursor-pointer hover:-translate-y-1"
+              className="bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-xl transition-all duration-300 group cursor-pointer hover:-translate-y-1 flex flex-col h-full"
               onClick={() => openArticleModal(article)}
             >
               {/* Image */}
-              <div className="relative h-48 overflow-hidden">
+              <div className="relative h-48 overflow-hidden rounded-t-xl">
                 <img 
                   src={article.imageUrl}
                   alt={article.title}
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute top-4 right-4 flex gap-2">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleBookmark(article.id);
-                    }}
-                    className={`p-2 rounded-full backdrop-blur-sm transition-transform active:scale-90 ${
-                      bookmarkedArticles.includes(article.id)
-                        ? 'bg-yellow-500 text-white'
-                        : 'bg-white/90 text-gray-600 hover:bg-white'
-                    }`}
-                    aria-label={bookmarkedArticles.includes(article.id) ? 'Retirer des favoris' : 'Ajouter aux favoris'}
-                  >
-                    <Bookmark className="h-4 w-4" />
-                  </button>
-                </div>
                 <div className="absolute bottom-4 left-4">
-                  <span className={`px-3 py-1 rounded-full text-xs font-bold ${getCategoryColor(article.category)}`}>
+                  <span className={`px-2 py-1 rounded text-[10px] font-black uppercase tracking-wider bg-white border border-slate-900 text-slate-900`}>
                     {categories.find(c => c.id === article.category)?.label}
                   </span>
                 </div>
               </div>
 
               {/* Content */}
-              <div className="p-6">
-                <div className="flex items-center text-sm text-gray-500 mb-3">
-                  <Calendar className="h-4 w-4 mr-1" aria-hidden="true" />
-                  <span className="mr-4">{article.date}</span>
-                  <Clock className="h-4 w-4 mr-1" aria-hidden="true" />
+              <div className="p-6 flex flex-col flex-grow">
+                <div className="flex items-center text-xs font-bold text-gray-400 mb-3 uppercase tracking-wider">
+                  <span>{article.date}</span>
+                  <span className="mx-2">•</span>
                   <span>{article.readTime}</span>
                 </div>
 
-                <h3 className="text-xl font-bold text-slate-900 mb-3 line-clamp-2 group-hover:text-[#CE1126] transition-colors">
+                <h3 className="text-xl font-black text-slate-900 mb-3 line-clamp-2 leading-tight group-hover:underline decoration-2 decoration-[#FCD116] underline-offset-4">
                   {article.title}
                 </h3>
 
-                <p className="text-gray-600 mb-4 line-clamp-2">
+                <p className="text-gray-600 mb-4 line-clamp-3 text-sm flex-grow font-medium">
                   {article.excerpt}
                 </p>
 
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {article.tags.slice(0, 3).map((tag) => (
-                    <span key={tag} className="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Stats */}
-                <div className="flex items-center justify-between text-sm text-gray-500 pt-4 border-t border-gray-100">
-                  <div className="flex items-center gap-4">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleLike(article.id);
-                      }}
-                      className={`flex items-center gap-1 active:scale-90 transition-transform ${
-                        likedArticles.includes(article.id) ? 'text-red-500' : 'hover:text-red-500'
-                      }`}
-                    >
-                      <Heart className="h-4 w-4" aria-hidden="true" />
-                      <span>{article.likes + (likedArticles.includes(article.id) ? 1 : 0)}</span>
-                    </button>
-                    <div className="flex items-center gap-1">
-                      <Eye className="h-4 w-4" aria-hidden="true" />
-                      <span>{article.views}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <MessageCircle className="h-4 w-4" aria-hidden="true" />
-                      <span>{article.comments}</span>
-                    </div>
-                  </div>
-                  <button className="text-[#CE1126] font-bold flex items-center group-hover:translate-x-1 transition-transform">
-                    {t.news_read_more || "Lire"} <ChevronRight className="h-4 w-4 ml-1" />
-                  </button>
+                {/* Stats Footer */}
+                <div className="flex items-center justify-between pt-4 border-t border-gray-100 mt-auto">
+                   <div className="flex gap-4 text-gray-400 text-sm">
+                      <span className="flex items-center gap-1"><Eye className="h-4 w-4"/> {article.views}</span>
+                      <span className="flex items-center gap-1"><Heart className="h-4 w-4"/> {article.likes}</span>
+                   </div>
+                   <ChevronRight className="h-5 w-5 text-slate-900" />
                 </div>
               </div>
             </article>
           ))}
         </div>
 
-        {/* Empty State */}
-        {filteredArticles.length === 0 && (
-          <div className="text-center py-16">
-            <Newspaper className="h-16 w-16 text-gray-300 mx-auto mb-6" aria-hidden="true" />
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">
-              {t.news_no_results || "Aucun article trouvé"}
-            </h3>
-            <p className="text-gray-600 max-w-md mx-auto mb-6">
-              Essayez de modifier vos critères de recherche ou de réinitialiser les filtres
-            </p>
-            <button
-              onClick={() => {
-                setSelectedCategory('all');
-                setSearchQuery('');
-              }}
-              className="px-6 py-3 bg-[#CE1126] text-white font-bold rounded-xl hover:bg-red-700 transition-colors active:scale-95"
-            >
-              Réinitialiser les filtres
-            </button>
-          </div>
-        )}
-
-        {/* Recent Articles Sidebar */}
-        <div className="bg-gradient-to-r from-slate-900 to-gray-900 rounded-3xl p-8 text-white">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-black">Articles récents</h2>
-            <TrendingUp className="h-6 w-6 text-yellow-400" aria-hidden="true" />
-          </div>
+        {/* Sidebar Récents (Style Dark) */}
+        <div className="bg-slate-900 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#CE1126] opacity-10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
           
-          <div className="space-y-6">
-            {recentArticles.map((article) => (
-              <div 
-                key={article.id}
-                className="bg-white/5 backdrop-blur-sm rounded-xl p-4 hover:bg-white/10 transition-colors cursor-pointer group active:scale-[0.99]"
-                onClick={() => openArticleModal(article)}
-              >
-                <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden">
-                    <img 
-                      src={article.imageUrl}
-                      alt={article.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="flex-grow">
-                    <h4 className="font-bold text-white mb-1 line-clamp-2 group-hover:text-yellow-300 transition-colors">
-                      {article.title}
-                    </h4>
-                    <div className="flex items-center text-white/60 text-sm">
-                      <Calendar className="h-3 w-3 mr-1" aria-hidden="true" />
-                      <span>{article.date}</span>
-                    </div>
-                  </div>
-                  <ChevronRight className="h-4 w-4 text-white/40 group-hover:text-white transition-colors" aria-hidden="true" />
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 pt-8 border-t border-white/10">
-            <button className="w-full py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-2 active:scale-95">
-              Voir toutes les actualités
-              <ArrowRight className="h-5 w-5" aria-hidden="true" />
-            </button>
-          </div>
-        </div>
-
-        {/* Newsletter Subscription */}
-        <div className="mt-16 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-3xl p-8 md:p-12 text-center border border-blue-100">
-          <div className="max-w-2xl mx-auto">
-            <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-4">
-              {t.news_subscribe_title || "Restez informé"}
-            </h3>
-            <p className="text-gray-600 mb-8">
-              {t.news_subscribe_desc || "Inscrivez-vous à notre newsletter pour recevoir les dernières actualités directement dans votre boîte mail"}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Votre adresse email"
-                className="flex-grow px-6 py-3 rounded-xl border-2 border-gray-200 focus:border-[#CE1126] focus:ring-2 focus:ring-[#CE1126]/20 outline-none"
-              />
-              <button className="px-8 py-3 bg-[#CE1126] text-white font-bold rounded-xl hover:bg-red-700 transition-colors active:scale-95">
-                {t.news_subscribe_btn || "S'abonner"}
+          <div className="relative z-10 flex flex-col md:flex-row gap-12">
+            <div className="md:w-1/3">
+              <h2 className="text-3xl font-black mb-4">En bref</h2>
+              <p className="text-slate-400 mb-6">Les dernières nouvelles rapides de la communauté.</p>
+              <button className="px-6 py-3 bg-white text-slate-900 font-bold rounded-xl hover:bg-gray-100 transition-colors">
+                Voir tout
               </button>
             </div>
-            <p className="text-sm text-gray-500 mt-4">
-              Pas de spam, uniquement des informations utiles. Vous pouvez vous désabonner à tout moment.
-            </p>
+            
+            <div className="md:w-2/3 grid gap-6">
+              {recentArticles.map((article) => (
+                <div 
+                  key={article.id}
+                  className="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors cursor-pointer group border-b border-white/10 last:border-0"
+                  onClick={() => openArticleModal(article)}
+                >
+                  <div className="flex-shrink-0 w-2 h-2 mt-2 rounded-full bg-[#FCD116]"></div>
+                  <div>
+                    <h4 className="font-bold text-lg mb-1 group-hover:text-[#FCD116] transition-colors">{article.title}</h4>
+                    <span className="text-xs text-slate-500 font-mono">{article.date}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
+
       </div>
 
-      {/* Article Modal */}
+      {/* Article Modal (inchangé mais inclus pour la complétude) */}
       {isModalOpen && selectedArticle && (
         <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
-          aria-labelledby="article-title"
-          onClick={closeArticleModal} // Click outside to close
+          onClick={closeArticleModal} 
         >
           <div 
-            className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200"
-            onClick={(e) => e.stopPropagation()} // Prevent close on content click
+            className="relative w-full max-w-4xl max-h-[90vh] bg-[#FFFBF0] rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200 flex flex-col"
+            onClick={(e) => e.stopPropagation()} 
           >
-            {/* Close Button */}
-            <button
-              onClick={closeArticleModal}
-              className="absolute top-4 right-4 z-10 p-3 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors hover:scale-110 active:scale-90"
-              aria-label="Fermer l'article"
-            >
-              <X className="h-6 w-6" aria-hidden="true" />
-            </button>
-
-            {/* Image */}
-            <div className="h-64 md:h-80 relative overflow-hidden">
-              <img
-                src={selectedArticle.imageUrl}
-                alt={selectedArticle.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-white">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className={`px-3 py-1 rounded-full text-xs font-bold ${getCategoryColor(selectedArticle.category)}`}>
-                    {categories.find(c => c.id === selectedArticle.category)?.label}
-                  </span>
-                  <span className="text-white/80 text-sm">
-                    {selectedArticle.readTime} de lecture
-                  </span>
-                </div>
-                <h1 id="article-title" className="text-2xl md:text-3xl font-black text-white">
-                  {selectedArticle.title}
-                </h1>
-              </div>
+            <div className="absolute top-4 right-4 z-20">
+               <button
+                onClick={closeArticleModal}
+                className="p-2 bg-white text-slate-900 rounded-full hover:bg-gray-100 shadow-lg border border-slate-900"
+              >
+                <span className="sr-only">Fermer</span>
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
             </div>
 
-            {/* Content */}
-            <div className="p-6 md:p-8 overflow-y-auto max-h-[calc(90vh-16rem)]">
-              <div className="flex items-center justify-between mb-6 text-sm text-gray-500">
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-1">
-                    <User className="h-4 w-4" aria-hidden="true" />
+            <div className="overflow-y-auto">
+              <div className="h-64 md:h-96 relative">
+                <img
+                  src={selectedArticle.imageUrl}
+                  alt={selectedArticle.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80" />
+                <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 text-white">
+                  <span className="inline-block px-3 py-1 mb-4 text-xs font-bold uppercase tracking-wider bg-[#FCD116] text-slate-900 rounded-sm">
+                    {categories.find(c => c.id === selectedArticle.category)?.label}
+                  </span>
+                  <h1 className="text-3xl md:text-5xl font-black leading-tight mb-4">
+                    {selectedArticle.title}
+                  </h1>
+                  <div className="flex items-center gap-6 text-sm font-bold opacity-80">
                     <span>{selectedArticle.author}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Calendar className="h-4 w-4" aria-hidden="true" />
+                    <span>•</span>
                     <span>{selectedArticle.date}</span>
                   </div>
-                  {selectedArticle.location && (
-                    <div className="flex items-center gap-1">
-                      <MapPin className="h-4 w-4" aria-hidden="true" />
-                      <span>{selectedArticle.location}</span>
-                    </div>
-                  )}
-                </div>
-                <div className="flex items-center gap-4">
-                  <button
-                    onClick={() => handleLike(selectedArticle.id)}
-                    className={`flex items-center gap-1 transition-transform active:scale-90 ${likedArticles.includes(selectedArticle.id) ? 'text-red-500' : 'text-gray-500 hover:text-red-500'}`}
-                  >
-                    <Heart className="h-5 w-5" aria-hidden="true" />
-                    <span>{selectedArticle.likes + (likedArticles.includes(selectedArticle.id) ? 1 : 0)}</span>
-                  </button>
-                  <button
-                    onClick={() => handleBookmark(selectedArticle.id)}
-                    className={`transition-transform active:scale-90 ${bookmarkedArticles.includes(selectedArticle.id) ? 'text-yellow-500' : 'text-gray-500 hover:text-yellow-500'}`}
-                  >
-                    <Bookmark className="h-5 w-5" aria-hidden="true" />
-                  </button>
-                  <button className="text-gray-500 hover:text-blue-500 transition-transform active:scale-90">
-                    <Share2 className="h-5 w-5" aria-hidden="true" />
-                  </button>
                 </div>
               </div>
 
-              <div className="prose max-w-none">
-                <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                  {selectedArticle.content}
-                </p>
+              <div className="p-8 md:p-12 max-w-3xl mx-auto">
+                <div className="prose prose-lg prose-slate max-w-none font-serif">
+                  <p className="lead text-xl font-bold text-slate-900 mb-8 border-l-4 border-[#CE1126] pl-6">
+                    {selectedArticle.excerpt}
+                  </p>
+                  <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+                    {selectedArticle.content}
+                  </p>
+                </div>
                 
-                {selectedArticle.excerpt && (
-                  <div className="bg-blue-50 p-4 rounded-xl border border-blue-100 my-6">
-                    <p className="text-blue-800 font-medium">
-                      {selectedArticle.excerpt}
-                    </p>
-                  </div>
-                )}
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mt-8 pt-8 border-t border-gray-200">
-                  {selectedArticle.tags.map((tag) => (
-                    <span key={tag} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
-                      #{tag}
-                    </span>
-                  ))}
+                <div className="mt-12 pt-8 border-t-2 border-slate-200 flex justify-between items-center">
+                   <div className="flex gap-2">
+                      {selectedArticle.tags.map(tag => (
+                        <span key={tag} className="text-xs font-bold text-slate-500 bg-white border border-slate-200 px-3 py-1 rounded-full">#{tag}</span>
+                      ))}
+                   </div>
+                   <button className="flex items-center gap-2 text-[#CE1126] font-bold hover:underline">
+                      <Share2 className="h-4 w-4"/> Partager
+                   </button>
                 </div>
               </div>
             </div>
@@ -648,23 +458,5 @@ const NewsSection: React.FC<NewsSectionProps> = ({ language = 'fr' }) => {
     </div>
   );
 };
-
-// Missing X icon component (defined inline here to avoid import error if lucide missing)
-const X = ({ className }: { className?: string }) => (
-  <svg 
-    className={className} 
-    fill="none" 
-    stroke="currentColor" 
-    viewBox="0 0 24 24" 
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path 
-      strokeLinecap="round" 
-      strokeLinejoin="round" 
-      strokeWidth={2} 
-      d="M6 18L18 6M6 6l12 12"
-    />
-  </svg>
-);
 
 export default NewsSection;
