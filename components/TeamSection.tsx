@@ -32,15 +32,17 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
   };
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    e.currentTarget.src = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?fit=crop&w=800&q=80";
+    // Fallback vers une image abstraite neutre si la photo ne charge pas
+    e.currentTarget.src = "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=800&auto=format&fit=crop";
   };
 
-  // Enhanced team members - Removed fake phone numbers
+  // Membres de l'équipe avec photos mises à jour pour correspondre aux profils
   const teamMembers: TeamMember[] = [
     {
       name: "Thierno I. T. Diallo",
       role: t.role_admin,
-      image: "https://i.imgur.com/T2LT1pB.jpg",
+      // Photo officielle fournie via Imgur
+      image: "https://i.imgur.com/T2LT1pB.png",
       email: "thierno.diallo@ballal.be",
       color: "border-[#CE1126]",
       bio: t.member_bio_placeholder || "Président de Ballal ASBL",
@@ -51,7 +53,8 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
     {
       name: "Bah Ibrahim",
       role: t.role_admin,
-      image: "https://i.imgur.com/l3UdDov.jpg",
+      // Photo officielle fournie via Imgur
+      image: "https://i.imgur.com/l3UdDov.png",
       email: "bah.ibrahim@ballal.be",
       color: "border-[#FCD116]",
       bio: t.member_bio_placeholder || "Vice-président de Ballal ASBL"
@@ -59,7 +62,8 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
     {
       name: "Kadiatou Sow",
       role: t.role_admin_f,
-      image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&q=80&w=800",
+      // Photo officielle fournie via Imgur
+      image: "https://i.imgur.com/THTzMBW.png",
       email: "kadiatou.sow@ballal.be",
       color: "border-[#009460]",
       bio: t.member_bio_placeholder || "Secrétaire générale de Ballal ASBL"
@@ -67,7 +71,8 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
     {
       name: "Cissé, Abdoulaye",
       role: t.role_admin,
-      image: "https://i.imgur.com/7FduSwY.jpg",
+      // Photo officielle fournie via Imgur
+      image: "https://i.imgur.com/7FduSwY.png",
       email: "abdoulaye.cisse@ballal.be",
       color: "border-slate-800",
       bio: t.member_bio_placeholder || "Trésorier de Ballal ASBL"
@@ -75,7 +80,8 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
     {
       name: "Francois Halleux",
       role: "Conseiller en stratégie & Innovation sociale",
-      image: "https://i.imgur.com/1qqkroP.jpg",
+      // Photo officielle fournie via Imgur
+      image: "https://i.imgur.com/1qqkroP.png",
       email: "francois.halleux@ballal.be",
       color: "border-blue-600",
       bio: t.member_bio_placeholder || "Conseiller en stratégie et innovation sociale",

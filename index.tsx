@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 
 interface GlobalErrorBoundaryProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 interface GlobalErrorBoundaryState {
@@ -15,6 +15,10 @@ interface GlobalErrorBoundaryState {
 // Si une erreur grave survient n'importe où dans l'app, ceci s'affichera à la place d'un écran blanc.
 class GlobalErrorBoundary extends React.Component<GlobalErrorBoundaryProps, GlobalErrorBoundaryState> {
   public state: GlobalErrorBoundaryState = { hasError: false, error: null };
+
+  constructor(props: GlobalErrorBoundaryProps) {
+    super(props);
+  }
 
   static getDerivedStateFromError(error: Error): GlobalErrorBoundaryState {
     return { hasError: true, error };

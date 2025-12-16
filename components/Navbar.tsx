@@ -83,7 +83,9 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
 
   const navItems = [
     { label: t.nav_home || 'Accueil', value: ViewState.HOME },
+    { label: t.nav_news || 'Actualités', value: ViewState.NEWS }, // Réintégration des News
     { label: t.nav_legal || 'Aide Juridique', value: ViewState.LEGAL_AID },
+    { label: t.nav_history || 'Histoire', value: ViewState.HISTORY },
     { label: t.nav_festival || 'Festival', value: ViewState.FESTIVAL },
     { label: t.nav_food_project || 'Alimentation', value: ViewState.FOOD_AUTONOMY },
   ];
@@ -157,7 +159,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                       type="button"
                       onClick={() => setView(item.value)}
                       aria-current={currentView === item.value ? 'page' : undefined}
-                      className={`px-4 py-2.5 rounded-full text-xs font-bold transition-all duration-200 uppercase tracking-wider focus:outline-none focus:ring-2 focus:ring-[#CE1126] focus:ring-offset-2 active:scale-95 ${
+                      className={`px-3 py-2.5 rounded-full text-xs font-bold transition-all duration-200 uppercase tracking-wider focus:outline-none focus:ring-2 focus:ring-[#CE1126] focus:ring-offset-2 active:scale-95 ${
                         currentView === item.value
                           ? 'text-white bg-gradient-to-r from-[#CE1126] to-red-600 shadow-md transform scale-105'
                           : 'text-gray-600 hover:text-[#CE1126] hover:bg-white hover:shadow-sm'

@@ -16,6 +16,7 @@ import FoodAutonomySection from './components/FoodAutonomySection.tsx';
 import ContactSection from './components/ContactSection.tsx';
 import FestivalSection from './components/FestivalSection.tsx';
 import LegalDocSection from './components/LegalDocSection.tsx';
+import NewsSection from './components/NewsSection.tsx'; // Import NewsSection
 import { FoodSupplierForm, FoodNetworkForm } from './components/FoodForms.tsx';
 
 interface ErrorBoundaryProps {
@@ -28,6 +29,10 @@ interface ErrorBoundaryState {
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   public state: ErrorBoundaryState = { hasError: false };
+
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+  }
 
   static getDerivedStateFromError(_: Error): ErrorBoundaryState {
     return { hasError: true };
@@ -62,6 +67,7 @@ const useAppNavigation = () => {
     switch(v) {
       case ViewState.LEGAL_AID: return 'legal';
       case ViewState.HISTORY: return 'history';
+      case ViewState.NEWS: return 'news'; // Hash for news
       case ViewState.SHARE: return 'share';
       case ViewState.DONATE: return 'donate';
       case ViewState.FOOD_AUTONOMY: return 'food-project';
@@ -82,6 +88,7 @@ const useAppNavigation = () => {
     switch(hash) {
       case 'legal': return ViewState.LEGAL_AID;
       case 'history': return ViewState.HISTORY;
+      case 'news': return ViewState.NEWS; // View for news
       case 'share': return ViewState.SHARE;
       case 'donate': return ViewState.DONATE;
       case 'food-project': return ViewState.FOOD_AUTONOMY;
@@ -176,6 +183,7 @@ const AppContent: React.FC = () => {
         );
       case ViewState.LEGAL_AID: return <LegalAidSection language={language} />;
       case ViewState.HISTORY: return <HistorySection language={language} />;
+      case ViewState.NEWS: return <NewsSection language={language} />; // Render NewsSection
       case ViewState.SHARE: return <ShareSection language={language} />;
       case ViewState.DONATE: return <DonationSection language={language} />;
       case ViewState.FOOD_AUTONOMY: return <FoodAutonomySection language={language} setView={navigate} />;

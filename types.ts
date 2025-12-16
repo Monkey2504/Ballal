@@ -225,6 +225,7 @@ export enum ViewState {
   CULTURE = 'CULTURE',
   EVENTS = 'EVENTS',
   HISTORY = 'HISTORY',
+  NEWS = 'NEWS', // Added NEWS state
   
   // Engagement
   DONATE = 'DONATE',
