@@ -62,9 +62,9 @@ const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, set
   }, []);
 
   // Contact links
-  const donorContactLink = `mailto:Admin@ballal.be?subject=${encodeURIComponent(t.email_subject_food_donor)}&body=${encodeURIComponent(t.email_body_food_donor)}`;
-  const collectiveContactLink = `mailto:Admin@ballal.be?subject=${encodeURIComponent(t.email_subject_food_network)}&body=${encodeURIComponent(t.email_body_food_network)}`;
-  const generalContactLink = `mailto:Admin@ballal.be?subject=${encodeURIComponent(t.nav_food_project)}`;
+  const donorContactLink = `mailto:admin@ballal.be?subject=${encodeURIComponent(t.email_subject_food_donor)}&body=${encodeURIComponent(t.email_body_food_donor)}`;
+  const collectiveContactLink = `mailto:admin@ballal.be?subject=${encodeURIComponent(t.email_subject_food_network)}&body=${encodeURIComponent(t.email_body_food_network)}`;
+  const generalContactLink = `mailto:admin@ballal.be?subject=${encodeURIComponent(t.nav_food_project)}`;
 
   const benefits = [
     {
@@ -394,17 +394,4 @@ const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, set
                 href={generalContactLink}
                 className="inline-flex items-center justify-center px-8 py-4 bg-[#009460] text-white font-bold rounded-xl hover:bg-green-700 transition-colors shadow-lg gap-2"
               >
-                Nous contacter <ArrowRight className="h-5 w-5" />
-              </a>
-              <button className="inline-flex items-center justify-center px-8 py-4 border-2 border-[#009460] text-[#009460] font-bold rounded-xl hover:bg-green-50 transition-colors gap-2">
-                Télécharger la brochure
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default FoodAutonomySection;
+                Nous contacter <ArrowRight className="h-5 w-5

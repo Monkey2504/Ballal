@@ -42,7 +42,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
       name: "Thierno I. T. Diallo",
       role: t.role_admin,
       image: "https://i.imgur.com/T2LT1pB.png",
-      email: "thierno.diallo@ballal.be",
+      email: "admin@ballal.be",
       color: "border-[#CE1126]",
       bio: t.member_bio_placeholder || "Président de Ballal ASBL",
       social: { linkedin: "#" }
@@ -51,7 +51,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
       name: "Bah Ibrahim",
       role: t.role_admin,
       image: "https://i.imgur.com/l3UdDov.png",
-      email: "bah.ibrahim@ballal.be",
+      email: "admin@ballal.be",
       color: "border-[#FCD116]",
       bio: t.member_bio_placeholder || "Vice-président de Ballal ASBL"
     },
@@ -59,7 +59,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
       name: "Kadiatou Sow",
       role: t.role_admin_f,
       image: "https://i.imgur.com/THTzMBW.png",
-      email: "kadiatou.sow@ballal.be",
+      email: "admin@ballal.be",
       color: "border-[#009460]",
       bio: t.member_bio_placeholder || "Secrétaire générale de Ballal ASBL"
     },
@@ -67,7 +67,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
       name: "Cissé, Abdoulaye",
       role: t.role_admin,
       image: "https://i.imgur.com/7FduSwY.png",
-      email: "abdoulaye.cisse@ballal.be",
+      email: "admin@ballal.be",
       color: "border-slate-800",
       bio: t.member_bio_placeholder || "Trésorier de Ballal ASBL"
     },
@@ -75,7 +75,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
       name: "Francois Halleux",
       role: "Conseiller en stratégie",
       image: "https://i.imgur.com/1qqkroP.png",
-      email: "francois.halleux@ballal.be",
+      email: "admin@ballal.be",
       color: "border-blue-600",
       bio: t.member_bio_placeholder || "Innovation sociale",
       social: { linkedin: "#" }
