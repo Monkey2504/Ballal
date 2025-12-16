@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { 
   BookOpen, Flag, GraduationCap, Globe, Home, Users, 
   ArrowDown, ChevronRight, Sparkles, MapPin, Quote, Camera, 
-  Newspaper, Coffee, ImageOff, TrendingUp, AlertCircle
+  Newspaper, Coffee, ImageOff, TrendingUp, AlertCircle, Smartphone, Briefcase
 } from 'lucide-react';
 import { LanguageCode } from '../types.ts';
 import { translations } from '../utils/translations.ts';
@@ -30,8 +30,8 @@ const HistorySection: React.FC<HistorySectionProps> = ({ language }) => {
     independance: "https://i.imgur.com/EPEdzOF.png", // Photo historique De Gaulle / Guinée 1958
     students: "https://i.imgur.com/9CxUOIj.png", // Photo historique Boursiers d'État
     exil: "https://i.imgur.com/o9pUOZw.png", // Photo historique Exil / Asile
-    matonge: "https://i.imgur.com/EZdOQPM.png", // Nouvelle photo Vague 3
-    route: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?q=80&w=1600&auto=format&fit=crop" // Espoir / Horizon
+    matonge: "https://i.imgur.com/EZdOQPM.png", // Photo Vague 3 (Ancrage)
+    route: "https://imgur.com/s3XuBNm.png" // Nouvelle photo Vague 4 (Jeunesse/Groupe)
   };
 
   return (
@@ -316,50 +316,92 @@ const HistorySection: React.FC<HistorySectionProps> = ({ language }) => {
       </article>
 
       {/* --- CHAPITRE 4 : AUJOURD'HUI (2010-2024) --- */}
-      <article className="relative py-20 bg-gradient-to-br from-[#009460] to-emerald-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row gap-12">
+      <article className="relative py-24 bg-[#F0FDF4] overflow-hidden border-b border-green-200">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-green-100 rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex flex-col md:flex-row gap-16 items-center">
             
             <div className="md:w-1/2">
-              <h2 className="text-6xl md:text-8xl font-black text-white/10 absolute -top-10 left-0 select-none">
-                FUTUR
-              </h2>
-              <div className="relative z-10">
-                <h3 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                  <Sparkles className="h-6 w-6 text-yellow-300" />
-                  Génération "La Route" & Résilience
-                </h3>
-                <p className="text-lg text-emerald-100 mb-6 leading-relaxed">
-                  C'est la vague la plus récente, la plus jeune, et peut-être la plus courageuse. Ils sont arrivés par la Méditerranée, traversant l'enfer pour chercher la dignité.
-                </p>
-                <p className="text-lg text-emerald-100 mb-8 leading-relaxed">
-                  Souvent mineurs à leur arrivée (MENA), ils font preuve d'une soif d'apprendre incroyable. Ils remplissent les écoles de promotion sociale, les chantiers de formation. Ils sont la force vive de demain.
-                </p>
-                
-                <a href="#contact" className="inline-flex items-center px-6 py-3 bg-white text-emerald-900 font-bold rounded-full hover:bg-emerald-50 transition-colors">
-                  Rejoindre la communauté <ChevronRight className="ml-2 h-4 w-4" />
-                </a>
+              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white border border-green-200 shadow-sm mb-6">
+                <span className="flex h-3 w-3 rounded-full bg-green-500 animate-pulse"></span>
+                <span className="text-xs font-bold text-green-800 uppercase tracking-wide">Vague 4 : 2010 - Présent</span>
               </div>
+              
+              <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 leading-tight">
+                La Génération <br/>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-800">
+                  Résilience & Digitale
+                </span>
+              </h2>
+              
+              <div className="prose prose-lg text-gray-600 mb-8">
+                <p>
+                  Les années 2010 marquent une rupture démographique et sociologique. C'est l'ère de la "route", des MENA (Mineurs Étrangers Non Accompagnés) et de l'hyper-connexion.
+                </p>
+              </div>
+
+              {/* Timeline Vague 4 */}
+              <div className="space-y-6 border-l-4 border-green-200 pl-6 ml-2">
+                <div className="relative">
+                  <div className="absolute -left-[34px] top-1 h-5 w-5 rounded-full border-4 border-white bg-green-500"></div>
+                  <h4 className="font-bold text-slate-900 text-lg">2015 : La Crise de l'Accueil</h4>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Arrivée massive de mineurs isolés. La communauté s'organise via WhatsApp pour pallier les manquements de l'État (hébergement citoyen, aide d'urgence).
+                  </p>
+                </div>
+                <div className="relative">
+                  <div className="absolute -left-[34px] top-1 h-5 w-5 rounded-full border-4 border-white bg-green-500"></div>
+                  <h4 className="font-bold text-slate-900 text-lg">L'Intégration par le Métier</h4>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Faute de reconnaissance des diplômes, cette génération se tourne massivement vers les métiers en pénurie : soins de santé, construction, logistique et IT. Ils deviennent des piliers essentiels de l'économie belge.
+                  </p>
+                </div>
+              </div>
+
+              <a href="#contact" className="inline-flex items-center mt-10 px-8 py-4 bg-slate-900 text-white font-bold rounded-xl hover:bg-black transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                <Briefcase className="mr-2 h-5 w-5" />
+                Rejoindre le réseau pro
+              </a>
             </div>
 
-            <div className="md:w-1/2 grid grid-cols-2 gap-4">
-              <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20">
-                <div className="text-4xl font-black text-yellow-400 mb-2">25K+</div>
-                <div className="text-sm text-emerald-100 font-medium">Guinéens en Belgique aujourd'hui</div>
+            <div className="md:w-1/2 relative">
+              {/* Carte Stats Flottante */}
+              <div className="absolute -top-10 -right-10 z-20 bg-white p-6 rounded-2xl shadow-xl border border-green-100 max-w-[280px] hidden lg:block animate-in fade-in slide-in-from-bottom-4 duration-1000">
+                <div className="flex items-center gap-3 mb-4 border-b border-gray-100 pb-3">
+                  <Smartphone className="h-6 w-6 text-green-600" />
+                  <span className="font-bold text-slate-900 text-sm uppercase">Solidarité 2.0</span>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-gray-500 font-medium">Groupes WhatsApp</span>
+                    <span className="font-black text-slate-900">50+</span>
+                  </div>
+                  <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                    <div className="bg-green-500 h-full w-[80%]"></div>
+                  </div>
+                  <p className="text-xs text-gray-400 italic mt-2">
+                    Le smartphone est devenu l'outil n°1 de l'organisation communautaire.
+                  </p>
+                </div>
               </div>
-              <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 mt-8">
-                <div className="text-4xl font-black text-yellow-400 mb-2">3</div>
-                <div className="text-sm text-emerald-100 font-medium">Villes majeures : Bruxelles, Liège, Charleroi</div>
-              </div>
-              <div className="col-span-2 relative h-48 rounded-2xl overflow-hidden shadow-lg border-2 border-white/30">
+
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-8 border-white group">
                 <img 
                   src={images.route} 
-                  alt="Jeunesse Guinéenne" 
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 bg-emerald-800"
+                  alt="Jeunesse Guinéenne Active" 
+                  className="w-full h-[550px] object-cover hover:scale-105 transition-transform duration-700"
                   onError={handleImageError}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
-                  <p className="font-bold text-white">L'histoire continue...</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-green-900/90 via-transparent to-transparent">
+                  <div className="absolute bottom-8 left-8 right-8">
+                    <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md text-white text-xs font-bold rounded mb-3 border border-white/30">
+                      AUJOURD'HUI
+                    </span>
+                    <p className="text-white font-medium text-lg leading-relaxed shadow-sm">
+                      "Ils ne demandent pas l'aumône, ils demandent du travail. C'est une génération d'entrepreneurs et de bâtisseurs qui émerge."
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
