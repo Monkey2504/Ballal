@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { ShieldCheck, Heart, Share2, Sparkles, Target, Users, Globe, ArrowRight, Newspaper } from 'lucide-react';
+
+import React from 'react';
+import { Share2, Sparkles, Heart, ArrowRight } from 'lucide-react';
 import { LanguageCode } from '../types.ts';
 import { translations } from '../utils/translations.ts';
 
@@ -7,203 +8,67 @@ interface HeroProps {
   onExplore: () => void;
   language?: LanguageCode;
   onShare: () => void;
-  onDonate?: () => void;
+  onDonate: () => void;
 }
 
 const Hero: React.FC<HeroProps> = ({ onExplore, language = 'fr', onShare, onDonate }) => {
   const t = translations[language] || translations['fr'];
   
-  // Image "Arbre d'origine" (Baobab majestueux au coucher du soleil)
-  const heroImage = "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=1600&auto=format&fit=crop";
-  
-  // On initialise à true pour afficher le contenu immédiatement, sans attendre d'effet
-  const [animationComplete, setAnimationComplete] = useState(true);
-
-  const stats = [
-    { value: "50+", label: "Personnes aidées mensuellement", icon: <Users className="h-4 w-4" /> },
-    { value: "1000+", label: "Kg de nourriture sauvés", icon: <Target className="h-4 w-4" /> },
-    { value: "3", label: "Villes actives", icon: <Globe className="h-4 w-4" /> }
-  ];
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "NGO",
-    "name": "BALLAL ASBL",
-    "url": "https://ballal-asbl.be",
-    "logo": "https://ballal-asbl.be/logo.png",
-    "description": t.hero_desc,
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Chaussée de Gand 645",
-      "addressLocality": "Molenbeek-Saint-Jean",
-      "postalCode": "1080",
-      "addressCountry": "BE"
-    },
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+32493434383",
-      "contactType": "customer service",
-      "email": "admin@ballal.be"
-    },
-    "foundingDate": "2023",
-    "legalName": "BALLAL Association Sans But Lucratif"
-  };
-
   return (
-    <div 
-      className="relative bg-gradient-to-br from-[#FFFBF0] via-white to-amber-50 overflow-hidden border-b border-orange-100"
-      role="banner"
-      aria-labelledby="hero-title"
-    >
-      {/* Structured Data for SEO */}
-      <script 
-        type="application/ld+json" 
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} 
-      />
-      
-      {/* Background Pattern */}
-      <div 
-        className="absolute inset-0 opacity-10 z-0 pointer-events-none"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23CE1126' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          backgroundSize: '60px 60px'
-        }}
-        aria-hidden="true"
-      />
+    <div className="relative min-h-[90vh] flex items-center justify-center pt-24 pb-12 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
+        
+        <div className="space-y-8 text-center lg:text-left">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-warm-green/10 text-warm-green font-bold text-sm uppercase tracking-wider">
+            <Sparkles className="h-4 w-4" />
+            {t.hero_asbl}
+          </div>
 
-      <div className="max-w-8xl mx-auto relative z-10">
-        <div className="relative z-10 py-12 md:py-16 lg:py-20 backdrop-blur-sm">
-          
-          {/* Main Content */}
-          <main className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              
-              {/* Left Column - Text Content */}
-              <div className="space-y-8">
-                {/* Badge */}
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-green-200 bg-gradient-to-r from-green-50 to-emerald-50 text-[#009460] text-sm font-bold uppercase tracking-wider shadow-sm animate-pulse">
-                  <span className="w-2 h-2 bg-[#009460] rounded-full animate-ping"></span>
-                  <Sparkles className="h-4 w-4" aria-hidden="true" />
-                  {t.hero_asbl}
-                </div>
+          <h1 className="text-6xl md:text-8xl font-serif font-black leading-[1.1] text-earth-black">
+            L'Union fait <br/>
+            <span className="text-terracotta italic">notre force.</span>
+          </h1>
 
-                {/* Title */}
-                <div className="space-y-4">
-                  <h1 
-                    id="hero-title"
-                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-tight"
-                  >
-                    <span className="block">BALLAL ASBL</span>
-                    <span className="block text-3xl sm:text-4xl md:text-5xl mt-2 lg:mt-4 bg-gradient-to-r from-[#CE1126] via-[#FCD116] to-[#009460] bg-clip-text text-transparent">
-                      {t.hero_subtitle}
-                    </span>
-                  </h1>
-                  
-                  <p className="text-lg sm:text-xl text-gray-700 leading-relaxed max-w-2xl font-medium">
-                    {t.hero_desc}
-                  </p>
-                </div>
+          <p className="text-xl md:text-2xl text-gray-600 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
+            {t.hero_desc}
+          </p>
 
-                {/* Stats */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
-                  {stats.map((stat, index) => (
-                    <div 
-                      key={index}
-                      className="bg-white/50 backdrop-blur-sm p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
-                    >
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="h-8 w-8 bg-gradient-to-br from-red-100 to-red-50 rounded-lg flex items-center justify-center">
-                          <span className="text-[#CE1126]">{stat.icon}</span>
-                        </div>
-                        <span className="text-2xl font-black text-slate-900">{stat.value}</span>
-                      </div>
-                      <p className="text-sm text-gray-600">{stat.label}</p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Action Buttons */}
-                <div className="space-y-4 pt-4">
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <button
-                      onClick={onExplore}
-                      className="group flex-1 inline-flex items-center justify-center px-8 py-4 border border-transparent text-base font-bold rounded-xl text-white bg-gradient-to-r from-[#CE1126] to-red-700 hover:from-red-700 hover:to-[#CE1126] shadow-lg shadow-red-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-red-300"
-                      aria-label={t.btn_assist}
-                    >
-                      <ShieldCheck className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform" aria-hidden="true" />
-                      {t.btn_assist}
-                    </button>
-                  </div>
-                  
-                  <div className="flex items-center justify-start gap-4">
-                    <button
-                      onClick={onShare}
-                      className="inline-flex items-center justify-center px-6 py-3 border border-gray-200 text-base font-medium rounded-xl text-gray-600 bg-white hover:bg-gray-50 hover:text-slate-900 shadow-sm hover:shadow-md transition-all duration-300 group"
-                      aria-label={t.nav_share}
-                    >
-                      <Share2 className="mr-2 h-5 w-5 group-hover:rotate-12 transition-transform" aria-hidden="true" />
-                      {t.nav_share}
-                    </button>
-                    
-                    <div className="hidden sm:flex items-center space-x-2 text-sm text-gray-500">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#CE1126] animate-pulse"></span>
-                      <span className="font-medium">{t.hero_city_conakry}</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#FCD116]"></span>
-                      <span className="font-medium">{t.hero_city_brussels}</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#009460]"></span>
-                      <span className="font-medium">{t.hero_city_liege}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Trust Indicators */}
-                <div className="pt-6 border-t border-gray-200">
-                  <p className="text-sm text-gray-500 flex items-center gap-2">
-                    <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                    Association reconnue d'utilité publique • Transparence certifiée
-                  </p>
-                </div>
-              </div>
-
-              {/* Right Column - Image */}
-              <div className="relative h-[400px] md:h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
-                {/* Image Unique - Sans condition de chargement masquante */}
-                <img
-                  className="absolute inset-0 w-full h-full object-cover"
-                  src={heroImage}
-                  alt="L'arbre à palabres - Symbole de nos racines et de notre unité"
-                  loading="eager"
-                  fetchPriority="high"
-                />
-                
-                {/* Gradient overlays */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/10 pointer-events-none" />
-                
-                {/* Decorative elements */}
-                <div className="absolute top-6 right-6 pointer-events-none">
-                  <div className="bg-gradient-to-br from-[#CE1126]/90 to-red-700/90 backdrop-blur-sm p-4 rounded-xl text-white shadow-lg">
-                    <div className="text-sm font-bold uppercase tracking-wider">Solidarité</div>
-                    <div className="text-2xl font-black">Active</div>
-                  </div>
-                </div>
-                
-                {/* Animated border */}
-                <div className="absolute inset-0 border-2 border-white/20 rounded-3xl pointer-events-none" />
-              </div>
-            </div>
-          </main>
+          <div className="flex flex-wrap justify-center lg:justify-start gap-4 pt-4">
+            <button
+              onClick={onExplore}
+              className="bg-warm-green text-white px-8 py-4 rounded-2xl text-lg font-bold hover:bg-opacity-90 transition-all flex items-center gap-3 shadow-xl shadow-warm-green/20"
+            >
+              Découvrir nos actions
+              <ArrowRight className="h-5 w-5" />
+            </button>
+            
+            <button
+              onClick={onDonate}
+              className="bg-white text-earth-black border border-gray-200 px-8 py-4 rounded-2xl text-lg font-bold hover:bg-gray-50 transition-all flex items-center gap-3 soft-shadow"
+            >
+              <Heart className="h-5 w-5 text-warm-red fill-warm-red" />
+              Soutenir Ballal
+            </button>
+          </div>
         </div>
-      </div>
 
-      {/* Decorative bottom gradient */}
-      <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-[#CE1126] via-[#FCD116] to-[#009460] animate-gradient"></div>
-      
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden lg:block">
-        <div className="animate-bounce">
-          <div className="h-8 w-px bg-gradient-to-b from-[#CE1126] to-transparent mx-auto"></div>
-          <div className="text-xs text-gray-400 mt-2 text-center">Découvrir</div>
+        <div className="relative">
+          {/* Collage élégant */}
+          <div className="relative z-10 rounded-[2.5rem] overflow-hidden aspect-[4/5] shadow-2xl">
+             <img 
+               src="https://images.unsplash.com/photo-1523438097201-5121b33c6035?q=80&w=1200&auto=format&fit=crop"
+               className="w-full h-full object-cover"
+               alt="Communauté"
+             />
+             <div className="absolute inset-0 bg-gradient-to-t from-earth-black/60 to-transparent"></div>
+             <div className="absolute bottom-8 left-8 right-8 text-white">
+                <p className="font-serif italic text-2xl">"Ensemble pour la dignité et l'avenir de notre communauté en Belgique."</p>
+             </div>
+          </div>
+          
+          {/* Décoration culturelle */}
+          <div className="absolute -top-10 -right-10 w-40 h-40 bg-warm-gold/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute -bottom-10 -left-10 w-60 h-60 bg-terracotta/10 rounded-full blur-3xl animate-pulse"></div>
         </div>
       </div>
     </div>
