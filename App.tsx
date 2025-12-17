@@ -1,54 +1,37 @@
-import React, { useState, useEffect, ErrorInfo, ReactNode, Component } from 'react';
+
+import React, { useState, ReactNode } from 'react';
 import Navbar from './components/Navbar.tsx';
 import Hero from './components/Hero.tsx';
 import Footer from './components/Footer.tsx';
 import TeamSection from './components/TeamSection.tsx';
 import { ViewState, LanguageCode } from './types.ts';
-import { translations } from './utils/translations.ts';
 import { AuthProvider } from './contexts/AuthContext.tsx';
-import { AlertTriangle, RefreshCcw } from 'lucide-react';
+import { AlertTriangle, RefreshCcw, Flag } from 'lucide-react';
 
 import LegalAidSection from './components/LegalAidSection.tsx';
 import HistorySection from './components/HistorySection.tsx';
 import ShareSection from './components/ShareSection.tsx';
 import DonationSection from './components/DonationSection.tsx';
 import FoodAutonomySection from './components/FoodAutonomySection.tsx';
-import SquatSection from './components/SquatSection.tsx'; // Import SquatSection
+import SquatSection from './components/SquatSection.tsx'; 
 import ContactSection from './components/ContactSection.tsx';
 import FestivalSection from './components/FestivalSection.tsx';
-import LegalDocSection from './components/LegalDocSection.tsx';
-import NewsSection from './components/NewsSection.tsx';
 import { FoodSupplierForm, FoodNetworkForm } from './components/FoodForms.tsx';
+import LegalDocSection from './components/LegalDocSection.tsx';
 
-interface ErrorBoundaryProps {
-  children?: ReactNode;
-}
-
-interface ErrorBoundaryState {
-  hasError: boolean;
-}
+interface ErrorBoundaryProps { children?: ReactNode; }
+interface ErrorBoundaryState { hasError: boolean; }
 
 class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   state: ErrorBoundaryState = { hasError: false };
-
-  static getDerivedStateFromError(_: Error): ErrorBoundaryState {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("App internal error:", error, errorInfo);
-  }
-
+  static getDerivedStateFromError(_: Error): ErrorBoundaryState { return { hasError: true }; }
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-[50vh] flex flex-col items-center justify-center p-8 text-center bg-red-50 rounded-xl m-4 border border-red-100">
+        <div className="min-h-[50vh] flex flex-col items-center justify-center p-8 text-center bg-red-50 m-4 rounded-xl border border-red-100">
           <AlertTriangle className="h-12 w-12 text-red-500 mb-4" />
-          <h2 className="text-xl font-bold text-gray-900 mb-2">Une erreur est survenue</h2>
-          <button 
-            onClick={() => window.location.reload()}
-            className="flex items-center px-4 py-2 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-colors"
-          >
+          <h2 className="text-xl font-bold mb-2">Erreur interne</h2>
+          <button onClick={() => window.location.reload()} className="flex items-center px-4 py-2 bg-red-600 text-white rounded-lg font-bold">
             <RefreshCcw className="mr-2 h-4 w-4" /> Recharger
           </button>
         </div>
@@ -58,173 +41,79 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
   }
 }
 
-const useAppNavigation = () => {
-  const getHashFromView = (v: ViewState) => {
-    switch(v) {
-      case ViewState.LEGAL_AID: return 'legal';
-      case ViewState.HISTORY: return 'history';
-      case ViewState.NEWS: return 'news';
-      case ViewState.SHARE: return 'share';
-      case ViewState.DONATE: return 'donate';
-      case ViewState.FOOD_AUTONOMY: return 'food-project';
-      case ViewState.SQUAT: return 'squat'; // Hash pour squat
-      case ViewState.FOOD_SUPPLIER: return 'food-supplier';
-      case ViewState.FOOD_NETWORK: return 'food-network';
-      case ViewState.CONTACT: return 'contact';
-      case ViewState.FESTIVAL: return 'festival';
-      case ViewState.PRIVACY: return 'privacy';
-      case ViewState.TERMS: return 'terms';
-      case ViewState.HOME: default: return '';
-    }
-  };
-
-  const getViewFromHash = (): ViewState => {
-    const hash = window.location.hash.replace(/^#/, '');
-    if (hash === '' || hash === '#') return ViewState.HOME;
-    
-    switch(hash) {
-      case 'legal': return ViewState.LEGAL_AID;
-      case 'history': return ViewState.HISTORY;
-      case 'news': return ViewState.NEWS;
-      case 'share': return ViewState.SHARE;
-      case 'donate': return ViewState.DONATE;
-      case 'food-project': return ViewState.FOOD_AUTONOMY;
-      case 'squat': return ViewState.SQUAT; // View pour squat
-      case 'food-supplier': return ViewState.FOOD_SUPPLIER;
-      case 'food-network': return ViewState.FOOD_NETWORK;
-      case 'contact': return ViewState.CONTACT;
-      case 'festival': return ViewState.FESTIVAL;
-      case 'privacy': return ViewState.PRIVACY;
-      case 'terms': return ViewState.TERMS;
-      default: return ViewState.HOME;
-    }
-  };
-
-  const [view, setView] = useState<ViewState>(getViewFromHash());
-
-  useEffect(() => {
-    const handleHashChange = () => {
-      setView(getViewFromHash());
-      setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
-    };
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
-
-  const navigate = (newView: ViewState) => {
-    if (newView === view) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-    const hash = getHashFromView(newView);
-    window.location.hash = hash;
-  };
-
-  return { view, navigate };
-};
-
-const usePersistedLanguage = () => {
-  const [language, setLanguage] = useState<LanguageCode>(() => {
-    try {
-      const saved = localStorage.getItem('ballal_lang');
-      return (saved as LanguageCode) || 'fr';
-    } catch {
-      return 'fr';
-    }
-  });
-
-  useEffect(() => {
-    localStorage.setItem('ballal_lang', language);
-    document.documentElement.lang = language;
-    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
-  }, [language]);
-
-  return { language, setLanguage };
-};
-
 const AppContent: React.FC = () => {
-  const { view, navigate } = useAppNavigation();
-  const { language, setLanguage } = usePersistedLanguage();
+  const [view, setView] = useState<ViewState>(ViewState.HOME);
+  const [language, setLanguage] = useState<LanguageCode>('fr');
 
-  useEffect(() => {
-    const loader = document.getElementById('initial-loader');
-    if (loader) {
-      loader.style.transition = 'opacity 0.5s ease-out';
-      loader.style.opacity = '0';
-      const timer = setTimeout(() => {
-        if (loader.parentNode) {
-          loader.parentNode.removeChild(loader);
-        }
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-  }, []);
-  
+  const navigate = (v: ViewState) => {
+    setView(v);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const HomeView = (
+    <div className="space-y-0">
+      <Hero 
+        onExplore={() => navigate(ViewState.LEGAL_AID)} 
+        language={language}
+        onShare={() => navigate(ViewState.SHARE)}
+        onDonate={() => navigate(ViewState.DONATE)}
+      />
+      
+      {/* Face A : Le Conseil d'Administration (Sourire Institutionnel) */}
+      <TeamSection language={language} />
+
+      {/* Pont : La Bannière Festival */}
+      <div className="py-32 px-6 bg-white">
+        <div className="max-w-7xl mx-auto bg-guinea-red text-white p-12 md:p-24 rounded-[3rem] text-center shadow-brutal border-y-8 border-guinea-yellow relative overflow-hidden">
+            <div className="absolute inset-0 african-pattern opacity-10"></div>
+            <Flag className="h-20 w-20 mx-auto mb-8 text-guinea-yellow animate-bounce" />
+            <h2 className="text-5xl md:text-8xl font-serif font-black uppercase mb-6 tracking-tighter">Festival des Sans-Papiers</h2>
+            <p className="text-xl md:text-3xl max-w-3xl mx-auto mb-12 font-medium italic opacity-90">"Célébrer la fierté, revendiquer la dignité."</p>
+            <button 
+                onClick={() => navigate(ViewState.FESTIVAL)}
+                className="bg-white text-guinea-red px-16 py-6 rounded-2xl font-black uppercase tracking-widest shadow-xl hover:scale-105 transition-all text-xl"
+            >
+                Voir le programme
+            </button>
+        </div>
+      </div>
+
+      {/* Histoire */}
+      <HistorySection language={language} />
+    </div>
+  );
+
   const renderView = () => {
     switch (view) {
-      case ViewState.HOME:
-        return (
-          <>
-            <Hero 
-              onExplore={() => navigate(ViewState.LEGAL_AID)} 
-              language={language}
-              onShare={() => navigate(ViewState.SHARE)}
-              onDonate={() => navigate(ViewState.DONATE)}
-            />
-            <TeamSection language={language} />
-          </>
-        );
+      case ViewState.HOME: return HomeView;
       case ViewState.LEGAL_AID: return <LegalAidSection language={language} />;
+      case ViewState.SQUAT: return <SquatSection language={language} />;
+      case ViewState.FOOD_AUTONOMY: return <FoodAutonomySection language={language} setView={navigate} />;
+      case ViewState.FESTIVAL: return <FestivalSection language={language} />;
       case ViewState.HISTORY: return <HistorySection language={language} />;
-      case ViewState.NEWS: return <NewsSection language={language} />;
       case ViewState.SHARE: return <ShareSection language={language} />;
       case ViewState.DONATE: return <DonationSection language={language} />;
-      case ViewState.FOOD_AUTONOMY: return <FoodAutonomySection language={language} setView={navigate} />;
-      case ViewState.SQUAT: return <SquatSection language={language} />; // Rendu de la section Squat
+      case ViewState.CONTACT: return <ContactSection language={language} />;
       case ViewState.FOOD_SUPPLIER: return <FoodSupplierForm language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />;
       case ViewState.FOOD_NETWORK: return <FoodNetworkForm language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />;
-      case ViewState.CONTACT: return <ContactSection language={language} />;
-      case ViewState.FESTIVAL: return <FestivalSection language={language} />;
       case ViewState.PRIVACY: return <LegalDocSection language={language} mode="privacy" />;
       case ViewState.TERMS: return <LegalDocSection language={language} mode="terms" />;
-      default:
-        return (
-            <Hero 
-              onExplore={() => navigate(ViewState.LEGAL_AID)} 
-              language={language}
-              onShare={() => navigate(ViewState.SHARE)}
-              onDonate={() => navigate(ViewState.DONATE)}
-            />
-        );
+      default: return HomeView;
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFBF0] text-slate-900 font-sans flex flex-col">
-      <Navbar 
-        currentView={view} 
-        setView={navigate} 
-        language={language} 
-        setLanguage={setLanguage} 
-      />
-      
-      <main id="main-content" className="flex-grow pt-20 relative z-0">
+    <div className="min-h-screen bg-soft-paper text-earth-black african-pattern transition-colors duration-500">
+      <Navbar currentView={view} setView={navigate} language={language} setLanguage={setLanguage} />
+      <main className="pt-20">
         <ErrorBoundary>
-            {renderView()}
+          {renderView()}
         </ErrorBoundary>
       </main>
-
       <Footer language={language} setView={navigate} />
     </div>
   );
 };
 
-const App: React.FC = () => {
-  return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
-  );
-};
-
+const App: React.FC = () => <AuthProvider><AppContent /></AuthProvider>;
 export default App;

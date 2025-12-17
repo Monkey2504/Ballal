@@ -12,11 +12,11 @@ interface GlobalErrorBoundaryState {
   error: Error | null;
 }
 
-// Composant de sécurité global (ErrorBoundary)
-// Si une erreur grave survient n'importe où dans l'app, ceci s'affichera à la place d'un écran blanc.
-// Fix: Use property initializer for state and ensure generic types are correctly applied to React.Component to fix missing 'props' property error
 class GlobalErrorBoundary extends React.Component<GlobalErrorBoundaryProps, GlobalErrorBoundaryState> {
-  state: GlobalErrorBoundaryState = { hasError: false, error: null };
+  constructor(props: GlobalErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
 
   static getDerivedStateFromError(error: Error): GlobalErrorBoundaryState {
     return { hasError: true, error };
@@ -49,20 +49,16 @@ class GlobalErrorBoundary extends React.Component<GlobalErrorBoundaryProps, Glob
       );
     }
 
-    // Accessing children from this.props now works as inheritance is correctly inferred
     return this.props.children;
   }
 }
 
-// Initialisation de l'application
 const rootElement = document.getElementById('root');
-
 if (!rootElement) {
   throw new Error("Impossible de trouver l'élément #root pour démarrer l'application.");
 }
 
 const root = ReactDOM.createRoot(rootElement);
-
 root.render(
   <React.StrictMode>
     <GlobalErrorBoundary>
