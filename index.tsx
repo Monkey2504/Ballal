@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
@@ -13,12 +14,9 @@ interface GlobalErrorBoundaryState {
 
 // Composant de sécurité global (ErrorBoundary)
 // Si une erreur grave survient n'importe où dans l'app, ceci s'affichera à la place d'un écran blanc.
+// Fix: Use property initializer for state and ensure generic types are correctly applied to React.Component to fix missing 'props' property error
 class GlobalErrorBoundary extends React.Component<GlobalErrorBoundaryProps, GlobalErrorBoundaryState> {
-  public state: GlobalErrorBoundaryState = { hasError: false, error: null };
-
-  constructor(props: GlobalErrorBoundaryProps) {
-    super(props);
-  }
+  state: GlobalErrorBoundaryState = { hasError: false, error: null };
 
   static getDerivedStateFromError(error: Error): GlobalErrorBoundaryState {
     return { hasError: true, error };
@@ -51,6 +49,7 @@ class GlobalErrorBoundary extends React.Component<GlobalErrorBoundaryProps, Glob
       );
     }
 
+    // Accessing children from this.props now works as inheritance is correctly inferred
     return this.props.children;
   }
 }

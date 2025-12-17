@@ -36,7 +36,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
     e.currentTarget.src = "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=800&auto=format&fit=crop";
   };
 
-  // Membres de l'équipe
+  // Membres de l'équipe avec bios et emails spécifiques demandés
   const teamMembers: TeamMember[] = [
     {
       name: "Thierno I. T. Diallo",
@@ -44,16 +44,16 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
       image: "https://i.imgur.com/T2LT1pB.png",
       email: "admin@ballal.be",
       color: "border-[#CE1126]",
-      bio: t.member_bio_placeholder || "Président de Ballal ASBL",
+      bio: "Président fondateur",
       social: { linkedin: "#" }
     },
     {
       name: "Bah Ibrahim",
       role: t.role_admin,
       image: "https://i.imgur.com/l3UdDov.png",
-      email: "admin@ballal.be",
+      email: "Ibrahim@ballal.be",
       color: "border-[#FCD116]",
-      bio: t.member_bio_placeholder || "Vice-président de Ballal ASBL"
+      bio: "Responsable des opérations"
     },
     {
       name: "Kadiatou Sow",
@@ -61,7 +61,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
       image: "https://i.imgur.com/THTzMBW.png",
       email: "admin@ballal.be",
       color: "border-[#009460]",
-      bio: t.member_bio_placeholder || "Secrétaire générale de Ballal ASBL"
+      bio: "Secrétaire"
     },
     {
       name: "Cissé, Abdoulaye",
@@ -69,15 +69,15 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
       image: "https://i.imgur.com/7FduSwY.png",
       email: "admin@ballal.be",
       color: "border-slate-800",
-      bio: t.member_bio_placeholder || "Trésorier de Ballal ASBL"
+      bio: "Trésorier de Ballal ASBL"
     },
     {
       name: "Francois Halleux",
-      role: "Conseiller en stratégie",
+      role: "Conseiller",
       image: "https://i.imgur.com/1qqkroP.png",
-      email: "admin@ballal.be",
+      email: "Francois@ballal.be",
       color: "border-blue-600",
-      bio: t.member_bio_placeholder || "Innovation sociale",
+      bio: "Conseiller stratégique",
       social: { linkedin: "#" }
     }
   ];
@@ -96,7 +96,6 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
   return (
     <section 
       id="team-section" 
-      // Fond crème pour la cohérence avec HistorySection
       className="py-16 md:py-24 relative bg-[#FFFBF0] overflow-hidden" 
       aria-labelledby="team-heading"
     >
@@ -127,7 +126,6 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
         {/* GRILLE BUREAU EXÉCUTIF */}
         <div className="flex flex-wrap justify-center gap-8 mb-24">
           {teamMembers.map((member, index) => {
-            const isAdmin = member.role === t.role_admin || member.role === t.role_admin_f;
             const cardWidth = getCardWidth();
             
             return (
@@ -178,7 +176,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
                 <div className="p-6 bg-white">
                   <div className="space-y-4">
                     {member.bio && (
-                      <p className="text-sm text-gray-600 line-clamp-2 italic border-l-2 border-gray-200 pl-3">
+                      <p className="text-sm text-gray-600 line-clamp-2 italic border-l-2 border-gray-200 pl-3 font-medium">
                         {member.bio}
                       </p>
                     )}
