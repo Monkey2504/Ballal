@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, ErrorInfo, ReactNode, Component } from 'react';
 import Navbar from './components/Navbar.tsx';
 import Hero from './components/Hero.tsx';
@@ -14,10 +13,11 @@ import HistorySection from './components/HistorySection.tsx';
 import ShareSection from './components/ShareSection.tsx';
 import DonationSection from './components/DonationSection.tsx';
 import FoodAutonomySection from './components/FoodAutonomySection.tsx';
+import SquatSection from './components/SquatSection.tsx'; // Import SquatSection
 import ContactSection from './components/ContactSection.tsx';
 import FestivalSection from './components/FestivalSection.tsx';
 import LegalDocSection from './components/LegalDocSection.tsx';
-import NewsSection from './components/NewsSection.tsx'; // Import NewsSection
+import NewsSection from './components/NewsSection.tsx';
 import { FoodSupplierForm, FoodNetworkForm } from './components/FoodForms.tsx';
 
 interface ErrorBoundaryProps {
@@ -28,7 +28,6 @@ interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-// Fix: Simplified ErrorBoundary class to use property initializers and ensure props type inference from React.Component
 class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   state: ErrorBoundaryState = { hasError: false };
 
@@ -55,7 +54,6 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
         </div>
       );
     }
-    // Fix: Access children from this.props which is now available via correct inheritance
     return this.props.children || null;
   }
 }
@@ -65,10 +63,11 @@ const useAppNavigation = () => {
     switch(v) {
       case ViewState.LEGAL_AID: return 'legal';
       case ViewState.HISTORY: return 'history';
-      case ViewState.NEWS: return 'news'; // Hash for news
+      case ViewState.NEWS: return 'news';
       case ViewState.SHARE: return 'share';
       case ViewState.DONATE: return 'donate';
       case ViewState.FOOD_AUTONOMY: return 'food-project';
+      case ViewState.SQUAT: return 'squat'; // Hash pour squat
       case ViewState.FOOD_SUPPLIER: return 'food-supplier';
       case ViewState.FOOD_NETWORK: return 'food-network';
       case ViewState.CONTACT: return 'contact';
@@ -86,10 +85,11 @@ const useAppNavigation = () => {
     switch(hash) {
       case 'legal': return ViewState.LEGAL_AID;
       case 'history': return ViewState.HISTORY;
-      case 'news': return ViewState.NEWS; // View for news
+      case 'news': return ViewState.NEWS;
       case 'share': return ViewState.SHARE;
       case 'donate': return ViewState.DONATE;
       case 'food-project': return ViewState.FOOD_AUTONOMY;
+      case 'squat': return ViewState.SQUAT; // View pour squat
       case 'food-supplier': return ViewState.FOOD_SUPPLIER;
       case 'food-network': return ViewState.FOOD_NETWORK;
       case 'contact': return ViewState.CONTACT;
@@ -146,21 +146,16 @@ const AppContent: React.FC = () => {
   const { view, navigate } = useAppNavigation();
   const { language, setLanguage } = usePersistedLanguage();
 
-  // UX IMPROVEMENT: Remove Initial Loader when React is fully mounted
   useEffect(() => {
     const loader = document.getElementById('initial-loader');
     if (loader) {
-      // Smooth fade out
       loader.style.transition = 'opacity 0.5s ease-out';
       loader.style.opacity = '0';
-      
-      // Remove from DOM after transition
       const timer = setTimeout(() => {
         if (loader.parentNode) {
           loader.parentNode.removeChild(loader);
         }
       }, 500);
-      
       return () => clearTimeout(timer);
     }
   }, []);
@@ -181,17 +176,17 @@ const AppContent: React.FC = () => {
         );
       case ViewState.LEGAL_AID: return <LegalAidSection language={language} />;
       case ViewState.HISTORY: return <HistorySection language={language} />;
-      case ViewState.NEWS: return <NewsSection language={language} />; // Render NewsSection
+      case ViewState.NEWS: return <NewsSection language={language} />;
       case ViewState.SHARE: return <ShareSection language={language} />;
       case ViewState.DONATE: return <DonationSection language={language} />;
       case ViewState.FOOD_AUTONOMY: return <FoodAutonomySection language={language} setView={navigate} />;
+      case ViewState.SQUAT: return <SquatSection language={language} />; // Rendu de la section Squat
       case ViewState.FOOD_SUPPLIER: return <FoodSupplierForm language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />;
       case ViewState.FOOD_NETWORK: return <FoodNetworkForm language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />;
       case ViewState.CONTACT: return <ContactSection language={language} />;
       case ViewState.FESTIVAL: return <FestivalSection language={language} />;
       case ViewState.PRIVACY: return <LegalDocSection language={language} mode="privacy" />;
       case ViewState.TERMS: return <LegalDocSection language={language} mode="terms" />;
-      
       default:
         return (
             <Hero 
@@ -205,7 +200,6 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    // CHANGEMENT MAJEUR: Application de bg-warm-bg (#FFFBF0) comme fond global pour unifier avec l'histoire
     <div className="min-h-screen bg-[#FFFBF0] text-slate-900 font-sans flex flex-col">
       <Navbar 
         currentView={view} 

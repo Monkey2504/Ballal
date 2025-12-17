@@ -51,8 +51,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
   useClickOutside(mobileLangMenuRef, () => setIsMobileLangMenuOpen(false));
   useClickOutside(profileMenuRef, () => setIsProfileMenuOpen(false));
   
-  // Pas de useClickOutside sur mobileMenuRef car il prend tout l'écran, on gère la fermeture via les liens
-
   const t = translations[language] || translations['fr'];
 
   // SÉCURITÉ : Fermer le menu mobile automatiquement dès que la vue change
@@ -63,7 +61,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
 
   const handleTeamClick = () => {
     setView(ViewState.HOME);
-    // Le useEffect ci-dessus fermera le menu, mais on le force ici aussi pour être sûr
     setIsMobileMenuOpen(false); 
     
     setTimeout(() => {
@@ -83,11 +80,12 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
 
   const navItems = [
     { label: t.nav_home || 'Accueil', value: ViewState.HOME },
-    { label: t.nav_news || 'Actualités', value: ViewState.NEWS }, // Réintégration des News
-    { label: t.nav_legal || 'Aide Juridique', value: ViewState.LEGAL_AID },
+    { label: t.nav_news || 'Actualités', value: ViewState.NEWS },
+    { label: t.nav_legal || 'Droits', value: ViewState.LEGAL_AID },
+    { label: t.nav_squat || 'Squat', value: ViewState.SQUAT }, // Nouvel onglet Squat
+    { label: t.nav_food_project || 'Alimentation', value: ViewState.FOOD_AUTONOMY },
     { label: t.nav_history || 'Histoire', value: ViewState.HISTORY },
     { label: t.nav_festival || 'Festival', value: ViewState.FESTIVAL },
-    { label: t.nav_food_project || 'Alimentation', value: ViewState.FOOD_AUTONOMY },
   ];
 
   const languages: {code: LanguageCode; label: string; icon: string}[] = [
@@ -362,12 +360,12 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
           </div>
         </div>
 
-        {/* MOBILE NAVIGATION DROPDOWN (FULL SCREEN) - FIXED BACKGROUND */}
+        {/* MOBILE NAVIGATION DROPDOWN */}
         {isMobileMenuOpen && (
           <div 
             ref={mobileMenuRef}
             className="xl:hidden bg-white border-t border-gray-100 fixed top-20 left-0 right-0 bottom-0 z-[100] overflow-y-auto"
-            style={{ backgroundColor: '#ffffff' }} // Force solid white
+            style={{ backgroundColor: '#ffffff' }}
             role="dialog"
             aria-modal="true"
             aria-label="Menu mobile"

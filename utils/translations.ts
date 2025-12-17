@@ -14,6 +14,7 @@ export interface Translation {
   nav_festival: string;
   nav_news: string;
   nav_directory: string;
+  nav_squat: string; // Ajout Squat
   
   // SEO Meta Descriptions
   meta_desc_home: string;
@@ -23,6 +24,7 @@ export interface Translation {
   meta_desc_food: string;
   meta_desc_contact: string;
   meta_desc_festival: string;
+  meta_desc_squat: string; // Ajout Squat
 
   // Hero
   hero_title: string;
@@ -112,7 +114,6 @@ export interface Translation {
   food_collectives_btn: string;
   food_contact_cta: string;
   food_image_alt: string;
-  // Food Goals (New)
   food_goal_squats: string;
   food_goal_people: string;
   food_goal_growth: string;
@@ -142,7 +143,7 @@ export interface Translation {
   form_error_consent: string;
   form_privacy_link: string;
 
-  // Contact Form (New)
+  // Contact Form
   contact_form_title: string;
   contact_form_subtitle: string;
   contact_subject_label: string;
@@ -164,7 +165,6 @@ export interface Translation {
   donate_impact_2: string;
   donate_impact_3: string;
   donate_secure_msg: string;
-  // Donation Goals (New)
   donate_goal_annual: string;
   donate_goal_annual_desc: string;
   donate_goal_previous: string;
@@ -233,7 +233,7 @@ export interface Translation {
   footer_privacy: string;
   footer_terms: string;
 
-  // Privacy Policy (New)
+  // Privacy Policy
   privacy_updated: string;
   privacy_controller: string;
   privacy_sec1_title: string;
@@ -279,6 +279,7 @@ const fr: Translation = {
     nav_festival: "Festival Sans-Papiers",
     nav_news: "Actualités",
     nav_directory: "Communauté",
+    nav_squat: "Squat",
     meta_desc_home: "La structure de référence pour la communauté guinéenne en Belgique.",
     meta_desc_legal: "Assistance juridique urgente et droits des étrangers en Belgique.",
     meta_desc_history: "Découvrez l'histoire de la communauté guinéenne en Belgique, de 1958 à nos jours.",
@@ -286,6 +287,7 @@ const fr: Translation = {
     meta_desc_food: "Projet d'autonomie et de sécurité alimentaire pour les collectifs et squats.",
     meta_desc_contact: "Contactez l'ASBL Ballal pour toute question ou demande de partenariat.",
     meta_desc_festival: "Festival des Sans-Papiers : Célébrer l'identité, revendiquer les droits.",
+    meta_desc_squat: "Guide militant sur les squats et occupations en Belgique : droits, histoire et pratique.",
     hero_title: "Solidarité Guinée-Belgique",
     hero_subtitle: "Accueillir. Protéger. Unir.",
     hero_desc: "La structure de référence pour la communauté guinéenne en Belgique. Assistance juridique, soutien social et promotion de notre culture.",
@@ -348,7 +350,7 @@ const fr: Translation = {
     hist_1960_desc: "Arrivée d'étudiants boursiers et de diplomates. Une immigration choisie, intellectuelle, venue se former dans les universités belges (ULB, UCL, Liège). Cette génération pionnière a posé les bases académiques de la diaspora.",
     hist_1990_year: "Années 90",
     hist_1990_title: "Vague 2 (90s) : L'Exil Politique",
-    hist_1990_desc: "L'instabilité à Conakry et la fin de la Première République poussent opposants, militants et familles à fuir la répression. La Belgique devient une terre d'asile politique pour ceux qui refusent le silence.",
+    hist_1990_desc: "L'instabilité à Conakry et la fin de la Première République poussent opposants, militants et familles à fuir la répression. Belgique devient une terre d'asile politique pour ceux qui refusent le silence.",
     hist_2000_title: "Vague 3 (2000s) : L'Enracinement & Familles",
     hist_2000_desc: "Période de régularisations (Opération 2000 et 2009) et de regroupement familial. La communauté se féminise, les enfants naissent ici. C'est l'ancrage durable dans des quartiers comme Matonge ou à Liège.",
     hist_2024_title: "Vague 4 (2010-2024) : La Génération 'La Route'",
@@ -515,7 +517,7 @@ const en: Translation = {
     nav_festival: "Festival Sans-Papiers",
     nav_news: "News",
     nav_directory: "Community",
-    // History Section Translations (English)
+    nav_squat: "Squatting",
     hist_title: "Black History in Belgium: The Guinean Epic",
     hist_subtitle: "Four great migratory waves, one resilient community. From 1958 independence to today's civic affirmation.",
     hist_1958_title: "1958: The Spark of Independence",
@@ -545,7 +547,7 @@ const nl: Translation = {
     nav_festival: "Festival zonder Papieren",
     nav_news: "Nieuws",
     nav_directory: "Gemeenschap",
-    // History Section Translations (Dutch)
+    nav_squat: "Kraken",
     hist_title: "Zwarte Geschiedenis in België: Het Guinese Epos",
     hist_subtitle: "Vier grote migratiegolven, één veerkrachtige gemeenschap. Van de onafhankelijkheid in 1958 tot de burgerlijke bevestiging van vandaag.",
     hist_1958_title: "1958: De Vonk van Onafhankelijkheid",
@@ -561,19 +563,16 @@ const nl: Translation = {
     hist_2024_desc: "Moedige jongeren, vaak minderjarigen (NBMV), die de Middellandse Zee oversteken om de precaire situatie te ontvluchten. Ze komen aan met een ongelooflijke veerkracht, op zoek naar opleiding en waardigheid ondanks een traumatisch migratietraject."
 };
 
-const de: Translation = { ...fr }; // Fallback to French for simplicity in this update
-const es: Translation = { ...fr }; // Fallback to French
-const ar: Translation = { ...fr }; // Fallback to French
+const de: Translation = { ...fr };
+const es: Translation = { ...fr };
+const ar: Translation = { ...fr };
+const pe: Translation = { ...fr };
+const ma: Translation = { ...fr };
+const su: Translation = { ...fr };
+const ru: Translation = { ...en };
+const it: Translation = { ...fr };
+const pt: Translation = { ...es };
 
-// --- Langues Guinéennes & Fallbacks ---
-const pe: Translation = { ...fr }; // Pular (Peul)
-const ma: Translation = { ...fr }; // Malinké
-const su: Translation = { ...fr }; // Soussou
-const ru: Translation = { ...en }; // Russian - Fallback to English
-const it: Translation = { ...fr }; // Italian - Fallback to French
-const pt: Translation = { ...es }; // Portuguese - Fallback to Spanish
-
-// Export translations object
 export const translations: Record<string, Translation> = {
   fr,
   en,

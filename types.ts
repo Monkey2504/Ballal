@@ -219,13 +219,14 @@ export enum ViewState {
   FOOD_AUTONOMY = 'FOOD_AUTONOMY',
   FOOD_SUPPLIER = 'FOOD_SUPPLIER',
   FOOD_NETWORK = 'FOOD_NETWORK',
+  SQUAT = 'SQUAT', // Nouvelle section SQUAT
   
   // Culture & Événements
   FESTIVAL = 'FESTIVAL',
   CULTURE = 'CULTURE',
   EVENTS = 'EVENTS',
   HISTORY = 'HISTORY',
-  NEWS = 'NEWS', // Added NEWS state
+  NEWS = 'NEWS',
   
   // Engagement
   DONATE = 'DONATE',
