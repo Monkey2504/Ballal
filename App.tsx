@@ -1,4 +1,5 @@
-import React, { useState, ReactNode } from 'react';
+
+import React, { useState, ReactNode, Component } from 'react';
 import Navbar from './components/Navbar.tsx';
 import Hero from './components/Hero.tsx';
 import Footer from './components/Footer.tsx';
@@ -21,7 +22,8 @@ import LegalDocSection from './components/LegalDocSection.tsx';
 interface ErrorBoundaryProps { children?: ReactNode; }
 interface ErrorBoundaryState { hasError: boolean; }
 
-class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+// Fix: Use Component from named imports to ensure props and state are correctly inherited in the type system for ErrorBoundary.
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   state: ErrorBoundaryState = { hasError: false };
   static getDerivedStateFromError(_: Error): ErrorBoundaryState { return { hasError: true }; }
   render() {

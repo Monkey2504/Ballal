@@ -1,9 +1,10 @@
-import React from 'react';
+
+import React, { Component, ReactNode, ErrorInfo } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 
 interface GlobalErrorBoundaryProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 interface GlobalErrorBoundaryState {
@@ -11,17 +12,15 @@ interface GlobalErrorBoundaryState {
   error: Error | null;
 }
 
-class GlobalErrorBoundary extends React.Component<GlobalErrorBoundaryProps, GlobalErrorBoundaryState> {
-  constructor(props: GlobalErrorBoundaryProps) {
-    super(props);
-    this.state = { hasError: false, error: null };
-  }
+// Fix: Use Component from named imports and initialize state as a class property to resolve TS errors regarding 'state' and 'props' properties.
+class GlobalErrorBoundary extends Component<GlobalErrorBoundaryProps, GlobalErrorBoundaryState> {
+  public state: GlobalErrorBoundaryState = { hasError: false, error: null };
 
   static getDerivedStateFromError(error: Error): GlobalErrorBoundaryState {
     return { hasError: true, error };
   }
 
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("Erreur critique Ballal App:", error, errorInfo);
   }
 

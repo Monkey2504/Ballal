@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, Globe, Heart, Phone, ShieldAlert, Newspaper, Flag } from 'lucide-react';
+import { Menu, X, Heart, Phone, ShieldAlert, Home, History } from 'lucide-react';
 import { ViewState, LanguageCode } from '../types.ts';
 import { translations } from '../utils/translations.ts';
 
@@ -15,11 +15,10 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
   const t = translations[language] || translations['fr'];
 
   const navItems = [
-    { label: "ACCUEIL", value: ViewState.HOME },
-    { label: "FESTIVAL", value: ViewState.FESTIVAL },
-    { label: "AIDE", value: ViewState.LEGAL_AID },
-    { label: "SOLIDARITÉ", value: ViewState.FOOD_AUTONOMY },
-    { label: "SQUAT", value: ViewState.SQUAT },
+    { label: "ACCUEIL", value: ViewState.HOME, icon: Home },
+    { label: "AIDE JURIDIQUE", value: ViewState.LEGAL_AID, icon: ShieldAlert },
+    { label: "SOLIDARITÉ", value: ViewState.FOOD_AUTONOMY, icon: Heart },
+    { label: "HISTOIRE", value: ViewState.HISTORY, icon: History },
   ];
 
   return (
@@ -37,7 +36,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
       </div>
 
       <nav className="px-6 py-4">
-        <div className="max-w-7xl mx-auto flex justify-between items-center bg-white/95 backdrop-blur-md px-8 py-4 rounded-[1.5rem] shadow-xl border border-gray-100">
+        <div className="max-w-7xl mx-auto flex justify-between items-center bg-white/95 backdrop-blur-md px-6 md:px-8 py-4 rounded-[1.5rem] shadow-xl border border-gray-100">
           
           <button 
             onClick={() => setView(ViewState.HOME)}
@@ -57,12 +56,13 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
               <button
                 key={item.value}
                 onClick={() => setView(item.value)}
-                className={`px-3 py-2 rounded-xl font-bold text-[10px] tracking-widest uppercase transition-all ${
+                className={`px-4 py-2 rounded-xl font-bold text-[10px] tracking-widest uppercase transition-all flex items-center gap-2 ${
                   currentView === item.value 
                   ? 'bg-earth-black text-white shadow-lg' 
                   : 'text-gray-500 hover:text-earth-black hover:bg-gray-50'
                 }`}
               >
+                <item.icon className="h-3 w-3" />
                 {item.label}
               </button>
             ))}
@@ -85,8 +85,9 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
                 <button
                   key={item.value}
                   onClick={() => { setView(item.value); setIsMobileMenuOpen(false); }}
-                  className={`w-full py-4 text-left px-6 rounded-2xl font-black uppercase text-xs tracking-widest ${currentView === item.value ? 'bg-guinea-red text-white' : 'text-gray-500 hover:bg-gray-50'}`}
+                  className={`w-full py-4 text-left px-6 rounded-2xl font-black uppercase text-xs tracking-widest flex items-center gap-4 ${currentView === item.value ? 'bg-guinea-red text-white' : 'text-gray-500 hover:bg-gray-50'}`}
                 >
+                  <item.icon className="h-5 w-5" />
                   {item.label}
                 </button>
               ))}
