@@ -22,6 +22,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
     { label: "HISTOIRE", value: ViewState.HISTORY, icon: History },
   ];
 
+  const handleNavClick = (view: ViewState) => {
+    setView(view);
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <div className="fixed top-0 w-full z-[150]">
       <div className="bg-guinea-red text-white py-2 px-6 flex justify-between items-center border-b border-white/10">
@@ -36,7 +41,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
 
       <nav className="px-6 py-4">
         <div className="max-w-7xl mx-auto flex justify-between items-center bg-white/90 backdrop-blur-md px-6 py-3 rounded-2xl shadow-soft-elegant border border-gray-100">
-          <button onClick={() => setView(ViewState.HOME)} className="flex items-center gap-3 group">
+          <button onClick={() => handleNavClick(ViewState.HOME)} className="flex items-center gap-3 group">
             <div className="p-2 bg-guinea-green rounded-xl group-hover:rotate-6 transition-transform">
               <Heart className="h-5 w-5 text-white fill-white" />
             </div>
@@ -50,7 +55,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
             {navItems.map((item) => (
               <button
                 key={item.value}
-                onClick={() => setView(item.value)}
+                onClick={() => handleNavClick(item.value)}
                 className={`px-4 py-2 rounded-xl font-bold text-[10px] tracking-widest uppercase transition-all flex items-center gap-2 ${
                   currentView === item.value ? 'bg-earth-black text-white' : 'text-gray-500 hover:text-earth-black hover:bg-gray-50'
                 }`}
@@ -62,22 +67,29 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
           </div>
 
           <div className="lg:hidden">
-            <button className="p-2 bg-earth-black text-white rounded-xl" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            <button 
+              className="p-2 bg-earth-black text-white rounded-xl" 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Ouvrir le menu"
+            >
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
 
+        {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-24 left-6 right-6 bg-white rounded-2xl p-4 shadow-2xl border border-gray-100">
-            <div className="flex flex-col gap-1">
+          <div className="lg:hidden absolute top-full left-6 right-6 mt-4 bg-white rounded-[2rem] shadow-2xl p-6 border border-gray-100 animate-in fade-in slide-in-from-top-4 duration-300">
+            <div className="grid gap-3">
               {navItems.map((item) => (
                 <button
                   key={item.value}
-                  onClick={() => { setView(item.value); setIsMobileMenuOpen(false); }}
-                  className={`w-full py-4 text-left px-6 rounded-xl font-bold uppercase text-[10px] tracking-widest flex items-center gap-4 ${currentView === item.value ? 'bg-guinea-red text-white' : 'text-gray-500'}`}
+                  onClick={() => handleNavClick(item.value)}
+                  className={`w-full p-5 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center gap-4 transition-all ${
+                    currentView === item.value ? 'bg-guinea-red text-white' : 'bg-gray-50 text-gray-500'
+                  }`}
                 >
-                  <item.icon className="h-4 w-4" />
+                  <item.icon className="h-5 w-5" />
                   {item.label}
                 </button>
               ))}
