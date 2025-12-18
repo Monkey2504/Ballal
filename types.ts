@@ -1,4 +1,3 @@
-
 export type LanguageCode = 'fr' | 'en' | 'nl' | 'pe' | 'ma' | 'su' | 'es' | 'ar' | 'de' | 'pt' | 'it' | 'ru';
 
 export enum ViewState {
@@ -13,7 +12,6 @@ export enum ViewState {
   DONATE = 'DONATE',
   SHARE = 'SHARE',
   CONTACT = 'CONTACT',
-  // Added missing ViewState members used in navigation and footer
   PRIVACY = 'PRIVACY',
   TERMS = 'TERMS'
 }
@@ -23,16 +21,13 @@ export interface UserPreferences {
   theme: 'light' | 'dark' | 'auto';
 }
 
-// Added UserRole type for consistency in authentication context
 export type UserRole = 'admin' | 'member';
 
 export interface User {
   id: string;
   name: string;
-  // Added missing email property and refined role type to UserRole
   email: string;
   role: UserRole;
-  // Added optional metadata properties used in session management
   joinedAt?: string;
   avatar?: string;
   preferences?: UserPreferences;
@@ -41,7 +36,6 @@ export interface User {
   emailVerified?: boolean;
 }
 
-// Exported default preferences used for new user initialization
 export const DEFAULT_USER_PREFERENCES: UserPreferences = {
   language: 'fr',
   theme: 'auto'

@@ -1,4 +1,3 @@
-
 import React, { useState, ReactNode } from 'react';
 import Navbar from './components/Navbar.tsx';
 import Hero from './components/Hero.tsx';
@@ -6,7 +5,7 @@ import Footer from './components/Footer.tsx';
 import TeamSection from './components/TeamSection.tsx';
 import { ViewState, LanguageCode } from './types.ts';
 import { AuthProvider } from './contexts/AuthContext.tsx';
-import { AlertTriangle, RefreshCcw, Flag } from 'lucide-react';
+import { AlertTriangle, RefreshCcw } from 'lucide-react';
 
 import LegalAidSection from './components/LegalAidSection.tsx';
 import HistorySection from './components/HistorySection.tsx';
@@ -50,42 +49,20 @@ const AppContent: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const HomeView = (
-    <div className="space-y-0">
-      <Hero 
-        onExplore={() => navigate(ViewState.LEGAL_AID)} 
-        language={language}
-        onShare={() => navigate(ViewState.SHARE)}
-        onDonate={() => navigate(ViewState.DONATE)}
-      />
-      
-      {/* Face A : Le Conseil d'Administration (Sourire Institutionnel) */}
-      <TeamSection language={language} />
-
-      {/* Pont : La Bannière Festival */}
-      <div className="py-32 px-6 bg-white">
-        <div className="max-w-7xl mx-auto bg-guinea-red text-white p-12 md:p-24 rounded-[3rem] text-center shadow-brutal border-y-8 border-guinea-yellow relative overflow-hidden">
-            <div className="absolute inset-0 african-pattern opacity-10"></div>
-            <Flag className="h-20 w-20 mx-auto mb-8 text-guinea-yellow animate-bounce" />
-            <h2 className="text-5xl md:text-8xl font-serif font-black uppercase mb-6 tracking-tighter">Festival des Sans-Papiers</h2>
-            <p className="text-xl md:text-3xl max-w-3xl mx-auto mb-12 font-medium italic opacity-90">"Célébrer la fierté, revendiquer la dignité."</p>
-            <button 
-                onClick={() => navigate(ViewState.FESTIVAL)}
-                className="bg-white text-guinea-red px-16 py-6 rounded-2xl font-black uppercase tracking-widest shadow-xl hover:scale-105 transition-all text-xl"
-            >
-                Voir le programme
-            </button>
-        </div>
-      </div>
-
-      {/* Histoire */}
-      <HistorySection language={language} />
-    </div>
-  );
-
   const renderView = () => {
     switch (view) {
-      case ViewState.HOME: return HomeView;
+      case ViewState.HOME: return (
+        <div className="space-y-0">
+          <Hero 
+            onExplore={() => navigate(ViewState.FESTIVAL)} 
+            language={language}
+            onShare={() => navigate(ViewState.SHARE)}
+            onDonate={() => navigate(ViewState.DONATE)}
+          />
+          <TeamSection language={language} />
+          <HistorySection language={language} />
+        </div>
+      );
       case ViewState.LEGAL_AID: return <LegalAidSection language={language} />;
       case ViewState.SQUAT: return <SquatSection language={language} />;
       case ViewState.FOOD_AUTONOMY: return <FoodAutonomySection language={language} setView={navigate} />;
@@ -98,7 +75,7 @@ const AppContent: React.FC = () => {
       case ViewState.FOOD_NETWORK: return <FoodNetworkForm language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />;
       case ViewState.PRIVACY: return <LegalDocSection language={language} mode="privacy" />;
       case ViewState.TERMS: return <LegalDocSection language={language} mode="terms" />;
-      default: return HomeView;
+      default: return null;
     }
   };
 

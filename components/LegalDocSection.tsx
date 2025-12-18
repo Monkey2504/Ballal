@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { Lock, FileText, Shield, ArrowLeft } from 'lucide-react';
+import { Lock, FileText, Shield, ArrowLeft, AlertCircle, ShieldAlert } from 'lucide-react';
 import { LanguageCode } from '../types.ts';
 import { translations } from '../utils/translations.ts';
 
@@ -31,10 +32,21 @@ const LegalDocSection: React.FC<LegalDocSectionProps> = ({ language, mode }) => 
             </p>
             <ul className="list-disc pl-6 space-y-2 bg-slate-50 p-4 rounded-xl border border-slate-200">
                 <li><strong>{t.privacy_address}</strong> Place Masui 9 Boîte 3, 1030 BRUXELLES, Belgique</li>
-                <li><strong>{t.footer_bce}</strong></li>
+                <li><strong>BCE :</strong> 1016.925.333</li>
                 <li><strong>{t.privacy_email}</strong> admin@ballal.be</li>
                 <li><strong>{t.privacy_phone}</strong> 0493 43 43 83</li>
             </ul>
+        </section>
+
+        {/* NOUVELLE SECTION : DONNÉES SENSIBLES */}
+        <section className="bg-guinea-red/5 p-6 rounded-2xl border-l-8 border-guinea-red">
+            <h2 className="text-xl font-bold text-guinea-red mb-4 flex items-center gap-2">
+                <ShieldAlert className="h-6 w-6" />
+                {t.privacy_sensitive_title}
+            </h2>
+            <p className="text-sm font-medium">
+                {t.privacy_sensitive_desc}
+            </p>
         </section>
 
         <section>
@@ -59,10 +71,21 @@ const LegalDocSection: React.FC<LegalDocSectionProps> = ({ language, mode }) => 
                     <p className="text-sm">
                         <strong>{t.privacy_data_types}</strong> Adresse email.
                         <br/><br/>
-                        <strong>{t.privacy_purpose}</strong> Vous envoyer des informations sur nos activités, événements et appels à la solidarité. Vous pouvez vous désinscrire à tout moment via le lien inclus dans chaque email.
+                        <strong>{t.privacy_purpose}</strong> Vous envoyer des informations sur nos activités et appels à la solidarité.
                     </p>
                 </div>
             </div>
+        </section>
+
+        {/* NOUVELLE SECTION : SECRET PROFESSIONNEL */}
+        <section className="bg-guinea-green/5 p-6 rounded-2xl border-l-8 border-guinea-green">
+            <h2 className="text-xl font-bold text-guinea-green mb-4 flex items-center gap-2">
+                <Lock className="h-6 w-6" />
+                {t.privacy_legal_secrecy}
+            </h2>
+            <p className="text-sm font-medium italic">
+                {t.privacy_legal_secrecy_desc}
+            </p>
         </section>
 
         <section>
@@ -73,13 +96,10 @@ const LegalDocSection: React.FC<LegalDocSectionProps> = ({ language, mode }) => 
             <p className="mb-4">
                 {t.privacy_sec3_desc}
             </p>
-            <p className="mb-4">
-                Elles peuvent être partagées uniquement dans les cas suivants, avec votre consentement explicite ou si la loi l'exige :
-            </p>
             <ul className="list-disc pl-6 space-y-2 text-sm">
-                <li>Avec nos partenaires juridiques (avocats) si vous sollicitez une aide légale spécifique.</li>
-                <li>Avec les autorités compétentes si une obligation légale nous y contraint.</li>
-                <li>Avec nos fournisseurs techniques (hébergement web, service d'envoi d'emails) qui respectent le RGPD.</li>
+                <li>Avec nos avocats partenaires (sous secret professionnel strict).</li>
+                <li>Avec les autorités compétentes UNIQUEMENT si une obligation légale impérieuse nous y contraint.</li>
+                <li>Avec nos fournisseurs techniques sécurisés respectant le RGPD.</li>
             </ul>
         </section>
 
@@ -92,7 +112,7 @@ const LegalDocSection: React.FC<LegalDocSectionProps> = ({ language, mode }) => 
                 {t.privacy_sec4_desc}
             </p>
             <p className="text-sm bg-blue-50 p-4 rounded-lg text-blue-800">
-                Nous n'utilisons <strong>pas de cookies publicitaires tiers</strong> pour traquer votre navigation à des fins commerciales.
+                Nous n'utilisons <strong>pas de cookies tiers publicitaires</strong>.
             </p>
         </section>
 
@@ -101,14 +121,12 @@ const LegalDocSection: React.FC<LegalDocSectionProps> = ({ language, mode }) => 
                 <span className="bg-blue-100 text-blue-600 w-8 h-8 rounded-full flex items-center justify-center text-sm">5</span>
                 {t.privacy_sec5_title}
             </h2>
-            <p className="mb-4">
-                {t.privacy_sec5_desc}
+            <p className="mb-4 font-bold text-guinea-red italic">
+                {t.privacy_simplified_rights}
             </p>
             <ul className="list-disc pl-6 space-y-2 mb-6">
-                <li><strong>Droit d'accès :</strong> Savoir quelles données nous détenons sur vous.</li>
-                <li><strong>Droit de rectification :</strong> Corriger des données inexactes.</li>
-                <li><strong>Droit à l'effacement :</strong> Demander la suppression de vos données ("droit à l'oubli").</li>
-                <li><strong>Droit à la limitation :</strong> Restreindre l'utilisation de vos données.</li>
+                <li><strong>Droit d'accès & Rectification :</strong> Savoir et corriger ce que nous avons sur vous.</li>
+                <li><strong>Droit à l'effacement :</strong> Demander la suppression immédiate de vos données.</li>
             </ul>
             <div className="bg-slate-900 text-white p-6 rounded-xl text-center">
                 <p className="mb-4 font-medium">{t.privacy_contact_rights}</p>
@@ -122,6 +140,13 @@ const LegalDocSection: React.FC<LegalDocSectionProps> = ({ language, mode }) => 
     <div className="space-y-6">
         <h1 className="text-3xl font-black text-slate-900 mb-6">{t.footer_terms || "Conditions d'utilisation"}</h1>
         
+        <section className="bg-amber-50 border-4 border-amber-500 p-6 rounded-2xl flex items-start gap-4 mb-8">
+            <AlertCircle className="h-8 w-8 text-amber-600 flex-shrink-0" />
+            <p className="text-amber-900 font-black uppercase text-sm leading-tight">
+                {t.terms_legal_warning_bold}
+            </p>
+        </section>
+
         <section>
             <h2 className="text-xl font-bold text-slate-800 mb-3">1. Objet</h2>
             <p className="text-gray-600 mb-4">
@@ -140,7 +165,7 @@ const LegalDocSection: React.FC<LegalDocSectionProps> = ({ language, mode }) => 
 
         <section>
             <h2 className="text-xl font-bold text-slate-800 mb-3">3. Responsabilité</h2>
-            <p className="text-gray-600 mb-4">
+            <p className="text-gray-600 mb-4 italic">
                 L'ASBL Ballal s'efforce de fournir des informations juridiques et sociales exactes mais ne saurait être tenue responsable 
                 des erreurs ou omissions. Les informations juridiques (section Droits) sont fournies à titre informatif et ne remplacent pas l'avis d'un avocat.
             </p>

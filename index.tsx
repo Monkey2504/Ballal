@@ -1,4 +1,3 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
@@ -54,15 +53,15 @@ class GlobalErrorBoundary extends React.Component<GlobalErrorBoundaryProps, Glob
 }
 
 const rootElement = document.getElementById('root');
-if (!rootElement) {
-  throw new Error("Impossible de trouver l'élément #root pour démarrer l'application.");
+if (rootElement) {
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(
+    <React.StrictMode>
+      <GlobalErrorBoundary>
+        <App />
+      </GlobalErrorBoundary>
+    </React.StrictMode>
+  );
+} else {
+  console.error("Impossible de trouver l'élément #root pour démarrer l'application.");
 }
-
-const root = ReactDOM.createRoot(rootElement);
-root.render(
-  <React.StrictMode>
-    <GlobalErrorBoundary>
-      <App />
-    </GlobalErrorBoundary>
-  </React.StrictMode>
-);
