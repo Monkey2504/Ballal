@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { 
     X, Search, Home, Shield, AlertTriangle, Lightbulb, MapPin,
-    Clock, Users, Zap, Flame, RotateCcw, Scale, LayoutList
+    Clock, Users, Zap, Flame, RotateCcw, Scale, LayoutList,
+    ShieldCheck, Eye, Info
 } from 'lucide-react';
 import { LanguageCode } from '../types.ts';
 
@@ -12,35 +13,39 @@ type InsideCategory = 'general' | 'refugee' | 'negotiation' | 'daily_life';
 interface SquatSectionProps { language?: LanguageCode; }
 interface ChecklistItem { id: number; text: string; done: boolean; }
 interface Checklists { scouting: ChecklistItem[]; entry: ChecklistItem[]; anchoring: ChecklistItem[]; defense: ChecklistItem[]; nego_legal: ChecklistItem[]; post: ChecklistItem[]; }
-interface Inside { id: number; text: string; source?: string; icon: React.ReactNode; category: InsideCategory; }
+interface Inside { id: number; text: string; title: string; source?: string; icon: React.ReactNode; category: InsideCategory; }
 interface PhaseInfo { phase: PhaseType; title: string; description: string; icon: React.ReactNode; duration: string; detail: { objective: string; tips: string[]; insidesKeys: InsideCategory[]; }; }
 
 const insidesData: Inside[] = [
-    { id: 1, text: "Vérifie le statut du bâtiment via le cadastre gratuit (cadastre.brussels) pour identifier le propriétaire.", source: "Cadastre BXL", icon: <MapPin size={18} />, category: 'general' },
-    { id: 2, text: "Si le bâtiment est un bien de spéculateur, propose une occupation temporaire légale pour lui éviter les taxes.", source: "Région BXL", icon: <RotateCcw size={18} />, category: 'negotiation' },
-    { id: 7, text: "Plus de 7.000 demandeurs d'asile sont sans-abri à BXL en 2025. Utilisez ce chiffre pour l'angle humanitaire.", source: "Fedasil 2025", icon: <Users size={18} />, category: 'refugee' },
-    { id: 15, text: "Communa (communa.be) peut signer la convention légale d'occupation pour vous.", source: "Communa", icon: <Home size={18} />, category: 'negotiation' },
-    { id: 23, text: "Mettez en place une gestion collective inclusive dès le premier jour.", source: "Pigment vzw", icon: <Users size={18} />, category: 'daily_life' },
+    { id: 1, title: "Identification Propriétaire", text: "Vérifie le statut du bâtiment via le cadastre gratuit (cadastre.brussels) ou via une demande au SPF Finances pour identifier le propriétaire exact.", source: "Cadastre BXL", icon: <MapPin size={18} />, category: 'general' },
+    { id: 2, title: "Levier Anti-Spéculation", text: "Si le bâtiment appartient à un spéculateur (société vide), propose une occupation temporaire légale pour lui éviter la taxe sur les immeubles abandonnés.", source: "Région BXL", icon: <RotateCcw size={18} />, category: 'negotiation' },
+    { id: 3, title: "Le Seuil des 7.000", text: "Plus de 7.000 demandeurs d'asile sont sans-abri à BXL en 2025. Utilisez ce chiffre systématiquement dans vos échanges avec la presse pour l'angle humanitaire.", source: "Fedasil 2025", icon: <Users size={18} />, category: 'refugee' },
+    { id: 4, title: "Médiation Communa", text: "Communa (communa.be) est l'interlocuteur de référence à Bruxelles pour signer des conventions d'occupation précaire et légitimer votre présence.", source: "Communa", icon: <ShieldCheck size={18} />, category: 'negotiation' },
+    { id: 5, title: "Gestion Collective", text: "Mettez en place une charte de vie et une gestion collective inclusive dès le premier jour pour éviter les tensions internes qui attirent la police.", source: "Pigment vzw", icon: <Users size={18} />, category: 'daily_life' },
+    { id: 6, title: "Preuve de Domicile", text: "Dès l'entrée, scotchez vos noms sur la boîte aux lettres et postez-vous une lettre recommandée. C'est une preuve juridique de domiciliation face à la police.", source: "Droit au Logement", icon: <Home size={18} />, category: 'general' },
+    { id: 7, title: "Silence Tactique", text: "En cas de visite de police sans mandat, restez calmes. Le silence est un droit. Ne signez jamais aucun document sur place sans avocat.", source: "Legal Aid", icon: <Shield size={18} />, category: 'general' },
 ];
 
 const initialChecklists: Checklists = {
     scouting: [
         { id: 1, text: "Repère un bâtiment vide depuis longtemps (fenêtres sales, pas de lumières).", done: false },
-        { id: 3, text: "Vérifie l'adresse et le propriétaire via le cadastre.", done: false },
-        { id: 5, text: "Décide du statut : squat ou tentative d'Occupation Temporaire (OT).", done: false }
+        { id: 2, text: "Vérifie l'adresse et le propriétaire via le cadastre.", done: false },
+        { id: 3, text: "S'assurer qu'il n'y a pas d'alarme active.", done: false }
     ],
     entry: [
         { id: 1, text: "Groupe discret (3-5 personnes max).", done: false },
-        { id: 2, text: "Entrée sans dégradation visible.", done: false },
-        { id: 3, text: "Changement de barillet propre.", done: false }
+        { id: 2, text: "Entrée sans dégradation visible (pas d'effraction forcée).", done: false },
+        { id: 3, text: "Changement de barillet propre immédiat.", done: false }
     ],
     anchoring: [
         { id: 1, text: "Installation immédiate d'une boîte aux lettres avec noms.", done: false },
-        { id: 2, text: "Envoi de courriers à votre nom (preuve d'habitation).", done: false }
+        { id: 2, text: "Envoi de courriers à votre nom (preuve d'habitation).", done: false },
+        { id: 3, text: "Prise de photos de l'aménagement intérieur.", done: false }
     ],
     defense: [
-        { id: 1, text: "Plan de réponse police : calme et caméra.", done: false },
-        { id: 3, text: "Affichage des scripts légaux aux portes.", done: false }
+        { id: 1, text: "Plan de réponse police : calme et caméra prête.", done: false },
+        { id: 2, text: "Affichage des scripts légaux aux portes.", done: false },
+        { id: 3, text: "Contact avec un avocat spécialisé prévenu.", done: false }
     ],
     nego_legal: [
         { id: 1, text: "Prise de contact pour une convention d'OT.", done: false },
@@ -48,7 +53,7 @@ const initialChecklists: Checklists = {
     ],
     post: [
         { id: 1, text: "Réunions hebdomadaires et gestion des tâches.", done: false },
-        { id: 3, text: "Démarches pour logement social (CAW).", done: false }
+        { id: 2, text: "Démarches pour logement social (CAW).", done: false }
     ]
 };
 
@@ -56,7 +61,7 @@ const phases: PhaseInfo[] = [
     { phase: 'scouting', title: 'PHASE 1 : REPÉRAGE', description: "Trouve le bon spot et vérifie son statut.", icon: <Search size={24} />, duration: '2-7 jours', detail: { objective: "Repérer un lieu abandonné.", tips: ["Marche discrètement.", "Vérifie le cadastre."], insidesKeys: ['general'] } },
     { phase: 'entry', title: 'PHASE 2 : ENTRÉE', description: 'Accès et sécurisation immédiate.', icon: <Flame size={24} />, duration: '1 nuit', detail: { objective: "Entrer sans casse.", tips: ["Kit urgence prêt.", "Changement barillet."], insidesKeys: ['general'] } },
     { phase: 'anchoring', title: 'PHASE 3 : ANCRAGE', description: 'Établir la preuve d’habitation.', icon: <Home size={24} />, duration: '1-3 jours', detail: { objective: "Preuve légale.", tips: ["Boîte aux lettres.", "Voisins."], insidesKeys: ['daily_life'] } },
-    { phase: 'defense', title: 'PHASE 4 : DÉFENSE', description: 'Préparer la réponse aux autorités.', icon: <Shield size={24} />, duration: 'Constant', detail: { objective: "Éviter l'expulsion.", tips: ["Silence et calme.", "Droit au domicile."], insidesKeys: ['negotiation'] } },
+    { phase: 'defense', title: 'PHASE 4 : DÉFENSE', description: 'Préparer la réponse aux autorités.', icon: <Shield size={24} />, duration: 'Constant', detail: { objective: "Éviter l'expulsion.", tips: ["Silence et calme.", "Droit au domicile."], insidesKeys: ['negotiation', 'general'] } },
     { phase: 'nego_legal', title: 'PHASE 5 : NÉGOCIATION', description: 'Légaliser l’occupation.', icon: <Scale size={24} />, duration: '1-4 sem.', detail: { objective: "Convention OT.", tips: ["Intermédiaire associatif.", "Angle humanitaire."], insidesKeys: ['negotiation', 'refugee'] } },
     { phase: 'post', title: 'PHASE 6 : LONG TERME', description: 'Gestion et futur.', icon: <Clock size={24} />, duration: '3-24 mois', detail: { objective: "Stabilisation.", tips: ["Logement social.", "Vie commune."], insidesKeys: ['daily_life', 'refugee'] } }
 ];
@@ -163,7 +168,6 @@ const SquatSection: React.FC<SquatSectionProps> = () => {
 
                 {activeTab === 'checklists' && (
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {/* Fix: Explicitly cast Object.keys to correctly typed Array<keyof Checklists> by removing the erroneous hyphen in keyof */}
                         {(Object.keys(checklists) as Array<keyof Checklists>).map(phase => (
                             <div key={phase} className="bg-white p-8 rounded-[2.5rem] shadow-soft-elegant border border-gray-100">
                                 <h3 className="text-lg font-serif font-black mb-6 uppercase tracking-tighter border-b border-gray-50 pb-4">{phases.find(p => p.phase === phase)?.title.split(':')[1] || phase}</h3>
@@ -174,6 +178,32 @@ const SquatSection: React.FC<SquatSectionProps> = () => {
                                             <span className={`text-xs font-bold leading-tight ${item.done ? 'line-through text-gray-400' : 'text-gray-600 group-hover:text-earth-black'}`}>{item.text}</span>
                                         </label>
                                     ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {activeTab === 'insides' && (
+                    <div className="grid md:grid-cols-2 gap-8 animate-in fade-in slide-in-from-bottom-4">
+                        {insidesData.map(inside => (
+                            <div key={inside.id} className="bg-white p-8 rounded-[2.5rem] shadow-soft-elegant border border-gray-100 flex gap-6 group hover:border-guinea-red transition-all">
+                                <div className="p-4 bg-soft-paper text-guinea-red rounded-2xl h-fit group-hover:bg-guinea-red group-hover:text-white transition-all">
+                                    {inside.icon}
+                                </div>
+                                <div>
+                                    <h3 className="text-xl font-serif font-black text-earth-black mb-3">{inside.title}</h3>
+                                    <p className="text-sm text-gray-600 font-medium leading-relaxed">{inside.text}</p>
+                                    <div className="mt-4 flex items-center justify-between">
+                                        <span className="text-[9px] font-black uppercase tracking-widest text-gray-400">{inside.source}</span>
+                                        <span className={`px-2 py-1 rounded text-[8px] font-bold uppercase tracking-widest ${
+                                            inside.category === 'negotiation' ? 'bg-blue-100 text-blue-600' :
+                                            inside.category === 'refugee' ? 'bg-purple-100 text-purple-600' :
+                                            'bg-guinea-green/10 text-guinea-green'
+                                        }`}>
+                                            {inside.category}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         ))}

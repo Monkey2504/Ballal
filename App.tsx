@@ -1,4 +1,3 @@
-
 import React, { useState, ReactNode, Component } from 'react';
 import Navbar from './components/Navbar.tsx';
 import Hero from './components/Hero.tsx';
@@ -22,7 +21,6 @@ import LegalDocSection from './components/LegalDocSection.tsx';
 interface ErrorBoundaryProps { children?: ReactNode; }
 interface ErrorBoundaryState { hasError: boolean; }
 
-// Fix: Explicitly declare state and props members to ensure TypeScript correctly identifies them on the class instance.
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   public state: ErrorBoundaryState;
   public props: ErrorBoundaryProps;
@@ -65,7 +63,7 @@ const AppContent: React.FC = () => {
       case ViewState.HOME: return (
         <div className="space-y-0">
           <Hero 
-            onExplore={() => navigate(ViewState.FESTIVAL)} 
+            onExplore={() => navigate(ViewState.LEGAL_AID)} 
             language={language}
             onShare={() => navigate(ViewState.SHARE)}
             onDonate={() => navigate(ViewState.DONATE)}

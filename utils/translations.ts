@@ -34,6 +34,13 @@ export interface Translation {
   legal_home_title: string;
   legal_home_warrant: string;
   legal_home_police: string;
+  hist_subtitle: string;
+  hist_1958_title: string;
+  hist_1958_desc: string;
+  hist_1960_title: string;
+  hist_1960_desc: string;
+  hist_2024_title: string;
+  hist_2024_desc: string;
   form_success_title: string;
   form_success_desc: string;
   form_error_required: string;
@@ -69,7 +76,7 @@ const fr: Translation = {
   nav_contact: "Contact",
   nav_festival: "Festival Sans-Papiers",
   nav_directory: "Annuaire",
-  nav_squat: "Squat et Occupation",
+  nav_squat: "Logement",
   hero_title: "BALLAL ASBL",
   hero_subtitle: "Accueillir. Protéger. Unir.",
   hero_desc: "La structure de référence pour la communauté guinéenne en Belgique. Entraide, annuaire communautaire et promotion de notre culture.",
@@ -91,6 +98,13 @@ const fr: Translation = {
   legal_home_title: "Protection du Domicile",
   legal_home_warrant: "Mandat obligatoire",
   legal_home_police: "La police ne peut entrer sans votre accord ou mandat.",
+  hist_subtitle: "De l'indépendance de 1958 à la diaspora dynamique d'aujourd'hui en Belgique.",
+  hist_1958_title: "L'An 0 de la Liberté",
+  hist_1958_desc: "Le 28 septembre 1958, la Guinée dit 'NON' au référendum de De Gaulle. C'est le premier pays d'Afrique subsaharienne française à choisir l'indépendance totale. Un acte de courage qui définit notre identité.",
+  hist_1960_title: "Les Pionniers en Belgique",
+  hist_1960_desc: "Dès les années 60, les premiers étudiants guinéens arrivent dans les universités belges (ULB, UCL). Ils forment les premières cellules de réflexion et de solidarité de notre communauté.",
+  hist_2024_title: "Une Diaspora Engagée",
+  hist_2024_desc: "Aujourd'hui, plus de 25 000 Guinéens vivent en Belgique. Entrepreneurs, médecins, ouvriers ou étudiants, nous formons une communauté soudée qui contribue activement au rayonnement de la Belgique.",
   form_success_title: "Message envoyé",
   form_success_desc: "Merci, nous vous répondrons bientôt.",
   form_error_required: "Ce champ est requis",
