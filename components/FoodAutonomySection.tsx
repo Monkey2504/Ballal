@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Wheat, ShieldCheck, Users, Mail, ArrowRight, 
-  ExternalLink, HeartHandshake, Leaf, Truck, Award, Globe,
-  Calendar, BarChart, CheckCircle, Target, Home, TrendingUp
+  HeartHandshake, Leaf, Truck, Globe,
+  Calendar, CheckCircle, Target, Home, TrendingUp
 } from 'lucide-react';
 import { LanguageCode, ViewState } from '../types.ts';
 import { translations } from '../utils/translations.ts';
@@ -14,285 +14,85 @@ interface FoodAutonomySectionProps {
 
 const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, setView }) => {
   const t = translations[language] || translations['fr'];
-  const [metrics, setMetrics] = useState({
-    squats: 0,
-    people: 0,
-    growth: 0,
-    partners: 0
-  });
+  const [metrics, setMetrics] = useState({ squats: 0, people: 0, growth: 0, partners: 0 });
 
-  // Animated counter effect for metrics (Objectifs 2025)
   useEffect(() => {
-    const targetMetrics = {
-      squats: 10,
-      people: 1000,
-      growth: 10,
-      partners: 50
-    };
-
-    const duration = 2000;
-    const steps = 60;
-    const stepDuration = duration / steps;
-
-    let currentStep = 0;
-    const interval = setInterval(() => {
-      currentStep++;
-      const progress = currentStep / steps;
-      
-      setMetrics({
-        squats: Math.floor(targetMetrics.squats * progress),
-        people: Math.floor(targetMetrics.people * progress),
-        growth: Math.floor(targetMetrics.growth * progress),
-        partners: Math.floor(targetMetrics.partners * progress)
-      });
-
-      if (currentStep >= steps) {
-        clearInterval(interval);
-      }
-    }, stepDuration);
-
-    return () => clearInterval(interval);
+    const target = { squats: 10, people: 1000, growth: 10, partners: 50 };
+    setMetrics(target);
   }, []);
 
-  // Contact links
-  const donorContactLink = `mailto:admin@ballal.be?subject=${encodeURIComponent(t.email_subject_food_donor)}&body=${encodeURIComponent(t.email_body_food_donor)}`;
-  const collectiveContactLink = `mailto:admin@ballal.be?subject=${encodeURIComponent(t.email_subject_food_network)}&body=${encodeURIComponent(t.email_body_food_network)}`;
-  const generalContactLink = `mailto:admin@ballal.be?subject=${encodeURIComponent(t.nav_food_project)}`;
-
-  const benefits = [
-    {
-      icon: <Leaf className="h-6 w-6" />,
-      title: "Réduction du gaspillage",
-      description: "Valorisation des surplus alimentaires en circuits courts"
-    },
-    {
-      icon: <HeartHandshake className="h-6 w-6" />,
-      title: "Solidarité territoriale",
-      description: "Renforcement des liens entre acteurs locaux"
-    },
-    {
-      icon: <Globe className="h-6 w-6" />,
-      title: "Impact environnemental",
-      description: "Réduction de l'empreinte carbone alimentaire"
-    },
-    {
-      icon: <Award className="h-6 w-6" />,
-      title: "Reconnaissance",
-      description: "Certification de votre engagement social"
-    }
-  ];
-
-  const processSteps = [
-    {
-      step: 1,
-      title: "Identification",
-      description: "Repérage des surplus alimentaires chez nos partenaires",
-      icon: <Target className="h-5 w-5" />
-    },
-    {
-      step: 2,
-      title: "Collecte",
-      description: "Logistique optimisée pour la récupération",
-      icon: <Truck className="h-5 w-5" />
-    },
-    {
-      step: 3,
-      title: "Distribution",
-      description: "Redistribution aux collectifs et associations",
-      icon: <Users className="h-5 w-5" />
-    },
-    {
-      step: 4,
-      title: "Suivi",
-      description: "Traçabilité complète et reporting",
-      icon: <BarChart className="h-5 w-5" />
-    }
-  ];
-
   return (
-    <div 
-      className="min-h-screen bg-[#FFFBF0]"
-      dir={language === 'ar' ? 'rtl' : 'ltr'}
-      role="main"
-      aria-labelledby="food-autonomy-title"
-    >
-      
-      {/* Hero Header */}
-      <div className="bg-gradient-to-br from-green-700 via-green-600 to-emerald-700 text-white py-16 md:py-24 relative overflow-hidden border-b-8 border-[#FCD116]">
-        <div className="absolute inset-0 opacity-10 AfricanPattern" aria-hidden="true" />
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <div className="inline-flex items-center justify-center p-4 bg-white/20 rounded-full mb-8 backdrop-blur-sm animate-pulse">
-            <Wheat className="h-12 w-12 text-[#FCD116]" />
+    <div className="min-h-screen bg-soft-paper pb-24">
+      {/* Header Doux */}
+      <div className="bg-[#2D2D2D] text-white py-24 border-b-8 border-guinea-green relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5 african-pattern"></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="bg-guinea-green text-white inline-block px-5 py-2 font-bold rounded-full text-xs uppercase mb-8 shadow-lg">
+             PROJET AUTONOMIE ALIMENTAIRE
           </div>
-          
-          <h1 id="food-autonomy-title" className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6">
-            {t.food_title}
+          <h1 className="text-6xl md:text-9xl font-serif font-black tracking-tighter leading-[0.8] mb-10">
+            Nourrir <span className="text-guinea-green">l'espoir</span>,<br/>semer <span className="text-guinea-yellow">l'unité</span>
           </h1>
-          
-          <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto font-medium italic mb-12">
-            "{t.food_slogan}"
+          <p className="text-xl md:text-3xl font-medium italic max-w-2xl leading-relaxed text-gray-300">
+            "Récupérer les surplus pour restaurer la dignité de chacun."
           </p>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-            {[
-              { value: metrics.squats, label: t.food_goal_squats, icon: <Home className="h-5 w-5" /> },
-              { value: metrics.people, label: t.food_goal_people, icon: <Users className="h-5 w-5" /> },
-              { value: `x${metrics.growth}`, label: t.food_goal_growth, icon: <TrendingUp className="h-5 w-5" />, isText: true },
-              { value: metrics.partners, label: t.food_goal_partners, icon: <HeartHandshake className="h-5 w-5" /> }
-            ].map((metric, index) => (
-              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center border border-white/10">
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <div className="text-[#FCD116]">{metric.icon}</div>
-                  <span className="text-2xl md:text-3xl font-black">
-                    {metric.isText ? metric.value : (typeof metric.value === 'number' ? metric.value.toLocaleString() : metric.value)}
-                  </span>
-                </div>
-                <div className="text-sm text-white/90 font-medium">{metric.label}</div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 -mt-8 relative z-20">
-        <section className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-16 border-t-8 border-[#009460]">
-          <div className="flex items-start gap-6 mb-8">
-            <div className="h-12 w-2 bg-[#009460] rounded-full" aria-hidden="true" />
-            <div>
-              <h2 className="text-3xl font-black text-slate-900 mb-4">{t.food_intro_title}</h2>
-              <p className="text-lg text-gray-700 leading-relaxed">{t.food_intro_text}</p>
+      <div className="max-w-7xl mx-auto px-6 -mt-16 relative z-20">
+        
+        {/* Metrics Grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+          {[
+            { value: metrics.squats, label: "Points de distribution", icon: <Home className="h-5 w-5" /> },
+            { value: metrics.people, label: "Repas par mois", icon: <Users className="h-5 w-5" /> },
+            { value: `x${metrics.growth}`, label: "Impact 2025", icon: <TrendingUp className="h-5 w-5" /> },
+            { value: metrics.partners, label: "Partenaires locaux", icon: <HeartHandshake className="h-5 w-5" /> }
+          ].map((metric, index) => (
+            <div key={index} className="bg-white p-8 rounded-[2.5rem] shadow-soft-elegant border border-gray-100 flex flex-col items-center text-center">
+              <div className="p-3 bg-guinea-green/10 text-guinea-green rounded-2xl mb-4">{metric.icon}</div>
+              <div className="text-4xl font-serif font-black text-earth-black mb-1">{metric.value}</div>
+              <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{metric.label}</div>
             </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-            {benefits.map((benefit, index) => (
-              <div key={index} className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl border border-green-100 hover:shadow-lg transition-all duration-300">
-                <div className="h-12 w-12 bg-white rounded-lg flex items-center justify-center mb-4 shadow-sm text-green-600">
-                  {benefit.icon}
-                </div>
-                <h3 className="font-bold text-slate-900 mb-2">{benefit.title}</h3>
-                <p className="text-sm text-gray-600">{benefit.description}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="mb-16">
-          <h2 className="text-2xl md:text-3xl font-black text-slate-900 mb-8 text-center">Notre Processus en 4 Étapes</h2>
-          <div className="relative">
-            <div className="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-green-500 to-emerald-500 transform -translate-y-1/2" aria-hidden="true" />
-            <div className="grid md:grid-cols-4 gap-6 md:gap-8">
-              {processSteps.map((step) => (
-                <div key={step.step} className="relative bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  <div className="absolute -top-3 -left-3 h-8 w-8 bg-[#009460] text-white rounded-full flex items-center justify-center font-black text-sm">
-                    {step.step}
-                  </div>
-                  <div className="h-12 w-12 bg-green-100 rounded-xl flex items-center justify-center mb-4 text-green-600">
-                    {step.icon}
-                  </div>
-                  <h3 className="font-bold text-slate-900 mb-2">{step.title}</h3>
-                  <p className="text-sm text-gray-600">{step.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-gradient-to-r from-slate-900 to-black rounded-3xl p-8 md:p-12 text-white mb-16 shadow-2xl">
-          <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
-            <div className="md:w-1/3">
-              <div className="bg-white/10 p-8 rounded-2xl border border-white/20 backdrop-blur-sm">
-                <ShieldCheck className="h-24 w-24 text-[#00C853]" />
-              </div>
-            </div>
-            <div className="md:w-2/3">
-              <div className="flex items-center gap-3 mb-4">
-                <h3 className="text-2xl font-black uppercase tracking-wide">{t.food_compliance_title}</h3>
-                <span className="bg-[#00C853] text-xs px-3 py-1 rounded-full text-white font-bold tracking-widest">CERTIFIÉ</span>
-              </div>
-              <p className="text-slate-300 text-lg leading-relaxed mb-6">{t.food_compliance_text}</p>
-              <div className="space-y-4">
-                {["Traçabilité complète des dons", "Conformité réglementaire stricte", "Rapports d'impact transparents", "Protection des données (RGPD)"].map((item, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <CheckCircle className="h-5 w-5 text-[#00C853]" />
-                    <span className="font-medium">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-            <div className="bg-gradient-to-r from-orange-500 to-amber-500 p-6 flex items-center justify-between">
-              <h3 className="text-xl font-black text-white">{t.food_partners_title}</h3>
-              <HeartHandshake className="h-8 w-8 text-white" />
-            </div>
-            <div className="p-8">
-              <p className="text-gray-600 mb-8">{t.food_partners_text}</p>
-              <div className="bg-orange-50 p-4 rounded-lg mb-6">
-                <h4 className="font-bold text-slate-900 mb-2">Avantages partenaires</h4>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li>• Réduction des coûts de gestion des surplus</li>
-                  <li>• Impact RSE mesurable</li>
-                  <li>• Certification de donateur engagé</li>
-                </ul>
-              </div>
-              <button 
-                onClick={() => setView?.(ViewState.FOOD_SUPPLIER)}
-                className="w-full bg-slate-900 text-white font-bold py-4 rounded-xl hover:bg-black transition-colors flex items-center justify-center gap-2"
-              >
-                <Mail className="h-5 w-5" />
-                {t.food_partners_btn}
-              </button>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-            <div className="bg-gradient-to-r from-red-600 to-rose-600 p-6 flex items-center justify-between">
-              <h3 className="text-xl font-black text-white">{t.food_collectives_title}</h3>
-              <Users className="h-8 w-8 text-white" />
-            </div>
-            <div className="p-8">
-              <p className="text-gray-600 mb-8">{t.food_collectives_text}</p>
-              <div className="bg-red-50 p-4 rounded-lg mb-6">
-                <h4 className="font-bold text-slate-900 mb-2">Services inclus</h4>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li>• Accès aux surplus alimentaires</li>
-                  <li>• Support logistique adapté</li>
-                  <li>• Formation aux bonnes pratiques</li>
-                </ul>
-              </div>
-              <button 
-                onClick={() => setView?.(ViewState.FOOD_NETWORK)}
-                className="w-full border-2 border-[#CE1126] text-[#CE1126] font-bold py-4 rounded-xl hover:bg-red-50 transition-colors flex items-center justify-center gap-2"
-              >
-                <ExternalLink className="h-5 w-5" />
-                {t.food_collectives_btn}
-              </button>
-            </div>
-          </div>
+          ))}
         </div>
 
-        <div className="bg-gradient-to-r from-emerald-50 to-green-50 rounded-3xl p-8 md:p-12 text-center border border-emerald-100">
-          <div className="max-w-2xl mx-auto">
-            <Calendar className="h-16 w-16 text-[#009460] mx-auto mb-6" />
-            <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">Prêt à faire la différence ?</h3>
-            <p className="text-gray-600 mb-8">Rejoignez notre réseau et contribuez à construire un système alimentaire plus juste et durable.</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a 
-                href={generalContactLink}
-                className="inline-flex items-center justify-center px-8 py-4 bg-[#009460] text-white font-bold rounded-xl hover:bg-green-700 transition-colors shadow-lg gap-2"
-              >
-                Nous contacter <ArrowRight className="h-5 w-5" />
-              </a>
-              <button className="inline-flex items-center justify-center px-8 py-4 border-2 border-[#009460] text-[#009460] font-bold rounded-xl hover:bg-green-50 transition-colors gap-2">
-                Télécharger la brochure
-              </button>
-            </div>
+        <div className="grid lg:grid-cols-2 gap-12">
+          {/* Action Card */}
+          <div className="bg-white p-12 rounded-[3.5rem] shadow-soft-elegant border border-gray-100 group transition-all">
+             <div className="flex items-center gap-5 mb-10">
+               <div className="p-5 bg-guinea-green/10 text-guinea-green rounded-[2rem] group-hover:scale-110 transition-transform"><Leaf className="h-10 w-10" /></div>
+               <h3 className="text-4xl font-serif font-black text-earth-black">Notre Mission</h3>
+             </div>
+             <p className="text-xl text-gray-600 font-medium leading-relaxed mb-10">
+               Nous collectons les surplus alimentaires des commerces de gros et détaillants pour approvisionner les cuisines collectives des squats et occupations de la diaspora.
+             </p>
+             <div className="space-y-4">
+                {["Lutte contre le gaspillage", "Zéro frais pour les occupants", "Qualité nutritionnelle garantie"].map((benefit, i) => (
+                   <div key={i} className="flex items-center gap-4 text-gray-700 font-bold">
+                     <CheckCircle className="h-5 w-5 text-guinea-green" /> {benefit}
+                   </div>
+                ))}
+             </div>
+          </div>
+
+          {/* Logistics Card */}
+          <div className="bg-white p-12 rounded-[3.5rem] shadow-soft-elegant border border-gray-100 group transition-all">
+             <div className="flex items-center gap-5 mb-10">
+               <div className="p-5 bg-guinea-yellow/10 text-guinea-yellow rounded-[2rem] group-hover:scale-110 transition-transform"><Truck className="h-10 w-10" /></div>
+               <h3 className="text-4xl font-serif font-black text-earth-black">Participer</h3>
+             </div>
+             <p className="text-xl text-gray-600 font-medium leading-relaxed mb-10">
+               Vous êtes un commerçant avec des invendus ? Ou un collectif ayant besoin d'appui ? Rejoignez le réseau Ballal.
+             </p>
+             <div className="grid gap-4">
+                <button onClick={() => setView?.(ViewState.FOOD_SUPPLIER)} className="bg-earth-black text-white p-6 rounded-2xl font-black uppercase text-xs tracking-widest flex items-center justify-between hover:bg-guinea-green transition-all shadow-md">
+                   Je suis un fournisseur <ArrowRight className="h-5 w-5" />
+                </button>
+                <button onClick={() => setView?.(ViewState.FOOD_NETWORK)} className="border-2 border-earth-black text-earth-black p-6 rounded-2xl font-black uppercase text-xs tracking-widest flex items-center justify-between hover:bg-gray-50 transition-all">
+                   Je suis un collectif <ArrowRight className="h-5 w-5" />
+                </button>
+             </div>
           </div>
         </div>
       </div>
