@@ -1,5 +1,5 @@
 
-import React, { Component, ReactNode, ErrorInfo } from 'react';
+import React, { ReactNode, ErrorInfo, Component } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 
@@ -12,9 +12,16 @@ interface GlobalErrorBoundaryState {
   error: Error | null;
 }
 
-// Fix: Use Component from named imports and initialize state as a class property to resolve TS errors regarding 'state' and 'props' properties.
+// Fix: Explicitly declare state and props members to ensure TypeScript correctly identifies them on the class instance.
 class GlobalErrorBoundary extends Component<GlobalErrorBoundaryProps, GlobalErrorBoundaryState> {
-  public state: GlobalErrorBoundaryState = { hasError: false, error: null };
+  public state: GlobalErrorBoundaryState;
+  public props: GlobalErrorBoundaryProps;
+
+  constructor(props: GlobalErrorBoundaryProps) {
+    super(props);
+    this.props = props;
+    this.state = { hasError: false, error: null };
+  }
 
   static getDerivedStateFromError(error: Error): GlobalErrorBoundaryState {
     return { hasError: true, error };

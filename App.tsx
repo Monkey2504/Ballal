@@ -22,10 +22,19 @@ import LegalDocSection from './components/LegalDocSection.tsx';
 interface ErrorBoundaryProps { children?: ReactNode; }
 interface ErrorBoundaryState { hasError: boolean; }
 
-// Fix: Use Component from named imports to ensure props and state are correctly inherited in the type system for ErrorBoundary.
+// Fix: Explicitly declare state and props members to ensure TypeScript correctly identifies them on the class instance.
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  state: ErrorBoundaryState = { hasError: false };
+  public state: ErrorBoundaryState;
+  public props: ErrorBoundaryProps;
+
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.props = props;
+    this.state = { hasError: false };
+  }
+
   static getDerivedStateFromError(_: Error): ErrorBoundaryState { return { hasError: true }; }
+  
   render() {
     if (this.state.hasError) {
       return (
