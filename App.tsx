@@ -1,4 +1,5 @@
 import React, { useState, ReactNode, Component } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import Navbar from './components/Navbar.tsx';
 import Hero from './components/Hero.tsx';
 import Footer from './components/Footer.tsx';
@@ -97,6 +98,7 @@ const AppContent: React.FC = () => {
         </ErrorBoundary>
       </main>
       <Footer language={language} setView={navigate} />
+      <Analytics />
     </div>
   );
 };

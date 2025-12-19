@@ -428,7 +428,7 @@ const InsidesTab: React.FC<{ brusselsDistricts: typeof brusselsDistricts; onInsi
     </div>
     <div className="bg-warm-red text-white border-4 border-earth-black p-6 rounded-xl shadow-brutal-red">
       <h4 className="font-black mb-4 uppercase tracking-widest text-guinea-yellow flex items-center gap-2">
-        <MapPin className='h-4 w-4' /> Zones Clés à BXL pour Squat->OT
+        <MapPin className='h-4 w-4' /> Zones Clés à BXL pour Squat-&gt;OT
       </h4>
       <ul className="text-sm space-y-2 font-bold">
         {brusselsDistricts.map(d => (
