@@ -1,14 +1,17 @@
+
 export type LanguageCode = 'fr' | 'en' | 'nl' | 'pe' | 'ma' | 'su' | 'es' | 'ar' | 'de' | 'pt' | 'it' | 'ru';
 
 export enum ViewState {
   HOME = 'HOME',
+  SOLIDARITY_NETWORK = 'SOLIDARITY_NETWORK',
   LEGAL_AID = 'LEGAL_AID',
   FOOD_AUTONOMY = 'FOOD_AUTONOMY',
   FOOD_SUPPLIER = 'FOOD_SUPPLIER',
   FOOD_NETWORK = 'FOOD_NETWORK',
   SQUAT = 'SQUAT',
   FESTIVAL = 'FESTIVAL',
-  HISTORY = 'HISTORY',
+  TEAM = 'TEAM',
+  COMMUNITY = 'COMMUNITY',
   DONATE = 'DONATE',
   SHARE = 'SHARE',
   CONTACT = 'CONTACT',

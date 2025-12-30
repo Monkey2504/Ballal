@@ -1,26 +1,21 @@
+
 import React, { useState } from 'react';
-import { Menu, X, Heart, ShieldAlert, Home, History, Landmark, Utensils } from 'lucide-react';
+import { Menu, X, Heart, ShieldAlert, LogIn, User as UserIcon } from 'lucide-react';
 import { ViewState, LanguageCode } from '../types.ts';
-import { translations } from '../utils/translations.ts';
+import { MAIN_NAV_ITEMS } from '../constants/navigation.ts';
+import { useAuth } from '../contexts/AuthContext.tsx';
 
 interface NavbarProps {
   currentView: ViewState;
   setView: (view: ViewState) => void;
   language: LanguageCode;
   setLanguage: (lang: LanguageCode) => void;
+  onOpenAuth: () => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLanguage }) => {
+const Navbar: React.FC<NavbarProps> = ({ currentView, setView, onOpenAuth }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const t = translations[language] || translations['fr'];
-
-  const navItems = [
-    { label: "ACCUEIL", value: ViewState.HOME, icon: Home },
-    { label: "DROITS", value: ViewState.LEGAL_AID, icon: ShieldAlert },
-    { label: "LOGEMENT", value: ViewState.SQUAT, icon: Landmark },
-    { label: "MANGER", value: ViewState.FOOD_AUTONOMY, icon: Utensils },
-    { label: "HISTOIRE", value: ViewState.HISTORY, icon: History },
-  ];
+  const { user, isAuthenticated, logout } = useAuth();
 
   const handleNavClick = (view: ViewState) => {
     setView(view);
@@ -34,9 +29,21 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
           <ShieldAlert className="h-3 w-3 text-guinea-yellow" />
           <span className="text-[9px] font-bold uppercase tracking-[0.2em]">Solidarité Ballal Belgique</span>
         </div>
-        <a href="tel:0493434383" className="font-bold text-[9px] hover:text-guinea-yellow transition-colors tracking-widest">
-          URGENCE : 0493 43 43 83
-        </a>
+        <div className="flex items-center gap-4">
+          <a href="tel:0493434383" className="font-bold text-[9px] hover:text-guinea-yellow transition-colors tracking-widest">
+            URGENCE : 0493 43 43 83
+          </a>
+          {isAuthenticated ? (
+            <div className="flex items-center gap-2">
+              <span className="text-[9px] font-bold uppercase">{user?.name}</span>
+              <button onClick={logout} className="text-[9px] font-bold underline hover:text-guinea-yellow">DÉCONNEXION</button>
+            </div>
+          ) : (
+            <button onClick={onOpenAuth} className="flex items-center gap-1 text-[9px] font-bold hover:text-guinea-yellow transition-colors">
+              <LogIn className="h-3 w-3" /> CONNEXION
+            </button>
+          )}
+        </div>
       </div>
 
       <nav className="px-6 py-4">
@@ -52,7 +59,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
           </button>
 
           <div className="hidden lg:flex gap-1">
-            {navItems.map((item) => (
+            {MAIN_NAV_ITEMS.map((item) => (
               <button
                 key={item.value}
                 onClick={() => handleNavClick(item.value)}
@@ -77,16 +84,15 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, language, setLang
           </div>
         </div>
 
-        {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-full left-6 right-6 mt-4 bg-white rounded-[2rem] shadow-2xl p-6 border border-gray-100 animate-in fade-in slide-in-from-top-4 duration-300">
-            <div className="grid gap-3">
-              {navItems.map((item) => (
+          <div className="lg:hidden mt-4 bg-white rounded-2xl shadow-2xl p-4 border border-gray-100 animate-in slide-in-from-top-4">
+            <div className="flex flex-col gap-2">
+              {MAIN_NAV_ITEMS.map((item) => (
                 <button
                   key={item.value}
                   onClick={() => handleNavClick(item.value)}
-                  className={`w-full p-5 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center gap-4 transition-all ${
-                    currentView === item.value ? 'bg-guinea-red text-white' : 'bg-gray-50 text-gray-500'
+                  className={`flex items-center gap-4 p-4 rounded-xl font-bold text-xs uppercase tracking-widest ${
+                    currentView === item.value ? 'bg-guinea-red text-white' : 'text-gray-600 hover:bg-gray-50'
                   }`}
                 >
                   <item.icon className="h-5 w-5" />
