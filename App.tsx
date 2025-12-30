@@ -8,7 +8,6 @@ import { AuthProvider } from './contexts/AuthContext.tsx';
 import { AlertTriangle, RefreshCcw, ShieldAlert } from 'lucide-react';
 import { MAIN_NAV_ITEMS } from './constants/navigation.ts';
 
-import SolidarityNetwork from './components/SolidarityNetwork.tsx';
 import LegalAidSection from './components/LegalAidSection.tsx';
 import ShareSection from './components/ShareSection.tsx';
 import DonationSection from './components/DonationSection.tsx';
@@ -17,17 +16,24 @@ import SquatSection from './components/SquatSection.tsx';
 import ContactSection from './components/ContactSection.tsx';
 import FestivalSection from './components/FestivalSection.tsx';
 import TeamSection from './components/TeamSection.tsx';
-import CommunitySection from './components/CommunitySection.tsx';
+import HistorySection from './components/HistorySection.tsx';
+import GallerySection from './components/GallerySection.tsx';
 import { AuthModal } from './components/AuthModals.tsx';
 import { FoodSupplierForm, FoodNetworkForm } from './components/FoodForms.tsx';
 import LegalDocSection from './components/LegalDocSection.tsx';
+// Fix: Import missing SolidarityNetwork component to enable navigation
+import SolidarityNetwork from './components/SolidarityNetwork.tsx';
 
 interface ErrorBoundaryProps { children?: ReactNode; }
 interface ErrorBoundaryState { hasError: boolean; }
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  public state: ErrorBoundaryState;
+  public props: ErrorBoundaryProps;
+
   constructor(props: ErrorBoundaryProps) {
     super(props);
+    this.props = props;
     this.state = { hasError: false };
   }
   static getDerivedStateFromError(_: Error): ErrorBoundaryState { return { hasError: true }; }
@@ -50,16 +56,16 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 const HomePage: React.FC<{ navigate: (v: ViewState) => void, language: LanguageCode }> = ({ navigate, language }) => (
   <div className="space-y-0">
     <Hero 
-      onExplore={() => navigate(ViewState.SOLIDARITY_NETWORK)} 
+      onExplore={() => navigate(ViewState.SQUAT)} 
       language={language}
       onShare={() => navigate(ViewState.SHARE)}
       onDonate={() => navigate(ViewState.DONATE)}
     />
     
     <section className="max-w-7xl mx-auto px-6 py-20">
-      <h2 className="text-xs font-black uppercase tracking-[0.4em] text-gray-400 mb-12 text-center">Nos Piliers d'Action</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {MAIN_NAV_ITEMS.filter(item => item.value !== ViewState.HOME).slice(0, 4).map((pill, i) => (
+      <h2 className="text-xs font-black uppercase tracking-[0.4em] text-gray-400 mb-12 text-center">Tableau de Bord Communautaire</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {MAIN_NAV_ITEMS.filter(item => item.value !== ViewState.HOME).map((pill, i) => (
           <button 
             key={i} 
             onClick={() => navigate(pill.value)}
@@ -99,6 +105,13 @@ const HomePage: React.FC<{ navigate: (v: ViewState) => void, language: LanguageC
   </div>
 );
 
+const CulturePage: React.FC<{ language: LanguageCode }> = ({ language }) => (
+  <div className="space-y-0">
+    <HistorySection language={language} />
+    <GallerySection />
+  </div>
+);
+
 const AppContent: React.FC = () => {
   const [view, setView] = useState<ViewState>(ViewState.HOME);
   const [language, setLanguage] = useState<LanguageCode>('fr');
@@ -118,11 +131,10 @@ const AppContent: React.FC = () => {
   const renderView = () => {
     switch (view) {
       case ViewState.HOME: return <HomePage navigate={navigate} language={language} />;
-      case ViewState.SOLIDARITY_NETWORK: return <SolidarityNetwork />;
+      case ViewState.CULTURE: return <CulturePage language={language} />;
       case ViewState.SQUAT: return <SquatSection language={language} />;
       case ViewState.FESTIVAL: return <FestivalSection language={language} />;
       case ViewState.TEAM: return <TeamSection language={language} />;
-      case ViewState.COMMUNITY: return <CommunitySection />;
       case ViewState.LEGAL_AID: return <LegalAidSection language={language} />;
       case ViewState.FOOD_AUTONOMY: return <FoodAutonomySection language={language} setView={navigate} />;
       case ViewState.SHARE: return <ShareSection language={language} />;
@@ -132,6 +144,8 @@ const AppContent: React.FC = () => {
       case ViewState.FOOD_NETWORK: return <FoodNetworkForm language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />;
       case ViewState.PRIVACY: return <LegalDocSection language={language} mode="privacy" />;
       case ViewState.TERMS: return <LegalDocSection language={language} mode="terms" />;
+      // Fix: Add case to handle SOLIDARITY_NETWORK navigation
+      case ViewState.SOLIDARITY_NETWORK: return <SolidarityNetwork />;
       default: return <HomePage navigate={navigate} language={language} />;
     }
   };

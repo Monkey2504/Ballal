@@ -3,20 +3,21 @@ export type LanguageCode = 'fr' | 'en' | 'nl' | 'pe' | 'ma' | 'su' | 'es' | 'ar'
 
 export enum ViewState {
   HOME = 'HOME',
-  SOLIDARITY_NETWORK = 'SOLIDARITY_NETWORK',
   LEGAL_AID = 'LEGAL_AID',
   FOOD_AUTONOMY = 'FOOD_AUTONOMY',
   FOOD_SUPPLIER = 'FOOD_SUPPLIER',
   FOOD_NETWORK = 'FOOD_NETWORK',
   SQUAT = 'SQUAT',
-  FESTIVAL = 'FESTIVAL',
+  CULTURE = 'CULTURE',
   TEAM = 'TEAM',
-  COMMUNITY = 'COMMUNITY',
   DONATE = 'DONATE',
   SHARE = 'SHARE',
   CONTACT = 'CONTACT',
   PRIVACY = 'PRIVACY',
-  TERMS = 'TERMS'
+  TERMS = 'TERMS',
+  FESTIVAL = 'FESTIVAL',
+  // Fix: Added SOLIDARITY_NETWORK to the enum to match the reference in Footer.tsx
+  SOLIDARITY_NETWORK = 'SOLIDARITY_NETWORK'
 }
 
 export interface UserPreferences {
