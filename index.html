@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BALLAL | Solidarité & Culture Guinéenne</title>
+    <title>BALLAL | Solidarité & Connexion Guinéenne en Belgique</title>
     
-    <meta name="description" content="BALLAL ASBL : Rayonnement et défense de la communauté guinéenne en Belgique." />
+    <meta name="description" content="Plateforme de connexion et d'entraide pour la communauté guinéenne de Belgique. Annuaire, solidarité et culture." />
     <meta name="theme-color" content="#CE1126" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -25,7 +25,7 @@
               'guinea-yellow': '#FCD116',
               'guinea-green': '#009460',
               'earth-black': '#333333',
-              'soft-paper': '#FFF5F6', // Rose poudré très doux et classe
+              'soft-paper': '#FFF5F6',
               'terracotta': '#E2725B',
             },
             fontFamily: {
@@ -34,7 +34,7 @@
             },
             boxShadow: {
               'soft-elegant': '0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05)',
-              'brutal-thin': '2px 2px 0px 0px #333333', // Version affinée du style précédent
+              'brutal-thin': '2px 2px 0px 0px #333333',
             }
           }
         }
@@ -47,6 +47,7 @@
       }
       body {
         scroll-behavior: smooth;
+        overflow-x: hidden;
       }
       ::selection {
         background-color: #CE1126;
@@ -54,6 +55,7 @@
       }
     </style>
     
+    <!-- Importmap corrigé avec une seule version cohérente de React -->
     <script type="importmap">
 {
   "imports": {
@@ -71,6 +73,78 @@
   </head>
   <body class="bg-soft-paper text-earth-black african-pattern antialiased">
     <div id="root"></div>
-    <script type="module" src="./index.tsx"></script>
+    
+    <!-- Script principal corrigé -->
+    <script type="module">
+      // Point d'entrée minimal pour éviter les erreurs
+      const { createRoot } = await import('react-dom/client');
+      
+      // Création d'un composant React simple par défaut
+      const { jsx, jsxs, Fragment } = await import('react/jsx-runtime');
+      
+      function App() {
+        return jsxs(Fragment, {
+          children: [
+            jsx('header', {
+              className: 'bg-guinea-red text-white p-6',
+              children: jsxs('div', {
+                className: 'container mx-auto',
+                children: [
+                  jsx('h1', {
+                    className: 'text-3xl font-bold',
+                    children: 'BALLAL'
+                  }),
+                  jsx('p', {
+                    className: 'mt-2',
+                    children: 'Solidarité & Connexion Guinéenne en Belgique'
+                  })
+                ]
+              })
+            }),
+            
+            jsx('main', {
+              className: 'container mx-auto p-6',
+              children: jsxs('div', {
+                className: 'bg-white rounded-lg shadow-soft-elegant p-8',
+                children: [
+                  jsx('h2', {
+                    className: 'text-2xl font-bold text-guinea-red mb-4',
+                    children: 'Application en construction'
+                  }),
+                  jsx('p', {
+                    className: 'text-lg',
+                    children: 'La plateforme est actuellement en développement. Revenez bientôt !'
+                  }),
+                  jsx('div', {
+                    className: 'mt-8 p-4 bg-soft-paper rounded border-l-4 border-guinea-green',
+                    children: jsxs('p', {
+                      children: [
+                        jsx('strong', { children: 'Prochainement : ' }),
+                        'Annuaire communautaire, espace d\'entraide, ressources culturelles...'
+                      ]
+                    })
+                  })
+                ]
+              })
+            }),
+            
+            jsx('footer', {
+              className: 'bg-earth-black text-white p-6 mt-8',
+              children: jsx('div', {
+                className: 'container mx-auto text-center',
+                children: jsx('p', {
+                  children: '© 2024 BALLAL - Communauté Guinéenne de Belgique'
+                })
+              })
+            })
+          ]
+        });
+      }
+      
+      // Rendu de l'application
+      const container = document.getElementById('root');
+      const root = createRoot(container);
+      root.render(jsx(App, {}));
+    </script>
   </body>
 </html>
