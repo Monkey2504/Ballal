@@ -1,4 +1,5 @@
 import React, { useState, ReactNode, Component } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import Navbar from './components/Navbar.tsx';
 import Hero from './components/Hero.tsx';
 import Footer from './components/Footer.tsx';
@@ -171,5 +172,10 @@ const AppContent: React.FC = () => {
   );
 };
 
-const App: React.FC = () => <AuthProvider><AppContent /></AuthProvider>;
+const App: React.FC = () => (
+  <AuthProvider>
+    <AppContent />
+    <Analytics />
+  </AuthProvider>
+);
 export default App;
