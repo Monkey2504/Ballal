@@ -1,4 +1,3 @@
-
 import React, { useState, ReactNode, Component } from 'react';
 import Navbar from './components/Navbar.tsx';
 import Hero from './components/Hero.tsx';

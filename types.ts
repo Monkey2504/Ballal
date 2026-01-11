@@ -1,4 +1,3 @@
-
 export type LanguageCode = 'fr' | 'en' | 'nl' | 'pe' | 'ma' | 'su' | 'es' | 'ar' | 'de' | 'pt' | 'it' | 'ru';
 
 export enum ViewState {

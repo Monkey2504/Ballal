@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   Mail, MapPin, Phone, Heart, ChevronRight, Shield, Building, Clock
@@ -50,9 +49,9 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
               {[
                 { name: "Accueil", view: ViewState.HOME },
                 { name: "Logement", view: ViewState.SQUAT },
-                { name: "Manger", view: ViewState.FOOD_AUTONOMY },
-                { name: "Équipe", view: ViewState.TEAM },
+                { name: "Culture", view: ViewState.CULTURE },
                 { name: "Festival", view: ViewState.FESTIVAL },
+                { name: "Équipe", view: ViewState.TEAM },
               ].map((link) => (
                 <li key={link.view}>
                   <button 
