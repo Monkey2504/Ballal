@@ -15,7 +15,8 @@ export enum ViewState {
   PRIVACY = 'PRIVACY',
   TERMS = 'TERMS',
   FESTIVAL = 'FESTIVAL',
-  NEWS = 'NEWS'
+  COMMUNITY = 'COMMUNITY',
+  SOLIDARITY_NETWORK = 'SOLIDARITY_NETWORK'
 }
 
 export interface UserPreferences {

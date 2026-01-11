@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Menu, X, Heart, ShieldAlert, LogIn, User as UserIcon } from 'lucide-react';
+import { Menu, X, Heart, ShieldAlert, LogIn } from 'lucide-react';
 import { ViewState, LanguageCode } from '../types.ts';
 import { MAIN_NAV_ITEMS } from '../constants/navigation.ts';
 import { useAuth } from '../contexts/AuthContext.tsx';
@@ -27,7 +27,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, onOpenAuth }) => 
       <div className="bg-guinea-red text-white py-2 px-6 flex justify-between items-center border-b border-white/10">
         <div className="flex items-center gap-3">
           <ShieldAlert className="h-3 w-3 text-guinea-yellow" />
-          <span className="text-[9px] font-bold uppercase tracking-[0.2em]">Solidarité Ballal Belgique</span>
+          <span className="text-[9px] font-bold uppercase tracking-[0.2em]">Réseau Ballal Belgique</span>
         </div>
         <div className="flex items-center gap-4">
           <a href="tel:0493434383" className="font-bold text-[9px] hover:text-guinea-yellow transition-colors tracking-widest">
@@ -40,21 +40,21 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, onOpenAuth }) => 
             </div>
           ) : (
             <button onClick={onOpenAuth} className="flex items-center gap-1 text-[9px] font-bold hover:text-guinea-yellow transition-colors">
-              <LogIn className="h-3 w-3" /> CONNEXION
+              <LogIn className="h-3 w-3" /> ACCÈS MEMBRE
             </button>
           )}
         </div>
       </div>
 
       <nav className="px-6 py-4">
-        <div className="max-w-7xl mx-auto flex justify-between items-center bg-white/90 backdrop-blur-md px-6 py-3 rounded-2xl shadow-soft-elegant border border-gray-100">
+        <div className="max-w-7xl mx-auto flex justify-between items-center bg-white/95 backdrop-blur-md px-6 py-3 rounded-2xl shadow-soft-elegant border border-gray-100">
           <button onClick={() => handleNavClick(ViewState.HOME)} className="flex items-center gap-3 group">
             <div className="p-2 bg-guinea-green rounded-xl group-hover:rotate-6 transition-transform">
               <Heart className="h-5 w-5 text-white fill-white" />
             </div>
             <div className="text-left hidden sm:block">
               <span className="block font-serif font-black text-xl leading-none text-earth-black">BALLAL</span>
-              <span className="text-[8px] font-bold tracking-[0.2em] text-guinea-red uppercase">Belgique</span>
+              <span className="text-[8px] font-bold tracking-[0.2em] text-guinea-red uppercase">Solidarité</span>
             </div>
           </button>
 
@@ -77,7 +77,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, setView, onOpenAuth }) => 
             <button 
               className="p-2 bg-earth-black text-white rounded-xl" 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Ouvrir le menu"
             >
               {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
