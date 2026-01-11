@@ -4,7 +4,7 @@ import Hero from './components/Hero.tsx';
 import Footer from './components/Footer.tsx';
 import { ViewState, LanguageCode } from './types.ts';
 import { AuthProvider } from './contexts/AuthContext.tsx';
-import { AlertTriangle, RefreshCcw, Users, HeartHandshake, ArrowRight } from 'lucide-react';
+import { AlertTriangle, RefreshCcw, Users, HeartHandshake, ArrowRight, Newspaper } from 'lucide-react';
 import { MAIN_NAV_ITEMS } from './constants/navigation.ts';
 
 import LegalAidSection from './components/LegalAidSection.tsx';
@@ -19,6 +19,7 @@ import HistorySection from './components/HistorySection.tsx';
 import GallerySection from './components/GallerySection.tsx';
 import CommunitySection from './components/CommunitySection.tsx';
 import SolidarityNetwork from './components/SolidarityNetwork.tsx';
+import NewsSection from './components/NewsSection.tsx';
 import { AuthModal } from './components/AuthModals.tsx';
 import { FoodSupplierForm, FoodNetworkForm } from './components/FoodForms.tsx';
 import LegalDocSection from './components/LegalDocSection.tsx';
@@ -28,11 +29,8 @@ interface ErrorBoundaryState { hasError: boolean; }
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   public state: ErrorBoundaryState;
-  public props: ErrorBoundaryProps;
-
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.props = props;
     this.state = { hasError: false };
   }
   static getDerivedStateFromError(_: Error): ErrorBoundaryState { return { hasError: true }; }
@@ -55,7 +53,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 const HomePage: React.FC<{ navigate: (v: ViewState) => void, language: LanguageCode }> = ({ navigate, language }) => (
   <div className="space-y-0">
     <Hero 
-      onExplore={() => navigate(ViewState.SOLIDARITY_NETWORK)} 
+      onExplore={() => navigate(ViewState.NEWS)} 
       language={language}
       onShare={() => navigate(ViewState.SHARE)}
       onDonate={() => navigate(ViewState.DONATE)}
@@ -64,7 +62,7 @@ const HomePage: React.FC<{ navigate: (v: ViewState) => void, language: LanguageC
     <section className="max-w-7xl mx-auto px-6 py-20">
       <div className="flex items-center gap-4 mb-12">
         <div className="h-1 w-12 bg-guinea-red"></div>
-        <h2 className="text-xs font-black uppercase tracking-[0.4em] text-gray-400">Plateforme de Connexion</h2>
+        <h2 className="text-xs font-black uppercase tracking-[0.4em] text-gray-400">Services & Connexion</h2>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {MAIN_NAV_ITEMS.filter(item => item.value !== ViewState.HOME).map((pill, i) => (
@@ -91,20 +89,20 @@ const HomePage: React.FC<{ navigate: (v: ViewState) => void, language: LanguageC
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12 relative z-10">
         <div className="max-w-2xl text-center md:text-left">
           <div className="flex items-center justify-center md:justify-start gap-3 text-guinea-yellow mb-4">
-            <HeartHandshake className="h-6 w-6" />
-            <span className="font-bold uppercase tracking-widest text-xs">Solidarité Directe</span>
+            <Newspaper className="h-6 w-6" />
+            <span className="font-bold uppercase tracking-widest text-xs">Actualités Diaspora</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-serif font-black mb-6">Un réseau pour tous les Guinéens de Belgique.</h2>
-          <p className="text-gray-400 text-lg mb-8 italic">Rejoignez l'espace d'entraide pour échanger des conseils administratifs, des offres d'emploi ou des services de traduction.</p>
+          <h2 className="text-4xl md:text-5xl font-serif font-black mb-6">Restez connecté aux nouvelles du pays.</h2>
+          <p className="text-gray-400 text-lg mb-8 italic">Notre IA analyse en temps réel les informations pertinentes pour les Guinéens de Belgique.</p>
           <button 
-            onClick={() => navigate(ViewState.SOLIDARITY_NETWORK)}
+            onClick={() => navigate(ViewState.NEWS)}
             className="bg-guinea-red text-white px-10 py-5 rounded-2xl font-black uppercase text-xs tracking-widest shadow-xl hover:bg-white hover:text-earth-black transition-all flex items-center gap-3 mx-auto md:mx-0"
           >
-            Découvrir l'espace entraide <ArrowRight className="h-4 w-4" />
+            Lire le Flash Pays <ArrowRight className="h-4 w-4" />
           </button>
         </div>
         <div className="w-full md:w-1/3 aspect-square bg-white/5 rounded-[3rem] border border-white/10 flex items-center justify-center group">
-           <Users className="h-32 w-32 text-white/20 group-hover:scale-110 group-hover:text-guinea-yellow transition-all" />
+           <HeartHandshake className="h-32 w-32 text-white/20 group-hover:scale-110 group-hover:text-guinea-yellow transition-all" />
         </div>
       </div>
     </section>
@@ -130,6 +128,7 @@ const AppContent: React.FC = () => {
   const renderView = () => {
     switch (view) {
       case ViewState.HOME: return <HomePage navigate={navigate} language={language} />;
+      case ViewState.NEWS: return <NewsSection />;
       case ViewState.SOLIDARITY_NETWORK: return <SolidarityNetwork />;
       case ViewState.COMMUNITY: return <CommunitySection />;
       case ViewState.CULTURE: 
@@ -156,7 +155,7 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-soft-paper text-earth-black african-pattern transition-colors duration-500">
+    <div className="min-h-screen bg-soft-paper text-earth-black african-pattern">
       <Navbar 
         currentView={view} 
         setView={navigate} 

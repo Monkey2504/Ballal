@@ -2,6 +2,7 @@ export type LanguageCode = 'fr' | 'en' | 'nl' | 'pe' | 'ma' | 'su' | 'es' | 'ar'
 
 export enum ViewState {
   HOME = 'HOME',
+  NEWS = 'NEWS',
   LEGAL_AID = 'LEGAL_AID',
   FOOD_AUTONOMY = 'FOOD_AUTONOMY',
   FOOD_SUPPLIER = 'FOOD_SUPPLIER',
