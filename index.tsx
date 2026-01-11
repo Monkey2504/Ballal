@@ -23,7 +23,7 @@ class GlobalErrorBoundary extends Component<GlobalErrorBoundaryProps, GlobalErro
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Critical Error detected in BALLAL App:", error, errorInfo);
+    console.error("BALLAL CRITICAL ERROR:", error, errorInfo);
   }
 
   render() {
@@ -40,15 +40,15 @@ class GlobalErrorBoundary extends Component<GlobalErrorBoundaryProps, GlobalErro
             </div>
             
             <h1 className="text-4xl font-serif font-black text-[#333333] mb-4 tracking-tight">
-              Oups, une erreur...
+              Problème de connexion...
             </h1>
             
             <p className="text-gray-500 mb-8 font-medium">
-              L'application a rencontré un problème technique lors du chargement.
+              Une erreur est survenue lors de l'initialisation de l'application.
             </p>
             
             <div className="bg-gray-50 p-6 rounded-2xl text-left mb-10 overflow-auto max-h-40 text-xs font-mono text-gray-400 border border-gray-100">
-              {this.state.error?.message || "Erreur de rendu inconnue"}
+              {this.state.error?.message || "Erreur inconnue"}
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -56,14 +56,7 @@ class GlobalErrorBoundary extends Component<GlobalErrorBoundaryProps, GlobalErro
                 onClick={() => window.location.reload()} 
                 className="flex items-center justify-center gap-3 px-8 py-4 bg-[#333333] text-white font-black uppercase text-[10px] tracking-widest rounded-2xl hover:bg-[#CE1126] transition-all shadow-lg"
               >
-                <RefreshCcw className="h-4 w-4" /> Recharger le site
-              </button>
-              
-              <button 
-                onClick={() => window.location.href = '/'} 
-                className="flex items-center justify-center gap-3 px-8 py-4 bg-white text-[#333333] border-2 border-[#333333] font-black uppercase text-[10px] tracking-widest rounded-2xl hover:bg-gray-50 transition-all"
-              >
-                <Home className="h-4 w-4" /> Accueil
+                <RefreshCcw className="h-4 w-4" /> Réessayer
               </button>
             </div>
           </div>
@@ -86,5 +79,5 @@ if (rootElement) {
     </React.StrictMode>
   );
 } else {
-  console.error("FATAL ERROR: #root element not found in DOM.");
+  console.error("Element #root non trouvé.");
 }

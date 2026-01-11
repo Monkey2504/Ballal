@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
-import { Newspaper, RefreshCcw, ExternalLink, AlertCircle, Loader2, Sparkles } from 'lucide-react';
+import { Newspaper, RefreshCcw, ExternalLink, AlertCircle, Loader2, Sparkles, ShieldAlert } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 
 const NewsSection: React.FC = () => {
@@ -10,29 +9,36 @@ const NewsSection: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const fetchNews = async () => {
+    // Vérification de la clé API avant de lancer l'appel
+    if (!process.env.API_KEY) {
+      setError("Le service d'actualités IA est momentanément indisponible (Clé API manquante).");
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     setError(null);
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
-        contents: "Génère un résumé complet et professionnel des 5 actualités les plus pertinentes (2024-2025) concernant la Guinée (politique, économie, société) et les événements marquants de la diaspora guinéenne en Belgique. Structure avec des titres clairs et un ton journalistique. Ajoute une courte analyse sur l'impact pour la communauté en Belgique.",
+        contents: "Génère un résumé journalistique des 5 actualités les plus importantes de 2024-2025 pour la Guinée et sa diaspora en Belgique. Utilise des titres impactants et une analyse brève pour chaque point.",
         config: {
           tools: [{ googleSearch: {} }],
         },
       });
 
-      // Direct property access as per guidelines
       const text = response.text;
       if (text) {
         setNews(text);
         setSources(response.candidates?.[0]?.groundingMetadata?.groundingChunks || []);
       } else {
-        throw new Error("Réponse vide de l'IA");
+        throw new Error("Aucun contenu généré.");
       }
-    } catch (err) {
-      console.error("Erreur news Gemini:", err);
-      setError("Désolé, nous n'avons pas pu récupérer les dernières nouvelles. Le service est peut-être saturé.");
+    } catch (err: any) {
+      console.error("Erreur News Gemini:", err);
+      // Gestion spécifique des erreurs de blocage ou réseau
+      setError("Impossible de charger les nouvelles en temps réel. Veuillez réessayer plus tard.");
     } finally {
       setLoading(false);
     }
@@ -55,7 +61,7 @@ const NewsSection: React.FC = () => {
           <button 
             onClick={fetchNews} 
             disabled={loading}
-            className="flex items-center gap-3 px-8 py-4 bg-earth-black text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-guinea-red transition-all shadow-soft-elegant disabled:opacity-50"
+            className="flex items-center gap-3 px-8 py-4 bg-earth-black text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-guinea-red transition-all shadow-lg disabled:opacity-50"
           >
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCcw className="h-4 w-4" />}
             Actualiser
@@ -68,13 +74,13 @@ const NewsSection: React.FC = () => {
               <div className="h-20 w-20 border-8 border-gray-100 rounded-full"></div>
               <div className="h-20 w-20 border-8 border-guinea-red border-t-transparent rounded-full animate-spin absolute top-0 left-0"></div>
             </div>
-            <p className="font-serif italic text-2xl text-gray-500">Analyse des flux d'actualités mondiaux...</p>
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Technologie Gemini 3 Flash</p>
+            <p className="font-serif italic text-2xl text-gray-500">Scan des sources internationales...</p>
           </div>
         ) : error ? (
           <div className="bg-white p-12 rounded-[3rem] shadow-soft-elegant border border-red-100 text-center">
-            <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-6" />
-            <p className="text-xl font-medium text-gray-600 mb-8">{error}</p>
+            <ShieldAlert className="h-16 w-16 text-red-500 mx-auto mb-6" />
+            <h3 className="text-2xl font-black mb-4">Oups !</h3>
+            <p className="text-lg font-medium text-gray-600 mb-8">{error}</p>
             <button onClick={fetchNews} className="bg-earth-black text-white px-8 py-4 rounded-xl font-black uppercase text-xs">Réessayer</button>
           </div>
         ) : (
@@ -98,7 +104,7 @@ const NewsSection: React.FC = () => {
                   {sources.slice(0, 4).map((chunk, i) => chunk.web && (
                     <a key={i} href={chunk.web.uri} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between p-6 bg-white rounded-2xl border border-gray-100 hover:border-guinea-green/30 transition-all group shadow-sm">
                       <div className="flex flex-col overflow-hidden">
-                        <span className="text-[10px] font-bold text-gray-400 uppercase mb-1">Information Source</span>
+                        <span className="text-[10px] font-bold text-gray-400 uppercase mb-1">Source Externe</span>
                         <span className="text-xs font-bold text-earth-black group-hover:text-guinea-green transition-colors truncate">{chunk.web.title || "Lien externe"}</span>
                       </div>
                       <ExternalLink className="h-4 w-4 text-gray-300 group-hover:text-guinea-green flex-shrink-0 ml-4" />
