@@ -21,8 +21,6 @@ import GallerySection from './components/GallerySection.tsx';
 import { AuthModal } from './components/AuthModals.tsx';
 import { FoodSupplierForm, FoodNetworkForm } from './components/FoodForms.tsx';
 import LegalDocSection from './components/LegalDocSection.tsx';
-// Fix: Import missing SolidarityNetwork component to enable navigation
-import SolidarityNetwork from './components/SolidarityNetwork.tsx';
 
 interface ErrorBoundaryProps { children?: ReactNode; }
 interface ErrorBoundaryState { hasError: boolean; }
@@ -144,8 +142,6 @@ const AppContent: React.FC = () => {
       case ViewState.FOOD_NETWORK: return <FoodNetworkForm language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />;
       case ViewState.PRIVACY: return <LegalDocSection language={language} mode="privacy" />;
       case ViewState.TERMS: return <LegalDocSection language={language} mode="terms" />;
-      // Fix: Add case to handle SOLIDARITY_NETWORK navigation
-      case ViewState.SOLIDARITY_NETWORK: return <SolidarityNetwork />;
       default: return <HomePage navigate={navigate} language={language} />;
     }
   };

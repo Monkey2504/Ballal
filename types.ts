@@ -15,9 +15,7 @@ export enum ViewState {
   CONTACT = 'CONTACT',
   PRIVACY = 'PRIVACY',
   TERMS = 'TERMS',
-  FESTIVAL = 'FESTIVAL',
-  // Fix: Added SOLIDARITY_NETWORK to the enum to match the reference in Footer.tsx
-  SOLIDARITY_NETWORK = 'SOLIDARITY_NETWORK'
+  FESTIVAL = 'FESTIVAL'
 }
 
 export interface UserPreferences {

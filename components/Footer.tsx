@@ -49,7 +49,6 @@ const Footer: React.FC<FooterProps> = ({ language, setView }) => {
             <ul className="space-y-2">
               {[
                 { name: "Accueil", view: ViewState.HOME },
-                { name: "Entraide", view: ViewState.SOLIDARITY_NETWORK },
                 { name: "Logement", view: ViewState.SQUAT },
                 { name: "Manger", view: ViewState.FOOD_AUTONOMY },
                 { name: "Équipe", view: ViewState.TEAM },
