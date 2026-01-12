@@ -1,4 +1,5 @@
 import React, { useState, ReactNode, Component } from 'react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import Navbar from './components/Navbar.tsx';
 import Hero from './components/Hero.tsx';
 import Footer from './components/Footer.tsx';
@@ -176,6 +177,8 @@ const AppContent: React.FC = () => {
         mode={authMode} 
         switchTo={(m) => setAuthMode(m)} 
       />
+      
+      <SpeedInsights />
     </div>
   );
 };
