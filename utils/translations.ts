@@ -115,6 +115,17 @@ export interface Translation {
   privacy_simplified_rights: string;
   privacy_contact_rights: string;
   terms_legal_warning_bold: string;
+  // FoodForms
+  form_back_btn: string;
+  form_org_label: string;
+  form_phone_label: string;
+  form_donation_type_label: string;
+  form_location_label: string;
+  form_supplier_title: string;
+  form_supplier_subtitle: string;
+  form_network_title: string;
+  form_network_subtitle: string;
+  form_submit_btn: string;
   [key: string]: string;
 }
 
@@ -233,6 +244,17 @@ const fr: Translation = {
   privacy_simplified_rights: "En clair : vous pouvez nous demander à tout moment de voir, corriger ou supprimer vos données.",
   privacy_contact_rights: "Pour exercer vos droits, contactez-nous directement :",
   terms_legal_warning_bold: "Ces informations juridiques sont fournies à titre indicatif et ne remplacent pas l'avis d'un avocat. En cas de situation d'urgence, contactez immédiatement le 0493 43 43 83.",
+  // FoodForms
+  form_back_btn: "Retour",
+  form_org_label: "Organisation / Structure",
+  form_phone_label: "Téléphone",
+  form_donation_type_label: "Type de don",
+  form_location_label: "Localisation du collectif",
+  form_supplier_title: "Fournisseur alimentaire",
+  form_supplier_subtitle: "Rejoignez le réseau de dons alimentaires Ballal pour éviter le gaspillage et nourrir les communautés solidaires.",
+  form_network_title: "Collectif ou occupation",
+  form_network_subtitle: "Inscrivez votre collectif pour recevoir des denrées alimentaires via le réseau Ballal.",
+  form_submit_btn: "Envoyer ma candidature",
 };
 
 export const translations: Record<string, Translation> = {

@@ -97,7 +97,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, mode, swi
 
   const validatePassword = (password: string): boolean => {
     if (mode === 'register') {
-      return password.length >= 6;
+      return password.length >= 8 && /[A-Z]/.test(password) && /[a-z]/.test(password) && /[0-9]/.test(password);
     }
     return password.length > 0;
   };
@@ -120,7 +120,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, mode, swi
       }
       
       if (!validatePassword(password)) {
-        setError("Le mot de passe doit contenir au moins 6 caractères.");
+        setError("Le mot de passe doit contenir au moins 8 caractères, une majuscule et un chiffre.");
         return;
       }
       
@@ -300,7 +300,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, mode, swi
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-10 pr-12 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#CE1126] focus:border-transparent outline-none transition-all font-medium"
-                  placeholder={mode === 'register' ? "Minimum 6 caractères" : "Votre mot de passe"}
+                  placeholder={mode === 'register' ? "Min. 8 car. + Majuscule + Chiffre" : "Votre mot de passe"}
                   autoComplete={mode === 'login' ? "current-password" : "new-password"}
                   aria-required={mode === 'register'}
                 />
@@ -319,7 +319,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, mode, swi
               </div>
               {mode === 'register' && (
                 <p className="text-[10px] text-gray-400 mt-1">
-                  ⚠️ Ne saisissez pas votre véritable mot de passe. Ceci est une démonstration.
+                  ⚠️ Min. 8 caractères, 1 majuscule, 1 chiffre. Ne saisissez pas votre vrai mot de passe (démo).
                 </p>
               )}
             </div>
