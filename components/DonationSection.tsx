@@ -13,7 +13,7 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
   const [activeMethod, setActiveMethod] = useState<'iban' | 'crypto' | 'paypal'>('iban');
   
   // PLACEHOLDERS : À REMPLACER PAR LES VRAIES DONNÉES
-  const IBAN = "BE00 0000 0000 0000"; // En attente du vrai numéro
+  const IBAN = "BE43 0020 2412 8201";
   const BIC = "À RENSEIGNER";
   const PAYPAL_LINK = "#"; // À configurer
   const CRYPTO_ADDRESS = "Adresse portefeuille à venir";
