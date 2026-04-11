@@ -1,118 +1,146 @@
-import React from 'react';
-import { Flag, GraduationCap, Quote, Newspaper, Camera, MapPin, TrendingUp, AlertCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { Quote, ChevronDown, ChevronUp } from 'lucide-react';
 import { LanguageCode } from '../types.ts';
-import { translations } from '../utils/translations.ts';
 
 interface HistorySectionProps {
   language: LanguageCode;
 }
 
-const HistorySection: React.FC<HistorySectionProps> = ({ language }) => {
-  const t = translations[language] || translations['fr'];
+const TIMELINE = [
+  {
+    year: '1958',
+    label: 'Le "Non" qui change tout',
+    colorHex: '#CE1126',
+    content: {
+      intro: `Le 28 septembre 1958, la Guinée devient le seul pays d'Afrique francophone à voter "Non" au référendum du général de Gaulle. En choisissant l'indépendance totale, elle rompt avec la France coloniale — et en paye immédiatement le prix.`,
+      body: `Paris rapatrie ses fonctionnaires en quelques semaines, détruit ou emporte les infrastructures, gèle les financements. La France tente même de bloquer l'admission de la Guinée à l'ONU. Sékou Touré devient le premier président d'un État nouveau, isolé, asphyxié économiquement — mais libre.`,
+      quote: `"Nous préférons la liberté dans la pauvreté à l'abondance dans l'esclavage."`,
+      quoteSource: 'Sékou Touré, 25 août 1958, Conakry',
+      detail: `Ce vote n'est pas qu'une date : c'est l'acte fondateur d'une identité politique. Plus d'un million de Guinéens votent "Non". Seulement 57 000 votent "Oui". La décision est massive, consciente, assumée.`,
+    }
+  },
+  {
+    year: '1958 – 1984',
+    label: 'Le régime et les premiers exilés',
+    colorHex: '#333333',
+    content: {
+      intro: `Le régime de Sékou Touré se durcit rapidement. Parti unique, censure, arrestations politiques, camp Boiro. Des groupes entiers — intellectuels, opposants, Peuls suspectés de contre-pouvoir économique — sont contraints à l'exil.`,
+      body: `En 1984, à la mort de Touré, on estime à 2 millions le nombre de Guinéens vivant hors des frontières. La grande majorité se trouve dans les pays voisins (Côte d'Ivoire, Sénégal, Libéria, Sierra Leone), mais une minorité atteint l'Europe — notamment la France et la Belgique — via les universités ou les réseaux de réfugiés politiques.`,
+      quote: `"L'exilé guinéen était perçu comme quelqu'un dont la loyauté était sujette à caution."`,
+      quoteSource: 'Revue Politique Africaine, n°36, 1989',
+      detail: `C'est à cette époque que les premières cellules de la diaspora guinéenne en Belgique prennent forme, notamment autour des universités bruxelloises. Ces pionniers sont en majorité des étudiants ou des intellectuels en rupture avec le régime.`,
+    }
+  },
+  {
+    year: '1984 – 2000',
+    label: 'Après Touré : espoir et instabilité',
+    colorHex: '#009460',
+    content: {
+      intro: `Le 3 avril 1984, une semaine après la mort de Sékou Touré, le colonel Lansana Conté prend le pouvoir. Il amnistie les prisonniers politiques, libéralise l'économie, tente une normalisation. Beaucoup d'exilés envisagent le retour.`,
+      body: `Mais l'instabilité politique persiste. Les années 1990 voient la Guinée accueillir plus de 500 000 réfugiés des guerres civiles libérienne et sierra-léonaise — tout en envoyant ses propres ressortissants vers l'Europe. La culture de mobilité des communautés peule et malinké, traditionnellement liée au commerce longue distance, amplifie ces mouvements.`,
+      quote: `"La diaspora guinéenne entretient l'idée que l'exil est porteur d'espoir et de renouveau politique."`,
+      quoteSource: 'Cairn.info, Revue Outre-Terre, 2017',
+      detail: `Durant cette période, la diaspora en Belgique se structure davantage. Des associations communautaires émergent. La mobilité migratoire s'installe comme une réalité générationnelle — transmise, organisée, normalisée.`,
+    }
+  },
+  {
+    year: '2014 – aujourd\'hui',
+    label: 'La nouvelle génération à Bruxelles',
+    colorHex: '#FCD116',
+    content: {
+      intro: `À partir de 2014-2015, la migration irrégulière des jeunes Guinéens vers l'Europe s'accélère fortement. Les routes deviennent plus dangereuses — Maghreb, Méditerranée, puis nouvelles voies via la Turquie ou l'Amérique centrale.`,
+      body: `Statbel recense 9 657 personnes de nationalité guinéenne en Belgique en 2017. Ce chiffre exclut les naturalisés, les sans-papiers et les demandeurs d'asile : les estimations réelles dépassent 15 000 personnes d'origine guinéenne. La Guinée est désormais la troisième nationalité africaine la plus représentée en Belgique, après la RDC et le Cameroun. Depuis 2023, les tensions diplomatiques entre les deux pays se sont accrues autour des politiques d'expulsion.`,
+      quote: `"Plus de 10 000 Guinéens résident légalement en Belgique. La Guinée est la troisième nationalité africaine la plus représentée."`,
+      quoteSource: 'CGRS / Cedoca, rapport novembre 2025',
+      detail: `C'est dans ce contexte que Ballal ASBL a vu le jour en 2022 à Molenbeek — pour répondre à une réalité que les structures institutionnelles ne couvraient pas : l'accompagnement de proximité des sans-papiers guinéens et subsahariens dans leur quotidien bruxellois.`,
+    }
+  },
+];
+
+const HistorySection: React.FC<HistorySectionProps> = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i);
 
   return (
-    <section className="bg-soft-paper py-32 px-6 overflow-hidden">
-      <div className="max-w-6xl mx-auto">
-        
-        {/* HEADER */}
-        <div className="mb-32 relative text-center lg:text-left">
+    <section className="bg-soft-paper py-24 px-6 overflow-hidden">
+      <div className="max-w-5xl mx-auto">
+
+        <div className="mb-20">
           <div className="inline-block py-2 px-6 bg-earth-black text-white font-bold text-[10px] uppercase tracking-[0.3em] mb-8 rounded-full">
-            Notre Héritage
+            Histoire & Diaspora
           </div>
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif font-black text-earth-black tracking-tighter leading-none mb-12">
-            Notre <span className="text-guinea-red/80">histoire</span>
+          <h1 className="text-6xl md:text-8xl font-serif font-black text-earth-black tracking-tighter leading-none mb-8">
+            D'où nous<br />
+            <span className="text-guinea-red/80">venons.</span>
           </h1>
-          <p className="text-xl md:text-3xl font-medium text-gray-500 italic max-w-3xl leading-relaxed border-l-4 border-guinea-yellow pl-8">
-            "{t.hist_subtitle}"
+          <p className="text-xl md:text-2xl font-medium text-gray-500 italic max-w-2xl leading-relaxed border-l-4 border-guinea-yellow pl-8">
+            La présence guinéenne en Belgique ne s'explique pas par le hasard. Elle est le produit d'une histoire politique longue, de régimes autoritaires, de guerres régionales, et d'une culture de la mobilité profondément ancrée.
           </p>
         </div>
 
-        {/* TIMELINE - Style Exposition Moderne */}
-        <div className="space-y-48">
-          
-          {/* 1958 */}
-          <div className="grid lg:grid-cols-2 gap-20 items-center">
-            <div className="relative group">
-              <div className="absolute -inset-4 bg-guinea-red/5 rounded-[3rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div className="relative z-10 bg-white p-6 rounded-[3rem] shadow-soft-elegant border border-gray-100 transform -rotate-1 group-hover:rotate-0 transition-transform duration-700">
-                 <img 
-                  src="https://i.imgur.com/EPEdzOF.png" 
-                  className="w-full h-[500px] object-cover rounded-[2rem] grayscale contrast-125 hover:grayscale-0 transition-all duration-700"
-                  alt="1958"
-                 />
-                 <div className="mt-6 px-4">
-                    <span className="text-xs font-bold uppercase tracking-widest text-guinea-red">L'Indépendance</span>
-                    <h3 className="font-serif font-black text-2xl mt-1">Septembre 1958 : Le Refus</h3>
-                 </div>
-              </div>
+        <div className="bg-earth-black text-white rounded-[3rem] p-10 md:p-16 mb-20 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-guinea-red/10 rounded-full blur-[80px]" />
+          <div className="relative z-10 grid md:grid-cols-3 gap-8 text-center">
+            <div>
+              <div className="text-5xl md:text-6xl font-black text-guinea-red mb-2">1958</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Année d'indépendance</div>
             </div>
-            <div className="space-y-8">
-              <span className="text-8xl font-black text-guinea-red/10 select-none">1958</span>
-              <h2 className="text-4xl md:text-5xl font-serif font-black text-earth-black leading-tight">{t.hist_1958_title}</h2>
-              <p className="text-xl text-gray-600 leading-relaxed font-medium">{t.hist_1958_desc}</p>
-              <div className="bg-white/50 backdrop-blur-sm p-8 rounded-3xl border border-gray-100 italic font-medium text-gray-500 shadow-sm">
-                 <Quote className="mb-4 h-8 w-8 text-guinea-yellow" />
-                 "Préférer la liberté dans la pauvreté à la richesse dans l'esclavage."
-              </div>
+            <div>
+              <div className="text-5xl md:text-6xl font-black text-guinea-yellow mb-2">+15 000</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Guinéens estimés en Belgique</div>
+            </div>
+            <div>
+              <div className="text-5xl md:text-6xl font-black text-guinea-green mb-2">3ème</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Nationalité africaine en Belgique</div>
             </div>
           </div>
-
-          {/* VAGUE 1 */}
-          <div className="grid lg:grid-cols-2 gap-20 items-center lg:flex-row-reverse">
-            <div className="order-2 lg:order-1 space-y-8">
-              <span className="text-8xl font-black text-guinea-green/10 select-none">1960</span>
-              <h2 className="text-4xl md:text-5xl font-serif font-black text-earth-black leading-tight">{t.hist_1960_title}</h2>
-              <p className="text-xl text-gray-600 leading-relaxed font-medium">{t.hist_1960_desc}</p>
-              <div className="flex flex-wrap gap-3">
-                {['ULB', 'UCL', 'LIÈGE', 'MONS'].map(univ => (
-                  <span key={univ} className="bg-guinea-green/10 text-guinea-green px-4 py-2 rounded-full font-bold text-[10px] tracking-widest border border-guinea-green/20">{univ}</span>
-                ))}
-              </div>
-            </div>
-            <div className="order-1 lg:order-2">
-               <div className="bg-white p-6 rounded-[3rem] shadow-soft-elegant border border-gray-100 rotate-1 group">
-                 <img 
-                  src="https://i.imgur.com/9CxUOIj.png" 
-                  className="w-full h-[500px] object-cover rounded-[2rem] grayscale opacity-80 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700"
-                  alt="Étudiants"
-                 />
-               </div>
-            </div>
-          </div>
-
-          {/* AUJOURD'HUI */}
-          <div className="bg-[#2D2D2D] rounded-[4rem] p-12 md:p-24 text-white relative overflow-hidden shadow-2xl border-b-8 border-guinea-yellow">
-             <div className="absolute top-0 right-0 w-96 h-96 bg-guinea-red/10 rounded-full blur-[100px]"></div>
-             <div className="grid lg:grid-cols-12 gap-16 items-center relative z-10">
-                <div className="lg:col-span-7 space-y-10">
-                   <h2 className="text-5xl md:text-7xl font-serif font-black italic tracking-tighter leading-none">
-                     {t.hist_2024_title}
-                   </h2>
-                   <p className="text-xl md:text-2xl text-gray-300 leading-relaxed font-medium">
-                     {t.hist_2024_desc}
-                   </p>
-                   <div className="flex items-center gap-6 pt-6">
-                      <div className="h-0.5 w-24 bg-guinea-yellow"></div>
-                      <span className="text-xs font-bold uppercase tracking-[0.3em] text-guinea-yellow">RÉSILIENCE • TRAVAIL • DIGNITÉ</span>
-                   </div>
-                </div>
-                <div className="lg:col-span-5">
-                   <div className="rounded-[3rem] overflow-hidden rotate-2 shadow-2xl border-4 border-white/20">
-                      <img src="https://i.imgur.com/s3XuBNm.png" className="w-full h-full object-cover grayscale brightness-110" />
-                   </div>
-                </div>
-             </div>
-          </div>
-
+          <p className="text-center text-[10px] text-gray-500 mt-8 uppercase tracking-widest">
+            Sources : Statbel 2017, CGRS/Cedoca nov. 2025, OIM 2020
+          </p>
         </div>
 
-        {/* STATS */}
-        <div className="mt-40 pt-20 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-12">
-           <div className="text-8xl md:text-9xl font-black text-earth-black tracking-tighter opacity-10">+25K</div>
-           <p className="text-3xl md:text-4xl font-serif font-black text-earth-black leading-tight text-center md:text-right max-w-lg">
-             Guinéens en Belgique. <br/>
-             <span className="text-guinea-red/80">Une force collective.</span>
-           </p>
+        <div className="space-y-4">
+          {TIMELINE.map((item, i) => (
+            <div key={i} className="bg-white rounded-[2rem] border border-gray-100 shadow-soft-elegant overflow-hidden">
+              <button
+                onClick={() => toggle(i)}
+                className="w-full flex items-center justify-between p-8 md:p-10 text-left"
+              >
+                <div className="flex items-center gap-6">
+                  <div className="text-4xl md:text-5xl font-black font-serif leading-none" style={{ color: item.colorHex }}>
+                    {item.year}
+                  </div>
+                  <h2 className="text-xl md:text-2xl font-black text-earth-black">{item.label}</h2>
+                </div>
+                <div className="flex-shrink-0 ml-4">
+                  {openIndex === i ? <ChevronUp className="h-6 w-6 text-gray-400" /> : <ChevronDown className="h-6 w-6 text-gray-400" />}
+                </div>
+              </button>
+
+              {openIndex === i && (
+                <div className="px-8 md:px-10 pb-10 space-y-8 animate-in fade-in duration-300">
+                  <div className="h-1 w-20 rounded-full" style={{ backgroundColor: item.colorHex }} />
+                  <p className="text-xl font-medium text-earth-black leading-relaxed">{item.content.intro}</p>
+                  <p className="text-gray-600 font-medium leading-relaxed">{item.content.body}</p>
+                  <div className="bg-soft-paper p-8 rounded-2xl border border-gray-100">
+                    <Quote className="h-6 w-6 mb-4" style={{ color: item.colorHex }} />
+                    <p className="text-lg font-serif italic text-earth-black mb-4">{item.content.quote}</p>
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">— {item.content.quoteSource}</p>
+                  </div>
+                  <div className="border-l-4 pl-6 py-2" style={{ borderColor: item.colorHex }}>
+                    <p className="text-gray-600 font-medium leading-relaxed italic">{item.content.detail}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-16 pt-8 border-t border-gray-200">
+          <p className="text-xs text-gray-400 font-medium leading-relaxed max-w-3xl">
+            <span className="font-black text-gray-500">Sources :</span> Statbel, CGRS/Cedoca (rapport novembre 2025), OIM 2020, Revue Politique Africaine n°36 (1989), Cairn.info — Revue Outre-Terre 2017.
+          </p>
         </div>
       </div>
     </section>
