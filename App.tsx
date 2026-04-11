@@ -23,6 +23,7 @@ import NewsSection from './components/NewsSection.tsx';
 import { AuthModal } from './components/AuthModals.tsx';
 import { FoodSupplierForm, FoodNetworkForm } from './components/FoodForms.tsx';
 import LegalDocSection from './components/LegalDocSection.tsx';
+import PressSection from './components/PressSection.tsx';
 
 interface ErrorBoundaryProps { children?: ReactNode; }
 interface ErrorBoundaryState { hasError: boolean; }
@@ -150,6 +151,7 @@ const AppContent: React.FC = () => {
       case ViewState.FOOD_NETWORK: return <FoodNetworkForm language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />;
       case ViewState.PRIVACY: return <LegalDocSection language={language} mode="privacy" />;
       case ViewState.TERMS: return <LegalDocSection language={language} mode="terms" />;
+      case ViewState.PRESS: return <PressSection />;
       default: return <HomePage navigate={navigate} language={language} />;
     }
   };
