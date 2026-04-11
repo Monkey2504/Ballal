@@ -17,8 +17,8 @@ export enum ViewState {
   TERMS = 'TERMS',
   FESTIVAL = 'FESTIVAL',
   COMMUNITY = 'COMMUNITY',
-  SOLIDARITY_NETWORK = 'SOLIDARITY_NETWORK'
-}
+  SOLIDARITY_NETWORK = 'SOLIDARITY_NETWORK',
+  PRESS = 'PRESS'}
 
 export interface UserPreferences {
   language: LanguageCode;
