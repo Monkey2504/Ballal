@@ -21,7 +21,7 @@ const NewsSection: React.FC = () => {
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
+        model: 'gemini-2.0-flash',
         contents: "Génère un résumé journalistique des 5 actualités les plus importantes de 2024-2025 pour la Guinée et sa diaspora en Belgique. Utilise des titres impactants et une analyse brève pour chaque point.",
         config: {
           tools: [{ googleSearch: {} }],

@@ -125,7 +125,7 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
              <div className="grid md:grid-cols-2 gap-16">
                 <div className="space-y-8">
                    <div className="flex items-center gap-4">
-                      <h4 className="text-3xl font-serif font-black text-guinea-green underline decoration-guinea-green/30 underline-offset-8">Article 9ter</h4>
+                      <h4 className="text-3xl font-serif font-black text-guinea-green underline decoration-guinea-green/30 underline-offset-8">Article 9bis</h4>
                       <span className="bg-guinea-green/10 text-guinea-green text-[10px] px-3 py-1 font-bold rounded-full uppercase">Humanitaire</span>
                    </div>
                    <p className="text-gray-700 font-medium leading-relaxed">
@@ -143,7 +143,7 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
 
                 <div className="space-y-8">
                    <div className="flex items-center gap-4">
-                      <h4 className="text-3xl font-serif font-black text-guinea-red underline decoration-guinea-red/30 underline-offset-8">Article 9bis</h4>
+                      <h4 className="text-3xl font-serif font-black text-guinea-red underline decoration-guinea-red/30 underline-offset-8">Article 9ter</h4>
                       <span className="bg-guinea-red/10 text-guinea-red text-[10px] px-3 py-1 font-bold rounded-full uppercase">Médical</span>
                    </div>
                    <p className="text-gray-700 font-medium leading-relaxed">
