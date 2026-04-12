@@ -3,9 +3,10 @@ import Navbar from './components/Navbar.tsx';
 import Hero from './components/Hero.tsx';
 import Footer from './components/Footer.tsx';
 import { ViewState, LanguageCode } from './types.ts';
-import { AuthProvider } from './contexts/AuthContext.tsx';
+import { AuthProvider, useAuth } from './contexts/AuthContext.tsx';
 import { AlertTriangle, RefreshCcw, Users, HeartHandshake, ArrowRight, Newspaper } from 'lucide-react';
 import { MAIN_NAV_ITEMS } from './constants/navigation.ts';
+import MemberDashboard from './components/MemberDashboard.tsx';
 
 import LegalAidSection from './components/LegalAidSection.tsx';
 import ShareSection from './components/ShareSection.tsx';
@@ -116,6 +117,7 @@ const AppContent: React.FC = () => {
   const [language, setLanguage] = useState<LanguageCode>('fr');
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
+  const { isAuthenticated } = useAuth();
 
   const navigate = (v: ViewState) => {
     setView(v);
@@ -129,7 +131,9 @@ const AppContent: React.FC = () => {
 
   const renderView = () => {
     switch (view) {
-      case ViewState.HOME: return <HomePage navigate={navigate} language={language} />;
+      case ViewState.HOME: return isAuthenticated
+        ? <MemberDashboard navigate={navigate} />
+        : <HomePage navigate={navigate} language={language} />;
       case ViewState.NEWS: return <NewsSection />;
       case ViewState.SOLIDARITY_NETWORK: return <SolidarityNetwork />;
       case ViewState.COMMUNITY: return <CommunitySection />;
