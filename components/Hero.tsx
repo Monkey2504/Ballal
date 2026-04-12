@@ -1,7 +1,5 @@
-
 import React from 'react';
-// Fix: Added missing 'Flag' to lucide-react imports.
-import { ShieldCheck, Heart, ArrowRight, Flag } from 'lucide-react';
+import { ArrowRight, Heart, ExternalLink, MapPin, Users, Calendar } from 'lucide-react';
 import { LanguageCode } from '../types.ts';
 
 interface HeroProps {
@@ -11,71 +9,146 @@ interface HeroProps {
   onDonate: () => void;
 }
 
+const IMPACT_STATS = [
+  { value: '25 000+', label: 'Guinéens en Belgique', icon: Users },
+  { value: '2024',    label: 'Année de fondation',   icon: Calendar },
+  { value: 'BXL',     label: 'Bruxelles & diaspora',  icon: MapPin },
+];
+
 const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
   return (
-    <div className="relative min-h-[90vh] flex items-center justify-center pt-32 pb-20 overflow-hidden bg-soft-paper">
-      <div className="absolute inset-0 african-pattern pointer-events-none"></div>
-      
-      <div className="max-w-7xl mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-        
-        <div className="space-y-12 text-center lg:text-left">
-          <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/50 backdrop-blur-sm text-guinea-red font-bold text-[10px] uppercase tracking-[0.3em] border border-guinea-red/10 shadow-sm">
-            <ShieldCheck className="h-4 w-4" />
-            Solidarité Guinée-Belgique
+    <section className="relative bg-white overflow-hidden" aria-label="Présentation de Ballal ASBL">
+
+      {/* Subtle background accent */}
+      <div className="absolute top-0 right-0 w-1/2 h-full pointer-events-none" aria-hidden="true">
+        <div className="absolute top-0 right-0 w-full h-full bg-[#FFF5F6]" />
+        <div className="absolute top-20 right-20 w-96 h-96 bg-[#CE1126]/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-20 right-40 w-64 h-64 bg-[#009460]/5 rounded-full blur-[80px]" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 xl:gap-20 items-center min-h-[88vh] py-16 lg:py-24">
+
+          {/* Left — Content */}
+          <div className="space-y-8">
+
+            {/* Status badge */}
+            <div className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-[#CE1126]">
+              <span className="w-2 h-2 rounded-full bg-[#CE1126] animate-pulse" aria-hidden="true" />
+              Association agréée · Bruxelles
+            </div>
+
+            {/* Headline */}
+            <div>
+              <h1 className="font-serif font-black text-gray-900 leading-[1.02] tracking-tight">
+                <span className="block text-5xl sm:text-6xl xl:text-7xl">Solidarité.</span>
+                <span className="block text-5xl sm:text-6xl xl:text-7xl text-[#CE1126]">Dignité.</span>
+                <span className="block text-5xl sm:text-6xl xl:text-7xl">Action.</span>
+              </h1>
+            </div>
+
+            {/* Mission statement */}
+            <p className="text-lg text-gray-600 leading-relaxed max-w-lg font-medium">
+              Ballal ASBL est la structure de référence pour la communauté guinéenne en Belgique.
+              Aide au logement, défense des droits, autonomie alimentaire et lien culturel.
+            </p>
+
+            {/* CTAs */}
+            <div className="flex flex-wrap gap-4 pt-2">
+              <button
+                onClick={onExplore}
+                className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-[#CE1126] text-white text-sm font-black uppercase tracking-widest rounded-lg hover:bg-[#b01020] transition-colors shadow-lg shadow-[#CE1126]/20 group"
+              >
+                Rejoindre l'entraide
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
+              </button>
+              <button
+                onClick={onDonate}
+                className="inline-flex items-center gap-2.5 px-7 py-3.5 border-2 border-gray-900 text-gray-900 text-sm font-black uppercase tracking-widest rounded-lg hover:bg-gray-900 hover:text-white transition-colors group"
+              >
+                <Heart className="h-4 w-4 text-[#CE1126] fill-[#CE1126] group-hover:text-white group-hover:fill-white transition-colors" aria-hidden="true" />
+                Soutenir Ballal
+              </button>
+            </div>
+
+            {/* Impact stats row */}
+            <div className="flex flex-wrap gap-8 pt-4 border-t border-gray-100">
+              {IMPACT_STATS.map((stat) => (
+                <div key={stat.label} className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-gray-50 border border-gray-100 rounded-lg flex items-center justify-center shrink-0">
+                    <stat.icon className="h-4 w-4 text-gray-400" aria-hidden="true" />
+                  </div>
+                  <div>
+                    <p className="text-base font-black text-gray-900 leading-none">{stat.value}</p>
+                    <p className="text-[10px] text-gray-400 font-medium mt-0.5 uppercase tracking-wide">{stat.label}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <h1 className="text-6xl md:text-8xl lg:text-[110px] font-serif font-black leading-[0.85] tracking-tighter text-earth-black">
-            <span className="block mb-2">Loger.</span>
-            <span className="text-guinea-red/90 block mb-2">Nourrir.</span>
-            <span className="text-guinea-green/90 block italic">Résister.</span>
-          </h1>
+          {/* Right — Visual */}
+          <div className="relative flex justify-center lg:justify-end">
 
-          <p className="text-xl md:text-2xl text-gray-600 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
-            Ici, on ne fait pas de longs discours. On s'organise pour que personne ne dorme dehors et que chacun trouve sa place.
-          </p>
+            {/* Main image frame */}
+            <div className="relative w-full max-w-md xl:max-w-lg">
 
-          <div className="flex flex-wrap justify-center lg:justify-start gap-6 pt-4">
-            <button
-              onClick={onExplore}
-              className="bg-earth-black text-white px-10 py-5 rounded-2xl text-lg font-black hover:bg-guinea-red transition-all duration-500 flex items-center gap-3 shadow-soft-elegant group"
-            >
-              Rejoindre l'Entraide
-              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-            
-            <button
-              onClick={onDonate}
-              className="bg-white/80 backdrop-blur-sm text-earth-black border border-gray-200 px-10 py-5 rounded-2xl text-lg font-black hover:bg-gray-50 transition-all duration-500 flex items-center gap-3 shadow-soft-elegant"
-            >
-              <Heart className="h-5 w-5 text-guinea-red fill-guinea-red" />
-              Soutenir Ballal
-            </button>
-          </div>
-        </div>
+              {/* Decorative frame offset */}
+              <div
+                className="absolute inset-0 translate-x-4 translate-y-4 border-2 border-[#CE1126]/20 rounded-2xl"
+                aria-hidden="true"
+              />
 
-        <div className="relative">
-          <div className="relative z-10 rounded-[3.5rem] overflow-hidden aspect-[4/5] shadow-2xl border-[12px] border-white transform lg:rotate-2 hover:rotate-0 transition-all duration-1000 ease-out bg-white group">
-             <img 
-               src="https://i.imgur.com/laZeGp9.jpeg"
-               className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
-               alt="Solidarité Guinée-Belgique"
-             />
-             <div className="absolute inset-0 bg-gradient-to-t from-earth-black/30 via-transparent to-transparent opacity-60"></div>
-             <div className="absolute bottom-12 left-10 right-10 text-white">
-                <p className="font-serif italic text-2xl md:text-3xl leading-tight drop-shadow-md">"La dignité d'un homme ne se négocie pas."</p>
-                <div className="h-1 w-16 bg-guinea-yellow mt-6 rounded-full"></div>
-             </div>
+              {/* Image */}
+              <div className="relative bg-gray-100 rounded-2xl overflow-hidden aspect-[4/5] shadow-2xl">
+                <img
+                  src="https://i.imgur.com/laZeGp9.jpeg"
+                  className="w-full h-full object-cover"
+                  alt="Membres de la communauté Ballal ASBL à Bruxelles"
+                  loading="eager"
+                />
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 via-gray-900/10 to-transparent" aria-hidden="true" />
+
+                {/* Quote overlay */}
+                <blockquote className="absolute bottom-0 left-0 right-0 p-6">
+                  <p className="font-serif italic text-white text-lg leading-snug drop-shadow">
+                    "La dignité d'un homme ne se négocie pas."
+                  </p>
+                  <div className="h-0.5 w-10 bg-[#FCD116] mt-3 rounded-full" aria-hidden="true" />
+                </blockquote>
+              </div>
+
+              {/* Floating badge — Guinea flag colors */}
+              <div
+                className="absolute -bottom-4 -left-4 bg-white border border-gray-100 rounded-xl shadow-xl px-4 py-3 flex items-center gap-3"
+                aria-hidden="true"
+              >
+                <div className="flex gap-0.5">
+                  <span className="w-2.5 h-8 bg-[#CE1126] rounded-sm" />
+                  <span className="w-2.5 h-8 bg-[#FCD116] rounded-sm" />
+                  <span className="w-2.5 h-8 bg-[#009460] rounded-sm" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-gray-900">Guinée · Belgique</p>
+                  <p className="text-[9px] text-gray-400 font-medium mt-0.5">Réseau solidaire</p>
+                </div>
+              </div>
+
+              {/* Accreditation badge */}
+              <div
+                className="absolute -top-4 -right-4 bg-[#CE1126] text-white rounded-xl shadow-xl px-4 py-3 text-center"
+                aria-hidden="true"
+              >
+                <p className="text-[9px] font-black uppercase tracking-widest opacity-80">ASBL</p>
+                <p className="text-[10px] font-black mt-0.5">Reconnue</p>
+              </div>
+            </div>
           </div>
-          
-          <div className="absolute -top-16 -right-16 w-64 h-64 bg-guinea-red/5 rounded-full blur-[80px]"></div>
-          <div className="absolute -bottom-16 -left-16 w-80 h-80 bg-guinea-green/5 rounded-full blur-[100px]"></div>
-          
-          <div className="absolute -bottom-10 -right-10 z-20 bg-guinea-yellow w-32 h-32 rounded-3xl rotate-12 flex items-center justify-center shadow-xl border-4 border-white">
-             <Flag className="h-12 w-12 text-earth-black fill-earth-black" />
-          </div>
+
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

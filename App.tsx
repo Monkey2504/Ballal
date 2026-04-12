@@ -6,7 +6,7 @@ import Footer from './components/Footer.tsx';
 import CookieConsent from './components/CookieConsent.tsx';
 import { ViewState, LanguageCode, ROUTE_MAP, VIEW_FROM_ROUTE } from './types.ts';
 import { AuthProvider } from './contexts/AuthContext.tsx';
-import { AlertTriangle, RefreshCcw, Users, HeartHandshake, ArrowRight, Newspaper } from 'lucide-react';
+import { AlertTriangle, RefreshCcw, ArrowRight, Newspaper, Shield, Utensils, Home, Scale, Users, BookOpen } from 'lucide-react';
 import { MAIN_NAV_ITEMS } from './constants/navigation.ts';
 
 import LegalAidSection from './components/LegalAidSection.tsx';
@@ -90,64 +90,174 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 }
 
+// ── Programme card data ────────────────────────────────────────────────────
+const PROGRAMS = [
+  {
+    view: ViewState.LEGAL_AID,
+    icon: Scale,
+    color: 'bg-[#CE1126]',
+    label: 'Droits & Juridique',
+    desc: 'Scripts de protection domiciliaire, articles 9bis/9ter, accompagnement administratif.',
+  },
+  {
+    view: ViewState.SQUAT,
+    icon: Home,
+    color: 'bg-gray-800',
+    label: 'Logement',
+    desc: "Guide d'accès au logement, occupations temporaires, médiation propriétaires.",
+  },
+  {
+    view: ViewState.FOOD_AUTONOMY,
+    icon: Utensils,
+    color: 'bg-[#009460]',
+    label: 'Autonomie Alimentaire',
+    desc: 'Réseau de dons alimentaires, collectifs, fournisseurs solidaires.',
+  },
+  {
+    view: ViewState.SOLIDARITY_NETWORK,
+    icon: Users,
+    color: 'bg-[#FCD116]',
+    textColor: 'text-gray-900',
+    label: 'Entraide',
+    desc: 'Plateforme de mise en relation : besoins et offres de la communauté.',
+  },
+  {
+    view: ViewState.CULTURE,
+    icon: BookOpen,
+    color: 'bg-purple-700',
+    label: 'Culture & Histoire',
+    desc: 'Histoire de la diaspora guinéenne, patrimoine, événements culturels.',
+  },
+  {
+    view: ViewState.COMMUNITY,
+    icon: Shield,
+    color: 'bg-teal-600',
+    label: 'Annuaire',
+    desc: 'Commerces, médecins, services et professionnels de la communauté.',
+  },
+];
+
+const IMPACT_NUMBERS = [
+  { value: '25 000+', label: 'Guinéens en Belgique' },
+  { value: '6',       label: 'Programmes actifs' },
+    { value: '3',       label: "Langues d'assistance" },
+  { value: '24h',     label: 'Urgence disponible' },
+];
+
 const HomePage: React.FC<{ navigate: (v: ViewState) => void; language: LanguageCode }> = ({ navigate, language }) => (
-  <div className="space-y-0">
+  <div>
+    {/* Hero */}
     <Hero
-      onExplore={() => navigate(ViewState.NEWS)}
+      onExplore={() => navigate(ViewState.SOLIDARITY_NETWORK)}
       language={language}
       onShare={() => navigate(ViewState.SHARE)}
       onDonate={() => navigate(ViewState.DONATE)}
     />
 
-    <section className="max-w-7xl mx-auto px-6 py-20">
-      <div className="flex items-center gap-4 mb-12">
-        <div className="h-1 w-12 bg-guinea-red"></div>
-        <h2 className="text-xs font-black uppercase tracking-[0.4em] text-gray-400">Services & Connexion</h2>
+    {/* ── Impact numbers strip ───────────────────────────────────────────── */}
+    <div className="bg-gray-900 border-b border-white/5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <dl className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-white/10">
+          {IMPACT_NUMBERS.map((stat) => (
+            <div key={stat.label} className="px-8 py-8 text-center">
+              <dt className="text-3xl xl:text-4xl font-serif font-black text-white leading-none">
+                {stat.value}
+              </dt>
+              <dd className="mt-2 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
+                {stat.label}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {MAIN_NAV_ITEMS.filter(item => item.value !== ViewState.HOME).map((pill, i) => (
-          <button
-            key={i}
-            onClick={() => navigate(pill.value)}
-            className="bg-white p-8 rounded-[2.5rem] shadow-soft-elegant border border-gray-100 text-left hover:translate-y-[-4px] transition-all group overflow-hidden relative"
-          >
-            <div className="absolute -right-4 -top-4 opacity-[0.03] group-hover:scale-110 transition-transform">
-              <pill.icon className="h-32 w-32" />
-            </div>
-            <div className={`p-4 rounded-2xl ${pill.color} text-white w-fit mb-6 shadow-lg group-hover:scale-110 transition-transform`}>
-              <pill.icon className="h-6 w-6" />
-            </div>
-            <h3 className="text-2xl font-serif font-black mb-2">{pill.label}</h3>
-            <p className="text-gray-500 text-sm font-medium leading-tight">{pill.desc}</p>
-          </button>
-        ))}
+    </div>
+
+    {/* ── Programs section ──────────────────────────────────────────────── */}
+    <section className="bg-white py-20 sm:py-28" aria-labelledby="programs-title">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+
+        {/* Section header */}
+        <div className="max-w-2xl mb-16">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#CE1126] mb-3">
+            Nos programmes
+          </p>
+          <h2 id="programs-title" className="font-serif font-black text-3xl sm:text-4xl text-gray-900 leading-tight">
+            Ce que nous faisons, concrètement.
+          </h2>
+          <p className="mt-4 text-gray-500 text-base leading-relaxed">
+            Six axes d'action au service de la dignité et de l'autonomie des Guinéens de Belgique.
+          </p>
+        </div>
+
+        {/* Programs grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-100 border border-gray-100 rounded-2xl overflow-hidden">
+          {PROGRAMS.map((prog) => (
+            <button
+              key={prog.view}
+              onClick={() => navigate(prog.view)}
+              className="group bg-white p-8 text-left hover:bg-gray-50 transition-colors flex flex-col gap-5"
+            >
+              <div className={`w-11 h-11 ${prog.color} rounded-xl flex items-center justify-center shrink-0`}>
+                <prog.icon className={`h-5 w-5 ${prog.textColor ?? 'text-white'}`} aria-hidden="true" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-serif font-black text-lg text-gray-900 mb-1.5 group-hover:text-[#CE1126] transition-colors">
+                  {prog.label}
+                </h3>
+                <p className="text-sm text-gray-500 leading-relaxed">{prog.desc}</p>
+              </div>
+              <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-[#CE1126] opacity-0 group-hover:opacity-100 transition-opacity">
+                En savoir plus <ArrowRight className="h-3 w-3" aria-hidden="true" />
+              </div>
+            </button>
+          ))}
+        </div>
       </div>
     </section>
 
-    <section className="bg-earth-black text-white py-20 overflow-hidden relative">
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-guinea-red/5 skew-x-12 translate-x-32"></div>
-      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12 relative z-10">
-        <div className="max-w-2xl text-center md:text-left">
-          <div className="flex items-center justify-center md:justify-start gap-3 text-guinea-yellow mb-4">
-            <Newspaper className="h-6 w-6" />
-            <span className="font-bold uppercase tracking-widest text-xs">Actualités Diaspora</span>
+    {/* ── News CTA strip ────────────────────────────────────────────────── */}
+    <section className="bg-[#CE1126]" aria-label="Actualités de la diaspora">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 flex flex-col sm:flex-row items-center justify-between gap-8">
+        <div className="text-white text-center sm:text-left">
+          <div className="flex items-center justify-center sm:justify-start gap-2 mb-3">
+            <Newspaper className="h-4 w-4 text-[#FCD116]" aria-hidden="true" />
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/80">
+              Flash actualités IA
+            </span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-serif font-black mb-6">
-            Restez connecté aux nouvelles du pays.
+          <h2 className="font-serif font-black text-2xl sm:text-3xl text-white leading-tight">
+            Restez informé des nouvelles<br className="hidden sm:block" /> de Guinée et de la diaspora.
           </h2>
-          <p className="text-gray-400 text-lg mb-8 italic">
-            Notre IA analyse en temps réel les informations pertinentes pour les Guinéens de Belgique.
+        </div>
+        <button
+          onClick={() => navigate(ViewState.NEWS)}
+          className="shrink-0 inline-flex items-center gap-2.5 px-7 py-3.5 bg-white text-[#CE1126] text-sm font-black uppercase tracking-widest rounded-lg hover:bg-[#FCD116] hover:text-gray-900 transition-colors shadow-xl group"
+        >
+          Lire le Flash Pays
+          <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
+        </button>
+      </div>
+    </section>
+
+    {/* ── Donate CTA ────────────────────────────────────────────────────── */}
+    <section className="bg-white py-16 border-t border-gray-100" aria-label="Soutenir Ballal ASBL">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-8">
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-2">Faire un geste</p>
+          <h2 className="font-serif font-black text-2xl text-gray-900">
+            Chaque don finance du concret.
+          </h2>
+          <p className="text-sm text-gray-500 mt-1">
+            Hébergement d'urgence · Aide alimentaire · Accompagnement juridique
           </p>
-          <button
-            onClick={() => navigate(ViewState.NEWS)}
-            className="bg-guinea-red text-white px-10 py-5 rounded-2xl font-black uppercase text-xs tracking-widest shadow-xl hover:bg-white hover:text-earth-black transition-all flex items-center gap-3 mx-auto md:mx-0"
-          >
-            Lire le Flash Pays <ArrowRight className="h-4 w-4" />
-          </button>
         </div>
-        <div className="w-full md:w-1/3 aspect-square bg-white/5 rounded-[3rem] border border-white/10 flex items-center justify-center group">
-          <HeartHandshake className="h-32 w-32 text-white/20 group-hover:scale-110 group-hover:text-guinea-yellow transition-all" />
-        </div>
+        <button
+          onClick={() => navigate(ViewState.DONATE)}
+          className="shrink-0 inline-flex items-center gap-2.5 px-7 py-3.5 bg-gray-900 text-white text-sm font-black uppercase tracking-widest rounded-lg hover:bg-[#CE1126] transition-colors group"
+        >
+          Soutenir Ballal
+          <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
+        </button>
       </div>
     </section>
   </div>
