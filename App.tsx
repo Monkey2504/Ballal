@@ -225,6 +225,73 @@ const HomePage: React.FC<{ navigate: (v: ViewState) => void; language: LanguageC
         </button>
       </div>
     </section>
+
+    {/* ── Conseil d'Administration ──────────────────────────────────────── */}
+    <section className="bg-gray-50 py-20 sm:py-28 border-t border-gray-100" aria-labelledby="team-title">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+
+        <div className="max-w-2xl mb-14">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#CE1126] mb-3">
+            Gouvernance
+          </p>
+          <h2 id="team-title" className="font-serif font-black text-3xl sm:text-4xl text-gray-900 leading-tight">
+            Conseil d'Administration
+          </h2>
+          <p className="mt-3 text-gray-500 text-base">
+            Les administrateurs au service de la communauté.
+          </p>
+        </div>
+
+        {/* Admin cards */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
+          {[
+            { name: "Thierno I. T. Diallo", bio: "Président fondateur",       img: "https://i.imgur.com/T2LT1pB.png", accent: "#CE1126" },
+            { name: "Bah Ibrahim",          bio: "Resp. des opérations",      img: "https://i.imgur.com/l3UdDov.png", accent: "#FCD116" },
+            { name: "Kadiatou Sow",         bio: "Secrétaire",                img: "https://i.imgur.com/THTzMBW.png", accent: "#009460" },
+            { name: "Cissé Abdoulaye",      bio: "Trésorier",                 img: "https://i.imgur.com/7FduSwY.png", accent: "#333333" },
+            { name: "Francois Halleux",     bio: "Conseiller stratégique",    img: "https://i.imgur.com/1qqkroP.png", accent: "#2563eb" },
+          ].map((member) => (
+            <div key={member.name} className="bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow group">
+              <div className="relative aspect-[3/4] overflow-hidden bg-gray-100">
+                <img
+                  src={member.img}
+                  alt={member.name}
+                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-1"
+                  style={{ backgroundColor: member.accent }}
+                  aria-hidden="true"
+                />
+              </div>
+              <div className="p-4">
+                <p className="font-black text-sm text-gray-900 leading-tight">{member.name}</p>
+                <p className="text-[10px] text-gray-400 font-medium mt-1">{member.bio}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Members collective photo */}
+        <div className="mt-14 rounded-2xl overflow-hidden relative">
+          <img
+            src="https://i.imgur.com/CwnDz75.png"
+            alt="Membres et militants de Ballal ASBL"
+            className="w-full h-64 sm:h-80 object-cover"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/20 to-transparent" aria-hidden="true" />
+          <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FCD116] mb-2">Membres & Militants</p>
+            <p className="font-serif font-black text-xl sm:text-2xl text-white leading-snug max-w-xl">
+              La force de Ballal, c'est son collectif de militants engagés.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
   </div>
 );
 
