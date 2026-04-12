@@ -2,7 +2,6 @@ export type LanguageCode = 'fr' | 'en' | 'nl' | 'pe' | 'ma' | 'su' | 'es' | 'ar'
 
 export enum ViewState {
   HOME = 'HOME',
-  NEWS = 'NEWS',
   LEGAL_AID = 'LEGAL_AID',
   FOOD_AUTONOMY = 'FOOD_AUTONOMY',
   FOOD_SUPPLIER = 'FOOD_SUPPLIER',
@@ -16,9 +15,9 @@ export enum ViewState {
   PRIVACY = 'PRIVACY',
   TERMS = 'TERMS',
   FESTIVAL = 'FESTIVAL',
-  COMMUNITY = 'COMMUNITY',
   SOLIDARITY_NETWORK = 'SOLIDARITY_NETWORK',
-  PRESS = 'PRESS'}
+  PRESS = 'PRESS',
+}
 
 export interface UserPreferences {
   language: LanguageCode;
@@ -47,9 +46,7 @@ export const DEFAULT_USER_PREFERENCES: UserPreferences = {
 
 export const ROUTE_MAP: Record<ViewState, string> = {
   [ViewState.HOME]:               '/',
-  [ViewState.NEWS]:               '/actualites',
   [ViewState.SOLIDARITY_NETWORK]: '/entraide',
-  [ViewState.COMMUNITY]:          '/annuaire',
   [ViewState.SQUAT]:              '/logement',
   [ViewState.CULTURE]:            '/culture',
   [ViewState.LEGAL_AID]:          '/droits',

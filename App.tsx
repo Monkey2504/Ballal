@@ -6,7 +6,7 @@ import Footer from './components/Footer.tsx';
 import CookieConsent from './components/CookieConsent.tsx';
 import { ViewState, LanguageCode, ROUTE_MAP, VIEW_FROM_ROUTE } from './types.ts';
 import { AuthProvider } from './contexts/AuthContext.tsx';
-import { AlertTriangle, RefreshCcw, ArrowRight, Newspaper, Shield, Utensils, Home, Scale, Users, BookOpen } from 'lucide-react';
+import { AlertTriangle, RefreshCcw, ArrowRight, Shield, Utensils, Home, Scale, Users, BookOpen } from 'lucide-react';
 import { MAIN_NAV_ITEMS } from './constants/navigation.ts';
 
 import LegalAidSection from './components/LegalAidSection.tsx';
@@ -19,9 +19,7 @@ import FestivalSection from './components/FestivalSection.tsx';
 import TeamSection from './components/TeamSection.tsx';
 import HistorySection from './components/HistorySection.tsx';
 import GallerySection from './components/GallerySection.tsx';
-import CommunitySection from './components/CommunitySection.tsx';
 import SolidarityNetwork from './components/SolidarityNetwork.tsx';
-import NewsSection from './components/NewsSection.tsx';
 import { AuthModal } from './components/AuthModals.tsx';
 import { FoodSupplierForm, FoodNetworkForm } from './components/FoodForms.tsx';
 import LegalDocSection from './components/LegalDocSection.tsx';
@@ -30,9 +28,7 @@ import PressSection from './components/PressSection.tsx';
 // Page titles for SEO — keyed by route path
 const PAGE_TITLES: Record<string, string> = {
   '/':                       'BALLAL ASBL | Solidarité Guinée-Belgique',
-  '/actualites':             'Actualités | BALLAL ASBL',
   '/entraide':               'Entraide & Solidarité | BALLAL ASBL',
-  '/annuaire':               'Annuaire Communautaire | BALLAL ASBL',
   '/logement':               'Logement & Squat | BALLAL ASBL',
   '/culture':                'Culture & Histoire | BALLAL ASBL',
   '/droits':                 'Aide & Droits | BALLAL ASBL',
@@ -128,19 +124,12 @@ const PROGRAMS = [
     label: 'Culture & Histoire',
     desc: 'Histoire de la diaspora guinéenne, patrimoine, événements culturels.',
   },
-  {
-    view: ViewState.COMMUNITY,
-    icon: Shield,
-    color: 'bg-teal-600',
-    label: 'Annuaire',
-    desc: 'Commerces, médecins, services et professionnels de la communauté.',
-  },
 ];
 
 const IMPACT_NUMBERS = [
   { value: '25 000+', label: 'Guinéens en Belgique' },
-  { value: '6',       label: 'Programmes actifs' },
-    { value: '3',       label: "Langues d'assistance" },
+  { value: '5',       label: 'Programmes actifs' },
+  { value: '3',       label: "Langues d'assistance" },
   { value: '24h',     label: 'Urgence disponible' },
 ];
 
@@ -215,30 +204,6 @@ const HomePage: React.FC<{ navigate: (v: ViewState) => void; language: LanguageC
       </div>
     </section>
 
-    {/* ── News CTA strip ────────────────────────────────────────────────── */}
-    <section className="bg-[#CE1126]" aria-label="Actualités de la diaspora">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 flex flex-col sm:flex-row items-center justify-between gap-8">
-        <div className="text-white text-center sm:text-left">
-          <div className="flex items-center justify-center sm:justify-start gap-2 mb-3">
-            <Newspaper className="h-4 w-4 text-[#FCD116]" aria-hidden="true" />
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/80">
-              Flash actualités IA
-            </span>
-          </div>
-          <h2 className="font-serif font-black text-2xl sm:text-3xl text-white leading-tight">
-            Restez informé des nouvelles<br className="hidden sm:block" /> de Guinée et de la diaspora.
-          </h2>
-        </div>
-        <button
-          onClick={() => navigate(ViewState.NEWS)}
-          className="shrink-0 inline-flex items-center gap-2.5 px-7 py-3.5 bg-white text-[#CE1126] text-sm font-black uppercase tracking-widest rounded-lg hover:bg-[#FCD116] hover:text-gray-900 transition-colors shadow-xl group"
-        >
-          Lire le Flash Pays
-          <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
-        </button>
-      </div>
-    </section>
-
     {/* ── Donate CTA ────────────────────────────────────────────────────── */}
     <section className="bg-white py-16 border-t border-gray-100" aria-label="Soutenir Ballal ASBL">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-8">
@@ -309,9 +274,7 @@ const AppContent: React.FC = () => {
         <ErrorBoundary>
           <Routes>
             <Route path="/"                         element={<HomePage navigate={navigate} language={language} />} />
-            <Route path="/actualites"               element={<NewsSection />} />
             <Route path="/entraide"                 element={<SolidarityNetwork />} />
-            <Route path="/annuaire"                 element={<CommunitySection />} />
             <Route path="/logement"                 element={<SquatSection language={language} />} />
             <Route path="/culture"                  element={<div className="space-y-0"><HistorySection language={language} /><GallerySection /></div>} />
             <Route path="/droits"                   element={<LegalAidSection language={language} />} />
