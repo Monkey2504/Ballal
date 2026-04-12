@@ -1,8 +1,10 @@
-import React, { useState, ReactNode, Component } from 'react';
+import React, { useState, ReactNode, Component, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar.tsx';
 import Hero from './components/Hero.tsx';
 import Footer from './components/Footer.tsx';
-import { ViewState, LanguageCode } from './types.ts';
+import CookieConsent from './components/CookieConsent.tsx';
+import { ViewState, LanguageCode, ROUTE_MAP, VIEW_FROM_ROUTE } from './types.ts';
 import { AuthProvider } from './contexts/AuthContext.tsx';
 import { AlertTriangle, RefreshCcw, Users, HeartHandshake, ArrowRight, Newspaper } from 'lucide-react';
 import { MAIN_NAV_ITEMS } from './constants/navigation.ts';
@@ -25,23 +27,60 @@ import { FoodSupplierForm, FoodNetworkForm } from './components/FoodForms.tsx';
 import LegalDocSection from './components/LegalDocSection.tsx';
 import PressSection from './components/PressSection.tsx';
 
+// Page titles for SEO — keyed by route path
+const PAGE_TITLES: Record<string, string> = {
+  '/':                       'BALLAL ASBL | Solidarité Guinée-Belgique',
+  '/actualites':             'Actualités | BALLAL ASBL',
+  '/entraide':               'Entraide & Solidarité | BALLAL ASBL',
+  '/annuaire':               'Annuaire Communautaire | BALLAL ASBL',
+  '/logement':               'Logement & Squat | BALLAL ASBL',
+  '/culture':                'Culture & Histoire | BALLAL ASBL',
+  '/droits':                 'Aide & Droits | BALLAL ASBL',
+  '/alimentation':           'Projet Alimentaire | BALLAL ASBL',
+  '/alimentation/fournisseur': 'Fournisseur Alimentaire | BALLAL ASBL',
+  '/alimentation/collectif': 'Collectif Alimentaire | BALLAL ASBL',
+  '/equipe':                 'Équipe | BALLAL ASBL',
+  '/festival':               'Festival Sans-Papiers | BALLAL ASBL',
+  '/don':                    'Faire un Don | BALLAL ASBL',
+  '/partager':               'Partager | BALLAL ASBL',
+  '/contact':                'Contact | BALLAL ASBL',
+  '/confidentialite':        'Politique de Confidentialité | BALLAL ASBL',
+  '/mentions-legales':       'Mentions Légales | BALLAL ASBL',
+  '/presse':                 'Espace Presse | BALLAL ASBL',
+};
+
 interface ErrorBoundaryProps { children?: ReactNode; }
-interface ErrorBoundaryState { hasError: boolean; }
+interface ErrorBoundaryState { hasError: boolean; errorMessage: string | null; }
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   public state: ErrorBoundaryState;
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = { hasError: false };
+    this.state = { hasError: false, errorMessage: null };
   }
-  static getDerivedStateFromError(_: Error): ErrorBoundaryState { return { hasError: true }; }
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    // In production we hide the technical message; in dev we show it
+    const isDev = import.meta.env.DEV;
+    return {
+      hasError: true,
+      errorMessage: isDev ? error.message : null,
+    };
+  }
   render() {
     if (this.state.hasError) {
       return (
         <div className="min-h-[50vh] flex flex-col items-center justify-center p-8 text-center bg-red-50 m-4 rounded-xl border border-red-100">
           <AlertTriangle className="h-12 w-12 text-red-500 mb-4" />
           <h2 className="text-xl font-bold mb-2">Une erreur est survenue</h2>
-          <button onClick={() => window.location.reload()} className="flex items-center px-4 py-2 bg-red-600 text-white rounded-lg font-bold">
+          {this.state.errorMessage && (
+            <p className="text-sm text-gray-600 mb-4 font-mono bg-white px-3 py-2 rounded border border-red-100">
+              {this.state.errorMessage}
+            </p>
+          )}
+          <button
+            onClick={() => window.location.reload()}
+            className="flex items-center px-4 py-2 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-colors"
+          >
             <RefreshCcw className="mr-2 h-4 w-4" /> Recharger
           </button>
         </div>
@@ -51,15 +90,15 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 }
 
-const HomePage: React.FC<{ navigate: (v: ViewState) => void, language: LanguageCode }> = ({ navigate, language }) => (
+const HomePage: React.FC<{ navigate: (v: ViewState) => void; language: LanguageCode }> = ({ navigate, language }) => (
   <div className="space-y-0">
-    <Hero 
-      onExplore={() => navigate(ViewState.NEWS)} 
+    <Hero
+      onExplore={() => navigate(ViewState.NEWS)}
       language={language}
       onShare={() => navigate(ViewState.SHARE)}
       onDonate={() => navigate(ViewState.DONATE)}
     />
-    
+
     <section className="max-w-7xl mx-auto px-6 py-20">
       <div className="flex items-center gap-4 mb-12">
         <div className="h-1 w-12 bg-guinea-red"></div>
@@ -67,13 +106,13 @@ const HomePage: React.FC<{ navigate: (v: ViewState) => void, language: LanguageC
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {MAIN_NAV_ITEMS.filter(item => item.value !== ViewState.HOME).map((pill, i) => (
-          <button 
-            key={i} 
+          <button
+            key={i}
             onClick={() => navigate(pill.value)}
             className="bg-white p-8 rounded-[2.5rem] shadow-soft-elegant border border-gray-100 text-left hover:translate-y-[-4px] transition-all group overflow-hidden relative"
           >
             <div className="absolute -right-4 -top-4 opacity-[0.03] group-hover:scale-110 transition-transform">
-                <pill.icon className="h-32 w-32" />
+              <pill.icon className="h-32 w-32" />
             </div>
             <div className={`p-4 rounded-2xl ${pill.color} text-white w-fit mb-6 shadow-lg group-hover:scale-110 transition-transform`}>
               <pill.icon className="h-6 w-6" />
@@ -93,9 +132,13 @@ const HomePage: React.FC<{ navigate: (v: ViewState) => void, language: LanguageC
             <Newspaper className="h-6 w-6" />
             <span className="font-bold uppercase tracking-widest text-xs">Actualités Diaspora</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-serif font-black mb-6">Restez connecté aux nouvelles du pays.</h2>
-          <p className="text-gray-400 text-lg mb-8 italic">Notre IA analyse en temps réel les informations pertinentes pour les Guinéens de Belgique.</p>
-          <button 
+          <h2 className="text-4xl md:text-5xl font-serif font-black mb-6">
+            Restez connecté aux nouvelles du pays.
+          </h2>
+          <p className="text-gray-400 text-lg mb-8 italic">
+            Notre IA analyse en temps réel les informations pertinentes pour les Guinéens de Belgique.
+          </p>
+          <button
             onClick={() => navigate(ViewState.NEWS)}
             className="bg-guinea-red text-white px-10 py-5 rounded-2xl font-black uppercase text-xs tracking-widest shadow-xl hover:bg-white hover:text-earth-black transition-all flex items-center gap-3 mx-auto md:mx-0"
           >
@@ -103,7 +146,7 @@ const HomePage: React.FC<{ navigate: (v: ViewState) => void, language: LanguageC
           </button>
         </div>
         <div className="w-full md:w-1/3 aspect-square bg-white/5 rounded-[3rem] border border-white/10 flex items-center justify-center group">
-           <HeartHandshake className="h-32 w-32 text-white/20 group-hover:scale-110 group-hover:text-guinea-yellow transition-all" />
+          <HeartHandshake className="h-32 w-32 text-white/20 group-hover:scale-110 group-hover:text-guinea-yellow transition-all" />
         </div>
       </div>
     </section>
@@ -111,13 +154,22 @@ const HomePage: React.FC<{ navigate: (v: ViewState) => void, language: LanguageC
 );
 
 const AppContent: React.FC = () => {
-  const [view, setView] = useState<ViewState>(ViewState.HOME);
   const [language, setLanguage] = useState<LanguageCode>('fr');
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
 
+  const routerNavigate = useNavigate();
+  const location = useLocation();
+
+  // Update document.title on every route change
+  useEffect(() => {
+    const title = PAGE_TITLES[location.pathname] ?? 'BALLAL ASBL';
+    document.title = title;
+  }, [location.pathname]);
+
+  // Navigate by ViewState — keeps internal code unchanged
   const navigate = (v: ViewState) => {
-    setView(v);
+    routerNavigate(ROUTE_MAP[v]);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -126,61 +178,68 @@ const AppContent: React.FC = () => {
     setIsAuthOpen(true);
   };
 
-  const renderView = () => {
-    switch (view) {
-      case ViewState.HOME: return <HomePage navigate={navigate} language={language} />;
-      case ViewState.NEWS: return <NewsSection />;
-      case ViewState.SOLIDARITY_NETWORK: return <SolidarityNetwork />;
-      case ViewState.COMMUNITY: return <CommunitySection />;
-      case ViewState.CULTURE: 
-        return (
-          <div className="space-y-0">
-            <HistorySection language={language} />
-            <GallerySection />
-          </div>
-        );
-      case ViewState.SQUAT: return <SquatSection language={language} />;
-      case ViewState.FESTIVAL: return <FestivalSection language={language} />;
-      case ViewState.TEAM: return <TeamSection language={language} />;
-      case ViewState.LEGAL_AID: return <LegalAidSection language={language} />;
-      case ViewState.FOOD_AUTONOMY: return <FoodAutonomySection language={language} setView={navigate} />;
-      case ViewState.SHARE: return <ShareSection language={language} />;
-      case ViewState.DONATE: return <DonationSection language={language} />;
-      case ViewState.CONTACT: return <ContactSection language={language} />;
-      case ViewState.FOOD_SUPPLIER: return <FoodSupplierForm language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />;
-      case ViewState.FOOD_NETWORK: return <FoodNetworkForm language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />;
-      case ViewState.PRIVACY: return <LegalDocSection language={language} mode="privacy" />;
-      case ViewState.TERMS: return <LegalDocSection language={language} mode="terms" />;
-      case ViewState.PRESS: return <PressSection />;
-      default: return <HomePage navigate={navigate} language={language} />;
-    }
-  };
-
   return (
     <div className="min-h-screen bg-soft-paper text-earth-black african-pattern">
-      <Navbar 
-        currentView={view} 
-        setView={navigate} 
-        language={language} 
-        setLanguage={setLanguage} 
+      {/* Skip to main content — WCAG 2.1 */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[300] focus:px-4 focus:py-2 focus:bg-[#CE1126] focus:text-white focus:font-bold focus:rounded-lg focus:shadow-lg"
+      >
+        Aller au contenu principal
+      </a>
+
+      <Navbar
+        setView={navigate}
+        language={language}
+        setLanguage={setLanguage}
         onOpenAuth={() => openAuth('login')}
       />
-      <main className="pt-20">
+
+      <main id="main-content" className="pt-20">
         <ErrorBoundary>
-          {renderView()}
+          <Routes>
+            <Route path="/"                         element={<HomePage navigate={navigate} language={language} />} />
+            <Route path="/actualites"               element={<NewsSection />} />
+            <Route path="/entraide"                 element={<SolidarityNetwork />} />
+            <Route path="/annuaire"                 element={<CommunitySection />} />
+            <Route path="/logement"                 element={<SquatSection language={language} />} />
+            <Route path="/culture"                  element={<div className="space-y-0"><HistorySection language={language} /><GallerySection /></div>} />
+            <Route path="/droits"                   element={<LegalAidSection language={language} />} />
+            <Route path="/alimentation"             element={<FoodAutonomySection language={language} setView={navigate} />} />
+            <Route path="/alimentation/fournisseur" element={<FoodSupplierForm language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />} />
+            <Route path="/alimentation/collectif"   element={<FoodNetworkForm language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />} />
+            <Route path="/equipe"                   element={<TeamSection language={language} />} />
+            <Route path="/festival"                 element={<FestivalSection language={language} />} />
+            <Route path="/don"                      element={<DonationSection language={language} />} />
+            <Route path="/partager"                 element={<ShareSection language={language} />} />
+            <Route path="/contact"                  element={<ContactSection language={language} />} />
+            <Route path="/confidentialite"          element={<LegalDocSection language={language} mode="privacy" />} />
+            <Route path="/mentions-legales"         element={<LegalDocSection language={language} mode="terms" />} />
+            <Route path="/presse"                   element={<PressSection />} />
+            <Route path="*"                         element={<Navigate to="/" replace />} />
+          </Routes>
         </ErrorBoundary>
       </main>
+
       <Footer language={language} setView={navigate} />
-      
-      <AuthModal 
-        isOpen={isAuthOpen} 
-        onClose={() => setIsAuthOpen(false)} 
-        mode={authMode} 
-        switchTo={(m) => setAuthMode(m)} 
+      <CookieConsent />
+
+      <AuthModal
+        isOpen={isAuthOpen}
+        onClose={() => setIsAuthOpen(false)}
+        mode={authMode}
+        switchTo={(m) => setAuthMode(m)}
       />
     </div>
   );
 };
 
-const App: React.FC = () => <AuthProvider><AppContent /></AuthProvider>;
+const App: React.FC = () => (
+  <AuthProvider>
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
+  </AuthProvider>
+);
+
 export default App;

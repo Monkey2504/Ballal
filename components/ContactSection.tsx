@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Mail, MessageSquare, Send, ShieldCheck, AlertTriangle } from 'lucide-react';
 import { LanguageCode } from '../types.ts';
 import { translations } from '../utils/translations.ts';
+import { isValidEmail } from '../utils/validation.ts';
 
 interface ContactSectionProps {
   language: LanguageCode;
@@ -36,7 +37,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ language }) => {
   const validate = () => {
     const newErrors: Record<string, string> = {};
     if (!formData.name.trim()) newErrors.name = t.form_error_required;
-    if (!formData.email.trim() || !/^\S+@\S+\.\S+$/.test(formData.email)) newErrors.email = t.form_error_email;
+    if (!formData.email.trim() || !isValidEmail(formData.email)) newErrors.email = t.form_error_email;
     if (!formData.message.trim()) newErrors.message = t.form_error_required;
     if (!formData.consent) newErrors.consent = t.form_error_consent;
     return newErrors;

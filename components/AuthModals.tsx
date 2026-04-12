@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, Mail, User, Lock, LogIn, ArrowRight, AlertTriangle, Eye, EyeOff, Info } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext.tsx';
+import { isValidEmail, isValidPassword } from '../utils/validation.ts';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -90,15 +91,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, mode, swi
 
   if (!isOpen) return null;
 
-  const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+  const validateEmail = isValidEmail;
 
   const validatePassword = (password: string): boolean => {
-    if (mode === 'register') {
-      return password.length >= 8 && /[A-Z]/.test(password) && /[a-z]/.test(password) && /[0-9]/.test(password);
-    }
+    if (mode === 'register') return isValidPassword(password);
     return password.length > 0;
   };
 

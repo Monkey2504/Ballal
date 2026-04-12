@@ -44,3 +44,28 @@ export const DEFAULT_USER_PREFERENCES: UserPreferences = {
   language: 'fr',
   theme: 'auto'
 };
+
+export const ROUTE_MAP: Record<ViewState, string> = {
+  [ViewState.HOME]:               '/',
+  [ViewState.NEWS]:               '/actualites',
+  [ViewState.SOLIDARITY_NETWORK]: '/entraide',
+  [ViewState.COMMUNITY]:          '/annuaire',
+  [ViewState.SQUAT]:              '/logement',
+  [ViewState.CULTURE]:            '/culture',
+  [ViewState.LEGAL_AID]:          '/droits',
+  [ViewState.FOOD_AUTONOMY]:      '/alimentation',
+  [ViewState.FOOD_SUPPLIER]:      '/alimentation/fournisseur',
+  [ViewState.FOOD_NETWORK]:       '/alimentation/collectif',
+  [ViewState.TEAM]:               '/equipe',
+  [ViewState.FESTIVAL]:           '/festival',
+  [ViewState.DONATE]:             '/don',
+  [ViewState.SHARE]:              '/partager',
+  [ViewState.CONTACT]:            '/contact',
+  [ViewState.PRIVACY]:            '/confidentialite',
+  [ViewState.TERMS]:              '/mentions-legales',
+  [ViewState.PRESS]:              '/presse',
+};
+
+export const VIEW_FROM_ROUTE: Record<string, ViewState> = Object.fromEntries(
+  (Object.entries(ROUTE_MAP) as [ViewState, string][]).map(([view, path]) => [path, view])
+) as Record<string, ViewState>;

@@ -2,9 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Newspaper, RefreshCcw, ExternalLink, AlertCircle, Loader2, Sparkles, ShieldAlert } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 
+interface GroundingChunk {
+  web?: { uri?: string; title?: string };
+  retrievedContext?: { uri?: string; title?: string };
+}
+
 const NewsSection: React.FC = () => {
   const [news, setNews] = useState<string | null>(null);
-  const [sources, setSources] = useState<any[]>([]);
+  const [sources, setSources] = useState<GroundingChunk[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
