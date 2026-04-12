@@ -24,6 +24,7 @@ import { AuthModal } from './components/AuthModals.tsx';
 import { FoodSupplierForm, FoodNetworkForm } from './components/FoodForms.tsx';
 import LegalDocSection from './components/LegalDocSection.tsx';
 import PressSection from './components/PressSection.tsx';
+import FoundersWallSection from './components/FoundersWallSection.tsx';
 
 interface ErrorBoundaryProps { children?: ReactNode; }
 interface ErrorBoundaryState { hasError: boolean; }
@@ -152,6 +153,7 @@ const AppContent: React.FC = () => {
       case ViewState.PRIVACY: return <LegalDocSection language={language} mode="privacy" />;
       case ViewState.TERMS: return <LegalDocSection language={language} mode="terms" />;
       case ViewState.PRESS: return <PressSection />;
+      case ViewState.FOUNDERS_WALL: return <FoundersWallSection />;
       default: return <HomePage navigate={navigate} language={language} />;
     }
   };

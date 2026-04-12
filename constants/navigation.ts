@@ -1,10 +1,11 @@
-import { 
-  Home as HomeIcon, 
-  Tent as TentIcon, 
+import {
+  Home as HomeIcon,
+  Tent as TentIcon,
   Search as SearchIcon,
   Palette as CultureIcon,
   HeartHandshake as SolidarityIcon,
-  Newspaper as NewsIcon
+  Newspaper as NewsIcon,
+  Star as StarIcon
 } from 'lucide-react';
 import { ViewState } from '../types.ts';
 
@@ -15,4 +16,5 @@ export const MAIN_NAV_ITEMS = [
   { label: "ANNUAIRE", value: ViewState.COMMUNITY,        icon: SearchIcon,      color: "bg-guinea-green",                  desc: "Commerces et services." },
   { label: "LOGEMENT", value: ViewState.SQUAT,            icon: TentIcon,        color: "bg-earth-black",                   desc: "Guide squat et occupations." },
   { label: "CULTURE",  value: ViewState.CULTURE,          icon: CultureIcon,     color: "bg-purple-600",                    desc: "Histoire et patrimoine." },
+  { label: "FONDATEURS", value: ViewState.FOUNDERS_WALL, icon: StarIcon,        color: "bg-guinea-yellow text-earth-black", desc: "200 fondateurs · 200 € · Un entrepôt pour le collectif." },
 ];
