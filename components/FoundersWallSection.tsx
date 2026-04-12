@@ -3,12 +3,12 @@ import {
   Star, Users, Target, Building2, Music, Copy, Check,
   ChevronDown, ChevronUp, Sparkles, Lock, Heart
 } from 'lucide-react';
+import { PAYMENT } from '../constants/payment.ts';
+import { useClipboard } from '../utils/useClipboard.ts';
 
 const GOAL_FOUNDERS = 200;
-const PRICE_PER_FOUNDER = 200;
+const PRICE_PER_FOUNDER = PAYMENT.MONTANT_FONDATEUR;
 const TOTAL_GOAL = GOAL_FOUNDERS * PRICE_PER_FOUNDER; // 40 000 €
-
-const IBAN = "BE43 0020 2412 8201";
 
 // Données fictives des fondateurs déjà inscrits (à remplacer par données réelles)
 const EXISTING_FOUNDERS: { name: string; date: string; anonymous?: boolean }[] = [
@@ -32,23 +32,8 @@ const PROGRESS_PCT = Math.round((FOUNDERS_COUNT / GOAL_FOUNDERS) * 100);
 const AMOUNT_RAISED = FOUNDERS_COUNT * PRICE_PER_FOUNDER;
 
 const FoundersWallSection: React.FC = () => {
-  const [copied, setCopied] = useState(false);
+  const { copy, copied } = useClipboard();
   const [showHowItWorks, setShowHowItWorks] = useState(false);
-
-  const handleCopy = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
-    } catch {
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      document.body.appendChild(ta);
-      ta.select();
-      try { document.execCommand('copy'); setCopied(true); setTimeout(() => setCopied(false), 2500); } catch {}
-      document.body.removeChild(ta);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-earth-black via-slate-900 to-slate-800">
@@ -311,10 +296,10 @@ const FoundersWallSection: React.FC = () => {
                     <label className="block text-white/40 text-xs uppercase tracking-wider font-bold mb-2">IBAN</label>
                     <div className="flex flex-col sm:flex-row gap-3">
                       <div className="flex-1 font-mono text-xl font-black text-white bg-white/5 px-4 py-3 rounded-xl tracking-wider">
-                        {IBAN}
+                        {PAYMENT.IBAN}
                       </div>
                       <button
-                        onClick={() => handleCopy(IBAN)}
+                        onClick={() => copy(PAYMENT.IBAN)}
                         aria-label="Copier l'IBAN"
                         className={`flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold transition-all ${
                           copied ? 'bg-guinea-green text-white' : 'bg-guinea-yellow text-earth-black hover:bg-yellow-300'

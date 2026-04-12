@@ -1,12 +1,8 @@
-
 import React from 'react';
-// Fix: Added missing 'Flag' to lucide-react imports.
 import { ShieldCheck, Heart, ArrowRight, Flag } from 'lucide-react';
-import { LanguageCode } from '../types.ts';
 
 interface HeroProps {
   onExplore: () => void;
-  language?: LanguageCode;
   onShare: () => void;
   onDonate: () => void;
 }

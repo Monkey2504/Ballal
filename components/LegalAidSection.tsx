@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Shield, Scale, Zap, GraduationCap, Home, X, Phone, MapPin, CheckCircle, Copy, ShieldAlert, ListChecks } from 'lucide-react';
 import { LanguageCode } from '../types.ts';
 import { translations } from '../utils/translations.ts';
+import { useClipboard } from '../utils/useClipboard.ts';
 
 interface LegalAidSectionProps {
   language?: LanguageCode;
@@ -9,16 +10,10 @@ interface LegalAidSectionProps {
 
 const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) => {
   const [isFlashMode, setIsFlashMode] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const { copy, copied } = useClipboard();
   const t = translations[language] || translations['fr'];
 
   const script = "Ceci est mon domicile privé. Je refuse l'entrée sans mandat (Art. 15 Const.). Je garde le silence jusqu'à l'arrivée de mon avocat.";
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(script);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   return (
     <div className="min-h-screen bg-soft-paper pb-24">
@@ -36,7 +31,7 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                "{script}"
              </p>
              <button 
-                onClick={handleCopy}
+                onClick={() => copy(script)}
                 className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-earth-black text-white px-8 py-4 rounded-full shadow-xl flex items-center gap-3 hover:bg-guinea-green transition-all"
              >
                 {copied ? <CheckCircle className="h-6 w-6" /> : <Copy className="h-6 w-6" />}

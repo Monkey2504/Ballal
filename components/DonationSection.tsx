@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Heart, Copy, Check, CreditCard, Coins, TrendingUp, Shield, Target } from 'lucide-react';
 import { LanguageCode } from '../types.ts';
 import { translations } from '../utils/translations.ts';
+import { PAYMENT } from '../constants/payment.ts';
+import { useClipboard } from '../utils/useClipboard.ts';
 
 interface DonationSectionProps {
   language: LanguageCode;
@@ -9,36 +11,8 @@ interface DonationSectionProps {
 
 const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
   const t = translations[language] || translations['fr'];
-  const [copied, setCopied] = useState(false);
+  const { copy, copied } = useClipboard();
   const [activeMethod, setActiveMethod] = useState<'iban' | 'crypto' | 'paypal'>('iban');
-  
-  // PLACEHOLDERS : À REMPLACER PAR LES VRAIES DONNÉES
-  const IBAN = "BE43 0020 2412 8201";
-  const BIC = "À RENSEIGNER";
-  const PAYPAL_LINK = "#"; // À configurer
-  const CRYPTO_ADDRESS = "Adresse portefeuille à venir";
-
-  const handleCopy = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      // Fallback for browsers that don't support clipboard API
-      const textArea = document.createElement('textarea');
-      textArea.value = text;
-      document.body.appendChild(textArea);
-      textArea.select();
-      try {
-        document.execCommand('copy');
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      } catch (fallbackErr) {
-        console.error('Failed to copy:', fallbackErr);
-      }
-      document.body.removeChild(textArea);
-    }
-  };
 
   const donationMethods = [
     {
@@ -196,10 +170,7 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
           {activeMethod === 'iban' && (
             <>
               <div className="bg-slate-900 p-6 md:p-8 text-white relative overflow-hidden">
-                <div 
-                  className="absolute top-0 right-0 w-48 h-48 md:w-64 md:h-64 bg-white opacity-5 rounded-full blur-2xl transform translate-x-1/2 -translate-y-1/2"
-                  aria-hidden="true"
-                />
+                <div className="absolute top-0 right-0 w-48 h-48 md:w-64 md:h-64 bg-white opacity-5 rounded-full blur-2xl transform translate-x-1/2 -translate-y-1/2" aria-hidden="true" />
                 <div className="relative z-10">
                   <div className="flex justify-between items-start mb-8">
                     <div>
@@ -207,91 +178,47 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
                         <CreditCard className="h-10 w-10 text-[#FCD116]" aria-hidden="true" />
                         <h3 className="text-2xl font-bold">Virement Bancaire</h3>
                       </div>
-                      <p className="text-gray-300 text-sm">
-                        Transfert direct vers le compte de l'association
-                      </p>
+                      <p className="text-gray-300 text-sm">Transfert direct vers le compte de l'association</p>
                     </div>
-                    <span className="font-mono text-sm opacity-70 tracking-widest hidden md:block">BALLAL ASBL</span>
+                    <span className="font-mono text-sm opacity-70 tracking-widest hidden md:block">{PAYMENT.ACCOUNT_NAME}</span>
                   </div>
-                  
                   <div className="space-y-4 md:space-y-6">
                     <div>
-                      <label className="block text-sm text-gray-400 uppercase tracking-wider font-bold mb-2">
-                        IBAN
-                      </label>
+                      <label className="block text-sm text-gray-400 uppercase tracking-wider font-bold mb-2">IBAN</label>
                       <div className="flex flex-col md:flex-row md:items-center gap-4">
                         <div className="font-mono text-xl md:text-2xl font-bold tracking-wider bg-black/30 px-4 py-3 rounded-lg flex-grow">
-                          {IBAN}
+                          {PAYMENT.IBAN}
                         </div>
-                        <button 
-                          onClick={() => handleCopy(IBAN)}
-                          className={`px-6 py-3 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-[#FCD116] flex items-center justify-center gap-2 min-w-[120px] ${
-                            copied 
-                              ? 'bg-green-600 text-white' 
-                              : 'bg-white/10 hover:bg-white/20 text-white'
-                          }`}
+                        <button
+                          onClick={() => copy(PAYMENT.IBAN)}
+                          className={`px-6 py-3 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-[#FCD116] flex items-center justify-center gap-2 min-w-[120px] ${copied ? 'bg-green-600 text-white' : 'bg-white/10 hover:bg-white/20 text-white'}`}
                           aria-label="Copier l'IBAN"
-                          aria-live="polite"
                         >
-                          {copied ? (
-                            <>
-                              <Check className="h-5 w-5" aria-hidden="true" />
-                              Copié
-                            </>
-                          ) : (
-                            <>
-                              <Copy className="h-5 w-5" aria-hidden="true" />
-                              Copier
-                            </>
-                          )}
+                          {copied ? <><Check className="h-5 w-5" aria-hidden="true" />Copié</> : <><Copy className="h-5 w-5" aria-hidden="true" />Copier</>}
                         </button>
                       </div>
                     </div>
-
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-sm text-gray-400 uppercase font-bold mb-2">
-                          BIC / SWIFT
-                        </label>
-                        <div className="font-mono text-lg bg-black/30 px-4 py-2 rounded-lg">
-                          {BIC}
-                        </div>
+                        <label className="block text-sm text-gray-400 uppercase font-bold mb-2">BIC / SWIFT</label>
+                        <div className="font-mono text-lg bg-black/30 px-4 py-2 rounded-lg">{PAYMENT.BIC}</div>
                       </div>
                       <div>
-                        <label className="block text-sm text-gray-400 uppercase font-bold mb-2">
-                          Communication structurée
-                        </label>
-                        <div className="font-mono text-lg text-yellow-400 font-bold bg-black/30 px-4 py-2 rounded-lg">
-                          "DON BALLAL"
-                        </div>
+                        <label className="block text-sm text-gray-400 uppercase font-bold mb-2">Communication</label>
+                        <div className="font-mono text-lg text-yellow-400 font-bold bg-black/30 px-4 py-2 rounded-lg">"{PAYMENT.COMMUNICATION_DON}"</div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              
               <div className="p-6 md:p-8 bg-white">
-                <div className={`mb-6 transition-all duration-300 ${
-                  copied ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 h-0 overflow-hidden'
-                }`}>
-                  <div 
-                    className="bg-green-50 text-green-800 px-4 py-3 rounded-xl text-center font-bold flex items-center justify-center border border-green-200 shadow-sm"
-                    role="alert"
-                    aria-live="assertive"
-                  >
+                {copied && (
+                  <div className="mb-6 bg-green-50 text-green-800 px-4 py-3 rounded-xl text-center font-bold flex items-center justify-center border border-green-200 shadow-sm" role="alert">
                     <Check className="h-5 w-5 mr-2" aria-hidden="true" />
                     {t.donate_copy_success}
                   </div>
-                </div>
-                
-                <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-                  <div className="text-center">
-                    <h4 className="font-bold text-slate-900 mb-2">IBAN en cours de configuration</h4>
-                    <p className="text-gray-600 text-sm max-w-md">
-                      Veuillez nous contacter directement si vous souhaitez faire un don urgent avant la mise à jour des coordonnées bancaires.
-                    </p>
-                  </div>
-                </div>
+                )}
+                <p className="text-center text-gray-500 text-sm">Virement sécurisé directement sur le compte de l'ASBL.</p>
               </div>
             </>
           )}
@@ -299,42 +226,18 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
           {/* PayPal Method */}
           {activeMethod === 'paypal' && (
             <div className="p-8 text-center">
-              <div className="mb-6">
-                <Coins className="h-16 w-16 text-blue-500 mx-auto mb-4" />
-                <h3 className="text-2xl font-bold text-slate-900 mb-2">Don via PayPal</h3>
-                <p className="text-gray-600 mb-6">
-                  Don sécurisé avec PayPal - Cartes bancaires acceptées
-                </p>
-              </div>
-              <a
-                href={PAYPAL_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg pointer-events-none opacity-50"
-              >
-                Lien PayPal à venir
-              </a>
+              <Coins className="h-16 w-16 text-blue-500 mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">Don via PayPal</h3>
+              <p className="text-gray-500 mb-6">Le lien PayPal sera disponible prochainement. En attendant, utilisez le virement bancaire.</p>
             </div>
           )}
 
           {/* Crypto Method */}
           {activeMethod === 'crypto' && (
-            <div className="p-8">
-              <div className="mb-6 text-center">
-                <TrendingUp className="h-16 w-16 text-purple-500 mx-auto mb-4" />
-                <h3 className="text-2xl font-bold text-slate-900 mb-2">Don en crypto-monnaies</h3>
-                <p className="text-gray-600">Adresse de portefeuille en cours de configuration</p>
-              </div>
-              <div className="bg-purple-50 p-6 rounded-xl mb-6">
-                <label className="block text-sm text-gray-700 font-bold mb-3">
-                  Adresse Ethereum (ERC-20)
-                </label>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="font-mono text-sm bg-white px-4 py-3 rounded-lg flex-grow overflow-x-auto">
-                    {CRYPTO_ADDRESS}
-                  </div>
-                </div>
-              </div>
+            <div className="p-8 text-center">
+              <TrendingUp className="h-16 w-16 text-purple-500 mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">Don en crypto-monnaies</h3>
+              <p className="text-gray-500">Les adresses de portefeuille seront disponibles prochainement.</p>
             </div>
           )}
         </div>

@@ -103,7 +103,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     
     // Check if session needs refresh
     if (now > expiry - SESSION_CONFIG.REFRESH_BUFFER) {
-      console.log('Session needs refresh');
+      // Session expirée, déconnexion requise
       return false;
     }
     
@@ -307,7 +307,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   useEffect(() => {
     const checkSessionInterval = setInterval(() => {
       if (user && !isSessionValid()) {
-        console.log('Session expired, logging out...');
+        // Session expirée
         logout();
       }
     }, 60000); // Check every minute
