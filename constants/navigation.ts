@@ -5,16 +5,18 @@ import {
   Palette as CultureIcon,
   HeartHandshake as SolidarityIcon,
   Newspaper as NewsIcon,
-  Star as StarIcon
+  Star as StarIcon,
+  Users as UsersIcon
 } from 'lucide-react';
 import { ViewState } from '../types.ts';
 
 export const MAIN_NAV_ITEMS = [
-  { label: "ACCUEIL",  value: ViewState.HOME,             icon: HomeIcon,        color: "bg-earth-black",                   desc: "Retour à l'accueil" },
-  { label: "NEWS",     value: ViewState.NEWS,             icon: NewsIcon,        color: "bg-guinea-yellow text-earth-black", desc: "L'actualité du pays et de la diaspora." },
-  { label: "ENTRAIDE", value: ViewState.SOLIDARITY_NETWORK, icon: SolidarityIcon, color: "bg-guinea-red",                  desc: "Besoin d'aide ou envie d'aider ?" },
-  { label: "ANNUAIRE", value: ViewState.COMMUNITY,        icon: SearchIcon,      color: "bg-guinea-green",                  desc: "Commerces et services." },
-  { label: "LOGEMENT", value: ViewState.SQUAT,            icon: TentIcon,        color: "bg-earth-black",                   desc: "Guide squat et occupations." },
-  { label: "CULTURE",  value: ViewState.CULTURE,          icon: CultureIcon,     color: "bg-purple-600",                    desc: "Histoire et patrimoine." },
-  { label: "FONDATEURS", value: ViewState.FOUNDERS_WALL, icon: StarIcon,        color: "bg-guinea-yellow text-earth-black", desc: "200 fondateurs · 200 € · Un entrepôt pour le collectif." },
+  { label: "ACCUEIL",    value: ViewState.HOME,             icon: HomeIcon,        color: "bg-earth-black",                   desc: "Retour à l'accueil" },
+  { label: "NEWS",       value: ViewState.NEWS,             icon: NewsIcon,        color: "bg-guinea-yellow text-earth-black", desc: "L'actualité du pays et de la diaspora." },
+  { label: "ENTRAIDE",   value: ViewState.SOLIDARITY_NETWORK, icon: SolidarityIcon, color: "bg-guinea-red",                  desc: "Besoin d'aide ou envie d'aider ?" },
+  { label: "ANNUAIRE",   value: ViewState.COMMUNITY,        icon: SearchIcon,      color: "bg-guinea-green",                  desc: "Commerces et services." },
+  { label: "LOGEMENT",   value: ViewState.SQUAT,            icon: TentIcon,        color: "bg-earth-black",                   desc: "Guide squat et occupations." },
+  { label: "CULTURE",    value: ViewState.CULTURE,          icon: CultureIcon,     color: "bg-purple-600",                    desc: "Histoire et patrimoine." },
+  { label: "ÉQUIPE",     value: ViewState.TEAM,             icon: UsersIcon,       color: "bg-blue-600",                      desc: "Le Conseil d'Administration de Ballal." },
+  { label: "FONDATEURS", value: ViewState.FOUNDERS_WALL,    icon: StarIcon,        color: "bg-guinea-yellow text-earth-black", desc: "200 fondateurs · 200 € · Un entrepôt pour le collectif." },
 ];
