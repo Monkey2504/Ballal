@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Mail, User, Shield, Users, ExternalLink, Copy, Check } from 'lucide-react';
+import { Mail, Users, Check } from 'lucide-react';
 import { LanguageCode } from '../types.ts';
 import { translations } from '../utils/translations.ts';
 

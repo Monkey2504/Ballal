@@ -339,8 +339,7 @@ const BaseFoodForm: React.FC<{
     await new Promise(resolve => setTimeout(resolve, 1000));
     
     try {
-      // Log form data (in a real app, you'd send this to your backend)
-      console.log(`${mode} form submitted:`, formData);
+      // TODO: send formData to backend API
       
       // Simulate success
       setSubmitted(true);

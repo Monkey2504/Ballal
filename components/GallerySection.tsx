@@ -179,9 +179,8 @@ const GallerySection: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isModalOpen, selectedImage]);
 
-  const handleLike = (id: string) => {
-    // In a real app, this would update the backend
-    console.log('Liked item:', id);
+  const handleLike = (_id: string) => {
+    // Placeholder — wire to backend when ready
   };
 
   const handleShare = (item: GalleryItem) => {

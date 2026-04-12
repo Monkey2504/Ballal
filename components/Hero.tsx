@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Heart, ExternalLink, MapPin, Users, Calendar } from 'lucide-react';
+import { ArrowRight, Heart, MapPin, Users, Calendar } from 'lucide-react';
 import { LanguageCode } from '../types.ts';
 
 interface HeroProps {
