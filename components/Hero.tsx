@@ -11,9 +11,9 @@ interface HeroProps {
 }
 
 const STATS = [
-  { value: 'Par & pour', label: 'les sans-papiers' },
-  { value: '2022',       label: 'Fondée à Molenbeek' },
-  { value: 'Du toit',    label: "à l'indépendance" },
+  { value: 'Fondée',   label: 'par des sans-papiers' },
+  { value: '2022',     label: 'Molenbeek, Bruxelles' },
+  { value: 'Du toit',  label: "jusqu'à l'autonomie" },
 ];
 
 const containerVariants = {
@@ -95,10 +95,10 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
               animate="visible"
               className="text-[17px] text-[#6B6B6B] leading-[1.75] max-w-lg font-medium"
             >
-              Ballal n'est pas une ONG qui parle au nom des sans-papiers.
-              Nous sommes des sans-papiers, d'anciens sans-papiers — qui prennent
-              soin de leurs frères. Du toit à l'emploi, de la rue à la culture,
-              jusqu'à l'indépendance complète.
+              Ballal n'est pas une association qui vous aide de l'extérieur.
+              Nous sommes des sans-papiers et d'anciens sans-papiers qui prennent
+              soin de leurs frères — du logement d'urgence jusqu'à l'emploi,
+              de la rue jusqu'à l'autonomie réelle.
             </motion.p>
 
             {/* CTAs */}

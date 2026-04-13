@@ -118,7 +118,7 @@ const PROGRAMS = [
     iconBg:      'bg-[#FFCC00]/20',
     iconColor:   'text-[#8B7000]',
     label:       'Entraide',
-    desc:        "Trouver un travail, comprendre un document, se repérer dans les administrations. On a tous besoin d'un frère qui connaît le chemin. C'est ça, Ballal.",
+    desc:        "Trouver du travail, comprendre un document, naviguer dans les administrations — quelqu'un qui est passé par là change tout. C'est ce que nous faisons.",
   },
   {
     view:        ViewState.CULTURE,
@@ -127,7 +127,7 @@ const PROGRAMS = [
     iconBg:      'bg-[#4B3D8F]/10',
     iconColor:   'text-[#4B3D8F]',
     label:       'Culture & Histoire',
-    desc:        "La culture, c'est notre prochaine frontière. Elle nous rend visibles, nous donne du poids politique, et nous permet d'aller encore plus loin dans l'aide que nous apportons.",
+    desc:        "La culture est notre levier politique. Elle nous rend visibles, renforce notre voix et nous permet d'aller plus loin encore dans ce que nous construisons.",
   },
 ];
 
