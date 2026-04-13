@@ -10,7 +10,7 @@ const TIMELINE = [
   {
     year: '1958',
     label: 'Le "Non" qui change tout',
-    colorHex: '#CE1126',
+    colorHex: '#BE0000',
     content: {
       intro: `Le 28 septembre 1958, la Guinée devient le seul pays d'Afrique francophone à voter "Non" au référendum du général de Gaulle. En choisissant l'indépendance totale, elle rompt avec la France coloniale — et en paye immédiatement le prix.`,
       body: `Paris rapatrie ses fonctionnaires en quelques semaines, détruit ou emporte les infrastructures, gèle les financements. La France tente même de bloquer l'admission de la Guinée à l'ONU. Sékou Touré devient le premier président d'un État nouveau, isolé, asphyxié économiquement — mais libre.`,
@@ -34,7 +34,7 @@ const TIMELINE = [
   {
     year: '1984 – 2000',
     label: 'Après Touré : espoir et instabilité',
-    colorHex: '#009460',
+    colorHex: '#00843D',
     content: {
       intro: `Le 3 avril 1984, une semaine après la mort de Sékou Touré, le colonel Lansana Conté prend le pouvoir. Il amnistie les prisonniers politiques, libéralise l'économie, tente une normalisation. Beaucoup d'exilés envisagent le retour.`,
       body: `Mais l'instabilité politique persiste. Les années 1990 voient la Guinée accueillir plus de 500 000 réfugiés des guerres civiles libérienne et sierra-léonaise — tout en envoyant ses propres ressortissants vers l'Europe. La culture de mobilité des communautés peule et malinké, traditionnellement liée au commerce longue distance, amplifie ces mouvements.`,
@@ -46,7 +46,7 @@ const TIMELINE = [
   {
     year: '2014 – aujourd\'hui',
     label: 'La nouvelle génération à Bruxelles',
-    colorHex: '#FCD116',
+    colorHex: '#FFCC00',
     content: {
       intro: `À partir de 2014-2015, la migration irrégulière des jeunes Guinéens vers l'Europe s'accélère fortement. Les routes deviennent plus dangereuses — Maghreb, Méditerranée, puis nouvelles voies via la Turquie ou l'Amérique centrale.`,
       body: `Statbel recense 9 657 personnes de nationalité guinéenne en Belgique en 2017. Ce chiffre exclut les naturalisés, les sans-papiers et les demandeurs d'asile : les estimations réelles dépassent 15 000 personnes d'origine guinéenne. La Guinée est désormais la troisième nationalité africaine la plus représentée en Belgique, après la RDC et le Cameroun. Depuis 2023, les tensions diplomatiques entre les deux pays se sont accrues autour des politiques d'expulsion.`,
@@ -63,36 +63,36 @@ const HistorySection: React.FC<HistorySectionProps> = () => {
   const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i);
 
   return (
-    <section className="bg-soft-paper py-24 px-6 overflow-hidden">
+    <section className="bg-[#FAFAF8] py-24 px-6 overflow-hidden">
       <div className="max-w-5xl mx-auto">
 
         <div className="mb-20">
-          <div className="inline-block py-2 px-6 bg-earth-black text-white font-bold text-[10px] uppercase tracking-[0.3em] mb-8 rounded-full">
+          <div className="inline-block py-2 px-6 bg-[#0F0F0F] text-white font-bold text-[10px] uppercase tracking-[0.3em] mb-8 rounded-full">
             Histoire & Diaspora
           </div>
-          <h1 className="text-6xl md:text-8xl font-serif font-black text-earth-black tracking-tighter leading-none mb-8">
-            D'où nous<br />
-            <span className="text-guinea-red/80">venons.</span>
+          <h1 className="text-6xl md:text-8xl font-serif font-black text-[#0F0F0F] tracking-tighter leading-none mb-8">
+            Nous savons<br />
+            <span className="text-guinea-red">d'où nous venons.</span>
           </h1>
           <p className="text-xl md:text-2xl font-medium text-gray-500 italic max-w-2xl leading-relaxed border-l-4 border-guinea-yellow pl-8">
-            La présence guinéenne en Belgique ne s'explique pas par le hasard. Elle est le produit d'une histoire politique longue, de régimes autoritaires, de guerres régionales, et d'une culture de la mobilité profondément ancrée.
+            La présence guinéenne en Belgique n'est pas le fruit du hasard. Elle porte l'empreinte d'un peuple qui a toujours su résister — aux régimes autoritaires, aux frontières, à l'oubli. Cette histoire est notre boussole.
           </p>
         </div>
 
-        <div className="bg-earth-black text-white rounded-[3rem] p-10 md:p-16 mb-20 relative overflow-hidden">
+        <div className="bg-[#0F0F0F] text-white rounded-[3rem] p-10 md:p-16 mb-20 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-80 h-80 bg-guinea-red/10 rounded-full blur-[80px]" />
           <div className="relative z-10 grid md:grid-cols-3 gap-8 text-center">
             <div>
               <div className="text-5xl md:text-6xl font-black text-guinea-red mb-2">1958</div>
-              <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Année d'indépendance</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Premier "NON" d'Afrique francophone</div>
             </div>
             <div>
-              <div className="text-5xl md:text-6xl font-black text-guinea-yellow mb-2">+15 000</div>
-              <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Guinéens estimés en Belgique</div>
+              <div className="text-5xl md:text-6xl font-black text-guinea-yellow mb-2">15 000+</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Guinéens établis en Belgique</div>
             </div>
             <div>
               <div className="text-5xl md:text-6xl font-black text-guinea-green mb-2">3ème</div>
-              <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Nationalité africaine en Belgique</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Nationalité africaine du pays</div>
             </div>
           </div>
           <p className="text-center text-[10px] text-gray-500 mt-8 uppercase tracking-widest">
@@ -111,7 +111,7 @@ const HistorySection: React.FC<HistorySectionProps> = () => {
                   <div className="text-4xl md:text-5xl font-black font-serif leading-none" style={{ color: item.colorHex }}>
                     {item.year}
                   </div>
-                  <h2 className="text-xl md:text-2xl font-black text-earth-black">{item.label}</h2>
+                  <h2 className="text-xl md:text-2xl font-black text-[#0F0F0F]">{item.label}</h2>
                 </div>
                 <div className="flex-shrink-0 ml-4">
                   {openIndex === i ? <ChevronUp className="h-6 w-6 text-gray-400" /> : <ChevronDown className="h-6 w-6 text-gray-400" />}
@@ -121,11 +121,11 @@ const HistorySection: React.FC<HistorySectionProps> = () => {
               {openIndex === i && (
                 <div className="px-8 md:px-10 pb-10 space-y-8 animate-in fade-in duration-300">
                   <div className="h-1 w-20 rounded-full" style={{ backgroundColor: item.colorHex }} />
-                  <p className="text-xl font-medium text-earth-black leading-relaxed">{item.content.intro}</p>
+                  <p className="text-xl font-medium text-[#0F0F0F] leading-relaxed">{item.content.intro}</p>
                   <p className="text-gray-600 font-medium leading-relaxed">{item.content.body}</p>
-                  <div className="bg-soft-paper p-8 rounded-2xl border border-gray-100">
+                  <div className="bg-[#FAFAF8] p-8 rounded-2xl border border-gray-100">
                     <Quote className="h-6 w-6 mb-4" style={{ color: item.colorHex }} />
-                    <p className="text-lg font-serif italic text-earth-black mb-4">{item.content.quote}</p>
+                    <p className="text-lg font-serif italic text-[#0F0F0F] mb-4">{item.content.quote}</p>
                     <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">— {item.content.quoteSource}</p>
                   </div>
                   <div className="border-l-4 pl-6 py-2" style={{ borderColor: item.colorHex }}>

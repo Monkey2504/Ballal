@@ -51,24 +51,24 @@ const SolidarityNetwork: React.FC = () => {
 
         <div className="bg-white p-8 rounded-[2.5rem] shadow-soft-elegant border border-gray-100 mb-12">
           <div className="flex gap-4 mb-6">
-            <button 
+            <button
               onClick={() => setMsgType('need')}
               className={`flex-1 py-3 rounded-xl font-black text-[10px] tracking-widest uppercase transition-all ${msgType === 'need' ? 'bg-guinea-red text-white shadow-lg' : 'bg-gray-50 text-gray-400'}`}
             >
-              J'ai un besoin
+              J'ai besoin d'aide
             </button>
-            <button 
+            <button
               onClick={() => setMsgType('offer')}
               className={`flex-1 py-3 rounded-xl font-black text-[10px] tracking-widest uppercase transition-all ${msgType === 'offer' ? 'bg-guinea-green text-white shadow-lg' : 'bg-gray-50 text-gray-400'}`}
             >
-              Je propose mon aide
+              Je peux aider
             </button>
           </div>
           <div className="relative">
-            <textarea 
+            <textarea
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
-              placeholder={msgType === 'need' ? "De quoi avez-vous besoin ?" : "Comment pouvez-vous aider ?"}
+              placeholder={msgType === 'need' ? "Décrivez votre situation — nous trouverons quelqu'un." : "Précisez ce que vous pouvez apporter à la communauté."}
               className="w-full p-6 rounded-2xl bg-gray-50 border-2 border-transparent focus:border-guinea-yellow/50 outline-none min-h-[120px] font-medium text-gray-700 transition-all"
             />
             <button 
@@ -83,7 +83,7 @@ const SolidarityNetwork: React.FC = () => {
         <div className="space-y-6">
           <h2 className="text-xs font-black uppercase tracking-[0.3em] text-gray-400 flex items-center gap-4">
             <div className="h-px flex-grow bg-gray-200"></div>
-            Appels à la Solidarité
+            En ce moment dans la communauté
             <div className="h-px flex-grow bg-gray-200"></div>
           </h2>
           
@@ -103,7 +103,7 @@ const SolidarityNetwork: React.FC = () => {
                 <div className="flex gap-4">
                   <button className="flex items-center gap-2 px-6 py-2 bg-gray-50 hover:bg-earth-black hover:text-white rounded-full text-[10px] font-black uppercase tracking-widest transition-all">
                     <MessageSquare className="h-3 w-3" />
-                    Répondre
+                    Je peux aider
                   </button>
                   <button className="flex items-center gap-2 px-6 py-2 bg-gray-50 hover:bg-guinea-red hover:text-white rounded-full text-[10px] font-black uppercase tracking-widest transition-all">
                     <Heart className="h-3 w-3" />
