@@ -57,7 +57,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
       role: t.role_admin,
       image: "https://i.imgur.com/7FduSwY.png",
       email: "admin@ballal.be",
-      color: "bg-earth-black",
+      color: "bg-[#0F0F0F]",
       bio: "Trésorier de Ballal ASBL"
     },
     {
@@ -71,15 +71,15 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
   ];
 
   return (
-    <section className="py-32 relative bg-soft-paper border-t border-gray-100">
+    <section className="py-32 relative bg-[#FAFAF8] border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
         {/* HEADER D'ENTREPRISE SOCIALE */}
         <div className="text-center mb-20">
-          <span className="inline-block py-2 px-6 bg-earth-black text-white font-black text-[10px] uppercase tracking-[0.3em] mb-6 rounded-full">
+          <span className="inline-block py-2 px-6 bg-[#0F0F0F] text-white font-black text-[10px] uppercase tracking-[0.3em] mb-6 rounded-full">
             Gouvernance & Vision
           </span>
-          <h2 className="text-5xl md:text-7xl font-serif font-black text-earth-black mb-8 tracking-tighter">
+          <h2 className="text-5xl md:text-7xl font-serif font-black text-[#0F0F0F] mb-8 tracking-tighter">
             {t.team_title}
           </h2>
           <div className="w-24 h-2 bg-warm-gold mx-auto mb-8"></div>
@@ -106,7 +106,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
               
               <div className="p-6 flex-grow flex flex-col justify-between">
                 <div>
-                  <h3 className="font-black text-xl text-earth-black leading-tight mb-1">{member.name}</h3>
+                  <h3 className="font-black text-xl text-[#0F0F0F] leading-tight mb-1">{member.name}</h3>
                   <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-4">{member.role}</p>
                   <p className="text-sm text-gray-600 italic mb-6">"{member.bio}"</p>
                 </div>
@@ -128,7 +128,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
         </div>
 
         {/* SECTION COLLECTIF */}
-        <div className="mt-32 bg-earth-black rounded-[3rem] p-12 md:p-20 text-white relative overflow-hidden shadow-brutal">
+        <div className="mt-32 bg-[#0F0F0F] rounded-[3rem] p-12 md:p-20 text-white relative overflow-hidden shadow-brutal">
           <div className="absolute top-0 right-0 w-96 h-96 bg-warm-red/10 rounded-full blur-[100px]"></div>
           <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">

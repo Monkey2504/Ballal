@@ -343,7 +343,7 @@ export const withAuth = <P extends object>(
     if (isLoading) {
       return (
         <div className="flex items-center justify-center min-h-screen">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#CE1126]"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#BE0000]"></div>
         </div>
       );
     }
@@ -360,7 +360,7 @@ export const withAuth = <P extends object>(
             </p>
             <button
               onClick={() => window.location.href = '/login'}
-              className="px-6 py-3 bg-[#CE1126] text-white rounded-lg hover:bg-[#B01020] transition-colors"
+              className="px-6 py-3 bg-[#BE0000] text-white rounded-lg hover:bg-[#B01020] transition-colors"
             >
               Se connecter
             </button>

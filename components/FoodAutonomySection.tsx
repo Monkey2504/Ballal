@@ -22,21 +22,24 @@ const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, set
   }, []);
 
   return (
-    <div className="min-h-screen bg-soft-paper pb-24">
-      {/* Header Doux */}
-      <div className="bg-[#2D2D2D] text-white py-24 border-b-8 border-guinea-green relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5 african-pattern"></div>
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="bg-guinea-green text-white inline-block px-5 py-2 font-bold rounded-full text-xs uppercase mb-8 shadow-lg">
-             PROJET AUTONOMIE ALIMENTAIRE
+    <div className="min-h-screen bg-[#FAFAF8] pb-24">
+      {/* Header */}
+      <div className="bg-[#0F0F0F] text-white py-20 relative overflow-hidden">
+        {/* Flag line top */}
+        <div className="flag-line absolute top-0 left-0 right-0" aria-hidden="true"><span /><span /><span /></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10 pt-4">
+          <div className="inline-flex items-center gap-2 bg-[#00843D]/20 text-[#00843D] px-5 py-2 font-bold rounded-full text-[10px] uppercase tracking-[0.25em] mb-8 border border-[#00843D]/30">
+            PROJET AUTONOMIE ALIMENTAIRE
           </div>
-          <h1 className="text-6xl md:text-9xl font-serif font-black tracking-tighter leading-[0.8] mb-10">
-            Nourrir <span className="text-guinea-green">l'espoir</span>,<br/>semer <span className="text-guinea-yellow">l'unité</span>
+          <h1 className="text-6xl md:text-8xl font-serif font-black tracking-tighter leading-[0.9] mb-8">
+            Nourrir <span className="text-[#00843D]">l'espoir</span>,<br/>semer <span className="text-[#FFCC00]">l'unité</span>
           </h1>
-          <p className="text-xl md:text-3xl font-medium italic max-w-2xl leading-relaxed text-gray-300">
+          <p className="text-lg md:text-xl font-medium italic max-w-2xl leading-relaxed text-white/50">
             "Récupérer les surplus pour restaurer la dignité de chacun."
           </p>
         </div>
+        {/* Flag line bottom */}
+        <div className="flag-line absolute bottom-0 left-0 right-0" aria-hidden="true"><span /><span /><span /></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 -mt-16 relative z-20">
@@ -51,7 +54,7 @@ const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, set
           ].map((metric, index) => (
             <div key={index} className="bg-white p-8 rounded-[2.5rem] shadow-soft-elegant border border-gray-100 flex flex-col items-center text-center">
               <div className="p-3 bg-guinea-green/10 text-guinea-green rounded-2xl mb-4">{metric.icon}</div>
-              <div className="text-4xl font-serif font-black text-earth-black mb-1">{metric.value}</div>
+              <div className="text-4xl font-serif font-black text-[#0F0F0F] mb-1">{metric.value}</div>
               <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{metric.label}</div>
             </div>
           ))}
@@ -62,7 +65,7 @@ const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, set
           <div className="bg-white p-12 rounded-[3.5rem] shadow-soft-elegant border border-gray-100 group transition-all">
              <div className="flex items-center gap-5 mb-10">
                <div className="p-5 bg-guinea-green/10 text-guinea-green rounded-[2rem] group-hover:scale-110 transition-transform"><Leaf className="h-10 w-10" /></div>
-               <h3 className="text-4xl font-serif font-black text-earth-black">Notre Mission</h3>
+               <h3 className="text-4xl font-serif font-black text-[#0F0F0F]">Notre Mission</h3>
              </div>
              <p className="text-xl text-gray-600 font-medium leading-relaxed mb-10">
                Nous collectons les surplus alimentaires des commerces de gros et détaillants pour approvisionner les cuisines collectives des squats et occupations de la diaspora.
@@ -80,16 +83,16 @@ const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, set
           <div className="bg-white p-12 rounded-[3.5rem] shadow-soft-elegant border border-gray-100 group transition-all">
              <div className="flex items-center gap-5 mb-10">
                <div className="p-5 bg-guinea-yellow/10 text-guinea-yellow rounded-[2rem] group-hover:scale-110 transition-transform"><Truck className="h-10 w-10" /></div>
-               <h3 className="text-4xl font-serif font-black text-earth-black">Participer</h3>
+               <h3 className="text-4xl font-serif font-black text-[#0F0F0F]">Participer</h3>
              </div>
              <p className="text-xl text-gray-600 font-medium leading-relaxed mb-10">
                Vous êtes un commerçant avec des invendus ? Ou un collectif ayant besoin d'appui ? Rejoignez le réseau Ballal.
              </p>
              <div className="grid gap-4">
-                <button onClick={() => setView?.(ViewState.FOOD_SUPPLIER)} className="bg-earth-black text-white p-6 rounded-2xl font-black uppercase text-xs tracking-widest flex items-center justify-between hover:bg-guinea-green transition-all shadow-md">
+                <button onClick={() => setView?.(ViewState.FOOD_SUPPLIER)} className="bg-[#0F0F0F] text-white p-6 rounded-2xl font-black uppercase text-xs tracking-widest flex items-center justify-between hover:bg-guinea-green transition-all shadow-md">
                    Je suis un fournisseur <ArrowRight className="h-5 w-5" />
                 </button>
-                <button onClick={() => setView?.(ViewState.FOOD_NETWORK)} className="border-2 border-earth-black text-earth-black p-6 rounded-2xl font-black uppercase text-xs tracking-widest flex items-center justify-between hover:bg-gray-50 transition-all">
+                <button onClick={() => setView?.(ViewState.FOOD_NETWORK)} className="border-2 border-earth-black text-[#0F0F0F] p-6 rounded-2xl font-black uppercase text-xs tracking-widest flex items-center justify-between hover:bg-gray-50 transition-all">
                    Je suis un collectif <ArrowRight className="h-5 w-5" />
                 </button>
              </div>

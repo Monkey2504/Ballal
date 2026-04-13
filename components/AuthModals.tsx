@@ -184,10 +184,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, mode, swi
         </div>
 
         {/* Header */}
-        <div className="bg-[#CE1126] p-6 text-white text-center relative shrink-0">
+        <div className="bg-[#BE0000] p-6 text-white text-center relative shrink-0">
           <button 
             onClick={onClose}
-            className="absolute top-4 right-4 text-white/80 hover:text-white bg-white/10 rounded-full p-2 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#CE1126]"
+            className="absolute top-4 right-4 text-white/80 hover:text-white bg-white/10 rounded-full p-2 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#BE0000]"
             aria-label="Fermer la fenêtre de connexion"
             autoFocus={false}
           >
@@ -233,7 +233,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, mode, swi
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#CE1126] focus:border-transparent outline-none transition-all font-medium"
+                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#BE0000] focus:border-transparent outline-none transition-all font-medium"
                     placeholder="Ex: Mamadou Diallo"
                     autoComplete="name"
                     aria-required="true"
@@ -259,7 +259,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, mode, swi
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#CE1126] focus:border-transparent outline-none transition-all font-medium"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#BE0000] focus:border-transparent outline-none transition-all font-medium"
                   placeholder="exemple@email.com"
                   autoComplete="email"
                   aria-required="true"
@@ -278,7 +278,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, mode, swi
                 {mode === 'login' && (
                   <button 
                     type="button" 
-                    className="text-[#CE1126] hover:underline text-xs font-normal"
+                    className="text-[#BE0000] hover:underline text-xs font-normal"
                     onClick={() => alert('Fonctionnalité désactivée en mode démo.')}
                   >
                     Mot de passe oublié ?
@@ -295,7 +295,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, mode, swi
                   required={mode === 'register'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-12 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#CE1126] focus:border-transparent outline-none transition-all font-medium"
+                  className="w-full pl-10 pr-12 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#BE0000] focus:border-transparent outline-none transition-all font-medium"
                   placeholder={mode === 'register' ? "Min. 8 car. + Majuscule + Chiffre" : "Votre mot de passe"}
                   autoComplete={mode === 'login' ? "current-password" : "new-password"}
                   aria-required={mode === 'register'}
@@ -303,7 +303,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, mode, swi
                 <button 
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-[#CE1126] focus:ring-inset rounded"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-[#BE0000] focus:ring-inset rounded"
                   aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
                 >
                   {showPassword ? (
@@ -330,7 +330,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, mode, swi
                     type="checkbox"
                     checked={acceptTerms}
                     onChange={(e) => setAcceptTerms(e.target.checked)}
-                    className="focus:ring-[#CE1126] h-4 w-4 text-[#CE1126] border-gray-300 rounded"
+                    className="focus:ring-[#BE0000] h-4 w-4 text-[#BE0000] border-gray-300 rounded"
                     required
                     aria-required="true"
                   />
@@ -376,7 +376,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, mode, swi
               {mode === 'login' ? "Pas encore de compte ?" : "Déjà membre ?"}
               <button 
                 onClick={handleSwitchMode}
-                className="ml-2 font-black text-[#CE1126] hover:underline focus:outline-none focus:ring-2 focus:ring-red-500 rounded px-1"
+                className="ml-2 font-black text-[#BE0000] hover:underline focus:outline-none focus:ring-2 focus:ring-red-500 rounded px-1"
               >
                 {mode === 'login' ? "S'inscrire" : "Se connecter"}
               </button>

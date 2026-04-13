@@ -45,9 +45,9 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
       id: 'iban',
       title: 'Virement Bancaire',
       icon: <CreditCard className="h-5 w-5" />,
-      color: 'border-[#CE1126]',
+      color: 'border-[#BE0000]',
       bgColor: 'bg-red-50',
-      textColor: 'text-[#CE1126]'
+      textColor: 'text-[#BE0000]'
     },
     {
       id: 'paypal',
@@ -99,11 +99,11 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
     >
       {/* Background elements */}
       <div 
-        className="absolute top-0 right-0 w-64 h-64 md:w-96 md:h-96 bg-[#FCD116] opacity-5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"
+        className="absolute top-0 right-0 w-64 h-64 md:w-96 md:h-96 bg-[#FFCC00] opacity-5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"
         aria-hidden="true"
       />
       <div 
-        className="absolute bottom-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-[#CE1126] opacity-5 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"
+        className="absolute bottom-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-[#BE0000] opacity-5 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"
         aria-hidden="true"
       />
 
@@ -115,7 +115,7 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
             className="inline-flex items-center justify-center p-4 bg-gradient-to-br from-red-100 to-red-50 rounded-full mb-6 shadow-lg"
             aria-hidden="true"
           >
-            <Heart className="h-10 w-10 text-[#CE1126] fill-current animate-pulse" />
+            <Heart className="h-10 w-10 text-[#BE0000] fill-current animate-pulse" />
           </div>
           <h1 
             id="donation-title"
@@ -136,7 +136,7 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
               {/* Objectif */}
               <div className="text-white w-full pt-4 md:pt-0">
                 <div className="flex items-center justify-center gap-2 mb-2">
-                  <Target className="h-5 w-5 text-[#FCD116]" />
+                  <Target className="h-5 w-5 text-[#FFCC00]" />
                   <p className="text-sm md:text-base opacity-80 font-bold uppercase tracking-wider">{t.donate_goal_annual}</p>
                 </div>
                 <div className="flex items-center justify-center gap-3">
@@ -150,7 +150,7 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
               {/* Bilan Précédent */}
               <div className="text-white w-full pt-6 md:pt-0 md:pl-12">
                 <div className="flex items-center justify-center gap-2 mb-2">
-                  <Check className="h-5 w-5 text-[#009460]" />
+                  <Check className="h-5 w-5 text-[#00843D]" />
                   <p className="text-sm md:text-base opacity-80 font-bold uppercase tracking-wider">{t.donate_goal_previous}</p>
                 </div>
                 <div className="flex items-center justify-center gap-2">
@@ -204,7 +204,7 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
                   <div className="flex justify-between items-start mb-8">
                     <div>
                       <div className="flex items-center gap-3 mb-2">
-                        <CreditCard className="h-10 w-10 text-[#FCD116]" aria-hidden="true" />
+                        <CreditCard className="h-10 w-10 text-[#FFCC00]" aria-hidden="true" />
                         <h3 className="text-2xl font-bold">Virement Bancaire</h3>
                       </div>
                       <p className="text-gray-300 text-sm">
@@ -225,7 +225,7 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
                         </div>
                         <button 
                           onClick={() => handleCopy(IBAN)}
-                          className={`px-6 py-3 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-[#FCD116] flex items-center justify-center gap-2 min-w-[120px] ${
+                          className={`px-6 py-3 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-[#FFCC00] flex items-center justify-center gap-2 min-w-[120px] ${
                             copied 
                               ? 'bg-green-600 text-white' 
                               : 'bg-white/10 hover:bg-white/20 text-white'
@@ -352,7 +352,7 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
               >
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-4xl" aria-hidden="true">{item.icon}</span>
-                  <span className="text-2xl font-black text-[#CE1126]">{item.amount}€</span>
+                  <span className="text-2xl font-black text-[#BE0000]">{item.amount}€</span>
                 </div>
                 <p className="text-gray-600 text-sm font-medium">{item.description}</p>
               </div>

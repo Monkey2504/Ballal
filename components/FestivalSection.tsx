@@ -80,7 +80,7 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
     >
       
       {/* HERO HEADER */}
-      <div className="bg-gradient-to-br from-red-700 via-red-600 to-orange-600 text-white py-16 md:py-24 relative overflow-hidden border-b-8 border-[#FCD116]">
+      <div className="bg-gradient-to-br from-red-700 via-red-600 to-orange-600 text-white py-16 md:py-24 relative overflow-hidden border-b-8 border-[#FFCC00]">
         <div 
           className="absolute inset-0 opacity-10"
           style={{
@@ -96,7 +96,7 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
               className="inline-flex items-center justify-center p-4 bg-white/20 rounded-full mb-8 backdrop-blur-sm animate-pulse"
               aria-hidden="true"
             >
-              <Flag className="h-12 w-12 text-[#FCD116]" />
+              <Flag className="h-12 w-12 text-[#FFCC00]" />
             </div>
             
             <h1 
@@ -112,7 +112,7 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
 
             {/* Countdown */}
             <div className="flex justify-center items-center gap-4 mb-8">
-              <Clock className="h-6 w-6 text-[#FCD116]" aria-hidden="true" />
+              <Clock className="h-6 w-6 text-[#FFCC00]" aria-hidden="true" />
               <span className="text-lg font-bold">Prochaine édition: {festivalData.date}</span>
             </div>
 
@@ -137,15 +137,15 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
             {/* Quick Info */}
             <div className="flex flex-wrap justify-center gap-6 md:gap-12">
               <div className="flex items-center gap-2">
-                <Calendar className="h-5 w-5 text-[#FCD116]" aria-hidden="true" />
+                <Calendar className="h-5 w-5 text-[#FFCC00]" aria-hidden="true" />
                 <span className="font-medium">{festivalData.date}</span>
               </div>
               <div className="flex items-center gap-2">
-                <MapPin className="h-5 w-5 text-[#FCD116]" aria-hidden="true" />
+                <MapPin className="h-5 w-5 text-[#FFCC00]" aria-hidden="true" />
                 <span className="font-medium">{festivalData.location}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-[#FCD116]" aria-hidden="true" />
+                <Users className="h-5 w-5 text-[#FFCC00]" aria-hidden="true" />
                 <span className="font-medium">{festivalData.expectedAttendance} participants attendus</span>
               </div>
             </div>
@@ -182,7 +182,7 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
           {/* Introduction */}
           <section className="bg-gradient-to-r from-slate-900 to-black text-white rounded-3xl p-8 md:p-12 shadow-2xl">
             <div className="flex items-start gap-4 mb-6">
-              <Megaphone className="h-8 w-8 text-[#FCD116] flex-shrink-0" aria-hidden="true" />
+              <Megaphone className="h-8 w-8 text-[#FFCC00] flex-shrink-0" aria-hidden="true" />
               <div>
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">
                   Notre Mission

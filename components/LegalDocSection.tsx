@@ -188,7 +188,7 @@ const LegalDocSection: React.FC<LegalDocSectionProps> = ({ language, mode }) => 
             <div className="mt-12 pt-8 border-t border-gray-100 text-center">
                 <button 
                     onClick={() => window.history.back()}
-                    className="inline-flex items-center text-slate-600 hover:text-[#CE1126] font-bold transition-colors"
+                    className="inline-flex items-center text-slate-600 hover:text-[#BE0000] font-bold transition-colors"
                 >
                     <ArrowLeft className="h-4 w-4 mr-2" />
                     Retour

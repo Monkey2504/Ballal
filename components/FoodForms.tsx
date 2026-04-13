@@ -66,7 +66,7 @@ const FormInput: React.FC<FormInputProps> = ({
   const inputClass = `w-full px-4 py-3 rounded-xl border-2 ${
     error 
       ? 'border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-200' 
-      : 'border-gray-200 focus:border-[#CE1126] focus:ring-2 focus:ring-[#CE1126]/20'
+      : 'border-gray-200 focus:border-[#BE0000] focus:ring-2 focus:ring-[#BE0000]/20'
   } outline-none transition-all duration-200`;
 
   const commonProps = {
@@ -156,7 +156,7 @@ const CheckboxInput: React.FC<{
         aria-required={required}
         aria-invalid={!!error}
         aria-describedby={error ? `${id}-error` : undefined}
-        className="h-5 w-5 rounded border-2 border-gray-300 text-[#CE1126] focus:ring-2 focus:ring-[#CE1126]/40 focus:border-[#CE1126] transition-colors"
+        className="h-5 w-5 rounded border-2 border-gray-300 text-[#BE0000] focus:ring-2 focus:ring-[#BE0000]/40 focus:border-[#BE0000] transition-colors"
       />
     </div>
     <label 
@@ -273,7 +273,7 @@ const BaseFoodForm: React.FC<{
   const [imgError, setImgError] = useState(false);
 
   const isSupplier = mode === 'supplier';
-  const themeColor = isSupplier ? '#CE1126' : '#009460';
+  const themeColor = isSupplier ? '#BE0000' : '#00843D';
   const themeBg = isSupplier ? 'bg-red-600' : 'bg-green-600';
   const themeHover = isSupplier ? 'hover:bg-red-700' : 'hover:bg-green-700';
   const Icon = isSupplier ? ShoppingBag : Users;

@@ -207,13 +207,13 @@ const GallerySection: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
           <div className="inline-flex items-center justify-center p-4 bg-gradient-to-br from-red-100 to-red-50 rounded-full mb-6 shadow-lg">
-            <ImageIcon className="h-10 w-10 text-[#CE1126]" aria-hidden="true" />
+            <ImageIcon className="h-10 w-10 text-[#BE0000]" aria-hidden="true" />
           </div>
           <h1 
             id="gallery-title"
             className="text-4xl md:text-5xl font-black text-slate-900 mb-4"
           >
-            Galerie <span className="text-[#CE1126]">Ballal</span>
+            Galerie <span className="text-[#BE0000]">Ballal</span>
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Découvrez nos actions, événements et moments forts en images
@@ -240,7 +240,7 @@ const GallerySection: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
                 <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="px-3 py-1 bg-[#CE1126] text-white text-xs font-bold rounded-full uppercase tracking-wider">
+                    <span className="px-3 py-1 bg-[#BE0000] text-white text-xs font-bold rounded-full uppercase tracking-wider">
                       À la une
                     </span>
                   </div>
@@ -285,7 +285,7 @@ const GallerySection: React.FC = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Rechercher dans la galerie..."
-                  className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-[#CE1126] focus:ring-2 focus:ring-[#CE1126]/20 outline-none transition-all"
+                  className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-[#BE0000] focus:ring-2 focus:ring-[#BE0000]/20 outline-none transition-all"
                   aria-label="Rechercher dans la galerie"
                 />
                 <Filter className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -338,7 +338,7 @@ const GallerySection: React.FC = () => {
                   onClick={() => setSelectedCategory(category.id)}
                   className={`px-4 py-2 rounded-full border-2 transition-all flex items-center gap-2 ${
                     selectedCategory === category.id
-                      ? 'border-[#CE1126] bg-red-50 text-[#CE1126] font-bold'
+                      ? 'border-[#BE0000] bg-red-50 text-[#BE0000] font-bold'
                       : 'border-gray-200 text-gray-600 hover:border-gray-300'
                   }`}
                   aria-label={`Filtrer par ${category.label}`}
@@ -395,7 +395,7 @@ const GallerySection: React.FC = () => {
                 </div>
                 <div className="absolute top-4 left-4">
                   <span className={`px-3 py-1 text-xs font-bold rounded-full uppercase tracking-wider ${
-                    item.category === 'festival' ? 'bg-[#CE1126] text-white' :
+                    item.category === 'festival' ? 'bg-[#BE0000] text-white' :
                     item.category === 'food' ? 'bg-green-600 text-white' :
                     item.category === 'event' ? 'bg-blue-600 text-white' :
                     item.category === 'team' ? 'bg-purple-600 text-white' :
@@ -409,7 +409,7 @@ const GallerySection: React.FC = () => {
               {/* Content */}
               <div className={`p-6 flex-1 ${viewMode === 'list' ? 'md:flex-1' : ''}`}>
                 <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-[#CE1126] transition-colors">
+                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-[#BE0000] transition-colors">
                     {item.title}
                   </h3>
                   <button
@@ -478,7 +478,7 @@ const GallerySection: React.FC = () => {
                 setSelectedCategory('all');
                 setSearchQuery('');
               }}
-              className="px-6 py-3 bg-[#CE1126] text-white font-bold rounded-xl hover:bg-red-700 transition-colors"
+              className="px-6 py-3 bg-[#BE0000] text-white font-bold rounded-xl hover:bg-red-700 transition-colors"
             >
               Réinitialiser les filtres
             </button>
@@ -520,7 +520,7 @@ const GallerySection: React.FC = () => {
             <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
               Partagez vos photos avec notre communauté et contribuez à documenter notre histoire collective
             </p>
-            <button className="px-8 py-4 bg-[#CE1126] text-white font-bold rounded-xl hover:bg-red-700 transition-colors shadow-lg flex items-center justify-center gap-2 mx-auto">
+            <button className="px-8 py-4 bg-[#BE0000] text-white font-bold rounded-xl hover:bg-red-700 transition-colors shadow-lg flex items-center justify-center gap-2 mx-auto">
               <Upload className="h-5 w-5" aria-hidden="true" />
               Partager mes photos
             </button>

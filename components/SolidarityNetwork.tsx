@@ -34,18 +34,18 @@ const SolidarityNetwork: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-soft-paper pb-20 pt-10 px-6">
+    <div className="min-h-screen bg-[#FAFAF8] pb-20 pt-10 px-6">
       <div className="max-w-4xl mx-auto">
         <header className="mb-12 text-center">
-          <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-guinea-yellow/20 text-guinea-red font-bold text-[10px] uppercase tracking-[0.3em] mb-6 border border-guinea-yellow/30">
+          <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-[#FFCC00]/15 text-[#8B7000] font-bold text-[10px] uppercase tracking-[0.3em] mb-6 border border-[#FFCC00]/25">
             <Users className="h-4 w-4" />
             Connecter la Communauté
           </div>
-          <h1 className="text-5xl md:text-7xl font-serif font-black text-earth-black tracking-tighter leading-none mb-6">
-            Espace <span className="text-guinea-green">Entraide</span>
+          <h1 className="text-5xl md:text-7xl font-serif font-black text-[#0F0F0F] tracking-tighter leading-none mb-6">
+            Espace <span className="text-[#00843D]">Entraide</span>
           </h1>
-          <p className="text-xl text-gray-500 font-medium italic">
-            "Le bonheur ne diminue pas quand il est partagé."
+          <p className="text-lg text-[#6B6B6B] font-medium max-w-xl mx-auto leading-relaxed">
+            Mettez en relation vos besoins et vos ressources au sein de la communauté.
           </p>
         </header>
 
@@ -73,7 +73,7 @@ const SolidarityNetwork: React.FC = () => {
             />
             <button 
               onClick={handlePost}
-              className="absolute bottom-4 right-4 bg-earth-black text-white p-3 rounded-xl hover:bg-guinea-red transition-all shadow-lg"
+              className="absolute bottom-4 right-4 bg-[#0F0F0F] text-white p-3 rounded-xl hover:bg-guinea-red transition-all shadow-lg"
             >
               <Send className="h-5 w-5" />
             </button>
@@ -94,14 +94,14 @@ const SolidarityNetwork: React.FC = () => {
               </div>
               <div className="flex-grow">
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="font-black text-earth-black">{req.user}</h3>
+                  <h3 className="font-black text-[#0F0F0F]">{req.user}</h3>
                   <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{req.date}</span>
                 </div>
                 <p className="text-gray-600 font-medium leading-relaxed mb-6">
                   {req.content}
                 </p>
                 <div className="flex gap-4">
-                  <button className="flex items-center gap-2 px-6 py-2 bg-gray-50 hover:bg-earth-black hover:text-white rounded-full text-[10px] font-black uppercase tracking-widest transition-all">
+                  <button className="flex items-center gap-2 px-6 py-2 bg-gray-50 hover:bg-[#0F0F0F] hover:text-white rounded-full text-[10px] font-black uppercase tracking-widest transition-all">
                     <MessageSquare className="h-3 w-3" />
                     Répondre
                   </button>

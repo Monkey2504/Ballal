@@ -45,7 +45,7 @@ const SquatSection: React.FC<{ language?: LanguageCode }> = () => {
   };
 
   return (
-    <div className="min-h-screen bg-soft-paper pb-20">
+    <div className="min-h-screen bg-[#FAFAF8] pb-20">
       <header className="pt-24 pb-12 px-6 text-center">
         <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 uppercase tracking-tighter">
           GUIDE <span className="text-guinea-red">SQUAT & OT</span>
@@ -100,7 +100,7 @@ const SquatSection: React.FC<{ language?: LanguageCode }> = () => {
                       ))}
                     </div>
                   </div>
-                  <div className="bg-earth-black text-white p-6 rounded-3xl">
+                  <div className="bg-[#0F0F0F] text-white p-6 rounded-3xl">
                     <h3 className="font-black text-sm uppercase mb-4 text-guinea-yellow">Conseils Clés</h3>
                     <ul className="space-y-3 text-xs opacity-80">
                       {PHASES.find(p => p.phase === activePhase)!.tips.map((t, i) => <li key={i}>• {t}</li>)}

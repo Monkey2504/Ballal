@@ -61,7 +61,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ language }) => {
   if (submitted) {
     return (
         <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-             <div className="bg-white p-8 rounded-2xl shadow-xl text-center max-w-md border-t-4 border-[#CE1126]">
+             <div className="bg-white p-8 rounded-2xl shadow-xl text-center max-w-md border-t-4 border-[#BE0000]">
                  <div className="mx-auto h-16 w-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
                      <Mail className="h-8 w-8 text-green-600" />
                  </div>
@@ -69,7 +69,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ language }) => {
                  <p className="text-gray-600 mb-6">{t.form_success_desc}</p>
                  <button 
                     onClick={() => setSubmitted(false)}
-                    className="text-[#CE1126] font-bold hover:underline"
+                    className="text-[#BE0000] font-bold hover:underline"
                  >
                     Envoyer un autre message
                  </button>
@@ -84,7 +84,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ language }) => {
         
         <div className="text-center mb-10">
             <div className="inline-flex items-center justify-center p-3 bg-red-100 rounded-full mb-4">
-                <MessageSquare className="h-6 w-6 text-[#CE1126]" />
+                <MessageSquare className="h-6 w-6 text-[#BE0000]" />
             </div>
             <h1 className="text-3xl font-black text-slate-900 mb-2">{t.contact_form_title}</h1>
             <p className="text-gray-600 font-medium">{t.contact_form_subtitle}</p>
@@ -108,7 +108,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ language }) => {
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
-                        className={`w-full px-4 py-3 rounded-xl border ${errors.name ? 'border-red-500 bg-red-50' : 'border-gray-200'} focus:ring-2 focus:ring-[#CE1126] outline-none transition-colors`}
+                        className={`w-full px-4 py-3 rounded-xl border ${errors.name ? 'border-red-500 bg-red-50' : 'border-gray-200'} focus:ring-2 focus:ring-[#BE0000] outline-none transition-colors`}
                     />
                     {errors.name && <p className="text-red-500 text-xs mt-1 font-bold">{errors.name}</p>}
                 </div>
@@ -124,7 +124,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ language }) => {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="exemple@email.com"
-                        className={`w-full px-4 py-3 rounded-xl border ${errors.email ? 'border-red-500 bg-red-50' : 'border-gray-200'} focus:ring-2 focus:ring-[#CE1126] outline-none transition-colors`}
+                        className={`w-full px-4 py-3 rounded-xl border ${errors.email ? 'border-red-500 bg-red-50' : 'border-gray-200'} focus:ring-2 focus:ring-[#BE0000] outline-none transition-colors`}
                     />
                     {errors.email && <p className="text-red-500 text-xs mt-1 font-bold">{errors.email}</p>}
                 </div>
@@ -138,7 +138,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ language }) => {
                         name="subject"
                         value={formData.subject}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#CE1126] outline-none bg-white transition-colors"
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#BE0000] outline-none bg-white transition-colors"
                     >
                         <option value="">-- Sélectionner --</option>
                         <option value={t.contact_subject_general}>{t.contact_subject_general}</option>
@@ -157,7 +157,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ language }) => {
                         rows={5}
                         value={formData.message}
                         onChange={handleChange}
-                        className={`w-full px-4 py-3 rounded-xl border ${errors.message ? 'border-red-500 bg-red-50' : 'border-gray-200'} focus:ring-2 focus:ring-[#CE1126] outline-none transition-colors resize-none`}
+                        className={`w-full px-4 py-3 rounded-xl border ${errors.message ? 'border-red-500 bg-red-50' : 'border-gray-200'} focus:ring-2 focus:ring-[#BE0000] outline-none transition-colors resize-none`}
                     ></textarea>
                     {errors.message && <p className="text-red-500 text-xs mt-1 font-bold">{errors.message}</p>}
                 </div>
@@ -172,7 +172,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ language }) => {
                                 type="checkbox"
                                 checked={formData.consent}
                                 onChange={handleChange}
-                                className="h-5 w-5 rounded border-gray-300 text-[#CE1126] focus:ring-[#CE1126]"
+                                className="h-5 w-5 rounded border-gray-300 text-[#BE0000] focus:ring-[#BE0000]"
                             />
                         </div>
                         <div className="ml-3 text-sm">

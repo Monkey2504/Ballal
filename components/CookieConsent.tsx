@@ -40,8 +40,8 @@ const CookieConsent: React.FC = () => {
     >
       <div className="max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl shadow-2xl overflow-hidden">
         <div className="flex items-start gap-4 p-5">
-          <div className="shrink-0 p-2 bg-[#CE1126]/10 rounded-xl">
-            <Cookie className="h-6 w-6 text-[#CE1126]" aria-hidden="true" />
+          <div className="shrink-0 p-2 bg-[#BE0000]/10 rounded-xl">
+            <Cookie className="h-6 w-6 text-[#BE0000]" aria-hidden="true" />
           </div>
           <div className="flex-1 min-w-0">
             <h2 className="text-sm font-black text-gray-900 uppercase tracking-wide mb-1">
@@ -71,7 +71,7 @@ const CookieConsent: React.FC = () => {
           </button>
           <button
             onClick={accept}
-            className="px-4 py-2 text-xs font-black text-white bg-[#CE1126] rounded-xl hover:bg-[#b01020] transition-colors focus:outline-none focus:ring-2 focus:ring-[#CE1126] focus:ring-offset-2 flex items-center gap-2"
+            className="px-4 py-2 text-xs font-black text-white bg-[#BE0000] rounded-xl hover:bg-[#b01020] transition-colors focus:outline-none focus:ring-2 focus:ring-[#BE0000] focus:ring-offset-2 flex items-center gap-2"
           >
             <Shield className="h-3.5 w-3.5" aria-hidden="true" />
             Accepter et continuer

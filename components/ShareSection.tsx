@@ -165,9 +165,9 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
   };
 
   const shareStats = [
-    { value: shareCount.toLocaleString(), label: 'Partages totaux', icon: Share2, color: 'text-[#CE1126]' },
-    { value: '98%', label: 'Engagement positif', icon: Heart, color: 'text-[#FCD116]' },
-    { value: '24h', label: 'Temps de réponse', icon: MessageSquare, color: 'text-[#009460]' },
+    { value: shareCount.toLocaleString(), label: 'Partages totaux', icon: Share2, color: 'text-[#BE0000]' },
+    { value: '98%', label: 'Engagement positif', icon: Heart, color: 'text-[#FFCC00]' },
+    { value: '24h', label: 'Temps de réponse', icon: MessageSquare, color: 'text-[#00843D]' },
     { value: '10K+', label: 'Communauté', icon: Users, color: 'text-purple-600' }
   ];
 
@@ -183,13 +183,13 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
         {/* Header */}
         <div className="text-center mb-12 md:mb-16 max-w-3xl mx-auto">
           <div className="inline-flex items-center justify-center p-4 bg-gradient-to-br from-red-100 to-red-50 rounded-full mb-6 shadow-lg">
-            <Share2 className="h-12 w-12 text-[#CE1126]" aria-hidden="true" />
+            <Share2 className="h-12 w-12 text-[#BE0000]" aria-hidden="true" />
           </div>
           <h1 
             id="share-title"
             className="text-4xl md:text-5xl font-black text-slate-900 mb-4"
           >
-            Partagez la <span className="text-[#CE1126]">Solidarité</span>
+            Partagez la <span className="text-[#BE0000]">Solidarité</span>
           </h1>
           <p className="text-xl text-gray-600 leading-relaxed">
             {t.share_subtitle || "Aidez-nous à faire connaître notre mission en partageant avec votre communauté"}
@@ -220,14 +220,14 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
             <div className="bg-white rounded-3xl shadow-lg border border-gray-200 p-8 transform transition-all hover:shadow-xl">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-3">
-                  <QrCode className="h-6 w-6 text-[#009460]" aria-hidden="true" />
+                  <QrCode className="h-6 w-6 text-[#00843D]" aria-hidden="true" />
                   QR Code Instantané
                 </h2>
                 <button
                   onClick={downloadQRCode}
                   disabled={qrStatus === 'generating'}
                   className={`flex items-center gap-2 text-sm font-bold px-3 py-2 rounded-lg transition-colors ${
-                    qrStatus === 'success' ? 'text-green-600 bg-green-50' : 'text-[#009460] hover:text-green-700 hover:bg-green-50'
+                    qrStatus === 'success' ? 'text-green-600 bg-green-50' : 'text-[#00843D] hover:text-green-700 hover:bg-green-50'
                   } disabled:opacity-50`}
                 >
                   {qrStatus === 'generating' ? (
@@ -253,7 +253,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
                     loading="lazy"
                   />
                   <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2">
-                    <div className="bg-[#009460] text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg whitespace-nowrap">
+                    <div className="bg-[#00843D] text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg whitespace-nowrap">
                       BALLAL ASBL
                     </div>
                   </div>
@@ -289,7 +289,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
                         readOnly
                         value={appUrl}
                         onClick={(e) => e.currentTarget.select()}
-                        className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-700 font-mono text-sm focus:outline-none focus:border-[#CE1126] focus:ring-2 focus:ring-[#CE1126]/20"
+                        className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-700 font-mono text-sm focus:outline-none focus:border-[#BE0000] focus:ring-2 focus:ring-[#BE0000]/20"
                         aria-label="Lien à partager"
                       />
                     </div>
@@ -335,7 +335,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
             {canShare && (
               <div className="bg-gradient-to-r from-slate-900 to-black rounded-3xl p-8 text-white shadow-xl">
                 <div className="flex items-center gap-3 mb-6">
-                  <Share2 className="h-8 w-8 text-[#FCD116]" aria-hidden="true" />
+                  <Share2 className="h-8 w-8 text-[#FFCC00]" aria-hidden="true" />
                   <div>
                     <h3 className="text-2xl font-black">Partagez facilement</h3>
                     <p className="text-slate-300 text-sm">Utilisez le partage natif de votre appareil</p>
@@ -344,7 +344,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
                 
                 <button 
                   onClick={handleNativeShare}
-                  className="w-full bg-gradient-to-r from-[#FCD116] to-yellow-500 text-slate-900 font-bold py-4 px-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:brightness-110 flex items-center justify-center gap-3 focus:outline-none focus:ring-4 focus:ring-yellow-300/30"
+                  className="w-full bg-gradient-to-r from-[#FFCC00] to-yellow-500 text-slate-900 font-bold py-4 px-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:brightness-110 flex items-center justify-center gap-3 focus:outline-none focus:ring-4 focus:ring-yellow-300/30"
                   aria-label="Partager via votre appareil"
                 >
                   <Share2 className="h-6 w-6" aria-hidden="true" />
@@ -415,13 +415,13 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
             {/* Share Tips */}
             <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-3xl p-8 border border-red-100">
               <div className="flex items-center gap-3 mb-6">
-                <Sparkles className="h-8 w-8 text-[#CE1126]" aria-hidden="true" />
+                <Sparkles className="h-8 w-8 text-[#BE0000]" aria-hidden="true" />
                 <h3 className="text-2xl font-black text-slate-900">Conseils de partage</h3>
               </div>
               
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
-                  <div className="h-6 w-6 bg-[#CE1126] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">
+                  <div className="h-6 w-6 bg-[#BE0000] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">
                     1
                   </div>
                   <p className="text-gray-700">
@@ -429,7 +429,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
                   </p>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="h-6 w-6 bg-[#FCD116] text-slate-900 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">
+                  <div className="h-6 w-6 bg-[#FFCC00] text-slate-900 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">
                     2
                   </div>
                   <p className="text-gray-700">
@@ -437,7 +437,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
                   </p>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="h-6 w-6 bg-[#009460] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">
+                  <div className="h-6 w-6 bg-[#00843D] text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">
                     3
                   </div>
                   <p className="text-gray-700">
@@ -461,7 +461,7 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
                 onClick={handleNativeShare}
-                className="px-8 py-4 bg-gradient-to-r from-[#CE1126] to-red-700 text-white font-bold rounded-xl hover:shadow-xl transition-all flex items-center justify-center gap-3 transform hover:-translate-y-1"
+                className="px-8 py-4 bg-gradient-to-r from-[#BE0000] to-red-700 text-white font-bold rounded-xl hover:shadow-xl transition-all flex items-center justify-center gap-3 transform hover:-translate-y-1"
               >
                 <Share2 className="h-5 w-5" aria-hidden="true" />
                 Partager maintenant

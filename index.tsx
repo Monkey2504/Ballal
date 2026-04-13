@@ -30,13 +30,13 @@ class GlobalErrorBoundary extends Component<GlobalErrorBoundaryProps, GlobalErro
     if (this.state.hasError) {
       return (
         <div className="min-h-screen flex items-center justify-center bg-[#FFF5F6] p-6 text-center relative overflow-hidden font-sans">
-          <div className="absolute top-0 left-0 w-full h-2 bg-[#CE1126]"></div>
-          <div className="absolute top-2 left-0 w-full h-2 bg-[#FCD116]"></div>
-          <div className="absolute top-4 left-0 w-full h-2 bg-[#009460]"></div>
+          <div className="absolute top-0 left-0 w-full h-2 bg-[#BE0000]"></div>
+          <div className="absolute top-2 left-0 w-full h-2 bg-[#FFCC00]"></div>
+          <div className="absolute top-4 left-0 w-full h-2 bg-[#00843D]"></div>
           
           <div className="max-w-xl w-full bg-white p-10 md:p-16 rounded-[3rem] shadow-xl border border-gray-100 relative z-10">
             <div className="inline-flex p-5 bg-red-50 rounded-3xl mb-8">
-              <ShieldAlert className="h-12 w-12 text-[#CE1126]" />
+              <ShieldAlert className="h-12 w-12 text-[#BE0000]" />
             </div>
             
             <h1 className="text-4xl font-serif font-black text-[#333333] mb-4 tracking-tight">
@@ -54,7 +54,7 @@ class GlobalErrorBoundary extends Component<GlobalErrorBoundaryProps, GlobalErro
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button 
                 onClick={() => window.location.reload()} 
-                className="flex items-center justify-center gap-3 px-8 py-4 bg-[#333333] text-white font-black uppercase text-[10px] tracking-widest rounded-2xl hover:bg-[#CE1126] transition-all shadow-lg"
+                className="flex items-center justify-center gap-3 px-8 py-4 bg-[#333333] text-white font-black uppercase text-[10px] tracking-widest rounded-2xl hover:bg-[#BE0000] transition-all shadow-lg"
               >
                 <RefreshCcw className="h-4 w-4" /> Réessayer
               </button>
