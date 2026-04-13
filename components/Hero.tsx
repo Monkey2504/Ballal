@@ -10,9 +10,9 @@ interface HeroProps {
 }
 
 const IMPACT_STATS = [
-  { value: '25 000+', label: 'Guinéens en Belgique', icon: Users },
-  { value: '2024',    label: 'Année de fondation',   icon: Calendar },
-  { value: 'BXL',     label: 'Bruxelles & diaspora',  icon: MapPin },
+  { value: '15 000+', label: 'Guinéens en Belgique',    icon: Users },
+  { value: '2022',    label: 'Fondée à Bruxelles',      icon: Calendar },
+  { value: 'Molenbeek', label: 'Ancrage local',         icon: MapPin },
 ];
 
 const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
@@ -35,22 +35,24 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
             {/* Status badge */}
             <div className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-[#CE1126]">
               <span className="w-2 h-2 rounded-full bg-[#CE1126] animate-pulse" aria-hidden="true" />
-              Association agréée · Bruxelles
+              ASBL agréée · BCE 1016.925.333 · Bruxelles
             </div>
 
             {/* Headline */}
             <div>
               <h1 className="font-serif font-black text-gray-900 leading-[1.02] tracking-tight">
-                <span className="block text-5xl sm:text-6xl xl:text-7xl">Solidarité.</span>
-                <span className="block text-5xl sm:text-6xl xl:text-7xl text-[#CE1126]">Dignité.</span>
-                <span className="block text-5xl sm:text-6xl xl:text-7xl">Action.</span>
+                <span className="block text-5xl sm:text-6xl xl:text-7xl">Accueillir.</span>
+                <span className="block text-5xl sm:text-6xl xl:text-7xl text-[#CE1126]">Défendre.</span>
+                <span className="block text-5xl sm:text-6xl xl:text-7xl">Rassembler.</span>
               </h1>
             </div>
 
             {/* Mission statement */}
             <p className="text-lg text-gray-600 leading-relaxed max-w-lg font-medium">
-              Ballal ASBL est la structure de référence pour la communauté guinéenne en Belgique.
-              Aide au logement, défense des droits, autonomie alimentaire et lien culturel.
+              Fondée à Bruxelles en 2022, Ballal ASBL accompagne les Guinéens et ressortissants
+              subsahariens en situation précaire. Logement d'urgence, défense des droits,
+              autonomie alimentaire et lien culturel — une réponse de proximité là où
+              les institutions ne parviennent pas.
             </p>
 
             {/* CTAs */}
@@ -89,17 +91,13 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
 
           {/* Right — Visual */}
           <div className="relative flex justify-center lg:justify-end">
-
-            {/* Main image frame */}
             <div className="relative w-full max-w-md xl:max-w-lg">
 
-              {/* Decorative frame offset */}
               <div
                 className="absolute inset-0 translate-x-4 translate-y-4 border-2 border-[#CE1126]/20 rounded-2xl"
                 aria-hidden="true"
               />
 
-              {/* Image */}
               <div className="relative bg-gray-100 rounded-2xl overflow-hidden aspect-[4/5] shadow-2xl">
                 <img
                   src="https://i.imgur.com/laZeGp9.jpeg"
@@ -107,19 +105,16 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
                   alt="Membres de la communauté Ballal ASBL à Bruxelles"
                   loading="eager"
                 />
-                {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 via-gray-900/10 to-transparent" aria-hidden="true" />
 
-                {/* Quote overlay */}
                 <blockquote className="absolute bottom-0 left-0 right-0 p-6">
                   <p className="font-serif italic text-white text-lg leading-snug drop-shadow">
-                    "La dignité d'un homme ne se négocie pas."
+                    "La dignité humaine ne se négocie pas."
                   </p>
                   <div className="h-0.5 w-10 bg-[#FCD116] mt-3 rounded-full" aria-hidden="true" />
                 </blockquote>
               </div>
 
-              {/* Floating badge — Guinea flag colors */}
               <div
                 className="absolute -bottom-4 -left-4 bg-white border border-gray-100 rounded-xl shadow-xl px-4 py-3 flex items-center gap-3"
                 aria-hidden="true"
@@ -131,17 +126,16 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
                 </div>
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-widest text-gray-900">Guinée · Belgique</p>
-                  <p className="text-[9px] text-gray-400 font-medium mt-0.5">Réseau solidaire</p>
+                  <p className="text-[9px] text-gray-400 font-medium mt-0.5">Solidarité active depuis 2022</p>
                 </div>
               </div>
 
-              {/* Accreditation badge */}
               <div
                 className="absolute -top-4 -right-4 bg-[#CE1126] text-white rounded-xl shadow-xl px-4 py-3 text-center"
                 aria-hidden="true"
               >
                 <p className="text-[9px] font-black uppercase tracking-widest opacity-80">ASBL</p>
-                <p className="text-[10px] font-black mt-0.5">Reconnue</p>
+                <p className="text-[10px] font-black mt-0.5">Agréée</p>
               </div>
             </div>
           </div>
