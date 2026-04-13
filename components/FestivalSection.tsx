@@ -80,7 +80,9 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
     >
       
       {/* HERO HEADER */}
-      <div className="bg-gradient-to-br from-red-700 via-red-600 to-orange-600 text-white py-16 md:py-24 relative overflow-hidden border-b-8 border-[#FFCC00]">
+      <div className="bg-gradient-to-br from-[#BE0000] via-[#9B0000] to-[#C9614A] text-white py-16 md:py-24 relative overflow-hidden">
+        {/* Flag line bottom */}
+        <div className="flag-line absolute bottom-0 left-0 right-0" aria-hidden="true"><span /><span /><span /></div>
         <div 
           className="absolute inset-0 opacity-10"
           style={{

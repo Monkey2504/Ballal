@@ -37,7 +37,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
     <section
       className="relative bg-[#FAFAF8] overflow-hidden"
       aria-label="Présentation de Ballal ASBL"
-      id="main-content"
+      id="hero"
     >
       {/* Subtle warm gradient — right side */}
       <div className="absolute top-0 right-0 w-2/5 h-full pointer-events-none" aria-hidden="true">
