@@ -118,11 +118,12 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
 
           {/* Stratégies de Régularisation */}
           <div className="md:col-span-2 bg-white p-12 rounded-[3rem] shadow-soft-elegant border border-gray-100">
-             <div className="inline-block bg-guinea-yellow/20 text-[#0F0F0F] px-4 py-1 rounded-full font-bold text-[10px] uppercase tracking-widest mb-8 border border-guinea-yellow/30">
-                STRATÉGIES DE LUTTE
+             <div className="inline-block bg-[#FFCC00]/15 text-[#8B7000] px-4 py-1 rounded-full font-bold text-[10px] uppercase tracking-widest mb-8 border border-[#FFCC00]/25">
+                VOIES DE RÉGULARISATION
              </div>
-             <h3 className="text-4xl md:text-5xl font-serif font-black text-[#0F0F0F] mb-12">Comment se régulariser ?</h3>
-             
+             <h3 className="text-4xl md:text-5xl font-serif font-black text-[#0F0F0F] mb-4">Deux voies. Un seul objectif.</h3>
+             <p className="text-[#6B6B6B] font-medium mb-12 text-lg">Chaque dossier est différent. Ballal vous aide à identifier la bonne stratégie.</p>
+
              <div className="grid md:grid-cols-2 gap-16">
                 <div className="space-y-8">
                    <div className="flex items-center gap-4">
@@ -130,14 +131,14 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                       <span className="bg-guinea-green/10 text-guinea-green text-[10px] px-3 py-1 font-bold rounded-full uppercase">Humanitaire</span>
                    </div>
                    <p className="text-gray-700 font-medium leading-relaxed">
-                     La voie principale basée sur l'ancrage social, les enfants scolarisés ou l'implication communautaire.
+                     L'ancrage social comme argument de droit. Scolarité des enfants, participation associative, résidence continue — chaque preuve compte.
                    </p>
                    <div className="bg-[#FAFAF8] p-8 rounded-3xl border border-gray-100">
-                      <h5 className="font-bold text-xs uppercase text-gray-400 mb-6 flex items-center gap-3"><ListChecks className="h-4 w-4" /> DOSSIER VISIBLE</h5>
+                      <h5 className="font-bold text-xs uppercase text-gray-400 mb-6 flex items-center gap-3"><ListChecks className="h-4 w-4" /> CE QUE VOUS DEVEZ PROUVER</h5>
                       <ul className="text-sm font-bold text-gray-600 space-y-4">
-                         <li className="flex gap-3 items-start"><div className="h-2 w-2 rounded-full bg-guinea-green mt-2"></div> Scolarité des enfants</li>
-                         <li className="flex gap-3 items-start"><div className="h-2 w-2 rounded-full bg-guinea-green mt-2"></div> Participation associative</li>
-                         <li className="flex gap-3 items-start"><div className="h-2 w-2 rounded-full bg-guinea-green mt-2"></div> Preuves de résidence continue</li>
+                         <li className="flex gap-3 items-start"><div className="h-2 w-2 rounded-full bg-guinea-green mt-2"></div> Scolarité des enfants (bulletins, attestations)</li>
+                         <li className="flex gap-3 items-start"><div className="h-2 w-2 rounded-full bg-guinea-green mt-2"></div> Participation associative documentée</li>
+                         <li className="flex gap-3 items-start"><div className="h-2 w-2 rounded-full bg-guinea-green mt-2"></div> Preuves de résidence continue en Belgique</li>
                       </ul>
                    </div>
                 </div>
@@ -148,12 +149,12 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                       <span className="bg-guinea-red/10 text-guinea-red text-[10px] px-3 py-1 font-bold rounded-full uppercase">Médical</span>
                    </div>
                    <p className="text-gray-700 font-medium leading-relaxed">
-                     Raisons médicales graves nécessitant une pathologie dont le traitement est inaccessible en Guinée.
+                     Pathologie grave inaccessible en Guinée. Le certificat médical est votre pièce maîtresse — il doit être précis, circonstancié, signé.
                    </p>
                    <div className="bg-[#FAFAF8] p-8 rounded-3xl border border-gray-100">
-                      <h5 className="font-bold text-xs uppercase text-gray-400 mb-6 flex items-center gap-3"><ListChecks className="h-4 w-4" /> DOSSIER TECHNIQUE</h5>
+                      <h5 className="font-bold text-xs uppercase text-gray-400 mb-6 flex items-center gap-3"><ListChecks className="h-4 w-4" /> DOCUMENTS CLÉS</h5>
                       <ul className="text-sm font-bold text-gray-600 space-y-4">
-                         <li className="flex gap-3 items-start"><div className="h-2 w-2 rounded-full bg-guinea-red mt-2"></div> Rapport médical circonstancié</li>
+                         <li className="flex gap-3 items-start"><div className="h-2 w-2 rounded-full bg-guinea-red mt-2"></div> Rapport médical circonstancié et daté</li>
                          <li className="flex gap-3 items-start"><div className="h-2 w-2 rounded-full bg-guinea-red mt-2"></div> Certificat de non-voyageabilité</li>
                       </ul>
                    </div>

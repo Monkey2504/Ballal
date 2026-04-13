@@ -46,23 +46,29 @@ const SquatSection: React.FC<{ language?: LanguageCode }> = () => {
 
   return (
     <div className="min-h-screen bg-[#FAFAF8] pb-20">
-      <header className="pt-24 pb-12 px-6 text-center">
-        <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 uppercase tracking-tighter">
-          GUIDE <span className="text-guinea-red">SQUAT & OT</span>
+      {/* Flag line header */}
+      <div className="flag-line" aria-hidden="true"><span /><span /><span /></div>
+      <header className="pt-20 pb-12 px-6 text-center bg-[#0F0F0F] text-white">
+        <div className="inline-flex items-center gap-2 bg-[#BE0000]/20 text-[#BE0000] px-5 py-2 font-bold rounded-full text-[10px] uppercase tracking-[0.25em] mb-6 border border-[#BE0000]/30">
+          GUIDE PRATIQUE
+        </div>
+        <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 leading-tight">
+          Votre droit au <span className="text-[#FFCC00]">logement</span>.
         </h1>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto italic">
-          Conseils de terrain pour occuper dignement : du squat à la convention légale.
+        <p className="text-lg text-white/50 max-w-2xl mx-auto font-medium">
+          Du squat à la convention légale — chaque étape documentée pour occuper avec dignité et sécurité.
         </p>
+        <div className="flag-line mt-8" aria-hidden="true"><span /><span /><span /></div>
       </header>
 
-      <nav className="flex justify-center border-y-4 border-earth-black bg-white sticky top-20 z-50">
+      <nav className="flex justify-center border-b border-[#E8E8E6] bg-white sticky top-[71px] z-50">
         {['manual', 'checklists', 'insides'].map(tab => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab as TabType)}
-            className={`px-8 py-4 font-black text-xs uppercase tracking-widest border-x-2 border-earth-black transition-colors ${activeTab === tab ? 'bg-guinea-yellow' : 'bg-white hover:bg-gray-50'}`}
+            className={`px-8 py-4 font-black text-[11px] uppercase tracking-widest transition-colors ${activeTab === tab ? 'bg-[#FFCC00] text-[#0F0F0F]' : 'bg-white text-[#6B6B6B] hover:bg-[#FAFAF8]'}`}
           >
-            {tab}
+            {tab === 'manual' ? 'Guide' : tab === 'checklists' ? 'Checklists' : 'Conseils de terrain'}
           </button>
         ))}
       </nav>

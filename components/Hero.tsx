@@ -95,10 +95,9 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
               animate="visible"
               className="text-[17px] text-[#6B6B6B] leading-[1.75] max-w-lg font-medium"
             >
-              Fondée à Bruxelles en 2022, Ballal ASBL accompagne les Guinéens et
-              ressortissants subsahariens en situation précaire. Logement d'urgence,
-              défense des droits, autonomie alimentaire et lien culturel — une réponse
-              de proximité là où les institutions ne parviennent pas.
+              Quand les institutions se taisent, Ballal agit. Nous défendons le droit
+              au logement, à la justice et à la dignité pour chaque Guinéen de
+              Belgique — sans condition, sans délai, depuis 2022.
             </motion.p>
 
             {/* CTAs */}
@@ -116,7 +115,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
                 transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                 className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-[#BE0000] text-white text-[12px] font-black uppercase tracking-widest rounded-[8px] shadow-[0_4px_16px_rgba(190,0,0,0.25)] hover:bg-[#9B0000] transition-colors duration-200 group focus:outline-none"
               >
-                Rejoindre l'entraide
+                Rejoindre le combat
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
               </motion.button>
 
@@ -211,7 +210,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
                 </div>
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-widest text-[#0F0F0F]">Guinée · Belgique</p>
-                  <p className="text-[9px] text-[#6B6B6B] font-medium mt-0.5">Solidarité active depuis 2022</p>
+                  <p className="text-[9px] text-[#6B6B6B] font-medium mt-0.5">En première ligne depuis 2022</p>
                 </div>
               </motion.div>
 

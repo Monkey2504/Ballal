@@ -91,7 +91,7 @@ const PROGRAMS = [
     iconBg:      'bg-[#BE0000]/10',
     iconColor:   'text-[#BE0000]',
     label:       'Droits & Juridique',
-    desc:        'Scripts de protection domiciliaire, accompagnement sur les articles 9bis/9ter, aide administrative pour la régularisation.',
+    desc:        "Votre domicile est protégé par la Constitution. Articles 9bis/9ter, scripts d'urgence, régularisation — nous vous outillons pour vous défendre.",
   },
   {
     view:        ViewState.SQUAT,
@@ -100,7 +100,7 @@ const PROGRAMS = [
     iconBg:      'bg-[#0F0F0F]/8',
     iconColor:   'text-[#0F0F0F]',
     label:       'Logement',
-    desc:        "Accès au logement d'urgence, gestion des occupations temporaires, médiation avec propriétaires et communes.",
+    desc:        "Personne ne devrait dormir dans la rue. Accès au logement d'urgence, gestion des occupations, médiation avec les communes.",
   },
   {
     view:        ViewState.FOOD_AUTONOMY,
@@ -109,7 +109,7 @@ const PROGRAMS = [
     iconBg:      'bg-[#00843D]/10',
     iconColor:   'text-[#00843D]',
     label:       'Autonomie Alimentaire',
-    desc:        'Collecte de surplus alimentaires, approvisionnement des cuisines collectives, réseau de fournisseurs solidaires.',
+    desc:        "Chaque semaine, nous transformons les invendus en repas. Réseau de fournisseurs et cuisines collectives à Bruxelles.",
   },
   {
     view:        ViewState.SOLIDARITY_NETWORK,
@@ -118,7 +118,7 @@ const PROGRAMS = [
     iconBg:      'bg-[#FFCC00]/20',
     iconColor:   'text-[#8B7000]',
     label:       'Entraide',
-    desc:        'Mise en relation directe entre les besoins et les ressources de la communauté — traduction, démarches, soutien mutuel.',
+    desc:        "La communauté est la première réponse à la précarité. Traduction, démarches, soutien mutuel — en temps réel.",
   },
   {
     view:        ViewState.CULTURE,
@@ -127,7 +127,7 @@ const PROGRAMS = [
     iconBg:      'bg-[#4B3D8F]/10',
     iconColor:   'text-[#4B3D8F]',
     label:       'Culture & Histoire',
-    desc:        "Mémoire de la diaspora guinéenne, patrimoine immatériel, festival annuel et événements culturels à Bruxelles.",
+    desc:        "Notre histoire est une arme. Patrimoine guinéen, festival annuel et mémoire vivante de la diaspora à Bruxelles.",
   },
 ];
 
@@ -191,10 +191,10 @@ const HomePage: React.FC<{ navigate: (v: ViewState) => void; language: LanguageC
             Nos programmes
           </p>
           <h2 id="programs-title" className="font-serif font-black text-3xl sm:text-4xl text-[#0F0F0F] leading-tight">
-            Ce que nous faisons, concrètement.
+            Cinq urgences. Cinq réponses concrètes.
           </h2>
           <p className="mt-4 text-[#6B6B6B] text-base leading-relaxed">
-            Cinq axes d'action au service de la dignité et de l'autonomie des Guinéens de Belgique.
+            Logement, droits, alimentation, entraide, culture — chaque programme répond à un besoin réel, documenté, immédiat.
           </p>
         </div>
 
@@ -246,12 +246,12 @@ const HomePage: React.FC<{ navigate: (v: ViewState) => void; language: LanguageC
     <section className="bg-white py-16 border-t border-[#E8E8E6]" aria-label="Soutenir Ballal ASBL">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-8">
         <div>
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#6B6B6B] mb-2">Faire un geste</p>
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#6B6B6B] mb-2">Agir maintenant</p>
           <h2 className="font-serif font-black text-2xl text-[#0F0F0F]">
-            Chaque don finance du concret.
+            Transformez votre geste en vie sauvée.
           </h2>
           <p className="text-[13px] text-[#6B6B6B] mt-1.5">
-            Hébergement d'urgence · Aide alimentaire · Accompagnement juridique
+            Un hébergement. Un repas. Un droit défendu. Ici, à Bruxelles.
           </p>
         </div>
         <motion.button
@@ -279,7 +279,7 @@ const HomePage: React.FC<{ navigate: (v: ViewState) => void; language: LanguageC
             Conseil d'Administration
           </h2>
           <p className="mt-3 text-[#6B6B6B] text-base">
-            Les administrateurs au service de la communauté.
+            Chaque administrateur est un militant de la dignité humaine.
           </p>
         </div>
 
@@ -334,7 +334,7 @@ const HomePage: React.FC<{ navigate: (v: ViewState) => void; language: LanguageC
           <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FFCC00] mb-2">Membres & Militants</p>
             <p className="font-serif font-black text-xl sm:text-2xl text-white leading-snug max-w-xl">
-              La force de Ballal, c'est son collectif de militants engagés.
+              Derrière chaque action Ballal, des femmes et des hommes qui ne lâchent pas.
             </p>
           </div>
         </div>

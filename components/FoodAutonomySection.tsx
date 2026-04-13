@@ -65,13 +65,13 @@ const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, set
           <div className="bg-white p-12 rounded-[3.5rem] shadow-soft-elegant border border-gray-100 group transition-all">
              <div className="flex items-center gap-5 mb-10">
                <div className="p-5 bg-guinea-green/10 text-guinea-green rounded-[2rem] group-hover:scale-110 transition-transform"><Leaf className="h-10 w-10" /></div>
-               <h3 className="text-4xl font-serif font-black text-[#0F0F0F]">Notre Mission</h3>
+               <h3 className="text-4xl font-serif font-black text-[#0F0F0F]">Ce que nous faisons</h3>
              </div>
              <p className="text-xl text-gray-600 font-medium leading-relaxed mb-10">
-               Nous collectons les surplus alimentaires des commerces de gros et détaillants pour approvisionner les cuisines collectives des squats et occupations de la diaspora.
+               Chaque semaine, nous collectons les invendus des commerces bruxellois pour approvisionner directement les cuisines collectives de la diaspora. Zéro déchet. Zéro facture pour les familles.
              </p>
              <div className="space-y-4">
-                {["Lutte contre le gaspillage", "Zéro frais pour les occupants", "Qualité nutritionnelle garantie"].map((benefit, i) => (
+                {["Zéro gaspillage, zéro frais", "Approvisionnement direct — sans intermédiaire", "Qualité nutritionnelle vérifiée"].map((benefit, i) => (
                    <div key={i} className="flex items-center gap-4 text-gray-700 font-bold">
                      <CheckCircle className="h-5 w-5 text-guinea-green" /> {benefit}
                    </div>
@@ -83,17 +83,17 @@ const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, set
           <div className="bg-white p-12 rounded-[3.5rem] shadow-soft-elegant border border-gray-100 group transition-all">
              <div className="flex items-center gap-5 mb-10">
                <div className="p-5 bg-guinea-yellow/10 text-guinea-yellow rounded-[2rem] group-hover:scale-110 transition-transform"><Truck className="h-10 w-10" /></div>
-               <h3 className="text-4xl font-serif font-black text-[#0F0F0F]">Participer</h3>
+               <h3 className="text-4xl font-serif font-black text-[#0F0F0F]">Rejoignez le réseau</h3>
              </div>
              <p className="text-xl text-gray-600 font-medium leading-relaxed mb-10">
-               Vous êtes un commerçant avec des invendus ? Ou un collectif ayant besoin d'appui ? Rejoignez le réseau Ballal.
+               Vous avez des surplus alimentaires ? Vous gérez un collectif en besoin ? Deux clics. Un réseau. Un impact réel.
              </p>
              <div className="grid gap-4">
-                <button onClick={() => setView?.(ViewState.FOOD_SUPPLIER)} className="bg-[#0F0F0F] text-white p-6 rounded-2xl font-black uppercase text-xs tracking-widest flex items-center justify-between hover:bg-guinea-green transition-all shadow-md">
-                   Je suis un fournisseur <ArrowRight className="h-5 w-5" />
+                <button onClick={() => setView?.(ViewState.FOOD_SUPPLIER)} className="bg-[#0F0F0F] text-white p-6 rounded-2xl font-black uppercase text-xs tracking-widest flex items-center justify-between hover:bg-[#00843D] transition-all shadow-md">
+                   Je donne des surplus <ArrowRight className="h-5 w-5" />
                 </button>
-                <button onClick={() => setView?.(ViewState.FOOD_NETWORK)} className="border-2 border-earth-black text-[#0F0F0F] p-6 rounded-2xl font-black uppercase text-xs tracking-widest flex items-center justify-between hover:bg-gray-50 transition-all">
-                   Je suis un collectif <ArrowRight className="h-5 w-5" />
+                <button onClick={() => setView?.(ViewState.FOOD_NETWORK)} className="border-2 border-[#0F0F0F] text-[#0F0F0F] p-6 rounded-2xl font-black uppercase text-xs tracking-widest flex items-center justify-between hover:bg-gray-50 transition-all">
+                   Mon collectif a besoin <ArrowRight className="h-5 w-5" />
                 </button>
              </div>
           </div>

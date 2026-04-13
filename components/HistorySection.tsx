@@ -71,11 +71,11 @@ const HistorySection: React.FC<HistorySectionProps> = () => {
             Histoire & Diaspora
           </div>
           <h1 className="text-6xl md:text-8xl font-serif font-black text-[#0F0F0F] tracking-tighter leading-none mb-8">
-            D'où nous<br />
-            <span className="text-guinea-red/80">venons.</span>
+            Nous savons<br />
+            <span className="text-guinea-red">d'où nous venons.</span>
           </h1>
           <p className="text-xl md:text-2xl font-medium text-gray-500 italic max-w-2xl leading-relaxed border-l-4 border-guinea-yellow pl-8">
-            La présence guinéenne en Belgique ne s'explique pas par le hasard. Elle est le produit d'une histoire politique longue, de régimes autoritaires, de guerres régionales, et d'une culture de la mobilité profondément ancrée.
+            La présence guinéenne en Belgique n'est pas le fruit du hasard. Elle porte l'empreinte d'un peuple qui a toujours su résister — aux régimes autoritaires, aux frontières, à l'oubli. Cette histoire est notre boussole.
           </p>
         </div>
 
@@ -84,15 +84,15 @@ const HistorySection: React.FC<HistorySectionProps> = () => {
           <div className="relative z-10 grid md:grid-cols-3 gap-8 text-center">
             <div>
               <div className="text-5xl md:text-6xl font-black text-guinea-red mb-2">1958</div>
-              <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Année d'indépendance</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Premier "NON" d'Afrique francophone</div>
             </div>
             <div>
-              <div className="text-5xl md:text-6xl font-black text-guinea-yellow mb-2">+15 000</div>
-              <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Guinéens estimés en Belgique</div>
+              <div className="text-5xl md:text-6xl font-black text-guinea-yellow mb-2">15 000+</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Guinéens établis en Belgique</div>
             </div>
             <div>
               <div className="text-5xl md:text-6xl font-black text-guinea-green mb-2">3ème</div>
-              <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Nationalité africaine en Belgique</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Nationalité africaine du pays</div>
             </div>
           </div>
           <p className="text-center text-[10px] text-gray-500 mt-8 uppercase tracking-widest">
