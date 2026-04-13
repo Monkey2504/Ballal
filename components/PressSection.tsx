@@ -43,7 +43,7 @@ const MISSIONS = [
     title: 'Festival des Sans-Papiers',
     desc: 'Événement annuel de visibilisation et de revendication culturelle, prévu en septembre 2026 à Bruxelles.',
     icon: Globe,
-    color: 'border-earth-black',
+    color: 'border-[#0F0F0F]',
   },
 ];
 
@@ -75,9 +75,9 @@ const PressSection: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#FAFAF8] pb-24">
 
-      <div className="bg-[#0F0F0F] text-white py-20 border-b-8 border-guinea-yellow relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5 african-pattern" />
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div className="bg-[#0F0F0F] text-white py-20 relative overflow-hidden">
+        <div className="flag-line absolute top-0 left-0 right-0" aria-hidden="true"><span /><span /><span /></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10 pt-4">
           <div className="flex items-center gap-3 mb-8">
             <div className="h-1 w-12 bg-guinea-red" />
             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-guinea-yellow">
@@ -92,6 +92,7 @@ const PressSection: React.FC = () => {
             Association reconnue, active depuis 2022 à Bruxelles. Logement, alimentation, droits — pour les personnes sans papiers.
           </p>
         </div>
+        <div className="flag-line absolute bottom-0 left-0 right-0" aria-hidden="true"><span /><span /><span /></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 -mt-12 relative z-20">
@@ -111,7 +112,7 @@ const PressSection: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-6 mt-16">
 
-        <div className="bg-white border-4 border-earth-black rounded-[3rem] p-10 md:p-14 shadow-brutal mb-16">
+        <div className="bg-white border border-gray-100 rounded-[3rem] p-10 md:p-14 shadow-soft-elegant mb-16">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div>
               <div className="inline-block bg-guinea-yellow/20 text-[#0F0F0F] px-4 py-1 rounded-full font-black text-[10px] uppercase tracking-widest mb-6 border border-guinea-yellow/30">
@@ -176,7 +177,7 @@ const PressSection: React.FC = () => {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all ${activeTab === tab ? 'bg-[#0F0F0F] text-white shadow-brutal' : 'bg-white text-gray-400 border border-gray-200 hover:text-[#0F0F0F]'}`}
+              className={`px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all ${activeTab === tab ? 'bg-[#0F0F0F] text-white shadow-soft-elegant' : 'bg-white text-gray-400 border border-gray-200 hover:text-[#0F0F0F]'}`}
             >
               {tab === 'press' ? '📰 Espace Presse' : '🤝 Partenariats'}
             </button>
@@ -220,12 +221,12 @@ const PressSection: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-white border-4 border-earth-black rounded-[2rem] p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="bg-white border border-gray-100 rounded-[2rem] p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-soft-elegant">
               <div>
                 <h3 className="text-2xl font-serif font-black text-[#0F0F0F] mb-2">Kit presse</h3>
                 <p className="text-gray-600 font-medium">Logo haute résolution, photos libres de droits, fiche de présentation PDF. Disponible sur demande.</p>
               </div>
-              <a href="mailto:admin@ballal.be?subject=Demande kit presse Ballal ASBL" className="flex-shrink-0 bg-[#0F0F0F] text-white px-8 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-guinea-red transition-all flex items-center gap-3 shadow-brutal">
+              <a href="mailto:admin@ballal.be?subject=Demande kit presse Ballal ASBL" className="flex-shrink-0 bg-[#0F0F0F] text-white px-8 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-guinea-red transition-all flex items-center gap-3 shadow-soft-elegant">
                 <Download className="h-4 w-4" />
                 Demander le kit
               </a>

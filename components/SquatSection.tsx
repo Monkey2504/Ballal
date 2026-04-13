@@ -81,7 +81,7 @@ const SquatSection: React.FC<{ language?: LanguageCode }> = () => {
                 <button
                   key={p.phase}
                   onClick={() => setActivePhase(p.phase)}
-                  className={`p-4 border-4 transition-all ${activePhase === p.phase ? 'border-guinea-red bg-guinea-red text-white scale-105 shadow-lg' : 'border-earth-black bg-white opacity-60'}`}
+                  className={`p-4 border-4 transition-all ${activePhase === p.phase ? 'border-guinea-red bg-guinea-red text-white scale-105 shadow-lg' : 'border-[#E8E8E6] bg-white opacity-60'}`}
                 >
                   <p.icon className="mx-auto mb-2" />
                   <h3 className="text-[10px] font-black uppercase leading-tight">{p.title}</h3>
@@ -90,7 +90,7 @@ const SquatSection: React.FC<{ language?: LanguageCode }> = () => {
             </div>
             
             {PHASES.find(p => p.phase === activePhase) && (
-              <div className="bg-white border-4 border-earth-black p-8 shadow-brutal animate-in fade-in">
+              <div className="bg-white border border-gray-100 p-8 shadow-soft-elegant animate-in fade-in">
                 <h2 className="text-3xl font-black mb-6 uppercase flex items-center gap-3">
                   {PHASES.find(p => p.phase === activePhase)!.title}
                 </h2>
@@ -124,7 +124,7 @@ const SquatSection: React.FC<{ language?: LanguageCode }> = () => {
               <div 
                 key={inside.id} 
                 onClick={() => setSelectedInside(inside)}
-                className="bg-white border-4 border-earth-black p-6 shadow-brutal cursor-pointer hover:bg-guinea-yellow/20"
+                className="bg-white border border-gray-100 p-6 shadow-soft-elegant cursor-pointer hover:bg-guinea-yellow/20"
               >
                 <div className="flex items-start gap-4">
                   <inside.icon className="h-6 w-6 text-guinea-red flex-shrink-0" />
@@ -141,7 +141,7 @@ const SquatSection: React.FC<{ language?: LanguageCode }> = () => {
         {activeTab === 'checklists' && (
           <div className="grid md:grid-cols-2 gap-6">
             {PHASES.map(phase => (
-              <div key={phase.phase} className="bg-white border-4 border-earth-black p-6 shadow-brutal">
+              <div key={phase.phase} className="bg-white border border-gray-100 p-6 shadow-soft-elegant">
                 <h3 className="font-black mb-4 uppercase text-guinea-red">{phase.title}</h3>
                 <div className="space-y-2">
                   {checklists[phase.phase as keyof typeof checklists].map(item => (

@@ -33,7 +33,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
       role: t.role_admin,
       image: "https://i.imgur.com/T2LT1pB.png",
       email: "admin@ballal.be",
-      color: "bg-warm-red",
+      color: "bg-guinea-red",
       bio: "Président fondateur"
     },
     {
@@ -41,7 +41,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
       role: t.role_admin,
       image: "https://i.imgur.com/l3UdDov.png",
       email: "Ibrahim@ballal.be",
-      color: "bg-warm-gold",
+      color: "bg-guinea-yellow",
       bio: "Responsable des opérations"
     },
     {
@@ -49,7 +49,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
       role: t.role_admin_f,
       image: "https://i.imgur.com/THTzMBW.png",
       email: "admin@ballal.be",
-      color: "bg-warm-green",
+      color: "bg-guinea-green",
       bio: "Secrétaire"
     },
     {
@@ -82,7 +82,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
           <h2 className="text-5xl md:text-7xl font-serif font-black text-[#0F0F0F] mb-8 tracking-tighter">
             {t.team_title}
           </h2>
-          <div className="w-24 h-2 bg-warm-gold mx-auto mb-8"></div>
+          <div className="w-24 h-2 bg-guinea-yellow mx-auto mb-8"></div>
           <p className="max-w-2xl mx-auto text-xl text-gray-600 font-medium italic">
             "{t.team_subtitle}"
           </p>
@@ -119,7 +119,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
                     onClick={() => handleCopyEmail(member.email!)}
                     className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                   >
-                    {copiedEmail === member.email ? <Check className="h-4 w-4 text-warm-green" /> : <Mail className="h-4 w-4 text-gray-400" />}
+                    {copiedEmail === member.email ? <Check className="h-4 w-4 text-guinea-green" /> : <Mail className="h-4 w-4 text-gray-400" />}
                   </button>
                 </div>
               </div>
@@ -128,18 +128,18 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
         </div>
 
         {/* SECTION COLLECTIF */}
-        <div className="mt-32 bg-[#0F0F0F] rounded-[3rem] p-12 md:p-20 text-white relative overflow-hidden shadow-brutal">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-warm-red/10 rounded-full blur-[100px]"></div>
+        <div className="mt-32 bg-[#0F0F0F] rounded-[3rem] p-12 md:p-20 text-white relative overflow-hidden shadow-soft-xl">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-guinea-red/10 rounded-full blur-[100px]"></div>
           <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <div className="flex items-center gap-4">
-                <Users className="h-10 w-10 text-warm-gold" />
+                <Users className="h-10 w-10 text-guinea-yellow" />
                 <h3 className="text-4xl md:text-5xl font-serif font-black">{t.members_title}</h3>
               </div>
               <p className="text-xl text-gray-300 leading-relaxed font-medium">
                 {t.team_collective_strength}
               </p>
-              <button className="bg-warm-red text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest hover:scale-105 transition-all shadow-xl">
+              <button className="bg-guinea-red text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest hover:scale-105 transition-all shadow-xl">
                 {t.join_button}
               </button>
             </div>
