@@ -11,9 +11,9 @@ interface HeroProps {
 }
 
 const STATS = [
-  { value: '15 000+',   label: 'Guinéens en Belgique' },
-  { value: '2022',      label: 'Fondée à Bruxelles' },
-  { value: 'Molenbeek', label: 'Ancrage local' },
+  { value: 'Par & pour', label: 'les sans-papiers' },
+  { value: '2022',       label: 'Fondée à Molenbeek' },
+  { value: 'Du toit',    label: "à l'indépendance" },
 ];
 
 const containerVariants = {
@@ -95,9 +95,10 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
               animate="visible"
               className="text-[17px] text-[#6B6B6B] leading-[1.75] max-w-lg font-medium"
             >
-              Quand les institutions se taisent, Ballal agit. Nous défendons le droit
-              au logement, à la justice et à la dignité pour chaque Guinéen de
-              Belgique — sans condition, sans délai, depuis 2022.
+              Ballal n'est pas une ONG qui parle au nom des sans-papiers.
+              Nous sommes des sans-papiers, d'anciens sans-papiers — qui prennent
+              soin de leurs frères. Du toit à l'emploi, de la rue à la culture,
+              jusqu'à l'indépendance complète.
             </motion.p>
 
             {/* CTAs */}
@@ -184,7 +185,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
 
                 <blockquote className="absolute bottom-0 left-0 right-0 p-6">
                   <p className="font-serif italic text-white text-lg leading-snug drop-shadow">
-                    "La dignité humaine ne se négocie pas."
+                    "On vient de là où tu viens. Et on ne lâche pas."
                   </p>
                   {/* Flag line as quote underline */}
                   <div className="flex gap-0.5 mt-3" aria-hidden="true">
@@ -210,7 +211,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
                 </div>
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-widest text-[#0F0F0F]">Guinée · Belgique</p>
-                  <p className="text-[9px] text-[#6B6B6B] font-medium mt-0.5">En première ligne depuis 2022</p>
+                  <p className="text-[9px] text-[#6B6B6B] font-medium mt-0.5">Par les sans-papiers, pour les sans-papiers</p>
                 </div>
               </motion.div>
 

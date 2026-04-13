@@ -100,7 +100,7 @@ const PROGRAMS = [
     iconBg:      'bg-[#0F0F0F]/8',
     iconColor:   'text-[#0F0F0F]',
     label:       'Logement',
-    desc:        "Personne ne devrait dormir dans la rue. Accès au logement d'urgence, gestion des occupations, médiation avec les communes.",
+    desc:        "Nous gérons directement plusieurs occupations solidaires à Bruxelles depuis des années. Pas des conseils de l'extérieur — une présence physique, sur place, chaque jour.",
   },
   {
     view:        ViewState.FOOD_AUTONOMY,
@@ -118,7 +118,7 @@ const PROGRAMS = [
     iconBg:      'bg-[#FFCC00]/20',
     iconColor:   'text-[#8B7000]',
     label:       'Entraide',
-    desc:        "La communauté est la première réponse à la précarité. Traduction, démarches, soutien mutuel — en temps réel.",
+    desc:        "Trouver un travail, comprendre un document, se repérer dans les administrations. On a tous besoin d'un frère qui connaît le chemin. C'est ça, Ballal.",
   },
   {
     view:        ViewState.CULTURE,
@@ -127,7 +127,7 @@ const PROGRAMS = [
     iconBg:      'bg-[#4B3D8F]/10',
     iconColor:   'text-[#4B3D8F]',
     label:       'Culture & Histoire',
-    desc:        "Notre histoire est une arme. Patrimoine guinéen, festival annuel et mémoire vivante de la diaspora à Bruxelles.",
+    desc:        "La culture, c'est notre prochaine frontière. Elle nous rend visibles, nous donne du poids politique, et nous permet d'aller encore plus loin dans l'aide que nous apportons.",
   },
 ];
 
@@ -191,10 +191,10 @@ const HomePage: React.FC<{ navigate: (v: ViewState) => void; language: LanguageC
             Nos programmes
           </p>
           <h2 id="programs-title" className="font-serif font-black text-3xl sm:text-4xl text-[#0F0F0F] leading-tight">
-            Cinq urgences. Cinq réponses concrètes.
+            Du toit à l'indépendance — le parcours complet.
           </h2>
           <p className="mt-4 text-[#6B6B6B] text-base leading-relaxed">
-            Logement, droits, alimentation, entraide, culture — chaque programme répond à un besoin réel, documenté, immédiat.
+            Nous ne traitons pas les urgences une par une. Nous gérons le parcours entier : logement, droits, alimentation, emploi, communauté, culture — jusqu'à ce que la personne soit vraiment libre.
           </p>
         </div>
 
@@ -248,10 +248,10 @@ const HomePage: React.FC<{ navigate: (v: ViewState) => void; language: LanguageC
         <div>
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#6B6B6B] mb-2">Agir maintenant</p>
           <h2 className="font-serif font-black text-2xl text-[#0F0F0F]">
-            Transformez votre geste en vie sauvée.
+            Soutenir Ballal, c'est soutenir ceux qui savent.
           </h2>
           <p className="text-[13px] text-[#6B6B6B] mt-1.5">
-            Un hébergement. Un repas. Un droit défendu. Ici, à Bruxelles.
+            Une association de terrain, par et pour les sans-papiers. Chaque don finance directement le parcours vers l'indépendance.
           </p>
         </div>
         <motion.button
@@ -279,7 +279,7 @@ const HomePage: React.FC<{ navigate: (v: ViewState) => void; language: LanguageC
             Conseil d'Administration
           </h2>
           <p className="mt-3 text-[#6B6B6B] text-base">
-            Chaque administrateur est un militant de la dignité humaine.
+            Notre direction vient de la rue. Certains ont été sans-papiers. Tous ont vécu ce que vivent nos bénéficiaires. C'est ce qui fait notre différence.
           </p>
         </div>
 
