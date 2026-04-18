@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Quote, ChevronDown, ChevronUp } from 'lucide-react';
 import { LanguageCode } from '../types.ts';
 
@@ -63,83 +64,116 @@ const HistorySection: React.FC<HistorySectionProps> = () => {
   const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i);
 
   return (
-    <section className="bg-[#FAFAF8] py-24 px-6 overflow-hidden">
+    <section className="bg-[#FAFAF8] py-16 sm:py-24 px-4 sm:px-6 overflow-hidden">
       <div className="max-w-5xl mx-auto">
 
-        <div className="mb-20">
-          <div className="inline-block py-2 px-6 bg-[#0F0F0F] text-white font-bold text-[10px] uppercase tracking-[0.3em] mb-8 rounded-full">
-            Histoire & Diaspora
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="mb-14 sm:mb-20"
+        >
+          <div className="inline-block py-2 px-6 bg-[#0F0F0F] text-white font-bold text-[10px] uppercase tracking-[0.3em] mb-6 sm:mb-8 rounded-full">
+            Histoire et diaspora
           </div>
-          <h1 className="text-6xl md:text-8xl font-serif font-black text-[#0F0F0F] tracking-tighter leading-none mb-8">
+          <h1 className="text-4xl sm:text-6xl md:text-8xl font-serif font-black text-[#0F0F0F] tracking-tighter leading-none mb-6 sm:mb-8">
             Nous savons<br />
-            <span className="text-guinea-red">d'où nous venons.</span>
+            <span className="text-[#BE0000]">d'où nous venons.</span>
           </h1>
-          <p className="text-xl md:text-2xl font-medium text-gray-500 italic max-w-2xl leading-relaxed border-l-4 border-guinea-yellow pl-8">
-            La présence guinéenne en Belgique n'est pas le fruit du hasard. Elle porte l'empreinte d'un peuple qui a toujours su résister — aux régimes autoritaires, aux frontières, à l'oubli. Cette histoire est notre boussole.
+          <p className="text-base sm:text-xl md:text-2xl font-medium text-[#6B6B6B] italic max-w-2xl leading-relaxed border-l-4 border-[#FFCC00] pl-6 sm:pl-8">
+            La présence guinéenne en Belgique n'est pas le fruit du hasard. Elle porte l'empreinte d'un peuple qui a toujours su résister. Cette histoire est notre boussole.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="bg-[#0F0F0F] text-white rounded-[3rem] p-10 md:p-16 mb-20 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-guinea-red/10 rounded-full blur-[80px]" />
-          <div className="relative z-10 grid md:grid-cols-3 gap-8 text-center">
-            <div>
-              <div className="text-5xl md:text-6xl font-black text-guinea-red mb-2">1958</div>
-              <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Premier "NON" d'Afrique francophone</div>
-            </div>
-            <div>
-              <div className="text-5xl md:text-6xl font-black text-guinea-yellow mb-2">15 000+</div>
-              <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Guinéens établis en Belgique</div>
-            </div>
-            <div>
-              <div className="text-5xl md:text-6xl font-black text-guinea-green mb-2">3ème</div>
-              <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Nationalité africaine du pays</div>
-            </div>
+        {/* Stats box */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="bg-[#0F0F0F] text-white rounded-[2rem] sm:rounded-[3rem] p-8 sm:p-10 md:p-16 mb-14 sm:mb-20 relative overflow-hidden"
+        >
+          <div className="absolute top-0 right-0 w-80 h-80 bg-[#BE0000]/10 rounded-full blur-[80px]" aria-hidden="true" />
+          <div className="relative z-10 grid sm:grid-cols-3 gap-8 text-center">
+            {[
+              { val: '1958', sub: 'Premier « NON » d\'Afrique francophone', color: '#BE0000' },
+              { val: '15 000+', sub: 'Guinéens établis en Belgique', color: '#FFCC00' },
+              { val: '3ème', sub: 'Nationalité africaine du pays', color: '#00843D' },
+            ].map(({ val, sub, color }) => (
+              <div key={val}>
+                <div className="text-4xl sm:text-5xl md:text-6xl font-black mb-2" style={{ color }}>{val}</div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-white/40">{sub}</div>
+              </div>
+            ))}
           </div>
-          <p className="text-center text-[10px] text-gray-500 mt-8 uppercase tracking-widest">
+          <p className="text-center text-[10px] text-white/30 mt-8 uppercase tracking-widest">
             Sources : Statbel 2017, CGRS/Cedoca nov. 2025, OIM 2020
           </p>
-        </div>
+        </motion.div>
 
-        <div className="space-y-4">
+        {/* Timeline accordion */}
+        <div className="space-y-3 sm:space-y-4">
           {TIMELINE.map((item, i) => (
-            <div key={i} className="bg-white rounded-[2rem] border border-gray-100 shadow-soft-elegant overflow-hidden">
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ delay: i * 0.05, duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="bg-white rounded-[1.5rem] sm:rounded-[2rem] border border-[#E8E8E6] shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden"
+            >
               <button
                 onClick={() => toggle(i)}
-                className="w-full flex items-center justify-between p-8 md:p-10 text-left"
+                className="w-full flex items-center justify-between p-6 sm:p-8 md:p-10 text-left min-h-[80px]"
+                aria-expanded={openIndex === i}
               >
-                <div className="flex items-center gap-6">
-                  <div className="text-4xl md:text-5xl font-black font-serif leading-none" style={{ color: item.colorHex }}>
+                <div className="flex items-center gap-4 sm:gap-6">
+                  <div className="text-2xl sm:text-4xl md:text-5xl font-black font-serif leading-none" style={{ color: item.colorHex }}>
                     {item.year}
                   </div>
-                  <h2 className="text-xl md:text-2xl font-black text-[#0F0F0F]">{item.label}</h2>
+                  <h2 className="text-base sm:text-xl md:text-2xl font-black text-[#0F0F0F]">{item.label}</h2>
                 </div>
                 <div className="flex-shrink-0 ml-4">
-                  {openIndex === i ? <ChevronUp className="h-6 w-6 text-gray-400" /> : <ChevronDown className="h-6 w-6 text-gray-400" />}
+                  {openIndex === i
+                    ? <ChevronUp className="h-5 w-5 sm:h-6 sm:w-6 text-[#6B6B6B]" aria-hidden="true" />
+                    : <ChevronDown className="h-5 w-5 sm:h-6 sm:w-6 text-[#6B6B6B]" aria-hidden="true" />
+                  }
                 </div>
               </button>
 
-              {openIndex === i && (
-                <div className="px-8 md:px-10 pb-10 space-y-8 animate-in fade-in duration-300">
-                  <div className="h-1 w-20 rounded-full" style={{ backgroundColor: item.colorHex }} />
-                  <p className="text-xl font-medium text-[#0F0F0F] leading-relaxed">{item.content.intro}</p>
-                  <p className="text-gray-600 font-medium leading-relaxed">{item.content.body}</p>
-                  <div className="bg-[#FAFAF8] p-8 rounded-2xl border border-gray-100">
-                    <Quote className="h-6 w-6 mb-4" style={{ color: item.colorHex }} />
-                    <p className="text-lg font-serif italic text-[#0F0F0F] mb-4">{item.content.quote}</p>
-                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">— {item.content.quoteSource}</p>
-                  </div>
-                  <div className="border-l-4 pl-6 py-2" style={{ borderColor: item.colorHex }}>
-                    <p className="text-gray-600 font-medium leading-relaxed italic">{item.content.detail}</p>
-                  </div>
-                </div>
-              )}
-            </div>
+              <AnimatePresence initial={false}>
+                {openIndex === i && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-6 sm:px-8 md:px-10 pb-8 sm:pb-10 space-y-6 sm:space-y-8">
+                      <div className="h-1 w-16 sm:w-20 rounded-full" style={{ backgroundColor: item.colorHex }} />
+                      <p className="text-base sm:text-xl font-medium text-[#0F0F0F] leading-relaxed">{item.content.intro}</p>
+                      <p className="text-sm sm:text-base text-[#6B6B6B] font-medium leading-relaxed">{item.content.body}</p>
+                      <div className="bg-[#FAFAF8] p-6 sm:p-8 rounded-[12px] border border-[#E8E8E6]">
+                        <Quote className="h-5 w-5 sm:h-6 sm:w-6 mb-4" style={{ color: item.colorHex }} aria-hidden="true" />
+                        <p className="text-base sm:text-lg font-serif italic text-[#0F0F0F] mb-4">«&nbsp;{item.content.quote.replace(/^"|"$/g, '')}&nbsp;»</p>
+                        <p className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest">— {item.content.quoteSource}</p>
+                      </div>
+                      <div className="border-l-4 pl-5 sm:pl-6 py-2" style={{ borderColor: item.colorHex }}>
+                        <p className="text-sm sm:text-base text-[#6B6B6B] font-medium leading-relaxed italic">{item.content.detail}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           ))}
         </div>
 
-        <div className="mt-16 pt-8 border-t border-gray-200">
-          <p className="text-xs text-gray-400 font-medium leading-relaxed max-w-3xl">
-            <span className="font-black text-gray-500">Sources :</span> Statbel, CGRS/Cedoca (rapport novembre 2025), OIM 2020, Revue Politique Africaine n°36 (1989), Cairn.info — Revue Outre-Terre 2017.
+        <div className="mt-12 sm:mt-16 pt-8 border-t border-[#E8E8E6]">
+          <p className="text-xs text-[#6B6B6B] font-medium leading-relaxed max-w-3xl">
+            <span className="font-black text-[#0F0F0F]">Sources :</span> Statbel, CGRS/Cedoca (rapport novembre 2025), OIM 2020, Revue Politique Africaine n°36 (1989), Cairn.info — Revue Outre-Terre 2017.
           </p>
         </div>
       </div>

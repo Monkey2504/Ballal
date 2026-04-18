@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import {
   Newspaper, Handshake, Download, Mail, Phone, MapPin,
   Building, FileText, Users, Calendar, Heart, ArrowRight,
@@ -77,25 +78,30 @@ const PressSection: React.FC = () => {
 
       <div className="bg-[#0F0F0F] text-white py-20 relative overflow-hidden">
         <div className="flag-line absolute top-0 left-0 right-0" aria-hidden="true"><span /><span /><span /></div>
-        <div className="max-w-7xl mx-auto px-6 relative z-10 pt-4">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 pt-4"
+        >
           <div className="flex items-center gap-3 mb-8">
-            <div className="h-1 w-12 bg-guinea-red" />
-            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-guinea-yellow">
-              Espace Presse & Partenaires
+            <div className="h-1 w-12 bg-[#BE0000]" aria-hidden="true" />
+            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#FFCC00]">
+              Espace presse et partenaires
             </span>
           </div>
-          <h1 className="text-5xl md:text-8xl font-serif font-black tracking-tighter leading-[0.85] mb-8">
-            Ballal <span className="text-guinea-red">ASBL</span><br />
-            <span className="text-guinea-yellow italic">en chiffres.</span>
+          <h1 className="text-4xl sm:text-5xl md:text-8xl font-serif font-black tracking-tighter leading-[0.9] mb-6 sm:mb-8">
+            Ballal <span className="text-[#BE0000]">ASBL</span><br />
+            <span className="text-[#FFCC00] italic">en chiffres.</span>
           </h1>
-          <p className="text-xl md:text-2xl font-medium text-gray-300 max-w-2xl leading-relaxed">
+          <p className="text-base sm:text-xl md:text-2xl font-medium text-white/60 max-w-2xl leading-relaxed">
             Association reconnue, active depuis 2022 à Bruxelles. Logement, alimentation, droits — pour les personnes sans papiers.
           </p>
-        </div>
+        </motion.div>
         <div className="flag-line absolute bottom-0 left-0 right-0" aria-hidden="true"><span /><span /><span /></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 -mt-12 relative z-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 -mt-12 relative z-20">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {KEY_FIGURES.map((fig, i) => (
             <div key={i} className="bg-white p-8 rounded-[2.5rem] shadow-soft-elegant border border-gray-100 flex flex-col items-center text-center">

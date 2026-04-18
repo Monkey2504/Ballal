@@ -1,6 +1,6 @@
 import React, { useState, ReactNode, Component, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar.tsx';
 import Hero from './components/Hero.tsx';
 import Footer from './components/Footer.tsx';
@@ -379,25 +379,35 @@ const AppContent: React.FC = () => {
       {/* pt accounts for: 3px flag line + 68px nav */}
       <main id="main-content" className="pt-[71px]">
         <ErrorBoundary>
-          <Routes>
-            <Route path="/"                         element={<HomePage navigate={navigate} language={language} />} />
-            <Route path="/entraide"                 element={<SolidarityNetwork />} />
-            <Route path="/logement"                 element={<SquatSection language={language} />} />
-            <Route path="/culture"                  element={<div className="space-y-0"><HistorySection language={language} /><GallerySection /></div>} />
-            <Route path="/droits"                   element={<LegalAidSection language={language} />} />
-            <Route path="/alimentation"             element={<FoodAutonomySection language={language} setView={navigate} />} />
-            <Route path="/alimentation/fournisseur" element={<FoodSupplierForm language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />} />
-            <Route path="/alimentation/collectif"   element={<FoodNetworkForm language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />} />
-            <Route path="/equipe"                   element={<TeamSection language={language} />} />
-            <Route path="/festival"                 element={<FestivalSection language={language} />} />
-            <Route path="/don"                      element={<DonationSection language={language} />} />
-            <Route path="/partager"                 element={<ShareSection language={language} />} />
-            <Route path="/contact"                  element={<ContactSection language={language} />} />
-            <Route path="/confidentialite"          element={<LegalDocSection language={language} mode="privacy" />} />
-            <Route path="/mentions-legales"         element={<LegalDocSection language={language} mode="terms" />} />
-            <Route path="/presse"                   element={<PressSection />} />
-            <Route path="*"                         element={<Navigate to="/" replace />} />
-          </Routes>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={location.pathname}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
+              <Routes location={location}>
+                <Route path="/"                         element={<HomePage navigate={navigate} language={language} />} />
+                <Route path="/entraide"                 element={<SolidarityNetwork />} />
+                <Route path="/logement"                 element={<SquatSection language={language} />} />
+                <Route path="/culture"                  element={<div className="space-y-0"><HistorySection language={language} /><GallerySection /></div>} />
+                <Route path="/droits"                   element={<LegalAidSection language={language} />} />
+                <Route path="/alimentation"             element={<FoodAutonomySection language={language} setView={navigate} />} />
+                <Route path="/alimentation/fournisseur" element={<FoodSupplierForm language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />} />
+                <Route path="/alimentation/collectif"   element={<FoodNetworkForm language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />} />
+                <Route path="/equipe"                   element={<TeamSection language={language} />} />
+                <Route path="/festival"                 element={<FestivalSection language={language} />} />
+                <Route path="/don"                      element={<DonationSection language={language} />} />
+                <Route path="/partager"                 element={<ShareSection language={language} />} />
+                <Route path="/contact"                  element={<ContactSection language={language} />} />
+                <Route path="/confidentialite"          element={<LegalDocSection language={language} mode="privacy" />} />
+                <Route path="/mentions-legales"         element={<LegalDocSection language={language} mode="terms" />} />
+                <Route path="/presse"                   element={<PressSection />} />
+                <Route path="*"                         element={<Navigate to="/" replace />} />
+              </Routes>
+            </motion.div>
+          </AnimatePresence>
         </ErrorBoundary>
       </main>
 

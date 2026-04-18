@@ -30,9 +30,10 @@ export default defineConfig(({ mode }) => {
         output: {
           // Code-split large vendor chunks for better caching
           manualChunks: {
-            'vendor-react': ['react', 'react-dom'],
+            'vendor-react':  ['react', 'react-dom'],
+            'vendor-motion': ['framer-motion'],
             'vendor-router': ['react-router-dom'],
-            'vendor-icons': ['lucide-react'],
+            'vendor-icons':  ['lucide-react'],
           },
         },
       },

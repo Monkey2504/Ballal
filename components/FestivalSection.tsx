@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Flag, Megaphone, Users, Calendar, MapPin, Target, Wallet, 
+import { motion } from 'framer-motion';
+import {
+  Flag, Megaphone, Users, Calendar, MapPin, Target, Wallet,
   Lightbulb, CheckCircle, HeartHandshake, Music, Film, BookOpen,
   ChevronRight, ExternalLink, Clock, BarChart, TrendingUp
 } from 'lucide-react';
@@ -93,23 +94,28 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
         />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center">
-            <div 
-              className="inline-flex items-center justify-center p-4 bg-white/20 rounded-full mb-8 backdrop-blur-sm animate-pulse"
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="text-center"
+          >
+            <div
+              className="inline-flex items-center justify-center p-4 bg-white/20 rounded-full mb-8 backdrop-blur-sm"
               aria-hidden="true"
             >
               <Flag className="h-12 w-12 text-[#FFCC00]" />
             </div>
-            
-            <h1 
+
+            <h1
               id="festival-title"
               className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6"
             >
               {festivalData.title}
             </h1>
-            
-            <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto font-medium italic mb-8">
-              "{festivalData.tagline}"
+
+            <p className="text-base sm:text-xl md:text-2xl text-white/90 max-w-4xl mx-auto font-medium italic mb-8">
+              «&nbsp;{festivalData.tagline}&nbsp;»
             </p>
 
             {/* Countdown */}
@@ -151,7 +157,7 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
                 <span className="font-medium">{festivalData.expectedAttendance} participants attendus</span>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 
