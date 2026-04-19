@@ -114,7 +114,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-[#BE0000] text-white text-[12px] font-black uppercase tracking-widest rounded-[8px] shadow-[0_4px_16px_rgba(190,0,0,0.25)] hover:bg-[#9B0000] transition-colors duration-200 group focus:outline-none"
+                className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-[#BE0000] text-white text-[12px] font-black uppercase tracking-widest rounded-[8px] shadow-[0_4px_16px_rgba(190,0,0,0.25)] hover:bg-[#9B0000] transition-colors duration-200 group focus:outline-none focus-visible:ring-2 focus-visible:ring-guinea-red/50 focus-visible:ring-offset-2"
               >
                 Rejoindre le combat
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
@@ -125,7 +125,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                className="inline-flex items-center gap-2.5 px-7 py-3.5 border border-[#0F0F0F] text-[#0F0F0F] text-[12px] font-black uppercase tracking-widest rounded-[8px] hover:bg-[#0F0F0F] hover:text-white transition-colors duration-200 group focus:outline-none"
+                className="inline-flex items-center gap-2.5 px-7 py-3.5 border border-[#0F0F0F] text-[#0F0F0F] text-[12px] font-black uppercase tracking-widest rounded-[8px] hover:bg-[#0F0F0F] hover:text-white transition-colors duration-200 group focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/40 focus-visible:ring-offset-2"
               >
                 <Heart className="h-4 w-4 text-[#BE0000] fill-[#BE0000] group-hover:text-[#FFCC00] group-hover:fill-[#FFCC00] transition-colors" aria-hidden="true" />
                 Soutenir Ballal

@@ -9,21 +9,28 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Guinea flag — deeper, more premium tones
-        'guinea-red':    '#BE0000',
-        'guinea-yellow': '#FFCC00',
-        'guinea-green':  '#00843D',
+        // Guinea flag
+        'guinea-red':      '#BE0000',
+        'guinea-red-dark': '#9B0000',
+        'guinea-yellow':   '#FFCC00',
+        'guinea-green':    '#00843D',
         // Neutral base
-        'ivory':         '#FAFAF8',
-        'ink':           '#0F0F0F',
-        'earth-black':   '#1C1C1E',
-        'soft-paper':    '#FAFAF8',
-        // Legacy aliases (keep for backward compat during migration)
-        'terracotta':    '#C9614A',
+        'ivory':           '#FAFAF8',
+        'ink':             '#0F0F0F',
+        // Semantic
+        'ink-muted':       '#6B6B6B',
+        'border-subtle':   '#E8E8E6',
       },
       fontFamily: {
         sans:  ['Plus Jakarta Sans', 'sans-serif'],
         serif: ['Playfair Display', 'serif'],
+      },
+      fontSize: {
+        'caption': ['9px',  { lineHeight: '1.4', letterSpacing: '0.06em' }],
+        'label':   ['10px', { lineHeight: '1.4', letterSpacing: '0.28em' }],
+        'badge':   ['11px', { lineHeight: '1.4', letterSpacing: '0.14em' }],
+        'body-sm': ['13px', { lineHeight: '1.6' }],
+        'body-lg': ['17px', { lineHeight: '1.75' }],
       },
       boxShadow: {
         'soft-elegant': '0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.06)',
@@ -32,13 +39,9 @@ export default {
         'soft-xl':      '0 16px 48px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.05)',
       },
       borderRadius: {
-        'token':  '8px',
+        'token':    '8px',
         'token-lg': '12px',
         'token-xl': '20px',
-      },
-      backgroundImage: {
-        // Ultra-subtle geometric — kept for selective use
-        'african-pattern': "url(\"data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 40c0-22.09 17.91-40 40-40v80c-22.09 0-40-17.91-40-40zM0 0c22.09 0 40 17.91 40 40S22.09 80 0 80V0z' fill='%23BE0000' fill-opacity='0.006' fill-rule='evenodd'/%3E%3C/svg%3E\")",
       },
       keyframes: {
         'fade-in': {
