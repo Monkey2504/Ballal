@@ -36,18 +36,18 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
         </div>
       )}
       {eyebrow && (
-        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#BE0000] mb-3">
+        <p className="text-label font-black uppercase tracking-[0.3em] text-guinea-red mb-3">
           {eyebrow}
         </p>
       )}
       <h2
         id={titleId}
-        className="font-serif font-black text-3xl sm:text-4xl text-[#0F0F0F] leading-tight"
+        className="font-serif font-black text-3xl sm:text-4xl text-ink leading-tight"
       >
         {title}
       </h2>
       {description && (
-        <p className="mt-4 text-sm sm:text-base text-[#6B6B6B] leading-relaxed">
+        <p className="mt-4 text-body-sm text-ink-muted leading-relaxed">
           {description}
         </p>
       )}
