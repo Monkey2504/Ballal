@@ -2,6 +2,7 @@ import React, { useState, ReactNode, Component, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import Navbar from './components/Navbar.tsx';
 import Hero from './components/Hero.tsx';
 import Footer from './components/Footer.tsx';
@@ -405,6 +406,7 @@ const App: React.FC = () => (
       <AppContent />
     </BrowserRouter>
     <Analytics />
+    <SpeedInsights />
   </AuthProvider>
 );
 
