@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Mail, Users, Check } from 'lucide-react';
 import { LanguageCode } from '../types.ts';
 import { translations } from '../utils/translations.ts';
@@ -16,6 +17,14 @@ interface TeamMember {
   color: string;
   bio?: string;
 }
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number) => ({
+    opacity: 1, y: 0,
+    transition: { delay: i * 0.07, duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
+  }),
+};
 
 const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
   const t = translations[language] || translations['fr'];
@@ -73,9 +82,13 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
   return (
     <section className="py-32 relative bg-[#FAFAF8] border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        
-        {/* HEADER D'ENTREPRISE SOCIALE */}
-        <div className="text-center mb-20">
+
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="text-center mb-20"
+        >
           <span className="inline-block py-2 px-6 bg-[#0F0F0F] text-white font-black text-[10px] uppercase tracking-[0.3em] mb-6 rounded-full">
             Gouvernance & Vision
           </span>
@@ -86,24 +99,28 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
           <p className="max-w-2xl mx-auto text-xl text-gray-600 font-medium italic">
             "{t.team_subtitle}"
           </p>
-        </div>
+        </motion.div>
 
-        {/* GRILLE DU CA */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
           {teamMembers.map((member, index) => (
-            <div 
-              key={index} 
+            <motion.div
+              key={index}
+              custom={index}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-30px' }}
               className="bg-white rounded-[2rem] overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500 group flex flex-col"
             >
               <div className="relative h-72 overflow-hidden">
-                <img 
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" 
-                  src={member.image} 
-                  alt={member.name} 
+                <img
+                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                  src={member.image}
+                  alt={member.name}
                 />
                 <div className={`absolute top-0 left-0 w-full h-1.5 ${member.color}`}></div>
               </div>
-              
+
               <div className="p-6 flex-grow flex flex-col justify-between">
                 <div>
                   <h3 className="font-black text-xl text-[#0F0F0F] leading-tight mb-1">{member.name}</h3>
@@ -123,12 +140,17 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
                   </button>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
-        {/* SECTION COLLECTIF */}
-        <div className="mt-32 bg-[#0F0F0F] rounded-[3rem] p-12 md:p-20 text-white relative overflow-hidden shadow-soft-xl">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="mt-32 bg-[#0F0F0F] rounded-[3rem] p-12 md:p-20 text-white relative overflow-hidden shadow-soft-xl"
+        >
           <div className="absolute top-0 right-0 w-96 h-96 bg-guinea-red/10 rounded-full blur-[100px]"></div>
           <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
@@ -147,7 +169,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
               <img src="https://i.imgur.com/CwnDz75.png" className="w-full h-full object-cover" alt="Membres" />
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
