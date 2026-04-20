@@ -1,361 +1,425 @@
-// --- BANQUE D'IMAGES STATIQUES OPTIMISÉE POUR BALLAL ASBL ---
+import { GoogleGenAI } from "@google/genai";
+import { NewsItem, CommunityEvent } from '../types';
 
-// Interface pour les images héro
-export interface HeroImageResult {
-  imageUrl: string;
-  label: string | null;
-  credit?: string;
-  aspectRatio?: string;
-  category?: string;
-}
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
-// Interface pour les images de gallerie
-export interface GalleryImage {
-  id: string;
-  imageUrl: string;
-  thumbnailUrl: string;
-  alt: string;
-  caption?: string;
-  category: 'culture' | 'events' | 'team' | 'projects';
-  date?: string;
-}
+// The API key must be obtained exclusively from the environment variable process.env.API_KEY
+const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
-// Collection d'images héro (mode drapeau guinéen)
-const GUINEAN_HERO_IMAGES: HeroImageResult[] = [
+// --- SMART IMAGE BANK (HIGH QUALITY & DIVERSE) ---
+// Banque d'images enrichie et diversifiée pour éviter les répétitions
+
+const TOPIC_IMAGES: Record<string, string[]> = {
+  POLITICS: [
+    'https://images.unsplash.com/photo-1596521345347-160100d072f5?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1555848962-6e79363ec58f?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1541872703-74c5963631df?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=800&auto=format&fit=crop'
+  ],
+  JUSTICE: [
+    'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1589391886645-d51941baf7fb?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1453928582365-b6c57d2d040f?q=80&w=800&auto=format&fit=crop'
+  ],
+  SOCCER: [
+    'https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1518091043644-c1d4457512c6?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1551958219-acbc608c6377?q=80&w=800&auto=format&fit=crop'
+  ],
+  ECONOMY: [
+    'https://images.unsplash.com/photo-1605218427368-35b0160d5c97?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1565514020176-dbf2277f0c6e?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1526304640152-d4619684e485?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop'
+  ],
+  MINING: [
+    'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1595245863339-b9e7df18f2f6?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1516937941344-00b4e0337589?q=80&w=800&auto=format&fit=crop'
+  ],
+  CULTURE: [
+    'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1519671482538-518b5c2bf7c6?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=800&auto=format&fit=crop'
+  ],
+  HEALTH: [
+    'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1584036561566-b93a90a6b262?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=800&auto=format&fit=crop'
+  ],
+  SOCIETY: [
+    'https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1577563908411-5077b6dc7624?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=800&auto=format&fit=crop'
+  ],
+  DEFAULT: [
+    'https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?q=80&w=800&auto=format&fit=crop'
+  ]
+};
+
+const getRandomImageForTopic = (topic: string | undefined): string => {
+  const key = topic?.toUpperCase() || 'DEFAULT';
+  const images = TOPIC_IMAGES[key] || TOPIC_IMAGES['DEFAULT'];
+  const index = Math.floor(Math.random() * images.length);
+  return images[index];
+};
+
+// --- MOCK DATA (UPDATED) ---
+
+const getMockNews = (): NewsItem[] => [
   {
-    imageUrl: "https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=1600&auto=format&fit=crop",
-    label: "Solidarité Guinée-Belgique",
-    credit: "Unsplash",
-    aspectRatio: "16:9",
-    category: "culture"
+    id: 'fallback-1',
+    title: 'Transition : Le CNT adopte le volet budgétaire',
+    summary: 'Les conseillers nationaux ont validé hier la loi de finances rectificative, mettant l\'accent sur les infrastructures routières.',
+    category: 'Politique',
+    date: 'Aujourd\'hui',
+    source: 'Guineenews',
+    imageUrl: getRandomImageForTopic('POLITICS')
   },
   {
-    imageUrl: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1600&auto=format&fit=crop",
-    label: "Communauté unie",
-    credit: "Unsplash",
-    aspectRatio: "16:9",
-    category: "community"
+    id: 'fallback-2',
+    title: 'Syli National : Liste des convoqués dévoilée',
+    summary: 'Le sélectionneur a publié la liste des 23 joueurs pour la prochaine trêve internationale. Quelques surprises en attaque.',
+    category: 'Sport',
+    date: 'Il y a 2h',
+    source: 'Foot224',
+    imageUrl: getRandomImageForTopic('SOCCER')
   },
   {
-    imageUrl: "https://images.unsplash.com/photo-1532375810709-75b1da00537c?q=80&w=1600&auto=format&fit=crop",
-    label: "Événements culturels",
-    credit: "Unsplash",
-    aspectRatio: "16:9",
-    category: "events"
+    id: 'fallback-3',
+    title: 'Boké : Reprise des exportations de bauxite',
+    summary: 'Après une brève interruption technique, le train minéralier a repris ses rotations vers le port de Kamsar.',
+    category: 'Économie',
+    date: 'Hier',
+    source: 'Mines Guinée',
+    imageUrl: getRandomImageForTopic('MINING')
   },
   {
-    imageUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1600&auto=format&fit=crop",
-    label: "Éducation et formation",
-    credit: "Unsplash",
-    aspectRatio: "16:9",
-    category: "education"
+    id: 'fallback-4',
+    title: 'Concert géant sur l\'Esplanade',
+    summary: 'Les stars de la musique urbaine guinéenne se sont produites devant une foule immense pour la paix.',
+    category: 'Culture',
+    date: 'Ce week-end',
+    source: 'Africaguinee',
+    imageUrl: getRandomImageForTopic('CULTURE')
   },
   {
-    imageUrl: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1600&auto=format&fit=crop",
-    label: "Actions humanitaires",
-    credit: "Unsplash",
-    aspectRatio: "16:9",
-    category: "humanitarian"
+    id: 'fallback-5',
+    title: 'Justice : Ouverture du procès des événements',
+    summary: 'Le tribunal de Dixinn a ouvert ce matin l\'audience tant attendue. Sécurité renforcée autour du tribunal.',
+    category: 'Justice',
+    date: 'Il y a 4h',
+    source: 'Kaloumpresse',
+    imageUrl: getRandomImageForTopic('JUSTICE')
+  },
+  {
+    id: 'fallback-6',
+    title: 'Rentrée scolaire : Les dates confirmées',
+    summary: 'Le Ministère de l\'Enseignement Pré-Universitaire confirme la date de la rentrée et annonce de nouvelles mesures.',
+    category: 'Société',
+    date: 'Hier',
+    source: 'MEPU-A',
+    imageUrl: getRandomImageForTopic('SOCIETY')
   }
 ];
 
-// Images spécifiques au drapeau guinéen (rouge-jaune-vert)
-const GUINEAN_THEMED_IMAGES: HeroImageResult[] = [
+const getMockEvents = (): CommunityEvent[] => [
   {
-    imageUrl: "https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1600&auto=format&fit=crop",
-    label: "Couleurs de Guinée",
-    credit: "Unsplash",
-    aspectRatio: "21:9",
-    category: "guinea"
+    id: 'evt-fallback-1',
+    title: 'Réunion Mensuelle BALLAL',
+    date: 'Samedi prochain, 14h00',
+    location: 'Bruxelles (Matonge)',
+    description: 'Rencontre d\'accueil pour les nouveaux arrivants et point sur les dossiers juridiques en cours.',
+    type: 'Meetup',
+    imageUrl: getRandomImageForTopic('SOCIETY')
   },
   {
-    imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?q=80&w=1600&auto=format&fit=crop",
-    label: "Traditions africaines",
-    credit: "Unsplash",
-    aspectRatio: "16:9",
-    category: "tradition"
+    id: 'evt-fallback-2',
+    title: 'Grande Fête de l\'Indépendance',
+    date: '2 Octobre, 18h00',
+    location: 'Salle La Madeleine, Bruxelles',
+    description: 'Célébration solennelle et festive de notre fête nationale. Tenue traditionnelle souhaitée.',
+    type: 'Fête',
+    imageUrl: getRandomImageForTopic('CULTURE')
+  },
+  {
+    id: 'evt-fallback-3',
+    title: 'Forum Business Guinée-Benelux',
+    date: '15 du mois prochain, 09h00',
+    location: 'Sheraton Brussels Airport',
+    description: 'Networking pour les entrepreneurs de la diaspora. Opportunités d\'investissement au pays.',
+    type: 'Business',
+    imageUrl: getRandomImageForTopic('ECONOMY')
+  },
+  {
+    id: 'evt-fallback-4',
+    title: 'Tournoi de Foot Solidaire',
+    date: 'Dimanche 24, 10h00',
+    location: 'Stade de Schaerbeek',
+    description: 'Match de gala entre les vétérans et la jeunesse. Les fonds iront à une école à Mamou.',
+    type: 'Sport',
+    imageUrl: getRandomImageForTopic('SOCCER')
+  },
+  {
+    id: 'evt-fallback-5',
+    title: 'Permanence Juridique Gratuite',
+    date: 'Tous les mercredis, 14h-17h',
+    location: 'Siège Ballal (Ixelles)',
+    description: 'Consultations gratuites avec nos avocats partenaires pour vos dossiers de régularisation.',
+    type: 'Meetup',
+    imageUrl: getRandomImageForTopic('JUSTICE')
+  },
+  {
+    id: 'evt-fallback-6',
+    title: 'Soirée Contes et Légendes du Fouta',
+    date: 'Vendredi soir, 19h30',
+    location: 'Centre Culturel PianoFabriek',
+    description: 'Une immersion dans notre patrimoine oral avec des conteurs venus spécialement de Labé.',
+    type: 'Culture',
+    imageUrl: getRandomImageForTopic('CULTURE')
   }
 ];
 
-// Image de fallback par défaut
-const DEFAULT_FALLBACK: HeroImageResult = {
+const FALLBACK_HERO = {
   imageUrl: "https://images.unsplash.com/photo-1547619292-240402b5ae5d?q=80&w=1600&auto=format&fit=crop",
-  label: "BALLAL ASBL - Solidarité Guinée-Belgique",
-  credit: "Unsplash",
-  aspectRatio: "16:9",
-  category: "default"
+  label: null
 };
 
-// Gallerie d'images pour les différentes sections
-const GALLERY_IMAGES: GalleryImage[] = [
-  // Images culturelles
-  {
-    id: "culture-1",
-    imageUrl: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1200&auto=format&fit=crop",
-    thumbnailUrl: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=400&auto=format&fit=crop",
-    alt: "Danse traditionnelle guinéenne",
-    caption: "Spectacle de danse traditionnelle",
-    category: "culture",
-    date: "2024-01-15"
-  },
-  {
-    id: "culture-2",
-    imageUrl: "https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1200&auto=format&fit=crop",
-    thumbnailUrl: "https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=400&auto=format&fit=crop",
-    alt: "Artisanat guinéen",
-    caption: "Exposition d'artisanat local",
-    category: "culture",
-    date: "2024-02-20"
-  },
-  
-  // Images d'événements
-  {
-    id: "event-1",
-    imageUrl: "https://images.unsplash.com/photo-1532375810709-75b1da00537c?q=80&w=1200&auto=format&fit=crop",
-    thumbnailUrl: "https://images.unsplash.com/photo-1532375810709-75b1da00537c?q=80&w=400&auto=format&fit=crop",
-    alt: "Conférence communautaire",
-    caption: "Conférence sur la diaspora guinéenne",
-    category: "events",
-    date: "2024-03-10"
-  },
-  {
-    id: "event-2",
-    imageUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1200&auto=format&fit=crop",
-    thumbnailUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=400&auto=format&fit=crop",
-    alt: "Atelier éducatif",
-    caption: "Atelier de formation professionnelle",
-    category: "events",
-    date: "2024-03-25"
-  },
-  
-  // Images de l'équipe
-  {
-    id: "team-1",
-    imageUrl: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop",
-    thumbnailUrl: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=400&auto=format&fit=crop",
-    alt: "Équipe BALLAL ASBL",
-    caption: "Réunion de l'équipe dirigeante",
-    category: "team",
-    date: "2024-04-05"
-  },
-  
-  // Images de projets
-  {
-    id: "project-1",
-    imageUrl: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=1200&auto=format&fit=crop",
-    thumbnailUrl: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=400&auto=format&fit=crop",
-    alt: "Projet humanitaire",
-    caption: "Distribution de matériel scolaire",
-    category: "projects",
-    date: "2024-04-15"
-  }
-];
+// --- CACHING & DEDUP UTILS ---
+const CACHE_PREFIX = 'ballal_cache_v3_';
+const QUOTA_ERROR_MARKER = 'ballal_quota_exceeded';
+const pendingRequests: Record<string, Promise<any>> = {};
 
-// Cache pour optimiser les performances
-let cachedHeroImage: HeroImageResult | null = null;
-let lastFetchTime: number = 0;
-const CACHE_DURATION = 3600000; // 1 heure en millisecondes
-
-// --- SERVICE METHODS ---
-
-/**
- * Récupère une image héro aléatoire ou selon une catégorie spécifique
- */
-export const fetchHeroImage = async (category?: string): Promise<HeroImageResult> => {
-  // Vérifier le cache
-  const now = Date.now();
-  if (cachedHeroImage && now - lastFetchTime < CACHE_DURATION) {
-    return cachedHeroImage;
-  }
-  
+const getCached = <T>(key: string): T | null => {
   try {
-    let availableImages: HeroImageResult[];
-    
-    // Filtrer par catégorie si spécifiée
-    if (category) {
-      availableImages = [
-        ...GUINEAN_HERO_IMAGES,
-        ...GUINEAN_THEMED_IMAGES
-      ].filter(img => img.category === category);
-      
-      // Si aucune image dans cette catégorie, utiliser toutes les images
-      if (availableImages.length === 0) {
-        availableImages = [...GUINEAN_HERO_IMAGES, ...GUINEAN_THEMED_IMAGES];
-      }
-    } else {
-      availableImages = [...GUINEAN_HERO_IMAGES, ...GUINEAN_THEMED_IMAGES];
-    }
-    
-    // Sélectionner une image aléatoire
-    const randomIndex = Math.floor(Math.random() * availableImages.length);
-    const selectedImage = availableImages[randomIndex];
-    
-    // Mettre en cache
-    cachedHeroImage = selectedImage;
-    lastFetchTime = now;
-    
-    return selectedImage;
-  } catch (error) {
-    console.error('Erreur lors de la récupération de l\'image héro:', error);
-    return DEFAULT_FALLBACK;
-  }
+    const cached = sessionStorage.getItem(CACHE_PREFIX + key);
+    if (cached) return JSON.parse(cached);
+  } catch (e) { return null; }
+  return null;
 };
 
-/**
- * Récupère toutes les images d'une catégorie spécifique
- */
-export const fetchGalleryImages = async (
-  category?: GalleryImage['category'],
-  limit?: number
-): Promise<GalleryImage[]> => {
+const setCached = (key: string, data: any) => {
   try {
-    let filteredImages = [...GALLERY_IMAGES];
-    
-    // Filtrer par catégorie
-    if (category) {
-      filteredImages = filteredImages.filter(img => img.category === category);
-    }
-    
-    // Limiter le nombre de résultats
-    if (limit && limit > 0) {
-      filteredImages = filteredImages.slice(0, limit);
-    }
-    
-    return filteredImages;
-  } catch (error) {
-    console.error('Erreur lors de la récupération des images de gallerie:', error);
-    return [];
-  }
+    sessionStorage.setItem(CACHE_PREFIX + key, JSON.stringify(data));
+  } catch (e) {}
 };
 
-/**
- * Récupère une image spécifique par son ID
- */
-export const fetchImageById = async (id: string): Promise<GalleryImage | null> => {
+const isQuotaExceededRaw = () => {
   try {
-    const image = GALLERY_IMAGES.find(img => img.id === id);
-    return image || null;
-  } catch (error) {
-    console.error(`Erreur lors de la récupération de l'image ${id}:`, error);
+    return sessionStorage.getItem(QUOTA_ERROR_MARKER) === 'true';
+  } catch { return false; }
+};
+
+const markQuotaExceeded = () => {
+  try {
+    console.warn("Global Quota Exceeded detected - switching to offline mode for this session.");
+    sessionStorage.setItem(QUOTA_ERROR_MARKER, 'true');
+  } catch {}
+};
+
+const isQuotaError = (e: any) => {
+  const msg = e?.message || JSON.stringify(e);
+  return msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED') || e?.status === 429;
+};
+
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+async function retryWithBackoff<T>(
+  operation: () => Promise<T>,
+  retries: number = 3,
+  backoff: number = 1000,
+  name: string = 'Operation'
+): Promise<T> {
+  try {
+    return await operation();
+  } catch (error: any) {
+    if (isQuotaError(error) || error?.status === 400 || error?.status === 403) {
+      throw error;
+    }
+    if (retries <= 0) {
+      console.warn(`[${name}] Failed after all retries. Last error: ${error.message}`);
+      throw error;
+    }
+    const jitter = Math.random() * 200;
+    const waitTime = backoff + jitter;
+    await delay(waitTime);
+    return retryWithBackoff(operation, retries - 1, backoff * 1.5, name);
+  }
+}
+
+const fetchWithDedup = async <T>(key: string, fetcher: () => Promise<T>): Promise<T> => {
+  const cached = getCached<T>(key);
+  if (cached) return cached;
+
+  if (pendingRequests[key]) {
+    return pendingRequests[key];
+  }
+
+  const promise = fetcher().then(data => {
+    if (data !== null && data !== undefined) setCached(key, data);
+    delete pendingRequests[key];
+    return data;
+  }).catch(err => {
+    delete pendingRequests[key];
+    throw err;
+  });
+
+  pendingRequests[key] = promise;
+  return promise;
+};
+
+const cleanAndParseJSON = (text: string): any => {
+  try {
+    if (!text) return null;
+    const jsonArrayMatch = text.match(/\[\s*\{[\s\S]*\}\s*\]/);
+    if (jsonArrayMatch) return JSON.parse(jsonArrayMatch[0]);
+    const jsonObjectMatch = text.match(/\{[\s\S]*\}/);
+    if (jsonObjectMatch) return JSON.parse(jsonObjectMatch[0]);
+    const cleaned = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    return JSON.parse(cleaned);
+  } catch (e) {
+    console.error("JSON Parsing Failed. Raw text sample:", text.substring(0, 50) + "...");
     return null;
   }
 };
 
-/**
- * Récupère les images par date (les plus récentes en premier)
- */
-export const fetchRecentImages = async (limit: number = 6): Promise<GalleryImage[]> => {
-  try {
-    const sortedImages = [...GALLERY_IMAGES]
-      .filter(img => img.date)
-      .sort((a, b) => {
-        if (!a.date || !b.date) return 0;
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
-      })
-      .slice(0, limit);
-    
-    return sortedImages;
-  } catch (error) {
-    console.error('Erreur lors de la récupération des images récentes:', error);
-    return [];
-  }
-};
+export interface NewsResult {
+  articles: NewsItem[];
+  sourceUrls: string[];
+}
 
-/**
- * Génère une URL d'image optimisée pour différentes tailles d'écran
- */
-export const getOptimizedImageUrl = (
-  baseUrl: string,
-  options?: {
-    width?: number;
-    height?: number;
-    quality?: number;
-    format?: 'webp' | 'jpg' | 'png';
-  }
-): string => {
-  const { width = 1200, height, quality = 80, format = 'webp' } = options || {};
-  
-  // Pour Unsplash, nous pouvons utiliser les paramètres de requête
-  if (baseUrl.includes('unsplash.com')) {
-    const params = new URLSearchParams();
-    params.set('w', width.toString());
-    params.set('auto', 'format');
-    params.set('fit', 'crop');
-    params.set('q', quality.toString());
-    
-    if (height) {
-      params.set('h', height.toString());
+export const fetchLatestNews = async (language: string = 'fr'): Promise<NewsResult> => {
+  if (!GEMINI_API_KEY || isQuotaExceededRaw()) return { articles: getMockNews(), sourceUrls: [] };
+
+  const cacheKey = `news_${language}_v3`;
+
+  return fetchWithDedup(cacheKey, async () => {
+    try {
+      return await retryWithBackoff(async () => {
+        const response = await ai.models.generateContent({
+          model: "gemini-2.5-flash",
+          contents: `Agis comme un rédacteur en chef expert sur la Guinée (Conakry).
+          Cherche les 6 actualités MAJEURES et VÉRIFIÉES des dernières 48 heures.
+          
+          Règles strictes :
+          1. Pas de rumeurs, que des faits.
+          2. Cite EXPLICITEMENT la source principale (ex: Guineenews, Africaguinee, RFI, Mosaiqueguinee) dans le champ 'source'.
+          3. Assigne un 'visual_topic' précis pour l'illustration.
+          4. Évite les faits divers mineurs. Concentre-toi sur la politique, l'économie, les grands événements sociétaux et sportifs.
+          
+          Langue de réponse : ${language === 'fr' ? 'Français' : language === 'en' ? 'Anglais' : language === 'ar' ? 'Arabe' : language === 'de' ? 'Allemand' : 'Français'}.
+          
+          Format JSON strict (Tableau) :
+          [
+            {
+              "id": "string",
+              "title": "string (Titre accrocheur et court)",
+              "summary": "string (Résumé informatif max 25 mots)",
+              "category": "Politique" | "Culture" | "Sport" | "Économie" | "Société" | "Justice" | "Santé",
+              "date": "string (ex: 'Il y a 2h', 'Ce matin')",
+              "source": "string (Nom du média source)",
+              "visual_topic": "POLITICS" | "SOCCER" | "ECONOMY" | "CULTURE" | "JUSTICE" | "SOCIETY" | "MINING" | "HEALTH"
+            }
+          ]`,
+          config: { tools: [{googleSearch: {}}] }
+        });
+
+        const rawArticles = cleanAndParseJSON(response.text || '') || getMockNews();
+        
+        const articles = Array.isArray(rawArticles) ? rawArticles.map((article: any) => ({
+          ...article,
+          imageUrl: getRandomImageForTopic(article.visual_topic || mapCategoryToTopic(article.category))
+        })) : getMockNews();
+        
+        const sourceUrls = response.candidates?.[0]?.groundingMetadata?.groundingChunks
+          ?.map((chunk: any) => chunk.web?.uri)
+          .filter((uri: any): uri is string => typeof uri === 'string')
+          .slice(0, 3) || [];
+
+        if (articles.length === 0) {
+            throw new Error("Invalid news data format");
+        }
+
+        return { articles, sourceUrls };
+      }, 3, 1000, 'fetchLatestNews');
+    } catch (error) {
+        console.error("News Fetch Failed (Fallback used):", error);
+        if (isQuotaError(error)) markQuotaExceeded();
+        return { articles: getMockNews(), sourceUrls: [] };
     }
-    
-    // Unsplash ne supporte pas le format webp via paramètres,
-    // mais utilise auto=format pour la conversion automatique
-    return `${baseUrl.split('?')[0]}?${params.toString()}`;
-  }
-  
-  // Pour d'autres sources, retourner l'URL originale
-  return baseUrl;
+  });
 };
 
-/**
- * Vide le cache des images
- */
-export const clearImageCache = (): void => {
-  cachedHeroImage = null;
-  lastFetchTime = 0;
+const mapCategoryToTopic = (category: string): string => {
+    const c = category?.toUpperCase() || '';
+    if (c.includes('POLITIQUE') || c.includes('POLITI')) return 'POLITICS';
+    if (c.includes('SPORT') || c.includes('FOOT') || c.includes('MATCH')) return 'SOCCER';
+    if (c.includes('ECONOM') || c.includes('MINE') || c.includes('FINANCE') || c.includes('ARGENT')) return 'ECONOMY';
+    if (c.includes('CULTURE') || c.includes('ART') || c.includes('MUSIQUE') || c.includes('CONCERT')) return 'CULTURE';
+    if (c.includes('JUSTICE') || c.includes('TRIBUNAL') || c.includes('DROIT')) return 'JUSTICE';
+    if (c.includes('SANTE') || c.includes('SANTÉ') || c.includes('HOPITAL') || c.includes('MALADIE')) return 'HEALTH';
+    return 'SOCIETY';
 };
 
-/**
- * Récupère une image héro thématique pour une saison ou occasion spécifique
- */
-export const fetchThemedHeroImage = async (): Promise<HeroImageResult> => {
-  const now = new Date();
-  const month = now.getMonth() + 1;
-  const day = now.getDate();
-  
-  // Images spéciales pour des occasions
-  const specialOccasions: { [key: string]: HeroImageResult } = {
-    // Jour de l'indépendance de la Guinée (2 octobre)
-    '10-02': {
-      imageUrl: "https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1600&auto=format&fit=crop",
-      label: "Jour de l'Indépendance de la Guinée",
-      credit: "Unsplash",
-      category: "independence"
-    },
-    // Nouvel An (1er janvier)
-    '01-01': {
-      imageUrl: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?q=80&w=1600&auto=format&fit=crop",
-      label: "Bonne Année de la part de BALLAL ASBL",
-      credit: "Unsplash",
-      category: "newyear"
-    },
-    // Saison estivale (juin-août)
-    'summer': {
-      imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?q=80&w=1600&auto=format&fit=crop",
-      label: "Été 2024 - Activités communautaires",
-      credit: "Unsplash",
-      category: "summer"
-    }
-  };
-  
-  // Vérifier les occasions spéciales
-  const dateKey = `${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-  if (specialOccasions[dateKey]) {
-    return specialOccasions[dateKey];
-  }
-  
-  // Vérifier la saison
-  if (month >= 6 && month <= 8) {
-    return specialOccasions['summer'];
-  }
-  
-  // Sinon, retourner une image aléatoire normale
-  return fetchHeroImage();
+export const fetchCommunityEvents = async (): Promise<CommunityEvent[]> => {
+    if (!GEMINI_API_KEY || isQuotaExceededRaw()) return getMockEvents();
+
+    return fetchWithDedup('events_v3', async () => {
+        try {
+            return await retryWithBackoff(async () => {
+                const response = await ai.models.generateContent({
+                    model: "gemini-2.5-flash",
+                    contents: `Trouve des événements pour la diaspora guinéenne en Belgique (Bruxelles/Liège) ou des événements africains majeurs à venir.
+                    Priorité aux événements réels futurs (Concerts, Conférences, Fêtes nationales). Si rien de spécifique, propose des événements génériques réalistes (Réunion mensuelle, Permanence, etc.).
+                    
+                    Format JSON strict :
+                    [
+                      {
+                        "id": "string",
+                        "title": "string",
+                        "date": "string",
+                        "location": "string",
+                        "description": "string",
+                        "type": "Meetup" | "Fête" | "Culture" | "Business" | "Sport",
+                        "visual_topic": "SOCIETY" | "CULTURE" | "ECONOMY" | "SOCCER"
+                      }
+                    ]`,
+                    config: { tools: [{googleSearch: {}}] }
+                });
+
+                const rawEvents = cleanAndParseJSON(response.text || '');
+                
+                const events = Array.isArray(rawEvents) ? rawEvents.map((event: any) => ({
+                  ...event,
+                  imageUrl: getRandomImageForTopic(event.visual_topic || mapCategoryToTopic(event.type))
+                })) : getMockEvents();
+
+                if (events.length === 0) throw new Error("Invalid events format");
+                return events;
+            }, 3, 1000, 'fetchCommunityEvents');
+        } catch (error) {
+            console.error("Events Fetch Failed (Fallback used):", error);
+            if (isQuotaError(error)) markQuotaExceeded();
+            return getMockEvents();
+        }
+    });
 };
 
-// Export des constantes pour une utilisation directe si nécessaire
-export {
-  GUINEAN_HERO_IMAGES,
-  GUINEAN_THEMED_IMAGES,
-  GALLERY_IMAGES,
-  DEFAULT_FALLBACK
+export interface HeroImageResult {
+    imageUrl: string;
+    label: string | null;
+}
+
+export const fetchHeroImage = async (): Promise<HeroImageResult> => {
+    if (!GEMINI_API_KEY || isQuotaExceededRaw()) return FALLBACK_HERO;
+    return FALLBACK_HERO;
 };
