@@ -32,29 +32,36 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Syne:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
 
-    <!-- Tailwind CDN (dev fallback — Vite uses PostCSS in production) -->
+    <!-- Tailwind CDN — moteur de styles en production (JIT via MutationObserver) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         theme: {
           extend: {
             colors: {
-              'guinea-red':    '#BE0000',
-              'guinea-yellow': '#FFCC00',
-              'guinea-green':  '#00843D',
-              'ivory':         '#FAFAF8',
-              'ink':           '#0F0F0F',
-              'earth-black':   '#1C1C1E',
-              'soft-paper':    '#FAFAF8',
-              'terracotta':    '#C9614A',
+              'guinea-red':      '#BE0000',
+              'guinea-red-dark': '#9B0000',
+              'guinea-yellow':   '#FFCC00',
+              'guinea-green':    '#00843D',
+              'ivory':           '#FAFAF8',
+              'ink':             '#0F0F0F',
+              'ink-muted':       '#6B6B6B',
+              'border-subtle':   '#E8E8E6',
             },
             fontFamily: {
-              sans:  ['Plus Jakarta Sans', 'sans-serif'],
-              serif: ['Playfair Display', 'serif'],
+              sans:  ['Syne', 'sans-serif'],
+              serif: ['Fraunces', 'serif'],
+            },
+            fontSize: {
+              'caption': ['9px',  { lineHeight: '1.4', letterSpacing: '0.06em' }],
+              'label':   ['10px', { lineHeight: '1.4', letterSpacing: '0.28em' }],
+              'badge':   ['11px', { lineHeight: '1.4', letterSpacing: '0.14em' }],
+              'body-sm': ['13px', { lineHeight: '1.6' }],
+              'body-lg': ['17px', { lineHeight: '1.75' }],
             },
             boxShadow: {
               'soft-elegant': '0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.06)',
@@ -66,6 +73,20 @@
               'token':    '8px',
               'token-lg': '12px',
               'token-xl': '20px',
+            },
+            keyframes: {
+              'fade-in': {
+                '0%':   { opacity: '0', transform: 'translateY(12px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              'slide-in-right': {
+                '0%':   { opacity: '0', transform: 'translateX(24px)' },
+                '100%': { opacity: '1', transform: 'translateX(0)' },
+              },
+            },
+            animation: {
+              'fade-in':        'fade-in 0.4s ease-out forwards',
+              'slide-in-right': 'slide-in-right 0.35s ease-out forwards',
             },
           },
         },
@@ -114,25 +135,9 @@
         flex: 1;
         display: block;
       }
-      .flag-line--crimson > span:nth-child(1) { background: var(--crimson); }
-      .flag-line--crimson > span:nth-child(2) { background: var(--gold); }
-      .flag-line--crimson > span:nth-child(3) { background: var(--emerald); }
-
-      /* Thin decorative line variant (1px) */
-      .flag-line-sm {
-        display: flex;
-        width: 100%;
-        height: 1.5px;
-      }
-      .flag-line-sm > span { flex: 1; display: block; }
-      .flag-line-sm > span:nth-child(1) { background: var(--crimson); }
-      .flag-line-sm > span:nth-child(2) { background: var(--gold); }
-      .flag-line-sm > span:nth-child(3) { background: var(--emerald); }
-
-      /* ── African pattern (ultra-subtle) ─────────────── */
-      .african-pattern {
-        background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 40c0-22.09 17.91-40 40-40v80c-22.09 0-40-17.91-40-40zM0 0c22.09 0 40 17.91 40 40S22.09 80 0 80V0z' fill='%23BE0000' fill-opacity='0.006' fill-rule='evenodd'/%3E%3C/svg%3E");
-      }
+      .flag-line > span:nth-child(1) { background: var(--crimson); }
+      .flag-line > span:nth-child(2) { background: var(--gold); }
+      .flag-line > span:nth-child(3) { background: var(--emerald); }
 
       /* ── WCAG skip-to-content ───────────────────────── */
       .sr-only {
@@ -148,6 +153,18 @@
 
       /* ── Framer-motion helpers ──────────────────────── */
       [data-motion-safe] { will-change: transform, opacity; }
+
+      /* ── Dot-grid texture for atmospheric depth ─────── */
+      .dot-grid {
+        background-image: radial-gradient(circle, rgba(15,15,15,0.065) 1px, transparent 1px);
+        background-size: 22px 22px;
+      }
+
+      /* ── Yellow highlighter on inline text ──────────── */
+      .highlight-mark {
+        background: linear-gradient(transparent 58%, var(--gold) 58%);
+        padding-right: 4px;
+      }
     </style>
 
     <!-- JSON-LD structured data — Organization (Schema.org) -->
