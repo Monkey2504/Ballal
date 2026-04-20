@@ -10,90 +10,101 @@ interface HeroProps {
   onDonate: () => void;
 }
 
-const STATS = [
-  { value: 'Fondée',   label: 'par des sans-papiers' },
-  { value: '2022',     label: 'Molenbeek, Bruxelles' },
-  { value: 'Du toit',  label: "jusqu'à l'autonomie" },
-];
+const ease = [0.22, 1, 0.36, 1] as const;
 
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } },
-};
-const wordVariants = {
-  hidden:  { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const } },
-};
 const fadeUp = {
-  hidden:  { opacity: 0, y: 16 },
+  hidden:  { opacity: 0, y: 18 },
   visible: (delay: number = 0) => ({
     opacity: 1, y: 0,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const, delay },
+    transition: { duration: 0.45, ease, delay },
   }),
 };
 
 const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
   return (
     <section
-      className="relative bg-[#FAFAF8] overflow-hidden"
+      className="relative bg-ivory overflow-hidden"
       aria-label="Présentation de Ballal ASBL"
       id="hero"
     >
-      {/* Subtle warm gradient — right side */}
-      <div className="absolute top-0 right-0 w-2/5 h-full pointer-events-none" aria-hidden="true">
-        <div className="absolute inset-0 bg-gradient-to-l from-[#FAFAF8] via-[#F5F0EE] to-transparent" />
-        <div className="absolute top-1/4 right-0 w-80 h-80 bg-[#BE0000]/4 rounded-full blur-[100px]" />
-        <div className="absolute bottom-1/4 right-16 w-56 h-56 bg-[#00843D]/4 rounded-full blur-[80px]" />
+      {/* Dot-grid texture — adds atmospheric depth */}
+      <div className="absolute inset-0 dot-grid pointer-events-none" aria-hidden="true" />
+
+      {/* Vertical Guinea flag strip — left-edge signature */}
+      <div className="absolute left-0 top-0 bottom-0 w-[5px] flex flex-col z-20 pointer-events-none" aria-hidden="true">
+        <span className="flex-1 bg-guinea-red" />
+        <span className="flex-1 bg-guinea-yellow" />
+        <span className="flex-1 bg-guinea-green" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 xl:gap-20 items-center min-h-[92vh] py-20 lg:py-28">
+      {/* Color atmosphere blobs */}
+      <div className="absolute top-0 right-0 w-[55%] h-full pointer-events-none" aria-hidden="true">
+        <div className="absolute top-1/4 right-8 w-[480px] h-[480px] bg-guinea-red/[0.07] rounded-full blur-[130px]" />
+        <div className="absolute bottom-1/3 right-1/3 w-72 h-72 bg-guinea-green/[0.05] rounded-full blur-[90px]" />
+        <div className="absolute top-1/2 right-0 w-80 h-80 bg-guinea-yellow/[0.09] rounded-full blur-[110px]" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
+        <div className="grid lg:grid-cols-[1fr_440px] xl:grid-cols-[1fr_520px] gap-12 xl:gap-16 items-center min-h-[92dvh] py-20 lg:py-24">
 
           {/* LEFT — Content */}
-          <div className="space-y-10">
+          <div className="space-y-8 pl-3">
 
             {/* Status badge */}
             <motion.div
-              custom={0}
+              custom={0.1}
               variants={fadeUp}
               initial="hidden"
               animate="visible"
-              className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.28em] text-[#BE0000]/80"
+              className="inline-flex items-center gap-2 text-label font-bold uppercase tracking-[0.28em] text-guinea-red/80"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#BE0000] animate-pulse" aria-hidden="true" />
+              <span className="w-1.5 h-1.5 rounded-full bg-guinea-red animate-pulse" aria-hidden="true" />
               ASBL agréée · BCE 1016.925.333 · Bruxelles
             </motion.div>
 
-            {/* Headline — staggered word reveal */}
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
+            {/* Headline — three staggered lines in one h1 */}
+            <motion.h1
+              className="font-serif font-black leading-[0.92] tracking-tight"
               aria-label="Accueillir. Défendre. Rassembler."
             >
-              {['Accueillir.', 'Défendre.', 'Rassembler.'].map((word, i) => (
-                <motion.div
-                  key={word}
-                  variants={wordVariants}
-                >
-                  <h1
-                    className={`font-serif font-black leading-[1.0] tracking-tight text-5xl sm:text-6xl xl:text-7xl ${
-                      i === 1 ? 'text-[#BE0000]' : 'text-[#0F0F0F]'
-                    }`}
-                  >
-                    {word}
-                  </h1>
-                </motion.div>
-              ))}
-            </motion.div>
+              <motion.span
+                className="block text-5xl sm:text-6xl xl:text-[80px] text-ink"
+                custom={0.2}
+                variants={fadeUp}
+                initial="hidden"
+                animate="visible"
+              >
+                Accueillir.
+              </motion.span>
 
-            {/* Mission */}
+              <motion.span
+                className="block italic text-5xl sm:text-6xl xl:text-[80px] text-guinea-red"
+                custom={0.32}
+                variants={fadeUp}
+                initial="hidden"
+                animate="visible"
+              >
+                Défendre.
+              </motion.span>
+
+              <motion.span
+                className="block text-5xl sm:text-6xl xl:text-[80px] text-ink"
+                custom={0.44}
+                variants={fadeUp}
+                initial="hidden"
+                animate="visible"
+              >
+                <span className="highlight-mark">Rassembler.</span>
+              </motion.span>
+            </motion.h1>
+
+            {/* Mission paragraph */}
             <motion.p
-              custom={0.5}
+              custom={0.55}
               variants={fadeUp}
               initial="hidden"
               animate="visible"
-              className="text-[17px] text-[#6B6B6B] leading-[1.75] max-w-lg font-medium"
+              className="text-body-lg text-ink-muted leading-[1.75] max-w-lg"
             >
               Ballal n'est pas une association qui vous aide de l'extérieur.
               Nous sommes des sans-papiers et d'anciens sans-papiers qui prennent
@@ -114,7 +125,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-[#BE0000] text-white text-[12px] font-black uppercase tracking-widest rounded-[8px] shadow-[0_4px_16px_rgba(190,0,0,0.25)] hover:bg-[#9B0000] transition-colors duration-200 group focus:outline-none focus-visible:ring-2 focus-visible:ring-guinea-red/50 focus-visible:ring-offset-2"
+                className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-guinea-red text-white text-[12px] font-bold uppercase tracking-widest rounded-token shadow-[0_4px_20px_rgba(190,0,0,0.28)] hover:bg-guinea-red-dark transition-colors duration-200 group focus:outline-none focus-visible:ring-2 focus-visible:ring-guinea-red/50 focus-visible:ring-offset-2"
               >
                 Rejoindre le combat
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
@@ -125,32 +136,36 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                className="inline-flex items-center gap-2.5 px-7 py-3.5 border border-[#0F0F0F] text-[#0F0F0F] text-[12px] font-black uppercase tracking-widest rounded-[8px] hover:bg-[#0F0F0F] hover:text-white transition-colors duration-200 group focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/40 focus-visible:ring-offset-2"
+                className="inline-flex items-center gap-2.5 px-7 py-3.5 border-2 border-ink text-ink text-[12px] font-bold uppercase tracking-widest rounded-token hover:bg-ink hover:text-white transition-colors duration-200 group focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/40 focus-visible:ring-offset-2"
               >
-                <Heart className="h-4 w-4 text-[#BE0000] fill-[#BE0000] group-hover:text-[#FFCC00] group-hover:fill-[#FFCC00] transition-colors" aria-hidden="true" />
+                <Heart className="h-4 w-4 text-guinea-red fill-guinea-red group-hover:text-guinea-yellow group-hover:fill-guinea-yellow transition-colors" aria-hidden="true" />
                 Soutenir Ballal
               </motion.button>
             </motion.div>
 
-            {/* Stats row with colored vertical bars */}
+            {/* Stat bars */}
             <motion.div
-              custom={0.8}
+              custom={0.78}
               variants={fadeUp}
               initial="hidden"
               animate="visible"
-              className="pt-6 border-t border-[#E8E8E6]"
+              className="pt-6 border-t border-border-subtle"
             >
               <div className="flex flex-wrap gap-8">
-                {STATS.map((stat, i) => (
+                {[
+                  { value: 'Fondée',   label: 'par des sans-papiers', color: '#BE0000' },
+                  { value: '2022',     label: 'Molenbeek, Bruxelles', color: '#FFCC00' },
+                  { value: 'Du toit',  label: "jusqu'à l'autonomie",  color: '#00843D' },
+                ].map((stat) => (
                   <div key={stat.label} className="flex items-start gap-3">
                     <div
                       className="w-[3px] h-10 rounded-full shrink-0 mt-0.5"
-                      style={{ background: ['#BE0000', '#FFCC00', '#00843D'][i] }}
+                      style={{ background: stat.color }}
                       aria-hidden="true"
                     />
                     <div>
-                      <p className="text-[17px] font-black text-[#0F0F0F] leading-none tracking-tight">{stat.value}</p>
-                      <p className="text-[10px] text-[#6B6B6B] font-medium mt-1 uppercase tracking-[0.14em]">{stat.label}</p>
+                      <p className="text-[17px] font-bold text-ink leading-none tracking-tight">{stat.value}</p>
+                      <p className="text-label text-ink-muted font-medium mt-1 uppercase tracking-[0.14em]">{stat.label}</p>
                     </div>
                   </div>
                 ))}
@@ -160,71 +175,76 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
 
           {/* RIGHT — Visual */}
           <motion.div
-            initial={{ opacity: 0, x: 32 }}
+            initial={{ opacity: 0, x: 28 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+            transition={{ duration: 0.6, ease, delay: 0.25 }}
             className="relative flex justify-center lg:justify-end"
           >
-            <div className="relative w-full max-w-md xl:max-w-lg">
+            <div className="relative w-full max-w-[420px] xl:max-w-[520px]">
 
-              {/* Offset border accent */}
+              {/* Rotated yellow accent border */}
               <div
-                className="absolute inset-0 translate-x-3 translate-y-3 border border-[#BE0000]/20 rounded-[20px]"
+                className="absolute inset-0 rotate-2 border-2 border-guinea-yellow/65 rounded-[22px]"
                 aria-hidden="true"
               />
 
-              {/* Main image */}
-              <div className="relative bg-[#E8E8E6] rounded-[20px] overflow-hidden aspect-[4/5] shadow-[0_16px_48px_rgba(0,0,0,0.10),0_4px_12px_rgba(0,0,0,0.05)]">
+              {/* Green corner accent */}
+              <div
+                className="absolute -right-3 -top-3 w-14 h-14 bg-guinea-green/20 rounded-token-lg"
+                aria-hidden="true"
+              />
+
+              {/* Main image — subtly tilted */}
+              <div className="relative bg-border-subtle rounded-[20px] overflow-hidden aspect-[4/5] shadow-soft-xl -rotate-[1.5deg]">
                 <img
                   src="https://i.imgur.com/laZeGp9.jpeg"
                   className="w-full h-full object-cover"
                   alt="Membres de la communauté Ballal ASBL à Bruxelles"
                   loading="eager"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F]/70 via-[#0F0F0F]/10 to-transparent" aria-hidden="true" />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/72 via-ink/10 to-transparent" aria-hidden="true" />
 
                 <blockquote className="absolute bottom-0 left-0 right-0 p-6">
-                  <p className="font-serif italic text-white text-lg leading-snug drop-shadow">
-                    "On vient de là où tu viens. Et on ne lâche pas."
+                  <p className="font-serif italic text-white text-lg leading-snug drop-shadow-md">
+                    « On vient de là où tu viens. Et on ne lâche pas. »
                   </p>
-                  {/* Flag line as quote underline */}
-                  <div className="flex gap-0.5 mt-3" aria-hidden="true">
-                    <span className="h-[2px] w-6 bg-[#BE0000] rounded-full" />
-                    <span className="h-[2px] w-6 bg-[#FFCC00] rounded-full" />
-                    <span className="h-[2px] w-6 bg-[#00843D] rounded-full" />
+                  <div className="flex gap-1 mt-3" aria-hidden="true">
+                    <span className="h-[3px] w-8 bg-guinea-red rounded-full" />
+                    <span className="h-[3px] w-8 bg-guinea-yellow rounded-full" />
+                    <span className="h-[3px] w-8 bg-guinea-green rounded-full" />
                   </div>
                 </blockquote>
               </div>
 
-              {/* Bottom badge */}
+              {/* Bottom floating badge */}
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7, duration: 0.4, ease: 'easeOut' }}
-                className="absolute -bottom-4 -left-4 bg-white border border-[#E8E8E6] rounded-[12px] shadow-[0_4px_16px_rgba(0,0,0,0.08)] px-4 py-3 flex items-center gap-3"
+                transition={{ delay: 0.78, duration: 0.35, ease: 'easeOut' }}
+                className="absolute -bottom-5 -left-5 bg-white border border-border-subtle rounded-token-lg shadow-soft-lg px-4 py-3 flex items-center gap-3"
                 aria-hidden="true"
               >
-                <div className="flex flex-col gap-[2px]">
-                  <span className="block w-2 h-5 bg-[#BE0000] rounded-sm" />
-                  <span className="block w-2 h-5 bg-[#FFCC00] rounded-sm" />
-                  <span className="block w-2 h-5 bg-[#00843D] rounded-sm" />
+                <div className="flex flex-col gap-[3px] shrink-0">
+                  <span className="block w-2 h-5 bg-guinea-red rounded-sm" />
+                  <span className="block w-2 h-5 bg-guinea-yellow rounded-sm" />
+                  <span className="block w-2 h-5 bg-guinea-green rounded-sm" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-black uppercase tracking-widest text-[#0F0F0F]">Guinée · Belgique</p>
-                  <p className="text-[9px] text-[#6B6B6B] font-medium mt-0.5">Par les sans-papiers, pour les sans-papiers</p>
+                  <p className="text-label font-bold uppercase tracking-widest text-ink">Guinée · Belgique</p>
+                  <p className="text-[9px] text-ink-muted font-medium mt-0.5">Par les sans-papiers, pour les sans-papiers</p>
                 </div>
               </motion.div>
 
-              {/* Top badge */}
+              {/* Top floating badge */}
               <motion.div
                 initial={{ opacity: 0, y: -12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8, duration: 0.4, ease: 'easeOut' }}
-                className="absolute -top-4 -right-4 bg-[#BE0000] text-white rounded-[12px] shadow-[0_4px_16px_rgba(190,0,0,0.25)] px-4 py-3 text-center"
+                transition={{ delay: 0.82, duration: 0.35, ease: 'easeOut' }}
+                className="absolute -top-5 -right-5 bg-guinea-red text-white rounded-token-lg shadow-[0_4px_20px_rgba(190,0,0,0.3)] px-4 py-3 text-center"
                 aria-hidden="true"
               >
-                <p className="text-[9px] font-black uppercase tracking-widest opacity-75">ASBL</p>
-                <p className="text-[10px] font-black mt-0.5">Agréée</p>
+                <p className="text-[9px] font-bold uppercase tracking-widest opacity-75">ASBL</p>
+                <p className="text-label font-bold mt-0.5">Agréée</p>
               </motion.div>
             </div>
           </motion.div>
