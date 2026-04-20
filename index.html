@@ -32,7 +32,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Syne:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
 
@@ -53,8 +53,8 @@
               'border-subtle':   '#E8E8E6',
             },
             fontFamily: {
-              sans:  ['Plus Jakarta Sans', 'sans-serif'],
-              serif: ['Playfair Display', 'serif'],
+              sans:  ['Syne', 'sans-serif'],
+              serif: ['Fraunces', 'serif'],
             },
             fontSize: {
               'caption': ['9px',  { lineHeight: '1.4', letterSpacing: '0.06em' }],
@@ -153,6 +153,18 @@
 
       /* ── Framer-motion helpers ──────────────────────── */
       [data-motion-safe] { will-change: transform, opacity; }
+
+      /* ── Dot-grid texture for atmospheric depth ─────── */
+      .dot-grid {
+        background-image: radial-gradient(circle, rgba(15,15,15,0.065) 1px, transparent 1px);
+        background-size: 22px 22px;
+      }
+
+      /* ── Yellow highlighter on inline text ──────────── */
+      .highlight-mark {
+        background: linear-gradient(transparent 58%, var(--gold) 58%);
+        padding-right: 4px;
+      }
     </style>
 
     <!-- JSON-LD structured data — Organization (Schema.org) -->
