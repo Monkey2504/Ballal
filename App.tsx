@@ -1,6 +1,7 @@
 import React, { useState, ReactNode, Component, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Analytics } from '@vercel/analytics/react';
 import Navbar from './components/Navbar.tsx';
 import Hero from './components/Hero.tsx';
 import Footer from './components/Footer.tsx';
@@ -403,6 +404,7 @@ const App: React.FC = () => (
     <BrowserRouter>
       <AppContent />
     </BrowserRouter>
+    <Analytics />
   </AuthProvider>
 );
 
