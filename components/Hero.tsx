@@ -23,15 +23,29 @@ const fadeUp = {
 const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
   return (
     <section
-      className="relative bg-ivory paper-grain overflow-hidden border-b border-border-subtle"
+      className="relative bg-ivory paper-grain overflow-hidden"
       aria-label="Présentation de Ballal ASBL"
       id="hero"
     >
+      {/* Folio / bandeau d'édition — façon une de journal */}
+      <div className="relative z-10 border-b border-ink/15">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8">
+          <div className="flex items-center justify-between py-2.5 dateline text-[9px] sm:text-[10px] text-ink-muted">
+            <span className="text-ink">Ballal — N° 01</span>
+            <span className="hidden sm:block">Solidarité Guinée · Belgique</span>
+            <span>Bruxelles · est. 2022</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Filet tricolore franc — signature unique */}
+      <div className="flag-rule relative z-10" aria-hidden="true"><span /><span /><span /></div>
+
       <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
-        <div className="grid lg:grid-cols-[1fr_440px] xl:grid-cols-[1fr_500px] gap-12 xl:gap-16 items-center min-h-[88dvh] py-16 lg:py-20">
+        <div className="grid lg:grid-cols-[1fr_420px] xl:grid-cols-[1fr_480px] gap-12 xl:gap-16 items-center min-h-[82dvh] py-14 lg:py-16">
 
           {/* LEFT — Content */}
-          <div className="space-y-8">
+          <div className="space-y-7">
 
             {/* Dateline kicker */}
             <motion.div
@@ -51,11 +65,11 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
 
             {/* Headline — three staggered lines in one h1 */}
             <motion.h1
-              className="font-serif font-black leading-[0.9] tracking-tight"
+              className="font-serif font-black leading-[0.85] tracking-[-0.02em]"
               aria-label="Accueillir. Défendre. Rassembler."
             >
               <motion.span
-                className="block text-[3.25rem] sm:text-7xl xl:text-[84px] text-ink"
+                className="block text-[3.5rem] sm:text-[5.5rem] xl:text-[7rem] text-ink"
                 custom={0.2}
                 variants={fadeUp}
                 initial="hidden"
@@ -65,7 +79,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
               </motion.span>
 
               <motion.span
-                className="block italic text-[3.25rem] sm:text-7xl xl:text-[84px] text-guinea-red"
+                className="block italic text-[3.5rem] sm:text-[5.5rem] xl:text-[7rem] text-guinea-red"
                 custom={0.32}
                 variants={fadeUp}
                 initial="hidden"
@@ -75,7 +89,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
               </motion.span>
 
               <motion.span
-                className="block text-[3.25rem] sm:text-7xl xl:text-[84px] text-ink"
+                className="block text-[3.5rem] sm:text-[5.5rem] xl:text-[7rem] text-ink"
                 custom={0.44}
                 variants={fadeUp}
                 initial="hidden"
@@ -91,7 +105,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
               variants={fadeUp}
               initial="hidden"
               animate="visible"
-              className="text-body-lg text-ink-muted leading-[1.75] max-w-xl"
+              className="text-body-lg text-ink-muted leading-[1.7] max-w-xl"
             >
               Ballal n'est pas une association qui vous aide de l'extérieur.
               Nous sommes des sans-papiers et d'anciens sans-papiers qui prennent
@@ -136,7 +150,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
               variants={fadeUp}
               initial="hidden"
               animate="visible"
-              className="pt-7 mt-1 border-t border-ink/15"
+              className="pt-6 mt-1 border-t border-ink/15"
             >
               <dl className="grid grid-cols-3 divide-x divide-ink/12">
                 {[
@@ -160,18 +174,21 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
             transition={{ duration: 0.6, ease, delay: 0.3 }}
             className="relative"
           >
-            <figure className="relative bg-ink rounded-[4px] overflow-hidden aspect-[4/5] shadow-soft-xl border border-ink/10">
+            {/* Tricolor top edge */}
+            <div className="flag-rule" aria-hidden="true"><span /><span /><span /></div>
+
+            <figure className="relative bg-ink overflow-hidden aspect-[4/5] shadow-soft-xl border-x border-b border-ink/15">
               <img
                 src="https://i.imgur.com/laZeGp9.jpeg"
                 className="w-full h-full object-cover"
                 alt="Membres de la communauté Ballal ASBL à Bruxelles"
                 loading="eager"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/15 to-ink/5" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-ink/5" aria-hidden="true" />
 
               {/* Press caption — top-left */}
               <figcaption className="absolute top-4 left-4">
-                <span className="dateline text-[9px] text-ivory bg-ink/55 backdrop-blur-sm px-2.5 py-1.5">
+                <span className="dateline text-[9px] text-ivory bg-ink/60 backdrop-blur-sm px-2.5 py-1.5">
                   Photo — archives Ballal
                 </span>
               </figcaption>
