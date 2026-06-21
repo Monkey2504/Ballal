@@ -63,10 +63,10 @@ const FormInput: React.FC<FormInputProps> = ({
   as = 'input',
   rows = 4
 }) => {
-  const inputClass = `w-full px-4 py-3 rounded-xl border-2 ${
-    error 
-      ? 'border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-200' 
-      : 'border-gray-200 focus:border-[#BE0000] focus:ring-2 focus:ring-[#BE0000]/20'
+  const inputClass = `w-full px-4 py-3 rounded-[4px] border-2 ${
+    error
+      ? 'border-guinea-red bg-guinea-red/5 focus:border-guinea-red focus:ring-guinea-red/20'
+      : 'border-border-subtle bg-paper focus:border-guinea-red focus:ring-2 focus:ring-guinea-red/20'
   } outline-none transition-all duration-200`;
 
   const commonProps = {
@@ -82,17 +82,17 @@ const FormInput: React.FC<FormInputProps> = ({
 
   return (
     <div>
-      <label 
-        htmlFor={id} 
-        className="block text-sm font-bold text-gray-700 mb-2"
+      <label
+        htmlFor={id}
+        className="block text-sm font-bold text-ink mb-2"
       >
-        {label} {required && <span className="text-red-500" aria-hidden="true">*</span>}
+        {label} {required && <span className="text-guinea-red" aria-hidden="true">*</span>}
         <span className="sr-only">{required ? ' (obligatoire)' : ' (optionnel)'}</span>
       </label>
-      
+
       <div className="relative">
         {icon && (
-          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-ink-muted">
             {icon}
           </div>
         )}
@@ -125,9 +125,9 @@ const FormInput: React.FC<FormInputProps> = ({
       </div>
       
       {error && (
-        <p 
-          id={`${id}-error`} 
-          className="text-red-600 text-sm font-medium mt-2 flex items-center animate-in slide-in-from-top-1"
+        <p
+          id={`${id}-error`}
+          className="text-guinea-red text-sm font-medium mt-2 flex items-center"
           role="alert"
         >
           <AlertTriangle className="h-4 w-4 mr-1" />
@@ -156,20 +156,20 @@ const CheckboxInput: React.FC<{
         aria-required={required}
         aria-invalid={!!error}
         aria-describedby={error ? `${id}-error` : undefined}
-        className="h-5 w-5 rounded border-2 border-gray-300 text-[#BE0000] focus:ring-2 focus:ring-[#BE0000]/40 focus:border-[#BE0000] transition-colors"
+        className="h-5 w-5 rounded-[3px] border-2 border-border-subtle text-guinea-red focus:ring-2 focus:ring-guinea-red/40 focus:border-guinea-red transition-colors"
       />
     </div>
-    <label 
-      htmlFor={id} 
+    <label
+      htmlFor={id}
       className="ml-3 text-sm cursor-pointer"
     >
-      <span className="font-medium text-gray-700">
-        {label} {required && <span className="text-red-500" aria-hidden="true">*</span>}
+      <span className="font-medium text-ink">
+        {label} {required && <span className="text-guinea-red" aria-hidden="true">*</span>}
       </span>
       {error && (
-        <p 
-          id={`${id}-error`} 
-          className="text-red-600 text-sm font-medium mt-1 flex items-center"
+        <p
+          id={`${id}-error`}
+          className="text-guinea-red text-sm font-medium mt-1 flex items-center"
           role="alert"
         >
           <AlertTriangle className="h-4 w-4 mr-1" />
@@ -198,43 +198,44 @@ const SuccessView: React.FC<{ t: Translation, onBack: () => void, mode: string }
   }, [onBack]);
   
   return (
-    <div 
-      className="min-h-screen bg-gradient-to-b from-slate-50 to-white flex items-center justify-center px-4"
+    <div
+      className="min-h-screen bg-ivory paper-grain flex items-center justify-center px-4"
       role="alert"
       aria-live="polite"
       aria-atomic="true"
     >
-      <div className="bg-white p-8 md:p-12 rounded-3xl shadow-2xl text-center max-w-md w-full border-t-8 border-green-500 animate-in zoom-in-95 duration-300">
-        <div className="mx-auto h-20 w-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
-          <CheckCircle className="h-10 w-10 text-green-600" aria-hidden="true" />
+      <div className="relative z-10 bg-white p-8 md:p-12 rounded-[4px] shadow-soft-xl text-center max-w-md w-full border border-ink/10">
+        <div className="flag-line w-12 mx-auto mb-6" aria-hidden="true"><span /><span /><span /></div>
+        <div className="mx-auto h-20 w-20 bg-guinea-green/10 rounded-full flex items-center justify-center mb-6">
+          <CheckCircle className="h-10 w-10 text-guinea-green" aria-hidden="true" />
         </div>
-        <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-4">
+        <h2 className="text-2xl md:text-3xl font-serif font-black text-ink mb-4">
           {t.form_success_title}
         </h2>
-        <p className="text-gray-600 mb-6 leading-relaxed">
+        <p className="text-ink-muted mb-6 leading-relaxed">
           {t.form_success_desc}
           <br />
-          <span className="text-sm text-gray-400 block mt-2">
+          <span className="dateline text-[9px] text-ink-muted block mt-3 normal-case tracking-[0.1em]">
             (Mode démo : le formulaire n'a pas été réellement envoyé)
           </span>
         </p>
-        
-        <div className="bg-green-50 p-4 rounded-xl mb-6">
-          <p className="text-sm text-green-800 font-medium">
+
+        <div className="bg-guinea-green/10 p-4 rounded-[4px] mb-6">
+          <p className="text-sm text-guinea-green font-medium">
             Retour automatique dans {autoRedirect} secondes
           </p>
         </div>
-        
+
         <div className="space-y-3">
-          <button 
+          <button
             onClick={onBack}
-            className="w-full bg-slate-900 text-white font-bold py-3 px-6 rounded-xl hover:bg-black transition-all focus:outline-none focus:ring-4 focus:ring-slate-200"
+            className="w-full bg-ink text-ivory font-mono font-bold uppercase text-xs tracking-[0.08em] py-3.5 px-6 rounded-[3px] hover:bg-guinea-red transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/40 focus-visible:ring-offset-2"
           >
             {mode === 'supplier' ? 'Revenir aux donateurs' : 'Revenir aux collectifs'}
           </button>
-          <button 
+          <button
             onClick={() => window.location.reload()}
-            className="w-full text-slate-700 font-medium py-3 px-6 rounded-xl hover:bg-slate-50 transition-all border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-300"
+            className="w-full text-ink font-mono font-bold uppercase text-xs tracking-[0.08em] py-3.5 px-6 rounded-[3px] hover:bg-paper transition-colors border-2 border-ink/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/30"
           >
             Nouveau formulaire
           </button>
@@ -274,8 +275,8 @@ const BaseFoodForm: React.FC<{
 
   const isSupplier = mode === 'supplier';
   const themeColor = isSupplier ? '#BE0000' : '#00843D';
-  const themeBg = isSupplier ? 'bg-red-600' : 'bg-green-600';
-  const themeHover = isSupplier ? 'hover:bg-red-700' : 'hover:bg-green-700';
+  const themeBg = isSupplier ? 'bg-guinea-red' : 'bg-guinea-green';
+  const themeHover = isSupplier ? 'hover:bg-guinea-red-dark' : 'hover:bg-guinea-green/90';
   const Icon = isSupplier ? ShoppingBag : Users;
   const FormIcon = isSupplier ? Package : HeartHandshake;
 
@@ -379,19 +380,19 @@ const BaseFoodForm: React.FC<{
       );
 
   return (
-    <div 
-      className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-8 md:py-12"
+    <div
+      className="min-h-screen bg-ivory paper-grain py-8 md:py-12"
       dir={language === 'ar' ? 'rtl' : 'ltr'}
       role="main"
       aria-labelledby={`${mode}-form-title`}
     >
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
         {/* Navigation */}
         <div className="mb-8">
-          <button 
-            onClick={onBack} 
-            className="flex items-center text-gray-600 hover:text-slate-900 font-bold transition-colors focus:outline-none focus:ring-2 focus:ring-current rounded-lg p-2"
+          <button
+            onClick={onBack}
+            className="flex items-center text-ink-muted hover:text-ink font-mono font-bold uppercase text-xs tracking-[0.08em] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-current rounded-[3px] p-2"
             aria-label={`Retour à ${isSupplier ? 'la page donateurs' : 'la page collectifs'}`}
           >
             <ArrowLeft className="h-5 w-5 mr-2" aria-hidden="true" />
@@ -400,27 +401,27 @@ const BaseFoodForm: React.FC<{
         </div>
 
         {/* Header */}
-        <div className="relative rounded-3xl overflow-hidden shadow-xl mb-8">
-          <img 
+        <div className="relative rounded-[4px] overflow-hidden shadow-soft-lg border border-ink/10 mb-8">
+          <img
             src={headerImg}
             alt={isSupplier ? "Donation de nourriture" : "Communauté solidaire"}
             className="w-full h-48 md:h-64 object-cover"
             onError={() => setImgError(true)}
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-6 md:p-10">
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/40 to-transparent flex flex-col justify-end p-6 md:p-10">
             <div className="flex items-center gap-3 mb-2">
-              <div className={`p-3 rounded-xl ${themeBg} bg-opacity-90`}>
+              <div className={`p-3 rounded-[3px] ${themeBg}`}>
                 <FormIcon className="h-8 w-8 text-white" aria-hidden="true" />
               </div>
-              <h1 
+              <h1
                 id={`${mode}-form-title`}
-                className="text-2xl md:text-4xl font-black text-white"
+                className="text-2xl md:text-4xl font-serif font-black text-ivory"
               >
                 {isSupplier ? t.form_supplier_title : t.form_network_title}
               </h1>
             </div>
-            <p className="text-white/90 text-lg font-medium">
+            <p className="text-ivory/90 text-lg font-medium">
               {isSupplier ? t.form_supplier_subtitle : t.form_network_subtitle}
             </p>
           </div>
@@ -434,26 +435,26 @@ const BaseFoodForm: React.FC<{
               <div className={`h-1 w-12 md:w-24 ${themeBg} bg-opacity-50`} />
               <div className={`h-3 w-3 rounded-full ${themeBg} bg-opacity-50`} />
               <div className={`h-1 w-12 md:w-24 ${themeBg} bg-opacity-30`} />
-              <div className="h-3 w-3 rounded-full bg-gray-300" />
+              <div className="h-3 w-3 rounded-full bg-border-subtle" />
             </div>
           </div>
-          <p className="text-center text-sm text-gray-600">
-            Étape 1 sur 3 - Informations de contact
+          <p className="text-center dateline text-[10px] text-ink-muted">
+            Étape 1 sur 3 — Informations de contact
           </p>
         </div>
 
         {/* Form Container */}
-        <div className="bg-white rounded-3xl shadow-lg p-6 md:p-10 border border-gray-200">
-          
+        <div className="bg-white rounded-[4px] shadow-soft-lg p-6 md:p-10 border border-ink/10">
+
           {/* Demo Warning */}
-          <div 
-            className="bg-amber-50 border-l-4 border-amber-500 p-4 mb-8 rounded-r-lg flex items-start"
+          <div
+            className="bg-guinea-yellow/15 border-l-4 border-guinea-yellow p-4 mb-8 rounded-r-[4px] flex items-start"
             role="alert"
           >
-            <AlertTriangle className="h-5 w-5 text-amber-500 mr-3 flex-shrink-0 mt-0.5" aria-hidden="true" />
+            <AlertTriangle className="h-5 w-5 text-[#8B7000] mr-3 flex-shrink-0 mt-0.5" aria-hidden="true" />
             <div>
-              <p className="text-sm font-bold text-amber-800 mb-1">Mode démonstration</p>
-              <p className="text-sm text-amber-700">
+              <p className="text-sm font-bold text-ink mb-1">Mode démonstration</p>
+              <p className="text-sm text-ink-muted">
                 {t.form_demo_warning}
               </p>
             </div>
@@ -461,11 +462,11 @@ const BaseFoodForm: React.FC<{
 
           {/* Error message */}
           {errors.submit && (
-            <div 
-              className="bg-red-50 border-l-4 border-red-500 p-4 mb-8 rounded-r-lg"
+            <div
+              className="bg-guinea-red/5 border-l-4 border-guinea-red p-4 mb-8 rounded-r-[4px]"
               role="alert"
             >
-              <p className="text-red-700 font-medium">
+              <p className="text-guinea-red font-medium">
                 <AlertTriangle className="h-5 w-5 inline mr-2" aria-hidden="true" />
                 {errors.submit}
               </p>
@@ -480,7 +481,7 @@ const BaseFoodForm: React.FC<{
           >
             {/* Contact Information */}
             <section>
-              <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+              <h2 className="text-xl font-serif font-black text-ink mb-6 flex items-center gap-2">
                 <Building2 className="h-5 w-5" aria-hidden="true" />
                 Informations de contact
               </h2>
@@ -534,7 +535,7 @@ const BaseFoodForm: React.FC<{
 
             {/* Specific Information */}
             <section>
-              <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+              <h2 className="text-xl font-serif font-black text-ink mb-6 flex items-center gap-2">
                 <Package className="h-5 w-5" aria-hidden="true" />
                 {isSupplier ? 'Détails du don' : 'Informations du collectif'}
               </h2>
@@ -615,7 +616,7 @@ const BaseFoodForm: React.FC<{
 
             {/* Additional Information */}
             <section>
-              <h2 className="text-xl font-bold text-slate-900 mb-6">Informations complémentaires</h2>
+              <h2 className="text-xl font-serif font-black text-ink mb-6">Informations complémentaires</h2>
               
               <FormInput 
                 id="message"
@@ -633,8 +634,8 @@ const BaseFoodForm: React.FC<{
             </section>
 
             {/* Consent & Preferences */}
-            <section className="bg-gray-50 p-6 rounded-2xl border border-gray-200">
-              <h2 className="text-xl font-bold text-slate-900 mb-6">Confidentialité et préférences</h2>
+            <section className="bg-paper p-6 rounded-[4px] border border-border-subtle">
+              <h2 className="text-xl font-serif font-black text-ink mb-6">Confidentialité et préférences</h2>
               
               <div className="space-y-4">
                 <CheckboxInput 
@@ -646,13 +647,13 @@ const BaseFoodForm: React.FC<{
                   required={true}
                 />
                 
-                <div className="ml-8 pl-4 border-l-2 border-gray-300">
-                  <p className="text-sm text-gray-600 mb-4">
+                <div className="ml-8 pl-4 border-l-2 border-border-subtle">
+                  <p className="text-sm text-ink-muted mb-4">
                     Vos données seront traitées conformément à notre politique de confidentialité et ne seront utilisées que pour traiter votre demande.
                   </p>
-                  <a 
+                  <a
                     href="#privacy"
-                    className="text-sm text-blue-600 hover:text-blue-800 font-medium flex items-center"
+                    className="text-sm text-guinea-red hover:text-guinea-red-dark font-medium flex items-center"
                   >
                     <ShieldCheck className="h-4 w-4 mr-2" aria-hidden="true" />
                     Lire notre politique de confidentialité
@@ -670,11 +671,11 @@ const BaseFoodForm: React.FC<{
             </section>
 
             {/* Submit Button */}
-            <div className="pt-6 border-t border-gray-200">
-              <button 
-                type="submit" 
+            <div className="pt-6 border-t border-border-subtle">
+              <button
+                type="submit"
                 disabled={isSubmitting}
-                className={`w-full ${themeBg} ${themeHover} text-white font-bold py-4 px-6 rounded-xl shadow-lg transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3 focus:outline-none focus:ring-4 focus:ring-current focus:ring-opacity-40`}
+                className={`w-full ${themeBg} ${themeHover} text-white font-mono font-bold uppercase tracking-[0.08em] py-4 px-6 rounded-[3px] shadow-soft-elegant transition-colors duration-200 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-current focus-visible:ring-offset-2`}
               >
                 {isSubmitting ? (
                   <>
@@ -690,7 +691,7 @@ const BaseFoodForm: React.FC<{
                 )}
               </button>
               
-              <p className="text-center text-sm text-gray-500 mt-4">
+              <p className="text-center text-sm text-ink-muted mt-4">
                 <AlertTriangle className="h-4 w-4 inline mr-1" aria-hidden="true" />
                 Ce formulaire est une démonstration. Dans la version finale, les données seront envoyées à notre équipe.
               </p>

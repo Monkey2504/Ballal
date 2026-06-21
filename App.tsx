@@ -28,10 +28,10 @@ import PressSection from './components/PressSection.tsx';
 
 const PAGE_TITLES: Record<string, string> = {
   '/':                         'BALLAL ASBL | Solidarité Guinée-Belgique',
-  '/entraide':                 'Entraide & Solidarité | BALLAL ASBL',
-  '/logement':                 'Logement & Squat | BALLAL ASBL',
-  '/culture':                  'Culture & Histoire | BALLAL ASBL',
-  '/droits':                   'Aide & Droits | BALLAL ASBL',
+  '/entraide':                 'Entraide et solidarité | BALLAL ASBL',
+  '/logement':                 'Logement et squat | BALLAL ASBL',
+  '/culture':                  'Culture et histoire | BALLAL ASBL',
+  '/droits':                   'Aide et droits | BALLAL ASBL',
   '/alimentation':             'Projet Alimentaire | BALLAL ASBL',
   '/alimentation/fournisseur': 'Fournisseur Alimentaire | BALLAL ASBL',
   '/alimentation/collectif':   'Collectif Alimentaire | BALLAL ASBL',

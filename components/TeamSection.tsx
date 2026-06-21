@@ -22,7 +22,7 @@ const cardVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: (i: number) => ({
     opacity: 1, y: 0,
-    transition: { delay: i * 0.07, duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
+    transition: { delay: i * 0.05, duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
   }),
 };
 
@@ -66,7 +66,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
       role: t.role_admin,
       image: "https://i.imgur.com/7FduSwY.png",
       email: "admin@ballal.be",
-      color: "bg-[#0F0F0F]",
+      color: "bg-ink",
       bio: "Trésorier de Ballal ASBL"
     },
     {
@@ -74,34 +74,36 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
       role: "Conseiller",
       image: "https://i.imgur.com/1qqkroP.png",
       email: "Francois@ballal.be",
-      color: "bg-blue-600",
+      color: "bg-guinea-green",
       bio: "Conseiller stratégique"
     }
   ];
 
   return (
-    <section className="py-32 relative bg-[#FAFAF8] border-t border-gray-100">
+    <section className="py-20 sm:py-28 relative bg-ivory paper-grain border-t border-border-subtle">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="text-center mb-20"
+          transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="max-w-2xl mb-14"
         >
-          <span className="inline-block py-2 px-6 bg-[#0F0F0F] text-white font-black text-[10px] uppercase tracking-[0.3em] mb-6 rounded-full">
-            Gouvernance & Vision
-          </span>
-          <h2 className="text-5xl md:text-7xl font-serif font-black text-[#0F0F0F] mb-8 tracking-tighter">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flag-line w-8 shrink-0" aria-hidden="true">
+              <span /><span /><span />
+            </span>
+            <p className="dateline text-[11px] text-guinea-red">Gouvernance et vision</p>
+          </div>
+          <h2 className="font-serif font-black text-[2rem] sm:text-[2.75rem] text-ink leading-[1.02] tracking-tight">
             {t.team_title}
           </h2>
-          <div className="w-24 h-2 bg-guinea-yellow mx-auto mb-8"></div>
-          <p className="max-w-2xl mx-auto text-xl text-gray-600 font-medium italic">
-            "{t.team_subtitle}"
+          <p className="mt-5 text-body-lg text-ink-muted leading-relaxed max-w-xl">
+            {t.team_subtitle}
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5">
           {teamMembers.map((member, index) => (
             <motion.div
               key={index}
@@ -110,33 +112,34 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-30px' }}
-              className="bg-white rounded-[2rem] overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500 group flex flex-col"
+              className="bg-white rounded-[4px] overflow-hidden border border-ink/10 shadow-soft-sm hover:shadow-soft-lg transition-shadow duration-300 group flex flex-col"
             >
-              <div className="relative h-72 overflow-hidden">
+              <div className="relative aspect-[3/4] overflow-hidden bg-border-subtle">
                 <img
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   src={member.image}
                   alt={member.name}
+                  loading="lazy"
                 />
-                <div className={`absolute top-0 left-0 w-full h-1.5 ${member.color}`}></div>
+                <div className={`absolute bottom-0 left-0 right-0 h-[3px] ${member.color}`} aria-hidden="true"></div>
               </div>
 
-              <div className="p-6 flex-grow flex flex-col justify-between">
+              <div className="p-4 flex-grow flex flex-col justify-between">
                 <div>
-                  <h3 className="font-black text-xl text-[#0F0F0F] leading-tight mb-1">{member.name}</h3>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-4">{member.role}</p>
-                  <p className="text-sm text-gray-600 italic mb-6">"{member.bio}"</p>
+                  <h3 className="font-black text-body-sm text-ink leading-tight">{member.name}</h3>
+                  <p className="dateline text-[9px] text-ink-muted mt-1.5 normal-case tracking-[0.1em]">{member.bio}</p>
                 </div>
 
-                <div className="flex items-center justify-between pt-4 border-t border-gray-50">
-                  <span className="text-[9px] font-black text-gray-400 uppercase tracking-tighter truncate max-w-[120px]">
+                <div className="flex items-center justify-between pt-3 mt-3 border-t border-ink/10">
+                  <span className="dateline text-[8px] text-ink-muted normal-case tracking-[0.08em] truncate max-w-[110px]">
                     {member.email}
                   </span>
                   <button
                     onClick={() => handleCopyEmail(member.email!)}
-                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    className="p-2 hover:bg-ink/[0.05] rounded-[3px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-guinea-red/40"
+                    aria-label={`Copier l'adresse e-mail de ${member.name}`}
                   >
-                    {copiedEmail === member.email ? <Check className="h-4 w-4 text-guinea-green" /> : <Mail className="h-4 w-4 text-gray-400" />}
+                    {copiedEmail === member.email ? <Check className="h-4 w-4 text-guinea-green" /> : <Mail className="h-4 w-4 text-ink-muted" />}
                   </button>
                 </div>
               </div>
@@ -148,26 +151,26 @@ const TeamSection: React.FC<TeamSectionProps> = ({ language }) => {
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="mt-32 bg-[#0F0F0F] rounded-[3rem] p-12 md:p-20 text-white relative overflow-hidden shadow-soft-xl"
+          transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="mt-16 bg-ink rounded-[4px] p-10 md:p-16 text-ivory relative overflow-hidden shadow-soft-xl"
         >
-          <div className="absolute top-0 right-0 w-96 h-96 bg-guinea-red/10 rounded-full blur-[100px]"></div>
-          <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
+          <div className="flag-line" aria-hidden="true"><span /><span /><span /></div>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-7">
               <div className="flex items-center gap-4">
-                <Users className="h-10 w-10 text-guinea-yellow" />
-                <h3 className="text-4xl md:text-5xl font-serif font-black">{t.members_title}</h3>
+                <Users className="h-9 w-9 text-guinea-yellow" aria-hidden="true" />
+                <h3 className="font-serif font-black text-3xl md:text-4xl">{t.members_title}</h3>
               </div>
-              <p className="text-xl text-gray-300 leading-relaxed font-medium">
+              <p className="text-body-lg text-ivory/70 leading-relaxed">
                 {t.team_collective_strength}
               </p>
-              <button className="bg-guinea-red text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest hover:scale-105 transition-all shadow-xl">
+              <button className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-guinea-red text-white font-mono text-[12px] font-bold uppercase tracking-[0.08em] rounded-[3px] hover:bg-guinea-red-dark transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-guinea-red/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink">
                 {t.join_button}
               </button>
             </div>
-            <div className="rounded-[2rem] overflow-hidden border-4 border-white/10 rotate-1 shadow-2xl">
-              <img src="https://i.imgur.com/CwnDz75.png" className="w-full h-full object-cover" alt="Membres" />
-            </div>
+            <figure className="rounded-[4px] overflow-hidden border border-ivory/10">
+              <img src="https://i.imgur.com/CwnDz75.png" className="w-full h-full object-cover" alt="Membres et militants de Ballal ASBL" loading="lazy" />
+            </figure>
           </div>
         </motion.div>
       </div>

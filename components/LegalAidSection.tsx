@@ -24,7 +24,7 @@ const CONTACTS = [
   },
   {
     name: 'CGRS — Commissariat Général',
-    role: 'Demande d\'asile & réfugiés',
+    role: 'Demande d\'asile et réfugiés',
     address: 'Rue Ernest Blerot 39, 1070 Anderlecht',
     phone: '02 205 51 11',
     url: 'cgvs.be',
@@ -32,7 +32,7 @@ const CONTACTS = [
   },
   {
     name: 'CIRÉ',
-    role: 'Aide juridique & permanences gratuites',
+    role: 'Aide juridique et permanences gratuites',
     address: 'Avenue Poincaré 50, 1070 Bruxelles',
     phone: '02 629 77 10',
     url: 'cire.be',
@@ -44,7 +44,7 @@ const CONTACTS = [
     address: 'Barreau de Bruxelles',
     phone: '02 508 68 10',
     url: 'avocats.be',
-    color: '#0F0F0F',
+    color: '#141210',
   },
 ];
 
@@ -95,46 +95,45 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8] pb-24">
+    <div className="min-h-screen bg-ivory pb-24">
 
       {/* FLASH MODE */}
       {isFlashMode && (
         <div className="fixed inset-0 z-[200] bg-guinea-red text-white flex flex-col items-center justify-center p-8 animate-in fade-in duration-300">
-          <button onClick={() => setIsFlashMode(false)} className="absolute top-8 right-8 text-white hover:scale-110 transition-transform p-2 bg-black/10 rounded-full">
+          <button onClick={() => setIsFlashMode(false)} className="absolute top-8 right-8 text-white hover:scale-110 transition-transform p-2 bg-black/10 rounded-[3px]" aria-label="Fermer">
             <X className="h-10 w-10" />
           </button>
-          <ShieldAlert className="h-24 w-24 mb-8 animate-pulse text-guinea-yellow" />
-          <h2 className="text-5xl md:text-8xl font-black uppercase text-center mb-10 tracking-tighter leading-none">NE PAS OUVRIR</h2>
-          <div className="bg-white text-[#0F0F0F] p-8 md:p-12 max-w-3xl w-full rounded-[2rem] shadow-2xl relative">
-            <p className="font-mono text-2xl md:text-4xl font-black uppercase leading-tight text-center">
+          <ShieldAlert className="h-24 w-24 mb-8 text-guinea-yellow" aria-hidden="true" />
+          <h2 className="font-serif font-black text-5xl md:text-8xl uppercase text-center mb-10 tracking-tighter leading-none">NE PAS OUVRIR</h2>
+          <div className="bg-white text-ink p-8 md:p-12 max-w-3xl w-full rounded-[4px] shadow-soft-xl relative">
+            <p className="font-mono text-2xl md:text-4xl font-bold uppercase leading-tight text-center">
               "{script}"
             </p>
             <button
               onClick={handleCopy}
-              className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-[#0F0F0F] text-white px-8 py-4 rounded-full shadow-xl flex items-center gap-3 hover:bg-guinea-green transition-all"
+              className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-ink text-ivory px-8 py-4 rounded-[3px] shadow-soft-lg flex items-center gap-3 hover:bg-guinea-green transition-colors font-mono font-bold text-xs uppercase tracking-[0.08em]"
             >
-              {copied ? <CheckCircle className="h-6 w-6" /> : <Copy className="h-6 w-6" />}
-              <span className="font-black text-xs uppercase tracking-widest">{copied ? 'COPIÉ' : 'COPIER LE SCRIPT'}</span>
+              {copied ? <CheckCircle className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
+              <span>{copied ? 'Copié' : 'Copier le script'}</span>
             </button>
           </div>
         </div>
       )}
 
       {/* HERO */}
-      <div className="bg-[#0F0F0F] text-white py-20 relative overflow-hidden">
+      <div className="bg-ink text-ivory py-20 relative overflow-hidden">
         <div className="flag-line absolute top-0 left-0 right-0" aria-hidden="true"><span /><span /><span /></div>
         <div className="max-w-7xl mx-auto px-6 relative z-10 pt-4">
-          <div className="inline-flex items-center gap-2 bg-[#FFCC00]/15 text-[#FFCC00] px-5 py-2 font-bold rounded-full text-[10px] uppercase tracking-[0.25em] mb-8 border border-[#FFCC00]/25">
-            GUIDE DE PROTECTION JURIDIQUE
-          </div>
+          <p className="dateline text-[11px] text-guinea-yellow mb-8">
+            Guide de protection juridique
+          </p>
           <h1 className="text-6xl md:text-8xl font-serif font-black tracking-tighter leading-[0.9] mb-8">
-            Tes <span className="text-[#BE0000]">droits</span>,<br />tes <span className="text-[#00843D]">armes</span>
+            Tes <span className="text-guinea-red">droits</span>,<br />tes <span className="text-guinea-green">armes</span>
           </h1>
-          <p className="text-lg md:text-xl font-medium italic max-w-2xl leading-relaxed text-white/50">
+          <p className="text-body-lg md:text-xl font-medium italic max-w-2xl leading-relaxed text-ivory/50">
             "{t.legal_intro}"
           </p>
         </div>
-        <div className="flag-line absolute bottom-0 left-0 right-0" aria-hidden="true"><span /><span /><span /></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 -mt-16 relative z-20">
@@ -142,31 +141,30 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
         {/* SOS BUTTON */}
         <button
           onClick={() => setIsFlashMode(true)}
-          className="w-full bg-guinea-red text-white p-10 rounded-[2.5rem] shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 flex items-center justify-center gap-8 group mb-12 overflow-hidden relative"
+          className="w-full bg-guinea-red text-white p-10 rounded-[4px] shadow-soft-lg hover:bg-guinea-red-dark hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-8 group mb-12"
         >
-          <div className="absolute inset-0 bg-white/5 group-hover:bg-transparent transition-colors" />
-          <Zap className="h-10 w-10 text-guinea-yellow group-hover:scale-125 transition-transform" />
-          <span className="text-3xl md:text-5xl font-black uppercase tracking-tighter">MODE URGENCE POLICE</span>
-          <Zap className="h-10 w-10 text-guinea-yellow group-hover:scale-125 transition-transform" />
+          <Zap className="h-8 w-8 text-guinea-yellow group-hover:scale-110 transition-transform" aria-hidden="true" />
+          <span className="font-serif font-black text-3xl md:text-5xl uppercase tracking-tighter">Mode urgence police</span>
+          <Zap className="h-8 w-8 text-guinea-yellow group-hover:scale-110 transition-transform" aria-hidden="true" />
         </button>
 
         {/* TAB NAVIGATION */}
-        <nav className="flex rounded-[1rem] bg-white border border-gray-100 shadow-soft-elegant overflow-hidden mb-12">
+        <nav className="flex rounded-[4px] bg-white border border-border-subtle shadow-soft-elegant overflow-hidden mb-12">
           {([
             { id: 'urgence',       label: 'Droits fondamentaux', icon: Shield },
             { id: 'regularisation', label: 'Régularisation',     icon: Scale },
-            { id: 'ressources',    label: 'Ressources & FAQ',    icon: BookOpen },
+            { id: 'ressources',    label: 'Ressources et FAQ',   icon: BookOpen },
           ] as { id: TabType; label: string; icon: any }[]).map(({ id, label, icon: Icon }) => (
             <button
               key={id}
               onClick={() => setActiveTab(id)}
-              className={`flex-1 flex items-center justify-center gap-2 py-4 px-3 font-black text-[11px] uppercase tracking-widest transition-all duration-200 ${
+              className={`flex-1 flex items-center justify-center gap-2 py-4 px-3 font-mono font-bold text-[11px] uppercase tracking-[0.08em] transition-all duration-200 ${
                 activeTab === id
-                  ? 'bg-[#0F0F0F] text-white'
-                  : 'text-[#6B6B6B] hover:bg-[#FAFAF8]'
+                  ? 'bg-ink text-ivory'
+                  : 'text-ink-muted hover:bg-paper'
               }`}
             >
-              <Icon className="h-4 w-4 shrink-0" />
+              <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
               <span className="hidden sm:inline">{label}</span>
             </button>
           ))}
@@ -177,43 +175,44 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
           <div className="grid md:grid-cols-2 gap-8 animate-in fade-in duration-300">
 
             {/* Éducation */}
-            <div className="bg-white p-10 rounded-[2.5rem] shadow-soft-elegant border border-gray-100 hover:border-guinea-green/20 transition-all group">
+            <div className="bg-white p-10 rounded-[4px] shadow-soft-elegant border border-border-subtle hover:border-guinea-green/30 transition-colors group">
               <div className="flex items-center gap-5 mb-8">
-                <div className="p-4 bg-guinea-green/10 text-guinea-green rounded-2xl group-hover:scale-110 transition-transform">
-                  <GraduationCap className="h-8 w-8" />
+                <div className="p-4 bg-guinea-green/10 text-guinea-green rounded-[4px]">
+                  <GraduationCap className="h-8 w-8" aria-hidden="true" />
                 </div>
-                <h3 className="text-3xl font-serif font-black text-[#0F0F0F]">{t.legal_school_title}</h3>
+                <h3 className="text-3xl font-serif font-black text-ink">{t.legal_school_title}</h3>
               </div>
-              <p className="text-lg font-medium text-gray-600 mb-8 italic">"{t.legal_school_subtitle}"</p>
+              <p className="text-body-lg font-medium text-ink-muted mb-8 italic">"{t.legal_school_subtitle}"</p>
               <ul className="space-y-4">
-                <li className="flex items-start gap-4 text-gray-700 font-medium">
-                  <CheckCircle className="h-5 w-5 text-guinea-green shrink-0 mt-1" />
+                <li className="flex items-start gap-4 text-ink-muted font-medium">
+                  <CheckCircle className="h-5 w-5 text-guinea-green shrink-0 mt-1" aria-hidden="true" />
                   {t.legal_school_point1}
                 </li>
-                <li className="flex items-start gap-4 text-gray-700 font-medium">
-                  <CheckCircle className="h-5 w-5 text-guinea-green shrink-0 mt-1" />
+                <li className="flex items-start gap-4 text-ink-muted font-medium">
+                  <CheckCircle className="h-5 w-5 text-guinea-green shrink-0 mt-1" aria-hidden="true" />
                   {t.legal_school_point2}
                 </li>
               </ul>
             </div>
 
             {/* Habitat */}
-            <div className="bg-white p-10 rounded-[2.5rem] shadow-soft-elegant border border-gray-100 hover:border-guinea-red/20 transition-all group">
+            <div className="bg-white p-10 rounded-[4px] shadow-soft-elegant border border-border-subtle hover:border-guinea-red/30 transition-colors group">
               <div className="flex items-center gap-5 mb-8">
-                <div className="p-4 bg-guinea-red/10 text-guinea-red rounded-2xl group-hover:scale-110 transition-transform">
-                  <Home className="h-8 w-8" />
+                <div className="p-4 bg-guinea-red/10 text-guinea-red rounded-[4px]">
+                  <Home className="h-8 w-8" aria-hidden="true" />
                 </div>
-                <h3 className="text-3xl font-serif font-black text-[#0F0F0F]">{t.legal_home_title}</h3>
+                <h3 className="text-3xl font-serif font-black text-ink">{t.legal_home_title}</h3>
               </div>
-              <div className="bg-guinea-red text-white p-6 rounded-2xl font-bold uppercase text-sm mb-6 shadow-sm">
-                ⚠️ {t.legal_home_warrant}
+              <div className="bg-guinea-red text-white p-6 rounded-[4px] font-bold uppercase text-sm mb-6 shadow-soft-sm flex items-start gap-3">
+                <AlertTriangle className="h-5 w-5 shrink-0 mt-0.5" aria-hidden="true" />
+                {t.legal_home_warrant}
               </div>
-              <p className="text-gray-600 font-medium mb-10 leading-relaxed">{t.legal_home_police}</p>
+              <p className="text-ink-muted font-medium mb-10 leading-relaxed">{t.legal_home_police}</p>
               <button
                 onClick={() => setIsFlashMode(true)}
-                className="w-full bg-[#0F0F0F] text-white py-5 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-guinea-red transition-all shadow-md flex items-center justify-center gap-3"
+                className="w-full bg-ink text-ivory py-5 rounded-[3px] font-mono font-bold uppercase text-xs tracking-[0.08em] hover:bg-guinea-red transition-colors shadow-soft-sm flex items-center justify-center gap-3"
               >
-                <Zap className="h-5 w-5 text-guinea-yellow" />
+                <Zap className="h-5 w-5 text-guinea-yellow" aria-hidden="true" />
                 Script d'urgence
               </button>
             </div>
@@ -225,25 +224,25 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
           <div className="space-y-8 animate-in fade-in duration-300">
 
             {/* 9bis */}
-            <div className="bg-white rounded-[2.5rem] shadow-soft-elegant border border-gray-100 overflow-hidden">
+            <div className="bg-white rounded-[4px] shadow-soft-elegant border border-border-subtle overflow-hidden">
               <div className="p-10 md:p-12">
                 <div className="flex flex-wrap items-center gap-4 mb-8">
                   <h3 className="text-4xl font-serif font-black text-guinea-green">Article 9<em>bis</em></h3>
-                  <span className="bg-guinea-green/10 text-guinea-green text-[10px] px-3 py-1 font-black rounded-full uppercase tracking-widest">Humanitaire</span>
-                  <span className="ml-auto flex items-center gap-2 text-[11px] font-bold text-gray-400 uppercase tracking-wider">
-                    <Clock className="h-4 w-4" /> 6 mois – 2 ans
+                  <span className="dateline bg-guinea-green/10 text-guinea-green text-[10px] px-3 py-1 rounded-[3px]">Humanitaire</span>
+                  <span className="dateline ml-auto flex items-center gap-2 text-[10px] text-ink-muted">
+                    <Clock className="h-4 w-4" aria-hidden="true" /> 6 mois – 2 ans
                   </span>
                 </div>
-                <p className="text-gray-700 font-medium leading-relaxed text-lg mb-10">
-                  La voie humanitaire repose sur votre ancrage en Belgique. Il n'existe <strong>aucune durée minimale légale</strong> — mais 3 à 5 ans de séjour documenté et d'intégration sociale renforcent très significativement le dossier.
+                <p className="text-ink-muted font-medium leading-relaxed text-body-lg mb-10">
+                  La voie humanitaire repose sur votre ancrage en Belgique. Il n'existe <strong>aucune durée minimale légale</strong> — mais 3 à 5 ans de séjour documenté et d'intégration sociale renforcent considérablement le dossier.
                 </p>
 
                 <div className="grid md:grid-cols-2 gap-8">
-                  <div className="bg-[#FAFAF8] p-8 rounded-2xl border border-gray-100">
-                    <h4 className="font-black text-xs uppercase text-gray-400 mb-6 flex items-center gap-2">
-                      <ListChecks className="h-4 w-4 text-guinea-green" /> Ce que vous devez prouver
+                  <div className="bg-paper p-8 rounded-[4px] border border-border-subtle">
+                    <h4 className="dateline text-[11px] text-ink-muted mb-6 flex items-center gap-2">
+                      <ListChecks className="h-4 w-4 text-guinea-green" aria-hidden="true" /> Ce que vous devez prouver
                     </h4>
-                    <ul className="space-y-4 text-sm font-medium text-gray-700">
+                    <ul className="space-y-4 text-sm font-medium text-ink-muted">
                       {[
                         'Durée et continuité du séjour (contrats de bail, factures, courriers)',
                         'Scolarisation des enfants (bulletins, attestations d\'inscription)',
@@ -253,18 +252,18 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                         'Absence d\'antécédents pénaux graves',
                       ].map((item, i) => (
                         <li key={i} className="flex gap-3 items-start">
-                          <div className="h-2 w-2 rounded-full bg-guinea-green mt-2 shrink-0" />
+                          <div className="h-2 w-2 rounded-full bg-guinea-green mt-2 shrink-0" aria-hidden="true" />
                           {item}
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  <div className="bg-[#FAFAF8] p-8 rounded-2xl border border-gray-100">
-                    <h4 className="font-black text-xs uppercase text-gray-400 mb-6 flex items-center gap-2">
-                      <FileText className="h-4 w-4 text-guinea-green" /> Documents à rassembler
+                  <div className="bg-paper p-8 rounded-[4px] border border-border-subtle">
+                    <h4 className="dateline text-[11px] text-ink-muted mb-6 flex items-center gap-2">
+                      <FileText className="h-4 w-4 text-guinea-green" aria-hidden="true" /> Documents à rassembler
                     </h4>
-                    <ul className="space-y-4 text-sm font-medium text-gray-700">
+                    <ul className="space-y-4 text-sm font-medium text-ink-muted">
                       {[
                         'Formulaire de demande (téléchargeable sur dofi.ibz.be)',
                         'Passeport ou document d\'identité (même expiré)',
@@ -274,7 +273,7 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                         'Lettre de motivation personnelle détaillant votre situation',
                       ].map((item, i) => (
                         <li key={i} className="flex gap-3 items-start">
-                          <div className="h-2 w-2 rounded-full bg-guinea-green mt-2 shrink-0" />
+                          <div className="h-2 w-2 rounded-full bg-guinea-green mt-2 shrink-0" aria-hidden="true" />
                           {item}
                         </li>
                       ))}
@@ -282,9 +281,9 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                   </div>
                 </div>
 
-                <div className="mt-8 bg-[#0F0F0F] text-white p-8 rounded-2xl">
-                  <h4 className="font-black text-xs uppercase text-guinea-yellow mb-4 tracking-widest">Procédure — 4 étapes</h4>
-                  <ol className="space-y-3 text-sm font-medium text-white/80">
+                <div className="mt-8 bg-ink text-ivory p-8 rounded-[4px]">
+                  <h4 className="dateline text-[11px] text-guinea-yellow mb-4">Procédure — 4 étapes</h4>
+                  <ol className="space-y-3 text-sm font-medium text-ivory/80">
                     {[
                       'Déposer le dossier complet à l\'Office des Étrangers (en mains propres ou recommandé avec accusé de réception)',
                       'Recevoir l\'accusé de réception → PROTECTION TEMPORAIRE contre l\'expulsion pendant l\'instruction',
@@ -302,58 +301,58 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
             </div>
 
             {/* 9ter */}
-            <div className="bg-white rounded-[2.5rem] shadow-soft-elegant border border-gray-100 overflow-hidden">
+            <div className="bg-white rounded-[4px] shadow-soft-elegant border border-border-subtle overflow-hidden">
               <div className="p-10 md:p-12">
                 <div className="flex flex-wrap items-center gap-4 mb-8">
                   <h3 className="text-4xl font-serif font-black text-guinea-red">Article 9<em>ter</em></h3>
-                  <span className="bg-guinea-red/10 text-guinea-red text-[10px] px-3 py-1 font-black rounded-full uppercase tracking-widest">Médical</span>
-                  <span className="ml-auto flex items-center gap-2 text-[11px] font-bold text-gray-400 uppercase tracking-wider">
-                    <Clock className="h-4 w-4" /> 4 mois minimum
+                  <span className="dateline bg-guinea-red/10 text-guinea-red text-[10px] px-3 py-1 rounded-[3px]">Médical</span>
+                  <span className="dateline ml-auto flex items-center gap-2 text-[10px] text-ink-muted">
+                    <Clock className="h-4 w-4" aria-hidden="true" /> 4 mois minimum
                   </span>
                 </div>
-                <p className="text-gray-700 font-medium leading-relaxed text-lg mb-10">
+                <p className="text-ink-muted font-medium leading-relaxed text-body-lg mb-10">
                   Réservé aux personnes atteintes d'une <strong>pathologie grave</strong> dont le traitement adéquat est <strong>inaccessible en Guinée</strong> — inexistant, indisponible ou financièrement hors d'atteinte.
                 </p>
 
-                <div className="bg-guinea-red/8 border border-guinea-red/20 rounded-2xl p-6 mb-8 flex gap-4 items-start">
-                  <AlertTriangle className="h-5 w-5 text-guinea-red shrink-0 mt-0.5" />
+                <div className="bg-guinea-red/8 border border-guinea-red/20 rounded-[4px] p-6 mb-8 flex gap-4 items-start">
+                  <AlertTriangle className="h-5 w-5 text-guinea-red shrink-0 mt-0.5" aria-hidden="true" />
                   <p className="text-sm font-bold text-guinea-red leading-relaxed">
                     Un simple certificat de maladie ne suffit pas. Le rapport médical doit explicitement argumenter l'inaccessibilité du traitement en Guinée. Demandez à votre médecin d'inclure cette mention.
                   </p>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-8">
-                  <div className="bg-[#FAFAF8] p-8 rounded-2xl border border-gray-100">
-                    <h4 className="font-black text-xs uppercase text-gray-400 mb-6 flex items-center gap-2">
-                      <ListChecks className="h-4 w-4 text-guinea-red" /> Critères obligatoires
+                  <div className="bg-paper p-8 rounded-[4px] border border-border-subtle">
+                    <h4 className="dateline text-[11px] text-ink-muted mb-6 flex items-center gap-2">
+                      <ListChecks className="h-4 w-4 text-guinea-red" aria-hidden="true" /> Critères obligatoires
                     </h4>
-                    <ul className="space-y-4 text-sm font-medium text-gray-700">
+                    <ul className="space-y-4 text-sm font-medium text-ink-muted">
                       {[
                         'Maladie grave (pronostic vital ou risque sérieux d\'aggravation)',
                         'Traitement requis inexistant ou inaccessible en Guinée',
                         'Suivi médical actuel et documenté en Belgique',
                       ].map((item, i) => (
                         <li key={i} className="flex gap-3 items-start">
-                          <div className="h-2 w-2 rounded-full bg-guinea-red mt-2 shrink-0" />
+                          <div className="h-2 w-2 rounded-full bg-guinea-red mt-2 shrink-0" aria-hidden="true" />
                           {item}
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  <div className="bg-[#FAFAF8] p-8 rounded-2xl border border-gray-100">
-                    <h4 className="font-black text-xs uppercase text-gray-400 mb-6 flex items-center gap-2">
-                      <FileText className="h-4 w-4 text-guinea-red" /> Documents clés
+                  <div className="bg-paper p-8 rounded-[4px] border border-border-subtle">
+                    <h4 className="dateline text-[11px] text-ink-muted mb-6 flex items-center gap-2">
+                      <FileText className="h-4 w-4 text-guinea-red" aria-hidden="true" /> Documents clés
                     </h4>
-                    <ul className="space-y-4 text-sm font-medium text-gray-700">
+                    <ul className="space-y-4 text-sm font-medium text-ink-muted">
                       {[
                         'Rapport médical détaillé : diagnostic, traitement requis, pronostic sans traitement, mention d\'inaccessibilité en Guinée',
                         'Preuve de prise en charge médicale actuelle en Belgique',
                         'Certificat de non-voyageabilité si applicable',
-                        'Rapport OMS ou MSF sur le système de santé guinéen pour cette pathologie (optionnel mais renforcant)',
+                        'Rapport OMS ou MSF sur le système de santé guinéen pour cette pathologie (optionnel mais renforçant)',
                       ].map((item, i) => (
                         <li key={i} className="flex gap-3 items-start">
-                          <div className="h-2 w-2 rounded-full bg-guinea-red mt-2 shrink-0" />
+                          <div className="h-2 w-2 rounded-full bg-guinea-red mt-2 shrink-0" aria-hidden="true" />
                           {item}
                         </li>
                       ))}
@@ -364,27 +363,27 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
             </div>
 
             {/* Asile */}
-            <div className="bg-white rounded-[2.5rem] shadow-soft-elegant border border-gray-100 overflow-hidden">
+            <div className="bg-white rounded-[4px] shadow-soft-elegant border border-border-subtle overflow-hidden">
               <div className="p-10 md:p-12">
                 <div className="flex flex-wrap items-center gap-4 mb-8">
                   <h3 className="text-4xl font-serif font-black text-[#4B3D8F]">Demande d'asile</h3>
-                  <span className="bg-[#4B3D8F]/10 text-[#4B3D8F] text-[10px] px-3 py-1 font-black rounded-full uppercase tracking-widest">Convention de Genève</span>
+                  <span className="dateline bg-[#4B3D8F]/10 text-[#4B3D8F] text-[10px] px-3 py-1 rounded-[3px]">Convention de Genève</span>
                 </div>
 
-                <div className="bg-[#4B3D8F]/8 border border-[#4B3D8F]/20 rounded-2xl p-6 mb-8 flex gap-4 items-start">
-                  <AlertTriangle className="h-5 w-5 text-[#4B3D8F] shrink-0 mt-0.5" />
+                <div className="bg-[#4B3D8F]/8 border border-[#4B3D8F]/20 rounded-[4px] p-6 mb-8 flex gap-4 items-start">
+                  <AlertTriangle className="h-5 w-5 text-[#4B3D8F] shrink-0 mt-0.5" aria-hidden="true" />
                   <p className="text-sm font-bold text-[#4B3D8F] leading-relaxed">
                     Déposez dès que possible. Une demande tardive après plusieurs années en Belgique peut affaiblir la crédibilité de la crainte alléguée aux yeux du CGRS.
                   </p>
                 </div>
 
-                <p className="text-gray-700 font-medium leading-relaxed text-lg mb-10">
+                <p className="text-ink-muted font-medium leading-relaxed text-body-lg mb-10">
                   L'asile s'adresse aux personnes qui craignent d'être persécutées dans leur pays pour des raisons de <strong>race, religion, nationalité, appartenance à un groupe social ou opinion politique</strong>. La protection subsidiaire couvre les risques d'atteinte grave à l'intégrité physique.
                 </p>
 
-                <div className="bg-[#0F0F0F] text-white p-8 rounded-2xl mb-8">
-                  <h4 className="font-black text-xs uppercase text-guinea-yellow mb-6 tracking-widest">Procédure — 5 étapes</h4>
-                  <ol className="space-y-4 text-sm font-medium text-white/80">
+                <div className="bg-ink text-ivory p-8 rounded-[4px] mb-8">
+                  <h4 className="dateline text-[11px] text-guinea-yellow mb-6">Procédure — 5 étapes</h4>
+                  <ol className="space-y-4 text-sm font-medium text-ivory/80">
                     {[
                       { step: 'Enregistrement à l\'OE (Petit-Château, Bruxelles) — vous recevez une attestation d\'immatriculation (AI), document officiel de séjour', color: '#BE0000' },
                       { step: 'Entretien(s) au CGRS — plusieurs mois d\'attente possible. Préparez votre récit avec précision et cohérence', color: '#FFCC00' },
@@ -403,15 +402,15 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
             </div>
 
             {/* OQT */}
-            <div className="bg-guinea-red/5 border-2 border-guinea-red/20 rounded-[2.5rem] p-10 md:p-12">
+            <div className="bg-guinea-red/5 border-2 border-guinea-red/20 rounded-[4px] p-10 md:p-12">
               <div className="flex items-center gap-4 mb-6">
-                <div className="p-3 bg-guinea-red text-white rounded-2xl">
-                  <AlertTriangle className="h-7 w-7" />
+                <div className="p-3 bg-guinea-red text-white rounded-[4px]">
+                  <AlertTriangle className="h-7 w-7" aria-hidden="true" />
                 </div>
                 <h3 className="text-3xl font-serif font-black text-guinea-red">Vous avez reçu un OQT ?</h3>
               </div>
-              <p className="text-xl font-black text-[#0F0F0F] mb-4">Ne paniquez pas. Un Ordre de Quitter le Territoire n'est pas une expulsion immédiate.</p>
-              <p className="text-gray-700 font-medium leading-relaxed mb-8">
+              <p className="font-serif font-black text-xl text-ink mb-4">Ne paniquez pas. Un Ordre de Quitter le Territoire n'est pas une expulsion immédiate.</p>
+              <p className="text-ink-muted font-medium leading-relaxed mb-8">
                 C'est une décision administrative. Vous avez des droits. Un recours suspensif au CCE bloque l'exécution de l'OQT pendant toute la durée de la procédure. Vous disposez de <strong>30 jours</strong> pour agir.
               </p>
               <div className="grid md:grid-cols-3 gap-4">
@@ -420,9 +419,9 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
                   { label: 'Dans les 30 jours', text: 'Introduire un recours suspensif au Conseil du Contentieux des Étrangers (CCE)', color: '#FFCC00' },
                   { label: 'En procédure', text: 'Si 9bis/9ter/asile en cours : votre recours est déjà suspensif — ne partez pas sans consulter', color: '#00843D' },
                 ].map((item, i) => (
-                  <div key={i} className="bg-white p-6 rounded-2xl shadow-soft-sm">
-                    <div className="text-[10px] font-black uppercase tracking-widest mb-2" style={{ color: item.color }}>{item.label}</div>
-                    <p className="text-sm font-medium text-gray-700">{item.text}</p>
+                  <div key={i} className="bg-white p-6 rounded-[4px] shadow-soft-sm border border-border-subtle">
+                    <div className="dateline text-[10px] mb-2" style={{ color: item.color }}>{item.label}</div>
+                    <p className="text-sm font-medium text-ink-muted">{item.text}</p>
                   </div>
                 ))}
               </div>
@@ -437,19 +436,19 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
 
             {/* Contacts */}
             <div>
-              <h2 className="font-serif font-black text-3xl text-[#0F0F0F] mb-8">Contacts essentiels — tous gratuits ou accessibles</h2>
+              <h2 className="font-serif font-black text-3xl text-ink mb-8">Contacts essentiels — tous gratuits ou accessibles</h2>
               <div className="grid md:grid-cols-2 gap-6">
                 {CONTACTS.map((c, i) => (
-                  <div key={i} className="bg-white p-8 rounded-[2rem] shadow-soft-elegant border border-gray-100 flex gap-6 items-start">
-                    <div className="w-1 self-stretch rounded-full shrink-0" style={{ backgroundColor: c.color }} />
+                  <div key={i} className="bg-white p-8 rounded-[4px] shadow-soft-elegant border border-border-subtle flex gap-6 items-start">
+                    <div className="w-1 self-stretch rounded-full shrink-0" style={{ backgroundColor: c.color }} aria-hidden="true" />
                     <div className="flex-grow">
-                      <h3 className="font-black text-[#0F0F0F] text-lg mb-1">{c.name}</h3>
-                      <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-4">{c.role}</p>
-                      <div className="space-y-2 text-sm font-medium text-gray-600">
-                        <div className="flex items-center gap-2"><MapPin className="h-4 w-4 shrink-0 text-gray-300" />{c.address}</div>
-                        <div className="flex items-center gap-2"><Phone className="h-4 w-4 shrink-0 text-gray-300" />{c.phone}</div>
+                      <h3 className="font-serif font-black text-ink text-lg mb-1">{c.name}</h3>
+                      <p className="dateline text-[11px] text-ink-muted mb-4">{c.role}</p>
+                      <div className="space-y-2 text-sm font-medium text-ink-muted">
+                        <div className="flex items-center gap-2"><MapPin className="h-4 w-4 shrink-0 text-ink-muted/50" aria-hidden="true" />{c.address}</div>
+                        <div className="flex items-center gap-2"><Phone className="h-4 w-4 shrink-0 text-ink-muted/50" aria-hidden="true" />{c.phone}</div>
                         <div className="flex items-center gap-2">
-                          <ExternalLink className="h-4 w-4 shrink-0 text-gray-300" />
+                          <ExternalLink className="h-4 w-4 shrink-0 text-ink-muted/50" aria-hidden="true" />
                           <span style={{ color: c.color }} className="font-bold">{c.url}</span>
                         </div>
                       </div>
@@ -460,47 +459,44 @@ const LegalAidSection: React.FC<LegalAidSectionProps> = ({ language = 'fr' }) =>
             </div>
 
             {/* Ballal CTA */}
-            <div className="bg-[#0F0F0F] text-white rounded-[2.5rem] p-10 md:p-12 flex flex-col md:flex-row items-center gap-8">
+            <div className="bg-ink text-ivory rounded-[4px] p-10 md:p-12 flex flex-col md:flex-row items-center gap-8">
               <div className="flex-grow">
-                <div className="flex gap-0.5 mb-6" aria-hidden="true">
-                  <span className="h-[3px] w-8 bg-[#BE0000] rounded-full" />
-                  <span className="h-[3px] w-8 bg-[#FFCC00] rounded-full" />
-                  <span className="h-[3px] w-8 bg-[#00843D] rounded-full" />
-                </div>
+                <span className="flag-line w-24 mb-6" aria-hidden="true"><span /><span /><span /></span>
                 <h3 className="text-3xl font-serif font-black mb-4">Ballal vous accompagne</h3>
-                <p className="text-white/60 font-medium leading-relaxed max-w-xl">
-                  Nous avons traversé ce que vous vivez. Constituer un dossier, comprendre vos droits, vous orienter vers le bon organisme — nous faisons ça depuis 2022, gratuitement, en Français, Peul et Malinké.
+                <p className="text-ivory/60 font-medium leading-relaxed max-w-xl">
+                  Nous avons traversé ce que vous vivez. Constituer un dossier, comprendre vos droits, vous orienter vers le bon organisme — nous faisons ça depuis 2022, gratuitement, en français, peul et malinké.
                 </p>
               </div>
               <a
                 href="mailto:admin@ballal.be?subject=Demande d'aide juridique"
-                className="shrink-0 bg-guinea-yellow text-[#0F0F0F] px-8 py-4 rounded-2xl font-black uppercase text-[11px] tracking-widest hover:bg-white transition-all shadow-lg flex items-center gap-3"
+                className="shrink-0 bg-guinea-yellow text-ink px-8 py-4 rounded-[3px] font-mono font-bold uppercase text-[11px] tracking-[0.08em] hover:bg-white transition-colors shadow-soft-lg flex items-center gap-3"
               >
-                <Phone className="h-5 w-5" />
+                <Phone className="h-5 w-5" aria-hidden="true" />
                 Nous contacter
               </a>
             </div>
 
             {/* FAQ */}
             <div>
-              <h2 className="font-serif font-black text-3xl text-[#0F0F0F] mb-8">Questions fréquentes</h2>
+              <h2 className="font-serif font-black text-3xl text-ink mb-8">Questions fréquentes</h2>
               <div className="space-y-3">
                 {FAQ.map((item, i) => (
-                  <div key={i} className="bg-white rounded-[1.5rem] shadow-soft-sm border border-gray-100 overflow-hidden">
+                  <div key={i} className="bg-white rounded-[4px] shadow-soft-sm border border-border-subtle overflow-hidden">
                     <button
                       onClick={() => setOpenFaq(openFaq === i ? null : i)}
                       className="w-full flex items-center justify-between p-7 text-left gap-4"
+                      aria-expanded={openFaq === i}
                     >
-                      <span className="font-black text-[#0F0F0F] text-base leading-snug">{item.q}</span>
+                      <span className="font-serif font-black text-ink text-base leading-snug">{item.q}</span>
                       {openFaq === i
-                        ? <ChevronUp className="h-5 w-5 text-guinea-red shrink-0" />
-                        : <ChevronDown className="h-5 w-5 text-gray-400 shrink-0" />
+                        ? <ChevronUp className="h-5 w-5 text-guinea-red shrink-0" aria-hidden="true" />
+                        : <ChevronDown className="h-5 w-5 text-ink-muted shrink-0" aria-hidden="true" />
                       }
                     </button>
                     {openFaq === i && (
                       <div className="px-7 pb-7 animate-in fade-in duration-200">
-                        <div className="h-px bg-gray-100 mb-6" />
-                        <p className="text-gray-700 font-medium leading-relaxed">{item.a}</p>
+                        <div className="h-px bg-border-subtle mb-6" />
+                        <p className="text-ink-muted font-medium leading-relaxed">{item.a}</p>
                       </div>
                     )}
                   </div>

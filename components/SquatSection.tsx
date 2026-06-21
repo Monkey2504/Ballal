@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Siren, Hammer, X, Search, Home, Shield, Scale, LayoutList, 
+import {
+  Siren, Hammer, X, Search, Home, Shield, Scale, LayoutList,
   Lightbulb, Zap, MapPin, Clock, BarChart, Eye, FileText, CheckCircle
 } from 'lucide-react';
 import { LanguageCode } from '../types.ts';
@@ -34,7 +34,7 @@ const fadeUp = {
   hidden:  { opacity: 0, y: 20 },
   visible: (i = 0) => ({
     opacity: 1, y: 0,
-    transition: { delay: i * 0.06, duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
+    transition: { delay: i * 0.05, duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
   }),
 };
 
@@ -47,40 +47,39 @@ const SquatSection: React.FC<{ language?: LanguageCode }> = () => {
   const toggleCheck = (phase: any, id: number) => {
     setChecklists({
       ...checklists,
-      [phase]: checklists[phase as keyof typeof checklists].map(item => 
+      [phase]: checklists[phase as keyof typeof checklists].map(item =>
         item.id === id ? { ...item, done: !item.done } : item
       )
     });
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8] pb-20">
-      <div className="flag-line" aria-hidden="true"><span /><span /><span /></div>
-      <header className="pt-20 pb-12 px-6 text-center bg-[#0F0F0F] text-white">
+    <div className="min-h-screen bg-ivory pb-20">
+      <header className="pt-20 pb-12 px-6 text-center bg-ink text-ivory relative overflow-hidden">
+        <div className="flag-line absolute top-0 left-0 right-0" aria-hidden="true"><span /><span /><span /></div>
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <div className="inline-flex items-center gap-2 bg-[#BE0000]/20 text-[#BE0000] px-5 py-2 font-bold rounded-full text-[10px] uppercase tracking-[0.25em] mb-6 border border-[#BE0000]/30">
-            GUIDE PRATIQUE
-          </div>
+          <p className="dateline text-[11px] text-guinea-red mb-6">
+            Guide pratique
+          </p>
           <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 leading-tight">
-            Votre droit au <span className="text-[#FFCC00]">logement</span>.
+            Votre droit au <span className="text-guinea-yellow">logement</span>.
           </h1>
-          <p className="text-lg text-white/50 max-w-2xl mx-auto font-medium">
+          <p className="text-body-lg text-ivory/55 max-w-2xl mx-auto">
             Du squat à la convention légale — chaque étape documentée pour occuper avec dignité et sécurité.
           </p>
         </motion.div>
-        <div className="flag-line mt-8" aria-hidden="true"><span /><span /><span /></div>
       </header>
 
-      <nav className="flex justify-center border-b border-[#E8E8E6] bg-white sticky top-[71px] z-50">
+      <nav className="flex justify-center border-b border-border-subtle bg-ivory sticky top-[71px] z-50">
         {['manual', 'checklists', 'insides'].map(tab => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab as TabType)}
-            className={`px-8 py-4 font-black text-[11px] uppercase tracking-widest transition-colors ${activeTab === tab ? 'bg-[#FFCC00] text-[#0F0F0F]' : 'bg-white text-[#6B6B6B] hover:bg-[#FAFAF8]'}`}
+            className={`px-8 py-4 font-mono font-bold text-[11px] uppercase tracking-[0.08em] transition-colors ${activeTab === tab ? 'bg-guinea-yellow text-ink' : 'bg-ivory text-ink-muted hover:bg-paper'}`}
           >
             {tab === 'manual' ? 'Guide' : tab === 'checklists' ? 'Checklists' : 'Conseils de terrain'}
           </button>
@@ -101,10 +100,10 @@ const SquatSection: React.FC<{ language?: LanguageCode }> = () => {
                   custom={i}
                   variants={fadeUp}
                   onClick={() => setActivePhase(p.phase)}
-                  className={`p-4 border-4 transition-all ${activePhase === p.phase ? 'border-guinea-red bg-guinea-red text-white scale-105 shadow-lg' : 'border-[#E8E8E6] bg-white opacity-60'}`}
+                  className={`p-4 rounded-[4px] border-2 transition-all ${activePhase === p.phase ? 'border-guinea-red bg-guinea-red text-white shadow-soft-lg' : 'border-border-subtle bg-ivory text-ink opacity-60 hover:opacity-100'}`}
                 >
-                  <p.icon className="mx-auto mb-2" />
-                  <h3 className="text-[10px] font-black uppercase leading-tight">{p.title}</h3>
+                  <p.icon className="mx-auto mb-2 h-5 w-5" aria-hidden="true" />
+                  <h3 className="text-[10px] font-mono font-bold uppercase tracking-[0.08em] leading-tight">{p.title}</h3>
                 </motion.button>
               ))}
             </motion.div>
@@ -117,26 +116,26 @@ const SquatSection: React.FC<{ language?: LanguageCode }> = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-                  className="bg-white border border-gray-100 p-8 shadow-soft-elegant"
+                  className="bg-white border border-border-subtle rounded-[4px] p-8 shadow-soft-elegant"
                 >
-                  <h2 className="text-3xl font-black mb-6 uppercase flex items-center gap-3">
+                  <h2 className="font-serif font-black text-3xl text-ink mb-6 flex items-center gap-3">
                     {PHASES.find(p => p.phase === activePhase)!.title}
                   </h2>
                   <div className="grid md:grid-cols-2 gap-8">
                     <div>
-                      <h3 className="font-black text-sm uppercase mb-4 flex items-center gap-2">Checklist</h3>
+                      <h3 className="dateline text-[11px] text-ink-muted mb-4 flex items-center gap-2">Checklist</h3>
                       <div className="space-y-2">
                         {checklists[activePhase as keyof typeof checklists].map(item => (
-                          <label key={item.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl cursor-pointer">
+                          <label key={item.id} className="flex items-center gap-3 p-3 bg-paper rounded-[4px] cursor-pointer">
                             <input type="checkbox" checked={item.done} onChange={() => toggleCheck(activePhase, item.id)} className="accent-guinea-red" />
-                            <span className={`text-sm font-bold ${item.done ? 'line-through text-gray-400' : ''}`}>{item.text}</span>
+                            <span className={`text-sm font-medium ${item.done ? 'line-through text-ink-muted' : 'text-ink'}`}>{item.text}</span>
                           </label>
                         ))}
                       </div>
                     </div>
-                    <div className="bg-[#0F0F0F] text-white p-6 rounded-3xl">
-                      <h3 className="font-black text-sm uppercase mb-4 text-guinea-yellow">Conseils Clés</h3>
-                      <ul className="space-y-3 text-xs opacity-80">
+                    <div className="bg-ink text-ivory p-6 rounded-[4px]">
+                      <h3 className="dateline text-[11px] mb-4 text-guinea-yellow">Conseils clés</h3>
+                      <ul className="space-y-3 text-sm text-ivory/80">
                         {PHASES.find(p => p.phase === activePhase)!.tips.map((t, i) => <li key={i}>• {t}</li>)}
                       </ul>
                     </div>
@@ -159,13 +158,13 @@ const SquatSection: React.FC<{ language?: LanguageCode }> = () => {
                 custom={i}
                 variants={fadeUp}
                 onClick={() => setSelectedInside(inside)}
-                className="bg-white border border-gray-100 p-6 shadow-soft-elegant cursor-pointer hover:bg-guinea-yellow/20"
+                className="bg-white border border-border-subtle rounded-[4px] p-6 shadow-soft-elegant cursor-pointer hover:bg-guinea-yellow/20 transition-colors"
               >
                 <div className="flex items-start gap-4">
-                  <inside.icon className="h-6 w-6 text-guinea-red flex-shrink-0" />
+                  <inside.icon className="h-5 w-5 text-guinea-red flex-shrink-0" aria-hidden="true" />
                   <div>
-                    <p className="font-black text-sm mb-2 uppercase leading-tight">{inside.text}</p>
-                    <p className="text-xs text-gray-500 italic">Source: {inside.source}</p>
+                    <p className="font-serif font-black text-base text-ink mb-2 leading-tight">{inside.text}</p>
+                    <p className="dateline text-[9px] text-ink-muted">Source : {inside.source}</p>
                   </div>
                 </div>
               </motion.div>
@@ -184,13 +183,13 @@ const SquatSection: React.FC<{ language?: LanguageCode }> = () => {
                 key={phase.phase}
                 custom={i}
                 variants={fadeUp}
-                className="bg-white border border-gray-100 p-6 shadow-soft-elegant"
+                className="bg-white border border-border-subtle rounded-[4px] p-6 shadow-soft-elegant"
               >
-                <h3 className="font-black mb-4 uppercase text-guinea-red">{phase.title}</h3>
+                <h3 className="dateline text-[11px] mb-4 text-guinea-red">{phase.title}</h3>
                 <div className="space-y-2">
                   {checklists[phase.phase as keyof typeof checklists].map(item => (
-                    <div key={item.id} className="text-sm font-bold flex items-center gap-2">
-                      <div className={`w-3 h-3 rounded-full ${item.done ? 'bg-guinea-green' : 'bg-gray-200'}`} />
+                    <div key={item.id} className="text-sm font-medium text-ink flex items-center gap-2">
+                      <div className={`w-3 h-3 rounded-full ${item.done ? 'bg-guinea-green' : 'bg-border-subtle'}`} aria-hidden="true" />
                       {item.text}
                     </div>
                   ))}
@@ -207,7 +206,7 @@ const SquatSection: React.FC<{ language?: LanguageCode }> = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] bg-black/90 flex items-center justify-center p-4"
+            className="fixed inset-0 z-[200] bg-ink/90 flex items-center justify-center p-4"
             onClick={() => setSelectedInside(null)}
           >
             <motion.div
@@ -215,13 +214,13 @@ const SquatSection: React.FC<{ language?: LanguageCode }> = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 8 }}
               transition={{ type: 'spring', stiffness: 350, damping: 28 }}
-              className="bg-white p-8 rounded-3xl max-w-2xl w-full relative"
+              className="bg-white p-8 rounded-[4px] max-w-2xl w-full relative"
               onClick={e => e.stopPropagation()}
             >
-              <button onClick={() => setSelectedInside(null)} className="absolute top-4 right-4"><X /></button>
-              <h2 className="text-2xl font-black mb-4 uppercase">{selectedInside.text}</h2>
-              <p className="text-gray-600 leading-relaxed mb-6">{selectedInside.details}</p>
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Source : {selectedInside.source}</p>
+              <button onClick={() => setSelectedInside(null)} className="absolute top-4 right-4 text-ink-muted hover:text-ink transition-colors" aria-label="Fermer"><X /></button>
+              <h2 className="font-serif font-black text-2xl text-ink mb-4">{selectedInside.text}</h2>
+              <p className="text-ink-muted leading-relaxed mb-6">{selectedInside.details}</p>
+              <p className="dateline text-[9px] text-ink-muted">Source : {selectedInside.source}</p>
             </motion.div>
           </motion.div>
         )}

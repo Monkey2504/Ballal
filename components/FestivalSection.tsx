@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   Flag, Megaphone, Users, Calendar, MapPin, Target, Wallet,
-  Lightbulb, CheckCircle, HeartHandshake, Music, Film, BookOpen,
+  Lightbulb, Check, HeartHandshake, Music, Film, BookOpen,
   ChevronRight, ExternalLink, Clock, BarChart, TrendingUp
 } from 'lucide-react';
 import { LanguageCode } from '../types.ts';
@@ -42,10 +42,10 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
     location: "Bruxelles, Belgique",
     expectedAttendance: 1000,
     activities: [
-      { name: "Concerts", icon: <Music className="h-5 w-5" />, color: "bg-red-100 text-red-600" },
-      { name: "Projections", icon: <Film className="h-5 w-5" />, color: "bg-blue-100 text-blue-600" },
-      { name: "Tables rondes", icon: <Users className="h-5 w-5" />, color: "bg-green-100 text-green-600" },
-      { name: "Ateliers", icon: <BookOpen className="h-5 w-5" />, color: "bg-yellow-100 text-yellow-600" }
+      { name: "Concerts", icon: <Music className="h-5 w-5" />, color: "text-guinea-red" },
+      { name: "Projections", icon: <Film className="h-5 w-5" />, color: "text-ink" },
+      { name: "Tables rondes", icon: <Users className="h-5 w-5" />, color: "text-guinea-green" },
+      { name: "Ateliers", icon: <BookOpen className="h-5 w-5" />, color: "text-guinea-red" }
     ],
     timeline: [
       { month: "Janvier 2026", tasks: ["Lancement de l'appel à projets", "Inscription des bénévoles", "Recherche de partenaires"] },
@@ -61,47 +61,40 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
 
   return (
     <div
-      className="min-h-screen bg-gradient-to-b from-slate-50 to-white"
+      className="min-h-screen bg-ivory"
       dir={language === 'ar' ? 'rtl' : 'ltr'}
       role="main"
       aria-labelledby="festival-title"
     >
-      <div className="bg-gradient-to-br from-[#BE0000] via-[#9B0000] to-[#C9614A] text-white py-16 md:py-24 relative overflow-hidden">
-        <div className="flag-line absolute bottom-0 left-0 right-0" aria-hidden="true"><span /><span /><span /></div>
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundSize: '60px 60px'
-          }}
-          aria-hidden="true"
-        />
+      <div className="bg-ink text-white py-16 md:py-24 relative overflow-hidden">
+        <div className="flag-line absolute top-0 left-0 right-0" aria-hidden="true"><span /><span /><span /></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
+            transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="text-center"
           >
-            <div className="inline-flex items-center justify-center p-4 bg-white/20 rounded-full mb-8 backdrop-blur-sm" aria-hidden="true">
-              <Flag className="h-12 w-12 text-[#FFCC00]" />
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <Flag className="h-5 w-5 text-guinea-yellow" aria-hidden="true" />
+              <p className="dateline text-[11px] text-guinea-yellow">Édition 15-16 septembre 2026</p>
             </div>
-            <h1 id="festival-title" className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6">
+            <h1 id="festival-title" className="font-serif font-black text-4xl md:text-6xl leading-[0.95] tracking-tight mb-6">
               {festivalData.title}
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto font-medium italic mb-8">
-              "{festivalData.tagline}"
+            <p className="font-serif text-xl md:text-2xl text-white/90 max-w-4xl mx-auto italic mb-8">
+              « {festivalData.tagline} »
             </p>
-            <div className="flex justify-center items-center gap-4 mb-8">
-              <Clock className="h-6 w-6 text-[#FFCC00]" aria-hidden="true" />
-              <span className="text-lg font-bold">Prochaine édition: {festivalData.date}</span>
+            <div className="flex justify-center items-center gap-3 mb-8">
+              <Clock className="h-5 w-5 text-guinea-yellow" aria-hidden="true" />
+              <span className="dateline text-[11px] text-white/80">Prochaine édition : {festivalData.date}</span>
             </div>
-            <div className="flex justify-center gap-4 md:gap-6 mb-12">
+            <div className="flex justify-center gap-3 md:gap-4 mb-12">
               {Object.entries(countdown).map(([unit, value]) => (
                 <div key={unit} className="text-center">
-                  <div className="bg-black/20 backdrop-blur-sm rounded-xl px-4 py-3 min-w-[80px]">
-                    <div className="text-3xl md:text-4xl font-black">{value.toString().padStart(2, '0')}</div>
-                    <div className="text-sm uppercase tracking-wider opacity-80 mt-1">
+                  <div className="bg-white/[0.06] border border-white/10 rounded-[4px] px-4 py-3 min-w-[80px]">
+                    <div className="font-serif font-black text-3xl md:text-4xl tabular-nums">{value.toString().padStart(2, '0')}</div>
+                    <div className="dateline text-[9px] text-white/50 mt-1">
                       {unit === 'days' ? 'jours' : unit === 'hours' ? 'heures' : unit === 'minutes' ? 'minutes' : 'secondes'}
                     </div>
                   </div>
@@ -110,15 +103,15 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
             </div>
             <div className="flex flex-wrap justify-center gap-6 md:gap-12">
               <div className="flex items-center gap-2">
-                <Calendar className="h-5 w-5 text-[#FFCC00]" aria-hidden="true" />
+                <Calendar className="h-5 w-5 text-guinea-yellow" aria-hidden="true" />
                 <span className="font-medium">{festivalData.date}</span>
               </div>
               <div className="flex items-center gap-2">
-                <MapPin className="h-5 w-5 text-[#FFCC00]" aria-hidden="true" />
+                <MapPin className="h-5 w-5 text-guinea-yellow" aria-hidden="true" />
                 <span className="font-medium">{festivalData.location}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-[#FFCC00]" aria-hidden="true" />
+                <Users className="h-5 w-5 text-guinea-yellow" aria-hidden="true" />
                 <span className="font-medium">{festivalData.expectedAttendance} participants attendus</span>
               </div>
             </div>
@@ -126,25 +119,25 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 -mt-8 relative z-20">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 relative z-10">
         <div className="mb-12 md:mb-16">
-          <h2 className="text-2xl md:text-3xl font-black text-slate-900 mb-8 text-center">Activités du Festival</h2>
+          <h2 className="font-serif font-black text-2xl md:text-3xl text-ink mb-8 text-center">Activités du festival</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {festivalData.activities.map((activity, index) => (
-              <div key={index} className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 text-center">
-                <div className={`inline-flex items-center justify-center p-3 rounded-xl mb-4 ${activity.color}`}>{activity.icon}</div>
-                <h3 className="font-bold text-slate-900">{activity.name}</h3>
+              <div key={index} className="bg-white p-6 rounded-[4px] border border-ink/10 shadow-soft-sm hover:shadow-soft-lg transition-all duration-300 hover:-translate-y-1 text-center">
+                <div className={`inline-flex items-center justify-center mb-4 ${activity.color}`}>{activity.icon}</div>
+                <h3 className="font-black text-ink">{activity.name}</h3>
               </div>
             ))}
           </div>
         </div>
 
         <div className="space-y-12 md:space-y-16">
-          <section className="bg-gradient-to-r from-slate-900 to-black text-white rounded-3xl p-8 md:p-12 shadow-2xl">
+          <section className="bg-ink text-white rounded-[4px] p-8 md:p-12 shadow-soft-lg">
             <div className="flex items-start gap-4 mb-6">
-              <Megaphone className="h-8 w-8 text-[#FFCC00] flex-shrink-0" aria-hidden="true" />
+              <Megaphone className="h-8 w-8 text-guinea-yellow flex-shrink-0" aria-hidden="true" />
               <div>
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">Notre Mission</h2>
+                <h2 className="font-serif font-black text-2xl md:text-3xl mb-4">Notre mission</h2>
                 <p className="text-lg leading-relaxed opacity-90">
                   Le Festival des Sans-Papiers se donne pour mission de célébrer la fierté identitaire des personnes sans papiers,
                   leur rappeler que naître ailleurs ne fait pas d'eux des criminels et de faire résonner leur voix dans l'espace
@@ -154,90 +147,90 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
             </div>
             <div className="mt-6 pt-6 border-t border-white/20">
               <p className="opacity-80">
-                S'inscrivant dans une démarche politique affirmée, il vise à créer un événement annuel comparable aux marches des Fiiertés LGBT+,
+                S'inscrivant dans une démarche politique affirmée, il vise à créer un événement annuel comparable aux marches des Fiertés LGBT+,
                 mais dédié à la cause des Sans-Papiers, avec l'ambition et les moyens de durer dans le temps.
               </p>
             </div>
           </section>
 
           <section>
-            <h2 className="text-2xl md:text-3xl font-black text-slate-900 mb-8">Objectifs Stratégiques</h2>
+            <h2 className="font-serif font-black text-2xl md:text-3xl text-ink mb-8">Objectifs stratégiques</h2>
             <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-red-500 hover:shadow-xl transition-all">
+              <div className="bg-white p-8 rounded-[4px] border border-ink/10 border-t-4 border-t-guinea-red shadow-soft-sm hover:shadow-soft-lg transition-all">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="h-12 w-12 bg-red-100 rounded-xl flex items-center justify-center"><Target className="h-6 w-6 text-red-600" /></div>
-                  <h3 className="text-xl font-bold text-slate-900">Politique</h3>
+                  <Target className="h-6 w-6 text-guinea-red" aria-hidden="true" />
+                  <h3 className="font-serif font-black text-xl text-ink">Politique</h3>
                 </div>
-                <p className="text-gray-600">Faire de la cause des Sans-Papiers une question politique majeure. Porter le message que l'accès aux droits fondamentaux est une question de dignité humaine.</p>
+                <p className="text-ink-muted">Faire de la cause des Sans-Papiers une question politique majeure. Porter le message que l'accès aux droits fondamentaux est une question de dignité humaine.</p>
               </div>
-              <div className="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-yellow-500 hover:shadow-xl transition-all">
+              <div className="bg-white p-8 rounded-[4px] border border-ink/10 border-t-4 border-t-guinea-yellow shadow-soft-sm hover:shadow-soft-lg transition-all">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="h-12 w-12 bg-yellow-100 rounded-xl flex items-center justify-center"><Users className="h-6 w-6 text-yellow-600" /></div>
-                  <h3 className="text-xl font-bold text-slate-900">Collectif</h3>
+                  <Users className="h-6 w-6 text-ink" aria-hidden="true" />
+                  <h3 className="font-serif font-black text-xl text-ink">Collectif</h3>
                 </div>
-                <p className="text-gray-600">Affirmer la fierté et l'unité. Créer un espace festif et revendicatif où l'affirmation d'identité devient un acte politique fort.</p>
+                <p className="text-ink-muted">Affirmer la fierté et l'unité. Créer un espace festif et revendicatif où l'affirmation d'identité devient un acte politique fort.</p>
               </div>
-              <div className="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-green-500 hover:shadow-xl transition-all">
+              <div className="bg-white p-8 rounded-[4px] border border-ink/10 border-t-4 border-t-guinea-green shadow-soft-sm hover:shadow-soft-lg transition-all">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="h-12 w-12 bg-green-100 rounded-xl flex items-center justify-center"><HeartHandshake className="h-6 w-6 text-green-600" /></div>
-                  <h3 className="text-xl font-bold text-slate-900">Solidarité</h3>
+                  <HeartHandshake className="h-6 w-6 text-guinea-green" aria-hidden="true" />
+                  <h3 className="font-serif font-black text-xl text-ink">Solidarité</h3>
                 </div>
-                <p className="text-gray-600">Mobiliser le grand public, les artistes et les acteurs culturels pour faire évoluer les mentalités et construire un large soutien.</p>
+                <p className="text-ink-muted">Mobiliser le grand public, les artistes et les acteurs culturels pour faire évoluer les mentalités et construire un large soutien.</p>
               </div>
             </div>
           </section>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3"><Users className="h-6 w-6 text-slate-400" />Publics Visés</h3>
+            <div className="bg-white rounded-[4px] border border-ink/10 shadow-soft-sm p-8">
+              <h3 className="font-serif font-black text-xl text-ink mb-6 flex items-center gap-3"><Users className="h-6 w-6 text-ink-muted" aria-hidden="true" />Publics visés</h3>
               <ul className="space-y-4">
                 {["Personnes sans papiers (acteurs premiers)","Artistes engagés (migrants ou alliés)","Acteurs culturels bruxellois","Grand public et citoyens solidaires","Associations et collectifs de soutien","Médias et influenceurs"].map((item, index) => (
                   <li key={index} className="flex items-start">
-                    <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                    <span className="text-gray-700 font-medium">{item}</span>
+                    <Check className="h-5 w-5 text-guinea-green mr-3 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                    <span className="text-ink font-medium">{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3"><Calendar className="h-6 w-6 text-slate-400" />Calendrier & Lieux</h3>
+            <div className="bg-white rounded-[4px] border border-ink/10 shadow-soft-sm p-8">
+              <h3 className="font-serif font-black text-xl text-ink mb-6 flex items-center gap-3"><Calendar className="h-6 w-6 text-ink-muted" aria-hidden="true" />Calendrier et lieux</h3>
               <div className="space-y-6">
                 <div>
-                  <h4 className="font-bold text-slate-800 text-sm uppercase tracking-wide mb-2 flex items-center"><ChevronRight className="h-4 w-4 mr-1 text-red-500" />Soirées Locales</h4>
-                  <p className="text-gray-600">Rendez-vous dans divers lieux culturels de Bruxelles (Concerts, projections, tables rondes) pour préparer la mobilisation et créer une dynamique locale.</p>
+                  <h4 className="dateline text-[11px] text-ink mb-2 flex items-center"><ChevronRight className="h-4 w-4 mr-1 text-guinea-red" aria-hidden="true" />Soirées locales</h4>
+                  <p className="text-ink-muted">Rendez-vous dans divers lieux culturels de Bruxelles (concerts, projections, tables rondes) pour préparer la mobilisation et créer une dynamique locale.</p>
                 </div>
-                <div className="border-t border-gray-100 pt-4">
-                  <h4 className="font-bold text-red-600 text-sm uppercase tracking-wide mb-2 flex items-center"><ChevronRight className="h-4 w-4 mr-1 text-red-600" />Finale Nationale</h4>
-                  <p className="text-gray-600">Grande soirée de rassemblement de clôture. Moment fédérateur à l'échelle du pays avec collectifs, artistes et porte-parole des différentes communautés.</p>
+                <div className="border-t border-border-subtle pt-4">
+                  <h4 className="dateline text-[11px] text-guinea-red mb-2 flex items-center"><ChevronRight className="h-4 w-4 mr-1 text-guinea-red" aria-hidden="true" />Finale nationale</h4>
+                  <p className="text-ink-muted">Grande soirée de rassemblement de clôture. Moment fédérateur à l'échelle du pays avec collectifs, artistes et porte-parole des différentes communautés.</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <section className="bg-gradient-to-r from-slate-50 to-white rounded-3xl p-8 md:p-12 border border-gray-200">
-            <h2 className="text-2xl md:text-3xl font-black text-slate-900 mb-8 flex items-center gap-3"><TrendingUp className="h-8 w-8 text-green-600" />Impact & Résultats Attendus</h2>
+          <section className="bg-paper rounded-[4px] p-8 md:p-12 border border-border-subtle">
+            <h2 className="font-serif font-black text-2xl md:text-3xl text-ink mb-8 flex items-center gap-3"><TrendingUp className="h-8 w-8 text-guinea-green" aria-hidden="true" />Impact et résultats attendus</h2>
             <div className="grid md:grid-cols-3 gap-6">
               {festivalData.impacts.map((impact, index) => (
-                <div key={index} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <div key={index} className="bg-white p-6 rounded-[4px] shadow-soft-sm border border-ink/10">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center"><BarChart className="h-5 w-5 text-blue-600" /></div>
-                    <span className="text-2xl font-black text-slate-900">{impact.value}</span>
+                    <BarChart className="h-6 w-6 text-ink-muted" aria-hidden="true" />
+                    <span className="font-serif font-black text-2xl text-ink">{impact.value}</span>
                   </div>
-                  <h4 className="font-bold text-slate-900 mb-2">{impact.area}</h4>
-                  <p className="text-sm text-gray-600">{impact.description}</p>
+                  <h4 className="font-black text-ink mb-2">{impact.area}</h4>
+                  <p className="text-sm text-ink-muted">{impact.description}</p>
                 </div>
               ))}
             </div>
             <div className="mt-12">
-              <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3"><Lightbulb className="h-6 w-6 text-yellow-600" />Feuille de Route</h3>
+              <h3 className="font-serif font-black text-xl text-ink mb-6 flex items-center gap-3"><Lightbulb className="h-6 w-6 text-guinea-yellow" aria-hidden="true" />Feuille de route</h3>
               <div className="grid md:grid-cols-3 gap-4">
                 {festivalData.timeline.map((phase, index) => (
-                  <div key={index} className="bg-white p-6 rounded-xl border-l-4 border-blue-500">
-                    <h4 className="font-bold text-blue-900 mb-2">{phase.month}</h4>
+                  <div key={index} className="bg-white p-6 rounded-[4px] border border-ink/10 border-l-4 border-l-guinea-red">
+                    <h4 className="font-serif font-black text-ink mb-2">{phase.month}</h4>
                     <ul className="space-y-2">
                       {phase.tasks.map((task, taskIndex) => (
-                        <li key={taskIndex} className="text-sm text-gray-600 flex items-center">
-                          <ChevronRight className="h-3 w-3 mr-2 text-blue-400" />{task}
+                        <li key={taskIndex} className="text-sm text-ink-muted flex items-center">
+                          <ChevronRight className="h-3 w-3 mr-2 text-guinea-red shrink-0" aria-hidden="true" />{task}
                         </li>
                       ))}
                     </ul>
@@ -247,15 +240,15 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
             </div>
           </section>
 
-          <div className="bg-gradient-to-r from-red-600 to-orange-600 rounded-3xl p-8 md:p-12 text-center text-white">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6">Participez au Festival des Sans-Papiers</h2>
+          <div className="bg-guinea-red rounded-[4px] p-8 md:p-12 text-center text-white">
+            <h2 className="font-serif font-black text-2xl md:text-3xl mb-6">Participez au Festival des Sans-Papiers</h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">Rejoignez-nous pour célébrer la dignité et revendiquer les droits fondamentaux.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="px-8 py-4 bg-white text-red-600 font-bold rounded-xl hover:bg-gray-100 transition-colors shadow-lg flex items-center justify-center gap-2">
-                S'inscrire comme bénévole <ExternalLink className="h-5 w-5" />
+              <button className="px-8 py-4 bg-white text-guinea-red font-mono text-[12px] font-bold uppercase tracking-[0.08em] rounded-[3px] hover:bg-ivory transition-colors shadow-soft-sm flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-guinea-red">
+                S'inscrire comme bénévole <ExternalLink className="h-5 w-5" aria-hidden="true" />
               </button>
-              <button className="px-8 py-4 bg-black/30 text-white font-bold rounded-xl hover:bg-black/40 transition-colors border border-white/30 flex items-center justify-center gap-2">
-                Proposer une activité <ExternalLink className="h-5 w-5" />
+              <button className="px-8 py-4 border-2 border-white text-white font-mono text-[12px] font-bold uppercase tracking-[0.08em] rounded-[3px] hover:bg-white hover:text-guinea-red transition-colors flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-guinea-red">
+                Proposer une activité <ExternalLink className="h-5 w-5" aria-hidden="true" />
               </button>
             </div>
           </div>

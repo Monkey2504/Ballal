@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Wheat, ShieldCheck, Users, Mail, ArrowRight, 
+import {
+  Wheat, ShieldCheck, Users, Mail, ArrowRight,
   HeartHandshake, Leaf, Truck, Globe,
   Calendar, CheckCircle, Target, Home, TrendingUp
 } from 'lucide-react';
@@ -22,20 +22,20 @@ const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, set
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8] pb-24">
+    <div className="min-h-screen bg-ivory pb-24">
       {/* Header */}
-      <div className="bg-[#0F0F0F] text-white py-20 relative overflow-hidden">
+      <div className="bg-ink text-ivory py-20 relative overflow-hidden">
         {/* Flag line top */}
         <div className="flag-line absolute top-0 left-0 right-0" aria-hidden="true"><span /><span /><span /></div>
         <div className="max-w-7xl mx-auto px-6 relative z-10 pt-4">
-          <div className="inline-flex items-center gap-2 bg-[#00843D]/20 text-[#00843D] px-5 py-2 font-bold rounded-full text-[10px] uppercase tracking-[0.25em] mb-8 border border-[#00843D]/30">
-            PROJET AUTONOMIE ALIMENTAIRE
-          </div>
-          <h1 className="text-6xl md:text-8xl font-serif font-black tracking-tighter leading-[0.9] mb-8">
-            Nourrir <span className="text-[#00843D]">l'espoir</span>,<br/>semer <span className="text-[#FFCC00]">l'unité</span>
+          <p className="dateline text-[11px] text-guinea-yellow mb-8">
+            Projet — autonomie alimentaire
+          </p>
+          <h1 className="text-6xl md:text-8xl font-serif font-black tracking-tight leading-[0.9] mb-8">
+            Nourrir <span className="text-guinea-green">l'espoir</span>,<br/>semer <span className="text-guinea-yellow">l'unité</span>
           </h1>
-          <p className="text-lg md:text-xl font-medium italic max-w-2xl leading-relaxed text-white/50">
-            "Récupérer les surplus pour restaurer la dignité de chacun."
+          <p className="text-body-lg md:text-xl font-serif italic max-w-2xl leading-relaxed text-ivory/60">
+            « Récupérer les surplus pour restaurer la dignité de chacun. »
           </p>
         </div>
         {/* Flag line bottom */}
@@ -43,7 +43,7 @@ const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, set
       </div>
 
       <div className="max-w-7xl mx-auto px-6 -mt-16 relative z-20">
-        
+
         {/* Metrics Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
           {[
@@ -52,47 +52,47 @@ const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, set
             { value: `x${metrics.growth}`, label: "Impact 2025", icon: <TrendingUp className="h-5 w-5" /> },
             { value: metrics.partners, label: "Partenaires locaux", icon: <HeartHandshake className="h-5 w-5" /> }
           ].map((metric, index) => (
-            <div key={index} className="bg-white p-8 rounded-[2.5rem] shadow-soft-elegant border border-gray-100 flex flex-col items-center text-center">
-              <div className="p-3 bg-guinea-green/10 text-guinea-green rounded-2xl mb-4">{metric.icon}</div>
-              <div className="text-4xl font-serif font-black text-[#0F0F0F] mb-1">{metric.value}</div>
-              <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{metric.label}</div>
+            <div key={index} className="bg-white p-8 rounded-[4px] shadow-soft-elegant border border-ink/10 flex flex-col items-center text-center">
+              <div className="p-3 bg-guinea-green/10 text-guinea-green rounded-[4px] mb-4">{metric.icon}</div>
+              <div className="text-4xl font-serif font-black text-ink mb-1">{metric.value}</div>
+              <div className="dateline text-[9px] text-ink-muted">{metric.label}</div>
             </div>
           ))}
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Action Card */}
-          <div className="bg-white p-12 rounded-[3.5rem] shadow-soft-elegant border border-gray-100 group transition-all">
+          <div className="bg-white p-12 rounded-[4px] shadow-soft-elegant border border-ink/10 group transition-all">
              <div className="flex items-center gap-5 mb-10">
-               <div className="p-5 bg-guinea-green/10 text-guinea-green rounded-[2rem] group-hover:scale-110 transition-transform"><Leaf className="h-10 w-10" /></div>
-               <h3 className="text-4xl font-serif font-black text-[#0F0F0F]">Ce que nous faisons</h3>
+               <div className="p-5 bg-guinea-green/10 text-guinea-green rounded-[4px]"><Leaf className="h-10 w-10" /></div>
+               <h3 className="text-4xl font-serif font-black text-ink">Ce que nous faisons</h3>
              </div>
-             <p className="text-xl text-gray-600 font-medium leading-relaxed mb-10">
+             <p className="text-body-lg text-ink-muted leading-relaxed mb-10">
                Chaque semaine, nous collectons les invendus des commerces bruxellois pour approvisionner directement les cuisines collectives de la diaspora. Zéro déchet. Zéro facture pour les familles.
              </p>
              <div className="space-y-4">
                 {["Zéro gaspillage, zéro frais", "Approvisionnement direct — sans intermédiaire", "Qualité nutritionnelle vérifiée"].map((benefit, i) => (
-                   <div key={i} className="flex items-center gap-4 text-gray-700 font-bold">
-                     <CheckCircle className="h-5 w-5 text-guinea-green" /> {benefit}
+                   <div key={i} className="flex items-center gap-4 text-ink font-bold">
+                     <CheckCircle className="h-5 w-5 text-guinea-green shrink-0" /> {benefit}
                    </div>
                 ))}
              </div>
           </div>
 
           {/* Logistics Card */}
-          <div className="bg-white p-12 rounded-[3.5rem] shadow-soft-elegant border border-gray-100 group transition-all">
+          <div className="bg-white p-12 rounded-[4px] shadow-soft-elegant border border-ink/10 group transition-all">
              <div className="flex items-center gap-5 mb-10">
-               <div className="p-5 bg-guinea-yellow/10 text-guinea-yellow rounded-[2rem] group-hover:scale-110 transition-transform"><Truck className="h-10 w-10" /></div>
-               <h3 className="text-4xl font-serif font-black text-[#0F0F0F]">Rejoignez le réseau</h3>
+               <div className="p-5 bg-guinea-yellow/15 text-guinea-yellow rounded-[4px]"><Truck className="h-10 w-10" /></div>
+               <h3 className="text-4xl font-serif font-black text-ink">Rejoignez le réseau</h3>
              </div>
-             <p className="text-xl text-gray-600 font-medium leading-relaxed mb-10">
+             <p className="text-body-lg text-ink-muted leading-relaxed mb-10">
                Vous avez des surplus alimentaires ? Vous gérez un collectif en besoin ? Deux clics. Un réseau. Un impact réel.
              </p>
              <div className="grid gap-4">
-                <button onClick={() => setView?.(ViewState.FOOD_SUPPLIER)} className="bg-[#0F0F0F] text-white p-6 rounded-2xl font-black uppercase text-xs tracking-widest flex items-center justify-between hover:bg-[#00843D] transition-all shadow-md">
+                <button onClick={() => setView?.(ViewState.FOOD_SUPPLIER)} className="bg-ink text-ivory p-6 rounded-[3px] font-mono font-bold uppercase text-xs tracking-[0.08em] flex items-center justify-between hover:bg-guinea-green transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-guinea-green/50 focus-visible:ring-offset-2">
                    Je donne des surplus <ArrowRight className="h-5 w-5" />
                 </button>
-                <button onClick={() => setView?.(ViewState.FOOD_NETWORK)} className="border-2 border-[#0F0F0F] text-[#0F0F0F] p-6 rounded-2xl font-black uppercase text-xs tracking-widest flex items-center justify-between hover:bg-gray-50 transition-all">
+                <button onClick={() => setView?.(ViewState.FOOD_NETWORK)} className="border-2 border-ink text-ink p-6 rounded-[3px] font-mono font-bold uppercase text-xs tracking-[0.08em] flex items-center justify-between hover:bg-ink hover:text-ivory transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/40 focus-visible:ring-offset-2">
                    Mon collectif a besoin <ArrowRight className="h-5 w-5" />
                 </button>
              </div>

@@ -131,7 +131,7 @@ export interface Translation {
 
 const fr: Translation = {
   nav_home: "Accueil",
-  nav_legal: "Aide & Droits",
+  nav_legal: "Aide et droits",
   nav_history: "Histoire",
   nav_share: "Partager",
   nav_team: "Équipe",

@@ -197,25 +197,28 @@ const GallerySection: React.FC = () => {
   };
 
   return (
-    <div 
-      className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12 md:py-20"
+    <div
+      className="min-h-screen bg-ivory paper-grain py-12 md:py-20"
       role="main"
       aria-labelledby="gallery-title"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
-          <div className="inline-flex items-center justify-center p-4 bg-gradient-to-br from-red-100 to-red-50 rounded-full mb-6 shadow-lg">
-            <ImageIcon className="h-10 w-10 text-[#BE0000]" aria-hidden="true" />
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="flag-line w-8 shrink-0" aria-hidden="true">
+              <span /><span /><span />
+            </span>
+            <p className="dateline text-[11px] text-guinea-red">Galerie — en images</p>
           </div>
-          <h1 
+          <h1
             id="gallery-title"
-            className="text-4xl md:text-5xl font-black text-slate-900 mb-4"
+            className="font-serif font-black text-4xl md:text-5xl text-ink mb-4"
           >
-            Galerie <span className="text-[#BE0000]">Ballal</span>
+            Galerie <span className="text-guinea-red">Ballal</span>
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-body-lg text-ink-muted max-w-3xl mx-auto">
             Découvrez nos actions, événements et moments forts en images
           </p>
         </div>
@@ -223,28 +226,28 @@ const GallerySection: React.FC = () => {
         {/* Featured Item */}
         {featuredItem && (
           <div className="mb-12 md:mb-16">
-            <div 
-              className="relative rounded-3xl overflow-hidden shadow-2xl group cursor-pointer"
+            <div
+              className="relative rounded-[4px] overflow-hidden border border-ink/10 shadow-soft-lg group cursor-pointer"
               onClick={() => openModal(featuredItem)}
               role="button"
               tabIndex={0}
               aria-label={`Voir en détail: ${featuredItem.title}`}
               onKeyPress={(e) => e.key === 'Enter' && openModal(featuredItem)}
             >
-              <img 
+              <img
                 src={featuredItem.imageUrl}
                 alt={featuredItem.title}
                 className="w-full h-64 md:h-96 object-cover transform group-hover:scale-105 transition-transform duration-700"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/40 to-transparent">
                 <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="px-3 py-1 bg-[#BE0000] text-white text-xs font-bold rounded-full uppercase tracking-wider">
+                    <span className="dateline px-3 py-1 bg-guinea-red text-white text-[10px] rounded-[3px]">
                       À la une
                     </span>
                   </div>
-                  <h2 className="text-2xl md:text-4xl font-black text-white mb-3">
+                  <h2 className="font-serif font-black text-2xl md:text-4xl text-white mb-3">
                     {featuredItem.title}
                   </h2>
                   <p className="text-white/90 text-lg mb-4 max-w-2xl">
@@ -266,7 +269,7 @@ const GallerySection: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className="absolute top-4 right-4 p-3 bg-black/50 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="absolute top-4 right-4 p-3 bg-ink/50 backdrop-blur-sm rounded-[3px] opacity-0 group-hover:opacity-100 transition-opacity">
                 <ZoomIn className="h-6 w-6 text-white" aria-hidden="true" />
               </div>
             </div>
@@ -274,9 +277,9 @@ const GallerySection: React.FC = () => {
         )}
 
         {/* Controls */}
-        <div className="mb-8 bg-white rounded-2xl shadow-lg p-6 border border-gray-200">
+        <div className="mb-8 bg-white rounded-[4px] shadow-soft-sm p-6 border border-ink/10">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            
+
             {/* Search */}
             <div className="flex-1">
               <div className="relative max-w-md">
@@ -285,23 +288,23 @@ const GallerySection: React.FC = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Rechercher dans la galerie..."
-                  className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-[#BE0000] focus:ring-2 focus:ring-[#BE0000]/20 outline-none transition-all"
+                  className="w-full pl-12 pr-4 py-3 rounded-[3px] border-2 border-border-subtle focus:border-guinea-red focus:ring-2 focus:ring-guinea-red/20 outline-none transition-all"
                   aria-label="Rechercher dans la galerie"
                 />
-                <Filter className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" aria-hidden="true" />
+                <Filter className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-ink-muted" aria-hidden="true" />
               </div>
             </div>
 
             {/* View Mode & Stats */}
             <div className="flex items-center gap-6">
               {/* View Toggle */}
-              <div className="flex items-center gap-2 bg-gray-100 rounded-xl p-1">
+              <div className="flex items-center gap-2 bg-paper rounded-[3px] p-1">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`p-2 rounded-lg transition-colors ${
-                    viewMode === 'grid' 
-                      ? 'bg-white text-slate-900 shadow-sm' 
-                      : 'text-gray-500 hover:text-slate-900'
+                  className={`p-2 rounded-[3px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-guinea-red/40 ${
+                    viewMode === 'grid'
+                      ? 'bg-white text-ink shadow-soft-sm'
+                      : 'text-ink-muted hover:text-ink'
                   }`}
                   aria-label="Vue grille"
                   aria-pressed={viewMode === 'grid'}
@@ -310,10 +313,10 @@ const GallerySection: React.FC = () => {
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`p-2 rounded-lg transition-colors ${
-                    viewMode === 'list' 
-                      ? 'bg-white text-slate-900 shadow-sm' 
-                      : 'text-gray-500 hover:text-slate-900'
+                  className={`p-2 rounded-[3px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-guinea-red/40 ${
+                    viewMode === 'list'
+                      ? 'bg-white text-ink shadow-soft-sm'
+                      : 'text-ink-muted hover:text-ink'
                   }`}
                   aria-label="Vue liste"
                   aria-pressed={viewMode === 'list'}
@@ -323,8 +326,8 @@ const GallerySection: React.FC = () => {
               </div>
 
               {/* Stats */}
-              <div className="hidden md:block text-sm text-gray-600">
-                <span className="font-bold text-slate-900">{filteredItems.length}</span> photos
+              <div className="hidden md:block text-sm text-ink-muted">
+                <span className="font-black text-ink">{filteredItems.length}</span> photos
               </div>
             </div>
           </div>
@@ -336,16 +339,16 @@ const GallerySection: React.FC = () => {
                 <button
                   key={category.id}
                   onClick={() => setSelectedCategory(category.id)}
-                  className={`px-4 py-2 rounded-full border-2 transition-all flex items-center gap-2 ${
+                  className={`px-4 py-2 rounded-[3px] border-2 transition-all flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-guinea-red/40 ${
                     selectedCategory === category.id
-                      ? 'border-[#BE0000] bg-red-50 text-[#BE0000] font-bold'
-                      : 'border-gray-200 text-gray-600 hover:border-gray-300'
+                      ? 'border-guinea-red bg-guinea-red/5 text-guinea-red font-bold'
+                      : 'border-border-subtle text-ink-muted hover:border-ink/30'
                   }`}
                   aria-label={`Filtrer par ${category.label}`}
                   aria-pressed={selectedCategory === category.id}
                 >
                   {category.label}
-                  <span className="text-xs bg-gray-100 px-2 py-0.5 rounded-full">
+                  <span className="text-xs bg-paper px-2 py-0.5 rounded-[3px]">
                     {category.count}
                   </span>
                 </button>
@@ -365,9 +368,9 @@ const GallerySection: React.FC = () => {
           {filteredItems.map((item) => (
             <article
               key={item.id}
-              className={`group bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 ${
-                viewMode === 'grid' 
-                  ? 'hover:-translate-y-1' 
+              className={`group bg-white rounded-[4px] shadow-soft-sm overflow-hidden border border-ink/10 hover:shadow-soft-lg transition-all duration-300 ${
+                viewMode === 'grid'
+                  ? 'hover:-translate-y-1'
                   : 'flex flex-col md:flex-row'
               }`}
             >
@@ -388,18 +391,18 @@ const GallerySection: React.FC = () => {
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                  <div className="absolute bottom-4 right-4 p-2 bg-black/50 backdrop-blur-sm rounded-full">
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="absolute bottom-4 right-4 p-2 bg-ink/50 backdrop-blur-sm rounded-[3px]">
                     <ZoomIn className="h-5 w-5 text-white" aria-hidden="true" />
                   </div>
                 </div>
                 <div className="absolute top-4 left-4">
-                  <span className={`px-3 py-1 text-xs font-bold rounded-full uppercase tracking-wider ${
-                    item.category === 'festival' ? 'bg-[#BE0000] text-white' :
-                    item.category === 'food' ? 'bg-green-600 text-white' :
-                    item.category === 'event' ? 'bg-blue-600 text-white' :
-                    item.category === 'team' ? 'bg-purple-600 text-white' :
-                    'bg-yellow-600 text-white'
+                  <span className={`dateline px-3 py-1 text-[10px] rounded-[3px] ${
+                    item.category === 'festival' ? 'bg-guinea-red text-white' :
+                    item.category === 'food' ? 'bg-guinea-green text-white' :
+                    item.category === 'event' ? 'bg-ink text-white' :
+                    item.category === 'team' ? 'bg-ink text-white' :
+                    'bg-guinea-yellow text-ink'
                   }`}>
                     {item.category}
                   </span>
@@ -409,23 +412,23 @@ const GallerySection: React.FC = () => {
               {/* Content */}
               <div className={`p-6 flex-1 ${viewMode === 'list' ? 'md:flex-1' : ''}`}>
                 <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-[#BE0000] transition-colors">
+                  <h3 className="font-serif font-black text-xl text-ink group-hover:text-guinea-red transition-colors">
                     {item.title}
                   </h3>
                   <button
                     onClick={() => handleLike(item.id)}
-                    className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+                    className="p-2 text-ink-muted hover:text-guinea-red transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-guinea-red/40 rounded-[3px]"
                     aria-label={`Aimer ${item.title}`}
                   >
                     <Heart className="h-5 w-5" />
                   </button>
                 </div>
-                
-                <p className="text-gray-600 mb-4 line-clamp-2">
+
+                <p className="text-ink-muted mb-4 line-clamp-2">
                   {item.description}
                 </p>
-                
-                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-6">
+
+                <div className="flex flex-wrap items-center gap-4 text-sm text-ink-muted mb-6">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4" aria-hidden="true" />
                     <span>{item.date}</span>
@@ -439,18 +442,18 @@ const GallerySection: React.FC = () => {
                     <span>{item.likes} j'aime</span>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => openModal(item)}
-                    className="flex-1 bg-slate-900 text-white font-medium py-2 px-4 rounded-lg hover:bg-black transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 bg-ink text-ivory font-mono text-[12px] font-bold uppercase tracking-[0.08em] py-2.5 px-4 rounded-[3px] hover:bg-guinea-red transition-colors flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-guinea-red/40"
                   >
                     <Info className="h-4 w-4" aria-hidden="true" />
                     Détails
                   </button>
                   <button
                     onClick={() => handleShare(item)}
-                    className="p-2 border border-gray-300 rounded-lg text-gray-600 hover:text-slate-900 hover:border-slate-900 transition-colors"
+                    className="p-2 border-2 border-ink text-ink rounded-[3px] hover:bg-ink hover:text-ivory transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/40"
                     aria-label={`Partager ${item.title}`}
                   >
                     <Share2 className="h-5 w-5" />
@@ -464,13 +467,13 @@ const GallerySection: React.FC = () => {
         {/* Empty State */}
         {filteredItems.length === 0 && (
           <div className="text-center py-16">
-            <div className="inline-flex items-center justify-center p-4 bg-gray-100 rounded-full mb-6">
-              <ImageIcon className="h-12 w-12 text-gray-400" aria-hidden="true" />
+            <div className="inline-flex items-center justify-center p-4 bg-paper rounded-[4px] mb-6">
+              <ImageIcon className="h-12 w-12 text-ink-muted" aria-hidden="true" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">
+            <h3 className="font-serif font-black text-2xl text-ink mb-3">
               Aucune image trouvée
             </h3>
-            <p className="text-gray-600 max-w-md mx-auto mb-6">
+            <p className="text-ink-muted max-w-md mx-auto mb-6">
               Essayez de modifier vos critères de recherche ou de réinitialiser les filtres
             </p>
             <button
@@ -478,7 +481,7 @@ const GallerySection: React.FC = () => {
                 setSelectedCategory('all');
                 setSearchQuery('');
               }}
-              className="px-6 py-3 bg-[#BE0000] text-white font-bold rounded-xl hover:bg-red-700 transition-colors"
+              className="px-7 py-3.5 bg-guinea-red text-white font-mono text-[12px] font-bold uppercase tracking-[0.08em] rounded-[3px] hover:bg-guinea-red-dark transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-guinea-red/50 focus-visible:ring-offset-2"
             >
               Réinitialiser les filtres
             </button>
@@ -486,41 +489,42 @@ const GallerySection: React.FC = () => {
         )}
 
         {/* Stats */}
-        <div className="mt-12 bg-gradient-to-r from-slate-900 to-black rounded-3xl p-8 text-white">
+        <div className="mt-12 bg-ink rounded-[4px] p-8 text-white relative overflow-hidden">
+          <div className="flag-line absolute top-0 left-0 right-0" aria-hidden="true"><span /><span /><span /></div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-black mb-2">{galleryItems.length}</div>
-              <div className="text-sm text-gray-300">Moments capturés</div>
+              <div className="font-serif font-black text-3xl md:text-4xl mb-2">{galleryItems.length}</div>
+              <div className="dateline text-[10px] text-white/50">Moments capturés</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-black mb-2">
+              <div className="font-serif font-black text-3xl md:text-4xl mb-2">
                 {galleryItems.reduce((sum, item) => sum + item.likes, 0)}
               </div>
-              <div className="text-sm text-gray-300">Mentions j'aime</div>
+              <div className="dateline text-[10px] text-white/50">Mentions j'aime</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-black mb-2">
+              <div className="font-serif font-black text-3xl md:text-4xl mb-2">
                 {new Set(galleryItems.map(item => item.category)).size}
               </div>
-              <div className="text-sm text-gray-300">Catégories</div>
+              <div className="dateline text-[10px] text-white/50">Catégories</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-black mb-2">2023</div>
-              <div className="text-sm text-gray-300">Première édition</div>
+              <div className="font-serif font-black text-3xl md:text-4xl mb-2">2023</div>
+              <div className="dateline text-[10px] text-white/50">Première édition</div>
             </div>
           </div>
         </div>
 
         {/* Call to Action */}
         <div className="mt-12 text-center">
-          <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-3xl p-8 md:p-12 border border-red-100">
-            <h2 className="text-2xl md:text-3xl font-black text-slate-900 mb-4">
+          <div className="bg-paper rounded-[4px] p-8 md:p-12 border border-border-subtle">
+            <h2 className="font-serif font-black text-2xl md:text-3xl text-ink mb-4">
               Vous avez des photos de nos événements ?
             </h2>
-            <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
+            <p className="text-ink-muted text-lg mb-8 max-w-2xl mx-auto">
               Partagez vos photos avec notre communauté et contribuez à documenter notre histoire collective
             </p>
-            <button className="px-8 py-4 bg-[#BE0000] text-white font-bold rounded-xl hover:bg-red-700 transition-colors shadow-lg flex items-center justify-center gap-2 mx-auto">
+            <button className="px-7 py-3.5 bg-guinea-red text-white font-mono text-[12px] font-bold uppercase tracking-[0.08em] rounded-[3px] hover:bg-guinea-red-dark transition-colors shadow-soft-sm flex items-center justify-center gap-2 mx-auto focus:outline-none focus-visible:ring-2 focus-visible:ring-guinea-red/50 focus-visible:ring-offset-2">
               <Upload className="h-5 w-5" aria-hidden="true" />
               Partager mes photos
             </button>
@@ -530,18 +534,18 @@ const GallerySection: React.FC = () => {
 
       {/* Lightbox Modal */}
       {isModalOpen && selectedImage && (
-        <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm"
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-ink/90 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
           aria-labelledby="lightbox-title"
           onClick={(e) => e.target === e.currentTarget && closeModal()}
         >
-          <div className="relative w-full max-w-6xl max-h-[90vh] bg-white rounded-3xl overflow-hidden">
+          <div className="relative w-full max-w-6xl max-h-[90vh] bg-white rounded-[4px] overflow-hidden">
             {/* Close Button */}
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 z-10 p-3 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors focus:outline-none focus:ring-2 focus:ring-white"
+              className="absolute top-4 right-4 z-10 p-3 bg-ink/50 text-white rounded-[3px] hover:bg-ink/70 transition-colors focus:outline-none focus:ring-2 focus:ring-white"
               aria-label="Fermer la galerie"
             >
               <X className="h-6 w-6" />
@@ -550,14 +554,14 @@ const GallerySection: React.FC = () => {
             {/* Navigation Buttons */}
             <button
               onClick={() => navigateGallery('prev')}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors focus:outline-none focus:ring-2 focus:ring-white"
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-ink/50 text-white rounded-[3px] hover:bg-ink/70 transition-colors focus:outline-none focus:ring-2 focus:ring-white"
               aria-label="Image précédente"
             >
               <ChevronLeft className="h-6 w-6" />
             </button>
             <button
               onClick={() => navigateGallery('next')}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors focus:outline-none focus:ring-2 focus:ring-white"
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-ink/50 text-white rounded-[3px] hover:bg-ink/70 transition-colors focus:outline-none focus:ring-2 focus:ring-white"
               aria-label="Image suivante"
             >
               <ChevronRight className="h-6 w-6" />
@@ -576,13 +580,13 @@ const GallerySection: React.FC = () => {
             <div className="p-6 md:p-8 bg-white">
               <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
                 <div className="flex-1">
-                  <h2 id="lightbox-title" className="text-2xl font-black text-slate-900 mb-3">
+                  <h2 id="lightbox-title" className="font-serif font-black text-2xl text-ink mb-3">
                     {selectedImage.title}
                   </h2>
-                  <p className="text-gray-600 mb-6">
+                  <p className="text-ink-muted mb-6">
                     {selectedImage.description}
                   </p>
-                  <div className="flex flex-wrap items-center gap-6 text-gray-500">
+                  <div className="flex flex-wrap items-center gap-6 text-ink-muted">
                     <div className="flex items-center gap-2">
                       <Calendar className="h-5 w-5" aria-hidden="true" />
                       <span>{selectedImage.date}</span>
@@ -597,34 +601,34 @@ const GallerySection: React.FC = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => handleLike(selectedImage.id)}
-                    className="p-3 border border-gray-300 rounded-xl text-gray-600 hover:text-red-500 hover:border-red-500 transition-colors"
+                    className="p-3 border-2 border-ink rounded-[3px] text-ink hover:text-guinea-red hover:border-guinea-red transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-guinea-red/40"
                     aria-label="Aimer cette image"
                   >
                     <Heart className="h-6 w-6" />
                   </button>
                   <button
                     onClick={() => handleShare(selectedImage)}
-                    className="p-3 border border-gray-300 rounded-xl text-gray-600 hover:text-slate-900 hover:border-slate-900 transition-colors"
+                    className="p-3 border-2 border-ink rounded-[3px] text-ink hover:bg-ink hover:text-ivory transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/40"
                     aria-label="Partager cette image"
                   >
                     <Share2 className="h-6 w-6" />
                   </button>
                   <button
-                    className="p-3 border border-gray-300 rounded-xl text-gray-600 hover:text-slate-900 hover:border-slate-900 transition-colors"
+                    className="p-3 border-2 border-ink rounded-[3px] text-ink hover:bg-ink hover:text-ivory transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/40"
                     aria-label="Télécharger cette image"
                   >
                     <Download className="h-6 w-6" />
                   </button>
                 </div>
               </div>
-              
+
               {/* Image Counter */}
-              <div className="mt-6 pt-6 border-t border-gray-200">
-                <p className="text-sm text-gray-500">
+              <div className="mt-6 pt-6 border-t border-border-subtle">
+                <p className="dateline text-[10px] text-ink-muted">
                   Image {filteredItems.findIndex(item => item.id === selectedImage.id) + 1} sur {filteredItems.length}
                 </p>
               </div>
