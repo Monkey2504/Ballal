@@ -18,7 +18,7 @@ export const PROGRAMS: Program[] = [
     borderColor: 'var(--crimson)',
     iconBg:      'bg-guinea-red/10',
     iconColor:   'text-guinea-red',
-    label:       'Droits & Juridique',
+    label:       'Droits et juridique',
     desc:        "Votre domicile est protégé par la Constitution. Articles 9bis/9ter, scripts d'urgence, régularisation — nous vous outillons pour vous défendre.",
   },
   {
@@ -54,7 +54,7 @@ export const PROGRAMS: Program[] = [
     borderColor: 'var(--ink)',
     iconBg:      'bg-ink/10',
     iconColor:   'text-ink',
-    label:       'Culture & Histoire',
+    label:       'Culture et histoire',
     desc:        "La culture est notre levier politique. Elle nous rend visibles, renforce notre voix et nous permet d'aller plus loin encore dans ce que nous construisons.",
   },
 ];

@@ -28,11 +28,11 @@
     <!-- Canonical -->
     <link rel="canonical" href="https://ballal.be/" />
 
-    <!-- Fonts -->
+    <!-- Fonts — Fraunces (display éditorial) · Archivo (corps) · Space Mono (datelines) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Syne:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Archivo:wght@400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
       rel="stylesheet"
     />
 
@@ -47,14 +47,16 @@
               'guinea-red-dark': '#9B0000',
               'guinea-yellow':   '#FFCC00',
               'guinea-green':    '#00843D',
-              'ivory':           '#FAFAF8',
-              'ink':             '#0F0F0F',
-              'ink-muted':       '#6B6B6B',
-              'border-subtle':   '#E8E8E6',
+              'ivory':           '#FAF7F0',
+              'paper':           '#F3EEE3',
+              'ink':             '#141210',
+              'ink-muted':       '#6B655C',
+              'border-subtle':   '#E4DECF',
             },
             fontFamily: {
-              sans:  ['Syne', 'sans-serif'],
+              sans:  ['Archivo', 'sans-serif'],
               serif: ['Fraunces', 'serif'],
+              mono:  ['"Space Mono"', 'monospace'],
             },
             fontSize: {
               'caption': ['9px',  { lineHeight: '1.4', letterSpacing: '0.06em' }],
@@ -96,20 +98,22 @@
     <style>
       /* ── Design tokens ──────────────────────────────── */
       :root {
-        --crimson:   #BE0000;
-        --gold:      #FFCC00;
-        --emerald:   #00843D;
-        --ivory:     #FAFAF8;
-        --ink:       #0F0F0F;
-        --ink-muted: #6B6B6B;
-        --border:    #E8E8E6;
+        --crimson:      #BE0000;
+        --crimson-dark: #9B0000;
+        --gold:         #FFCC00;
+        --emerald:      #00843D;
+        --ivory:        #FAF7F0;
+        --paper:        #F3EEE3;
+        --ink:          #141210;
+        --ink-muted:    #6B655C;
+        --border:       #E4DECF;
 
         --radius:    12px;
         --radius-lg: 20px;
 
-        --shadow-sm: 0 1px 3px rgba(0,0,0,0.05), 0 2px 8px rgba(0,0,0,0.04);
-        --shadow-md: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.06);
-        --shadow-lg: 0 8px 32px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
+        --shadow-sm: 0 1px 3px rgba(20,18,16,0.05), 0 2px 8px rgba(20,18,16,0.04);
+        --shadow-md: 0 1px 3px rgba(20,18,16,0.05), 0 4px 16px rgba(20,18,16,0.06);
+        --shadow-lg: 0 8px 32px rgba(20,18,16,0.08), 0 2px 6px rgba(20,18,16,0.04);
       }
 
       /* ── Global base ────────────────────────────────── */
@@ -120,10 +124,31 @@
         background-color: var(--ivory);
         color: var(--ink);
         margin: 0;
+        font-family: 'Archivo', sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }
       #root { min-height: 100vh; }
+
+      /* ── Paper grain — atmosphere through texture, not blur ─ */
+      .paper-grain { position: relative; }
+      .paper-grain::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.5;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+      }
+
+      /* ── Dateline — Space Mono metadata label (press wire) ─ */
+      .dateline {
+        font-family: 'Space Mono', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        font-weight: 700;
+      }
 
       /* ── Guinea flag line ───────────────────────────── */
       .flag-line {

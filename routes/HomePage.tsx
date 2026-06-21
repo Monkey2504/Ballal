@@ -13,9 +13,13 @@ const cardVariants = {
   hidden:  { opacity: 0, y: 20 },
   visible: (i: number) => ({
     opacity: 1, y: 0,
-    transition: { delay: i * 0.07, duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
+    transition: { delay: i * 0.06, duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
   }),
 };
+
+// Couleur lisible pour les numéros de sommaire (le jaune drapeau passe en or foncé)
+const numberColor = (border: string) =>
+  border === 'var(--gold)' ? '#8B7000' : border;
 
 interface HomePageProps {
   navigate: (v: ViewState) => void;
@@ -23,9 +27,6 @@ interface HomePageProps {
 }
 
 const HomePage: React.FC<HomePageProps> = ({ navigate, language }) => {
-  const FeaturedIcon = PROGRAMS[0].icon;
-  const SecondIcon = PROGRAMS[1].icon;
-
   return (
     <div>
       <Hero
@@ -38,12 +39,11 @@ const HomePage: React.FC<HomePageProps> = ({ navigate, language }) => {
       {/* Bandeau de chiffres */}
       <div className="bg-ink relative overflow-hidden">
         <div className="flag-line" aria-hidden="true"><span /><span /><span /></div>
-        <div className="absolute inset-0 dot-grid opacity-[0.13] pointer-events-none" aria-hidden="true" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
           <dl className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-white/[0.08]">
             {IMPACT_NUMBERS.map((stat) => (
               <div key={stat.label} className="px-8 py-14 text-center flex flex-col-reverse gap-3">
-                <dt className="text-label font-bold uppercase tracking-[0.2em] text-white/40">
+                <dt className="dateline text-[10px] text-white/40">
                   {stat.label}
                 </dt>
                 <dd className="text-4xl xl:text-5xl font-serif font-black leading-none" style={{ color: stat.accent }}>
@@ -53,136 +53,75 @@ const HomePage: React.FC<HomePageProps> = ({ navigate, language }) => {
             ))}
           </dl>
         </div>
-        <div className="flag-line" aria-hidden="true"><span /><span /><span /></div>
       </div>
 
-      {/* Programmes */}
-      <section className="bg-ivory py-20 sm:py-28" aria-labelledby="programs-title">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      {/* Programmes — sommaire éditorial */}
+      <section className="bg-ivory paper-grain py-20 sm:py-28" aria-labelledby="programs-title">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
           <SectionHeader
             titleId="programs-title"
-            eyebrow="Nos programmes"
-            title="Du toit à l'indépendance — le parcours complet."
-            description="Nous ne traitons pas les urgences une par une. Nous gérons le parcours entier : logement, droits, alimentation, emploi, communauté, culture — jusqu'à ce que la personne soit vraiment libre."
+            eyebrow="Sommaire — nos programmes"
+            title="Du toit à l'indépendance, le parcours complet."
+            description="Nous ne traitons pas les urgences une par une. Nous gérons le parcours entier : logement, droits, alimentation, emploi, communauté, culture — jusqu'à ce que la personne soit vraiment libre."
             flagLine
-            className="mb-16"
+            className="mb-14"
           />
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <motion.div
-              custom={0}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-40px' }}
-              className="lg:col-span-2"
-            >
-              <Card
-                hover
-                onClick={() => navigate(PROGRAMS[0].view)}
-                accentColor={PROGRAMS[0].borderColor}
-                className="group p-8 sm:p-10 flex flex-col gap-6 h-full"
-              >
-                <div className="flex items-start gap-6">
-                  <div className={`w-14 h-14 ${PROGRAMS[0].iconBg} rounded-token-lg flex items-center justify-center shrink-0`}>
-                    <FeaturedIcon className={`h-7 w-7 ${PROGRAMS[0].iconColor}`} aria-hidden="true" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-serif font-black text-2xl text-ink mb-3 leading-tight group-hover:opacity-80 transition-opacity">
-                      {PROGRAMS[0].label}
-                    </h3>
-                    <p className="text-body-lg text-ink-muted leading-relaxed">{PROGRAMS[0].desc}</p>
-                  </div>
-                </div>
-                <div
-                  className="flex items-center gap-1.5 text-label font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-200 mt-auto"
-                  style={{ color: PROGRAMS[0].borderColor }}
-                >
-                  Accéder <ArrowRight className="h-3 w-3" aria-hidden="true" />
-                </div>
-              </Card>
-            </motion.div>
-
-            <motion.div
-              custom={1}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-40px' }}
-            >
-              <Card
-                hover
-                onClick={() => navigate(PROGRAMS[1].view)}
-                accentColor={PROGRAMS[1].borderColor}
-                className="group p-7 flex flex-col gap-5 h-full"
-              >
-                <div className={`w-10 h-10 ${PROGRAMS[1].iconBg} rounded-token flex items-center justify-center shrink-0`}>
-                  <SecondIcon className={`h-5 w-5 ${PROGRAMS[1].iconColor}`} aria-hidden="true" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-serif font-black text-lg text-ink mb-2 leading-tight group-hover:opacity-80 transition-opacity">
-                    {PROGRAMS[1].label}
-                  </h3>
-                  <p className="text-body-sm text-ink-muted leading-relaxed">{PROGRAMS[1].desc}</p>
-                </div>
-                <div
-                  className="flex items-center gap-1.5 text-label font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                  style={{ color: PROGRAMS[1].borderColor }}
-                >
-                  Accéder <ArrowRight className="h-3 w-3" aria-hidden="true" />
-                </div>
-              </Card>
-            </motion.div>
-
-            {PROGRAMS.slice(2).map((prog, i) => {
+          <ul className="border-t border-ink/15">
+            {PROGRAMS.map((prog, i) => {
               const Icon = prog.icon;
+              const color = numberColor(prog.borderColor);
               return (
-                <motion.div
+                <motion.li
                   key={prog.view}
-                  custom={i + 2}
+                  custom={i}
                   variants={cardVariants}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: '-40px' }}
                 >
-                  <Card
-                    hover
+                  <button
                     onClick={() => navigate(prog.view)}
-                    accentColor={prog.borderColor}
-                    className="group p-7 flex flex-col gap-5 h-full"
+                    className="group w-full text-left flex items-baseline gap-5 sm:gap-8 py-7 border-b border-ink/15 transition-colors hover:bg-ink/[0.03] focus:outline-none focus-visible:ring-2 focus-visible:ring-guinea-red/40 -mx-3 px-3"
                   >
-                    <div className={`w-10 h-10 ${prog.iconBg} rounded-token flex items-center justify-center shrink-0`}>
-                      <Icon className={`h-5 w-5 ${prog.iconColor}`} aria-hidden="true" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-serif font-black text-lg text-ink mb-2 leading-tight group-hover:opacity-80 transition-opacity">
-                        {prog.label}
-                      </h3>
-                      <p className="text-body-sm text-ink-muted leading-relaxed">{prog.desc}</p>
-                    </div>
-                    <div
-                      className="flex items-center gap-1.5 text-label font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                      style={{ color: prog.borderColor }}
+                    <span
+                      className="font-mono font-bold text-base sm:text-lg shrink-0 w-8 tabular-nums"
+                      style={{ color }}
+                      aria-hidden="true"
                     >
-                      Accéder <ArrowRight className="h-3 w-3" aria-hidden="true" />
-                    </div>
-                  </Card>
-                </motion.div>
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+
+                    <span className="flex-1 min-w-0">
+                      <span className="flex items-center gap-3">
+                        <Icon className="h-5 w-5 shrink-0" style={{ color }} aria-hidden="true" />
+                        <span className="font-serif font-black text-xl sm:text-2xl text-ink leading-tight group-hover:opacity-70 transition-opacity">
+                          {prog.label}
+                        </span>
+                      </span>
+                      <span className="block text-body-sm text-ink-muted leading-relaxed mt-2 max-w-2xl">
+                        {prog.desc}
+                      </span>
+                    </span>
+
+                    <ArrowRight
+                      className="h-5 w-5 text-ink-muted shrink-0 self-center opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
+                      aria-hidden="true"
+                    />
+                  </button>
+                </motion.li>
               );
             })}
-          </div>
+          </ul>
         </div>
       </section>
 
       {/* CTA Don */}
-      <section className="bg-guinea-yellow relative overflow-hidden py-16 sm:py-20" aria-label="Soutenir Ballal ASBL">
-        <div className="absolute -right-28 -bottom-28 w-[380px] h-[380px] bg-ink/[0.04] rounded-full pointer-events-none" aria-hidden="true" />
-        <div className="absolute -left-14 -top-14 w-44 h-44 bg-guinea-red/[0.08] rounded-full pointer-events-none" aria-hidden="true" />
-        <div className="absolute right-1/4 top-0 w-px h-full bg-ink/[0.06] pointer-events-none" aria-hidden="true" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+      <section className="bg-guinea-yellow py-16 sm:py-20" aria-label="Soutenir Ballal ASBL">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
             <div className="max-w-xl">
-              <p className="text-label font-bold uppercase tracking-[0.3em] text-ink/50 mb-3">Agir maintenant</p>
+              <p className="dateline text-[11px] text-ink/55 mb-3">Agir maintenant</p>
               <h2 className="font-serif font-black text-3xl sm:text-4xl text-ink leading-tight">
                 Soutenir Ballal, c'est soutenir ceux qui savent.
               </h2>
@@ -195,7 +134,7 @@ const HomePage: React.FC<HomePageProps> = ({ navigate, language }) => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-              className="shrink-0 inline-flex items-center gap-2.5 px-7 py-3.5 bg-ink text-white text-[12px] font-bold uppercase tracking-widest rounded-token hover:bg-guinea-red transition-colors duration-200 group focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/40 focus-visible:ring-offset-2"
+              className="shrink-0 inline-flex items-center gap-2.5 px-7 py-3.5 bg-ink text-ivory font-mono text-[12px] font-bold uppercase tracking-[0.08em] rounded-[3px] hover:bg-guinea-red transition-colors duration-200 group focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/40 focus-visible:ring-offset-2"
             >
               Soutenir Ballal
               <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
@@ -205,12 +144,12 @@ const HomePage: React.FC<HomePageProps> = ({ navigate, language }) => {
       </section>
 
       {/* Conseil d'Administration */}
-      <section className="bg-ivory py-20 sm:py-28 border-t border-border-subtle" aria-labelledby="team-title">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <section className="bg-ivory paper-grain py-20 sm:py-28 border-t border-border-subtle" aria-labelledby="team-title">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <SectionHeader
             titleId="team-title"
             eyebrow="Gouvernance"
-            title="Conseil d'Administration"
+            title="Conseil d'administration"
             description="Notre direction vient de la rue. Certains ont été sans-papiers. Tous ont vécu ce que vivent nos bénéficiaires. C'est ce qui fait notre différence."
             flagLine
             className="mb-14"
@@ -231,7 +170,7 @@ const HomePage: React.FC<HomePageProps> = ({ navigate, language }) => {
                     <img
                       src={member.img}
                       alt={member.name}
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />
                     <div
@@ -242,28 +181,28 @@ const HomePage: React.FC<HomePageProps> = ({ navigate, language }) => {
                   </div>
                   <div className="p-4">
                     <p className="font-black text-body-sm text-ink leading-tight">{member.name}</p>
-                    <p className="text-label text-ink-muted font-medium mt-1">{member.bio}</p>
+                    <p className="dateline text-[9px] text-ink-muted mt-1.5 normal-case tracking-[0.1em]">{member.bio}</p>
                   </div>
                 </Card>
               </motion.div>
             ))}
           </div>
 
-          <div className="mt-12 rounded-token-xl overflow-hidden relative shadow-soft-lg">
+          <figure className="mt-12 rounded-[4px] overflow-hidden relative shadow-soft-lg border border-ink/10">
             <img
               src="https://i.imgur.com/CwnDz75.png"
               alt="Membres et militants de Ballal ASBL"
               className="w-full h-64 sm:h-80 object-cover"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" aria-hidden="true" />
-            <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-              <p className="text-label font-black uppercase tracking-[0.3em] text-guinea-yellow mb-2">Membres & Militants</p>
-              <p className="font-serif font-black text-xl sm:text-2xl text-white leading-snug max-w-xl">
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/25 to-transparent" aria-hidden="true" />
+            <figcaption className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+              <p className="dateline text-[10px] text-guinea-yellow mb-2">Membres et militants</p>
+              <p className="font-serif font-black text-xl sm:text-2xl text-ivory leading-snug max-w-xl">
                 Derrière chaque action Ballal, des femmes et des hommes qui ne lâchent pas.
               </p>
-            </div>
-          </div>
+            </figcaption>
+          </figure>
         </div>
       </section>
     </div>

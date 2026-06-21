@@ -23,7 +23,7 @@ const Card: React.FC<CardProps> = ({
       onClick={onClick}
       whileHover={hover ? { y: -4, transition: { type: 'spring', stiffness: 350, damping: 22 } } : undefined}
       className={[
-        'bg-white border border-border-subtle rounded-token-lg',
+        'bg-white border border-border-subtle rounded-[4px]',
         'shadow-soft-sm',
         hover ? 'hover:shadow-soft-lg transition-shadow' : '',
         onClick ? 'cursor-pointer text-left w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-guinea-red/40 focus-visible:ring-offset-2' : '',

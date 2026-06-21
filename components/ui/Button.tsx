@@ -13,7 +13,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantClasses: Record<Variant, string> = {
   primary:   'bg-guinea-red text-white hover:bg-guinea-red-dark',
-  secondary: 'bg-transparent border border-ink text-ink hover:bg-ink hover:text-white',
+  secondary: 'bg-transparent border-2 border-ink text-ink hover:bg-ink hover:text-ivory',
   ghost:     'bg-transparent text-ink-muted hover:text-ink hover:bg-border-subtle/50',
 };
 
@@ -40,8 +40,8 @@ const Button: React.FC<ButtonProps> = ({
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
       disabled={disabled}
       className={[
-        'inline-flex items-center justify-center rounded-[8px]',
-        'font-black uppercase tracking-widest',
+        'inline-flex items-center justify-center rounded-[3px]',
+        'font-mono font-bold uppercase tracking-[0.08em]',
         'transition-colors duration-200',
         'focus:outline-none focus-visible:ring-2 focus-visible:ring-guinea-red/50 focus-visible:ring-offset-2',
         'disabled:opacity-40 disabled:cursor-not-allowed',

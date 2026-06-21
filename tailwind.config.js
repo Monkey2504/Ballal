@@ -15,15 +15,17 @@ export default {
         'guinea-yellow':   '#FFCC00',
         'guinea-green':    '#00843D',
         // Neutral base
-        'ivory':           '#FAFAF8',
-        'ink':             '#0F0F0F',
+        'ivory':           '#FAF7F0',
+        'paper':           '#F3EEE3',
+        'ink':             '#141210',
         // Semantic
-        'ink-muted':       '#6B6B6B',
-        'border-subtle':   '#E8E8E6',
+        'ink-muted':       '#6B655C',
+        'border-subtle':   '#E4DECF',
       },
       fontFamily: {
-        sans:  ['Plus Jakarta Sans', 'sans-serif'],
-        serif: ['Playfair Display', 'serif'],
+        sans:  ['Archivo', 'sans-serif'],
+        serif: ['Fraunces', 'serif'],
+        mono:  ['Space Mono', 'monospace'],
       },
       fontSize: {
         'caption': ['9px',  { lineHeight: '1.4', letterSpacing: '0.06em' }],

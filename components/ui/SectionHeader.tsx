@@ -30,24 +30,26 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
       transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
       className={['max-w-2xl', alignClass, className].join(' ')}
     >
-      {flagLine && (
-        <div className="flag-line mb-4 w-12" aria-hidden="true">
-          <span /><span /><span />
-        </div>
-      )}
       {eyebrow && (
-        <p className="text-label font-black uppercase tracking-[0.3em] text-guinea-red mb-3">
-          {eyebrow}
-        </p>
+        <div className={`flex items-center gap-3 mb-4 ${align === 'center' ? 'justify-center' : ''}`}>
+          {flagLine && (
+            <span className="flag-line w-8 shrink-0" aria-hidden="true">
+              <span /><span /><span />
+            </span>
+          )}
+          <p className="dateline text-[11px] text-guinea-red">
+            {eyebrow}
+          </p>
+        </div>
       )}
       <h2
         id={titleId}
-        className="font-serif font-black text-3xl sm:text-4xl text-ink leading-tight"
+        className="font-serif font-black text-[2rem] sm:text-[2.75rem] text-ink leading-[1.02] tracking-tight"
       >
         {title}
       </h2>
       {description && (
-        <p className="mt-4 text-body-sm text-ink-muted leading-relaxed">
+        <p className="mt-5 text-body-lg text-ink-muted leading-relaxed max-w-xl">
           {description}
         </p>
       )}

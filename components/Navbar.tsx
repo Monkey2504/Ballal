@@ -66,7 +66,7 @@ const Navbar: React.FC<NavbarProps> = ({ setView, onOpenAuth }) => {
           aria-label="Navigation principale"
           initial={false}
           animate={{
-            backgroundColor: '#FAFAF8',
+            backgroundColor: '#FAF7F0',
             boxShadow: isScrolled
               ? '0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.07)'
               : '0 1px 0 rgba(0,0,0,0.06)',
@@ -90,11 +90,11 @@ const Navbar: React.FC<NavbarProps> = ({ setView, onOpenAuth }) => {
                   <span className="block w-1 h-3.5 bg-[#00843D] rounded-full" />
                 </div>
                 <div>
-                  <span className="block font-serif font-black text-xl leading-none text-[#0F0F0F] tracking-tight group-hover:text-[#BE0000] transition-colors duration-200">
+                  <span className="block font-serif font-black text-xl leading-none text-[#141210] tracking-tight group-hover:text-[#BE0000] transition-colors duration-200">
                     BALLAL
                   </span>
-                  <span className="block text-[9px] font-bold tracking-[0.25em] text-[#BE0000]/70 uppercase leading-none mt-0.5">
-                    ASBL · BCE 1016.925.333
+                  <span className="dateline block text-[9px] text-[#BE0000]/70 leading-none mt-1">
+                    ASBL · SOLIDARITÉ GUINÉE–BELGIQUE
                   </span>
                 </div>
               </button>
@@ -108,10 +108,10 @@ const Navbar: React.FC<NavbarProps> = ({ setView, onOpenAuth }) => {
                       key={item.value}
                       onClick={() => handleNavClick(item.value)}
                       aria-current={active ? 'page' : undefined}
-                      className={`relative px-4 py-2 text-[11px] font-bold uppercase tracking-[0.14em] transition-colors duration-200 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE0000]/40 ${
+                      className={`relative px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-[0.08em] transition-colors duration-200 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE0000]/40 ${
                         active
                           ? 'text-[#BE0000]'
-                          : 'text-[#6B6B6B] hover:text-[#0F0F0F]'
+                          : 'text-[#6B655C] hover:text-[#141210]'
                       }`}
                     >
                       {item.label}

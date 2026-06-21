@@ -11,9 +11,9 @@ const NAV_LINKS = [
   { label: 'Accueil',              view: ViewState.HOME },
   { label: 'Entraide',             view: ViewState.SOLIDARITY_NETWORK },
   { label: 'Logement',             view: ViewState.SQUAT },
-  { label: 'Droits & Juridique',   view: ViewState.LEGAL_AID },
-  { label: 'Autonomie Alimentaire', view: ViewState.FOOD_AUTONOMY },
-  { label: 'Culture & Histoire',   view: ViewState.CULTURE },
+  { label: 'Droits et juridique',  view: ViewState.LEGAL_AID },
+  { label: 'Autonomie alimentaire', view: ViewState.FOOD_AUTONOMY },
+  { label: 'Culture et histoire',  view: ViewState.CULTURE },
   { label: 'Festival',             view: ViewState.FESTIVAL },
   { label: 'Équipe',               view: ViewState.TEAM },
 ];
@@ -31,7 +31,7 @@ const Footer: React.FC<FooterProps> = ({ setView }) => {
   };
 
   return (
-    <footer className="bg-[#0F0F0F] text-white/60" role="contentinfo" aria-label="Pied de page">
+    <footer className="bg-ink text-white/60" role="contentinfo" aria-label="Pied de page">
 
       {/* Guinea flag line — 3px signature at the top of footer */}
       <div className="flag-line" aria-hidden="true"><span /><span /><span /></div>
@@ -51,7 +51,7 @@ const Footer: React.FC<FooterProps> = ({ setView }) => {
               </div>
               <div>
                 <span className="block font-serif font-black text-xl text-white leading-none tracking-tight">BALLAL</span>
-                <span className="block text-[9px] font-bold tracking-[0.25em] text-[#BE0000]/70 uppercase leading-none mt-0.5">ASBL</span>
+                <span className="dateline block text-[9px] text-[#BE0000]/70 leading-none mt-1">ASBL</span>
               </div>
             </div>
 
@@ -59,18 +59,11 @@ const Footer: React.FC<FooterProps> = ({ setView }) => {
               Solidarité Guinée-Belgique. Logement d'urgence, défense des droits,
               autonomie alimentaire et lien culturel pour la diaspora.
             </p>
-
-            {/* Guinea flag dots — decorative */}
-            <div className="flex gap-1.5 mt-4" aria-label="Couleurs du drapeau de Guinée">
-              <span className="h-1 w-8 bg-[#BE0000] rounded-full" />
-              <span className="h-1 w-8 bg-[#FFCC00] rounded-full" />
-              <span className="h-1 w-8 bg-[#00843D] rounded-full" />
-            </div>
           </div>
 
           {/* Navigation column */}
           <div className="space-y-4">
-            <h3 className="text-[10px] font-black text-white uppercase tracking-[0.25em]">
+            <h3 className="dateline text-[10px] text-white">
               Navigation
             </h3>
             <ul className="space-y-2.5">
@@ -93,8 +86,8 @@ const Footer: React.FC<FooterProps> = ({ setView }) => {
 
           {/* Legal column */}
           <div className="space-y-4">
-            <h3 className="text-[10px] font-black text-white uppercase tracking-[0.25em]">
-              Légal & Transparence
+            <h3 className="dateline text-[10px] text-white">
+              Légal et transparence
             </h3>
             <ul className="space-y-2.5">
               {LEGAL_LINKS.map((link) => (
@@ -117,8 +110,8 @@ const Footer: React.FC<FooterProps> = ({ setView }) => {
 
           {/* Contact column */}
           <div className="space-y-4">
-            <h3 className="text-[10px] font-black text-white uppercase tracking-[0.25em]">
-              Contact & Urgence
+            <h3 className="dateline text-[10px] text-white">
+              Contact et urgence
             </h3>
             <address className="not-italic space-y-3.5">
               <div className="flex items-start gap-3 text-[13px]">
