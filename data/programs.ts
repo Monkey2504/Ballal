@@ -28,7 +28,7 @@ export const PROGRAMS: Program[] = [
     iconBg:      'bg-ink/10',
     iconColor:   'text-ink',
     label:       'Logement',
-    desc:        "Nous gérons directement plusieurs occupations solidaires à Bruxelles depuis des années. Pas des conseils de l'extérieur — une présence physique, sur place, chaque jour.",
+    desc:        "Ballal est née dans une occupation solidaire de Molenbeek : 130 personnes, organisées au quotidien par quatre responsables. Pas des conseils de l'extérieur. Une présence sur place, chaque jour.",
   },
   {
     view:        ViewState.FOOD_AUTONOMY,

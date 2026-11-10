@@ -10,5 +10,5 @@ export const TEAM_MEMBERS: TeamMember[] = [
   { name: "Bah Ibrahim",          bio: "Resp. des opérations",   img: "https://i.imgur.com/l3UdDov.png", accent: "var(--gold)"    },
   { name: "Kadiatou Sow",         bio: "Secrétaire",             img: "https://i.imgur.com/THTzMBW.png", accent: "var(--emerald)" },
   { name: "Cissé Abdoulaye",      bio: "Trésorier",              img: "https://i.imgur.com/7FduSwY.png", accent: "var(--ink)"     },
-  { name: "Francois Halleux",     bio: "Conseiller stratégique", img: "https://i.imgur.com/1qqkroP.png", accent: "var(--ink)"     },
+  { name: "François Halleux",     bio: "Conseiller stratégique", img: "https://i.imgur.com/1qqkroP.png", accent: "var(--ink)"     },
 ];
