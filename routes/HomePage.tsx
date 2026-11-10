@@ -210,7 +210,7 @@ const HomePage: React.FC<HomePageProps> = ({ navigate, language }) => {
           <SectionHeader
             titleId="team-title"
             eyebrow="Gouvernance"
-            title="Conseil d'Administration"
+            title="Conseil d'administration et équipe"
             description="Notre direction vient de la rue. Certains ont été sans-papiers. Tous ont vécu ce que vivent nos bénéficiaires. C'est ce qui fait notre différence."
             flagLine
             className="mb-14"
