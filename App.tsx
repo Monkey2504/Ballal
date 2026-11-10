@@ -19,7 +19,7 @@ import ContactSection from './components/ContactSection.tsx';
 import FestivalSection from './components/FestivalSection.tsx';
 import TeamSection from './components/TeamSection.tsx';
 import HistorySection from './components/HistorySection.tsx';
-import GallerySection from './components/GallerySection.tsx';
+import AgendaSection from './components/AgendaSection.tsx';
 import SolidarityNetwork from './components/SolidarityNetwork.tsx';
 import { AuthModal } from './components/AuthModals.tsx';
 import { FoodSupplierForm, FoodNetworkForm } from './components/FoodForms.tsx';
@@ -29,7 +29,7 @@ import PressSection from './components/PressSection.tsx';
 const PAGE_TITLES: Record<string, string> = {
   '/':                         'BALLAL ASBL | Solidarité Guinée-Belgique',
   '/entraide':                 'Entraide & Solidarité | BALLAL ASBL',
-  '/logement':                 'Logement & Squat | BALLAL ASBL',
+  '/logement':                 'Logement et occupations | BALLAL ASBL',
   '/culture':                  'Culture & Histoire | BALLAL ASBL',
   '/droits':                   'Aide & Droits | BALLAL ASBL',
   '/alimentation':             'Projet Alimentaire | BALLAL ASBL',
@@ -121,7 +121,7 @@ const AppContent: React.FC = () => {
             <Route path="/"                         element={<HomePage navigate={navigate} language={language} />} />
             <Route path="/entraide"                 element={<SolidarityNetwork />} />
             <Route path="/logement"                 element={<SquatSection language={language} />} />
-            <Route path="/culture"                  element={<div className="space-y-0"><HistorySection language={language} /><GallerySection /></div>} />
+            <Route path="/culture"                  element={<div className="space-y-0"><AgendaSection /><HistorySection language={language} /></div>} />
             <Route path="/droits"                   element={<LegalAidSection language={language} />} />
             <Route path="/alimentation"             element={<FoodAutonomySection language={language} setView={navigate} />} />
             <Route path="/alimentation/fournisseur" element={<FoodSupplierForm language={language} onBack={() => navigate(ViewState.FOOD_AUTONOMY)} />} />
