@@ -15,15 +15,15 @@ const PRESS_CONTACTS = {
 
 const KEY_FIGURES = [
   { value: '130', label: 'Personnes accompagnées', sub: 'actuellement en suivi actif', icon: Users, color: 'text-guinea-red' },
-  { value: '3 ans', label: "D'existence", sub: 'fondée et active depuis 2022', icon: Calendar, color: 'text-guinea-green' },
-  { value: '150+', label: 'Actions menées', sub: 'consultations, hébergements, distributions', icon: Heart, color: 'text-guinea-yellow' },
+  { value: '2024', label: 'Constitution en ASBL', sub: 'active sur le terrain depuis 2022', icon: Calendar, color: 'text-guinea-green' },
+  { value: '4', label: 'Responsables de terrain', sub: "organisent le quotidien de l'occupation", icon: Heart, color: 'text-guinea-yellow' },
   { value: '1', label: 'Permanence hebdomadaire', sub: 'accueil sur rendez-vous à Bruxelles', icon: Building, color: 'text-[#0F0F0F]' },
 ];
 
 const MISSIONS = [
   {
     title: 'Logement d\'urgence',
-    desc: 'Accompagnement et orientation des personnes sans abri, coordination avec les structures d\'accueil bruxelloises.',
+    desc: 'Organisation quotidienne d\'une occupation solidaire de 130 personnes à Molenbeek, orientation vers les structures d\'accueil bruxelloises.',
     icon: Building,
     color: 'border-guinea-red',
   },
@@ -35,13 +35,13 @@ const MISSIONS = [
   },
   {
     title: 'Aide juridique',
-    desc: 'Information sur les droits (9bis, 9ter), orientation vers les avocats partenaires, soutien aux démarches administratives.',
+    desc: 'Information sur les droits (9bis, 9ter), orientation vers des avocats et des services juridiques, soutien aux démarches administratives.',
     icon: Shield,
     color: 'border-guinea-yellow',
   },
   {
     title: 'Festival des Sans-Papiers',
-    desc: 'Événement annuel de visibilisation et de revendication culturelle, prévu en septembre 2026 à Bruxelles.',
+    desc: 'Projet de festival politique et culturel, par et pour les sans-papiers. En préparation, dates à annoncer.',
     icon: Globe,
     color: 'border-[#0F0F0F]',
   },
@@ -89,7 +89,7 @@ const PressSection: React.FC = () => {
             <span className="text-guinea-yellow italic">en chiffres.</span>
           </h1>
           <p className="text-xl md:text-2xl font-medium text-gray-300 max-w-2xl leading-relaxed">
-            Association reconnue, active depuis 2022 à Bruxelles. Logement, alimentation, droits — pour les personnes sans papiers.
+            ASBL de droit belge, active sur le terrain depuis 2022 à Bruxelles. Logement, alimentation, droits — pour les personnes sans papiers.
           </p>
         </div>
         <div className="flag-line absolute bottom-0 left-0 right-0" aria-hidden="true"><span /><span /><span /></div>
@@ -134,7 +134,7 @@ const PressSection: React.FC = () => {
                 </div>
                 <div className="flex items-start gap-3">
                   <Calendar className="h-4 w-4 text-guinea-red mt-1 flex-shrink-0" />
-                  <div><span className="font-black text-[#0F0F0F]">Active depuis : </span>2022 — 3 ans d'opérations continues</div>
+                  <div><span className="font-black text-[#0F0F0F]">Active depuis : </span>2022 sur le terrain — constituée en ASBL en décembre 2024</div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Globe className="h-4 w-4 text-guinea-red mt-1 flex-shrink-0" />
@@ -209,9 +209,9 @@ const PressSection: React.FC = () => {
               <div className="space-y-4">
                 {[
                   'Ballal ASBL accompagne 130 personnes sans papiers à Bruxelles.',
-                  'Fondée en 2022, l\'association intervient sur le logement d\'urgence, l\'alimentation et les droits.',
+                  'Active depuis 2022 et constituée en ASBL en décembre 2024, l\'association intervient sur le logement, l\'alimentation et les droits.',
                   'Ballal est une ASBL de droit belge (BCE 1016.925.333), active en Région de Bruxelles-Capitale.',
-                  'L\'association organise le Festival des Sans-Papiers, événement annuel prévu en septembre 2026.',
+                  'L\'association porte le projet de Festival des Sans-Papiers, en préparation.',
                 ].map((point, i) => (
                   <div key={i} className="flex items-start gap-4">
                     <CheckCircle className="h-5 w-5 text-guinea-yellow flex-shrink-0 mt-0.5" />
@@ -260,7 +260,7 @@ const PressSection: React.FC = () => {
               <div className="grid md:grid-cols-2 gap-6">
                 {[
                   { titre: 'Ancrage territorial', desc: 'Présence directe à Molenbeek et réseau de confiance avec les communautés.' },
-                  { titre: 'Légitimité opérationnelle', desc: '3 ans d\'actions concrètes, 130 personnes suivies, ASBL enregistrée.' },
+                  { titre: 'Légitimité opérationnelle', desc: 'Des années d\'actions concrètes, 130 personnes suivies, ASBL enregistrée.' },
                   { titre: 'Réseau de terrain', desc: 'Liens avec les squats, occupations solidaires et associations partenaires bruxelloises.' },
                   { titre: 'Visibilité militante', desc: 'Festival, présence médiatique en construction — audience engagée.' },
                 ].map((item, i) => (

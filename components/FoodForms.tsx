@@ -335,8 +335,11 @@ const BaseFoodForm: React.FC<{
     
     setIsSubmitting(true);
     
-    // Simulate API call for better UX
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // Envoi par la messagerie de la personne, vers l'adresse de l'association
+    const lignes = Object.entries(formData as unknown as Record<string, unknown>)
+      .filter(([, v]) => v !== '' && v !== false && v != null)
+      .map(([k, v]) => `${k} : ${Array.isArray(v) ? v.join(', ') : String(v)}`);
+    window.location.href = `mailto:admin@ballal.be?subject=${encodeURIComponent('Autonomie alimentaire — ' + mode)}&body=${encodeURIComponent(lignes.join('\n'))}`;
     
     try {
       // TODO: send formData to backend API
@@ -452,7 +455,7 @@ const BaseFoodForm: React.FC<{
           >
             <AlertTriangle className="h-5 w-5 text-amber-500 mr-3 flex-shrink-0 mt-0.5" aria-hidden="true" />
             <div>
-              <p className="text-sm font-bold text-amber-800 mb-1">Mode démonstration</p>
+              <p className="text-sm font-bold text-amber-800 mb-1">Envoi par e-mail</p>
               <p className="text-sm text-amber-700">
                 {t.form_demo_warning}
               </p>
@@ -692,7 +695,7 @@ const BaseFoodForm: React.FC<{
               
               <p className="text-center text-sm text-gray-500 mt-4">
                 <AlertTriangle className="h-4 w-4 inline mr-1" aria-hidden="true" />
-                Ce formulaire est une démonstration. Dans la version finale, les données seront envoyées à notre équipe.
+                Le formulaire ouvre votre messagerie : le message part vers admin@ballal.be quand vous l'envoyez.
               </p>
             </div>
           </form>

@@ -21,11 +21,11 @@ interface PhaseInfo {
 }
 
 const PHASES: PhaseInfo[] = [
-  { phase: 'scouting', title: 'Phase 1 : Repérage', description: "Trouve le bon spot.", icon: Search, duration: '2-7 jours', tips: ["Check cadastre", "Observe boîtes aux lettres"], categories: ['general'] },
-  { phase: 'entry', title: 'Phase 2 : Entrée', description: "Accès au lieu.", icon: Hammer, duration: '1 nuit', tips: ["Pas d'effraction", "Change barillet"], categories: ['general', 'ot'] },
-  { phase: 'anchoring', title: 'Phase 3 : Ancrage', description: "Preuve d'habitation.", icon: Home, duration: '1-3 jours', tips: ["Boîte aux lettres", "Noms visibles"], categories: ['daily_life'] },
-  { phase: 'defense', title: 'Phase 4 : Défense', description: "Éviter l'expulsion.", icon: Shield, duration: 'Constant', tips: ["Reste calme", "Filme tout"], categories: ['negotiation'] },
-  { phase: 'nego_legal', title: 'Phase 5 : Négociation', description: "Légalisation via OT.", icon: Scale, duration: '1-4 semaines', tips: ["Propose entretien", "Évite taxes"], categories: ['negotiation', 'refugee', 'ot'] },
+  { phase: 'scouting', title: 'Phase 1 : Repérage', description: "Trouve un bâtiment vide.", icon: Search, duration: '2-7 jours', tips: ["Consulte le cadastre", "Identifie le propriétaire"], categories: ['general'] },
+  { phase: 'entry', title: 'Phase 2 : Contact', description: "Parle au propriétaire avant d'entrer.", icon: Hammer, duration: '1-4 semaines', tips: ["Écris au propriétaire", "Propose une convention"], categories: ['general', 'ot'] },
+  { phase: 'anchoring', title: 'Phase 3 : Ancrage', description: "S'installer dans les règles.", icon: Home, duration: '1-3 jours', tips: ["Boîte aux lettres", "Charte de vie collective"], categories: ['daily_life'] },
+  { phase: 'defense', title: 'Phase 4 : Tes droits', description: "En cas de visite de la police.", icon: Shield, duration: 'En continu', tips: ["Reste calme", "Demande le mandat"], categories: ['negotiation'] },
+  { phase: 'nego_legal', title: 'Phase 5 : Négociation', description: "Convention d'occupation temporaire.", icon: Scale, duration: '1-4 semaines', tips: ["Propose l'entretien du bâtiment", "Fais-toi accompagner"], categories: ['negotiation', 'refugee', 'ot'] },
   { phase: 'post', title: 'Phase 6 : Long terme', description: "Gestion stable.", icon: Clock, duration: '3-24 mois', tips: ["Réunions collectives", "Dossier social"], categories: ['daily_life', 'refugee'] },
 ];
 
@@ -56,7 +56,10 @@ const SquatSection: React.FC<{ language?: LanguageCode }> = () => {
           Votre droit au <span className="text-[#FFCC00]">logement</span>.
         </h1>
         <p className="text-lg text-white/50 max-w-2xl mx-auto font-medium">
-          Du squat à la convention légale — chaque étape documentée pour occuper avec dignité et sécurité.
+          De la rue à la convention d'occupation : chaque étape pour se loger avec dignité et en sécurité.
+        </p>
+        <p className="text-sm text-white/40 max-w-2xl mx-auto font-medium mt-4">
+          Depuis la loi du 18 octobre 2017, entrer dans un bâtiment sans l'accord du propriétaire est une infraction pénale en Belgique. Ce guide décrit la voie légale : l'occupation temporaire avec convention.
         </p>
         <div className="flag-line mt-8" aria-hidden="true"><span /><span /><span /></div>
       </header>

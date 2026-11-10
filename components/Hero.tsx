@@ -59,7 +59,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
               className="inline-flex items-center gap-2 text-label font-bold uppercase tracking-[0.28em] text-guinea-red/80"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-guinea-red animate-pulse" aria-hidden="true" />
-              ASBL agréée · BCE 1016.925.333 · Bruxelles
+              ASBL · BCE 1016.925.333 · Bruxelles
             </motion.div>
 
             {/* Headline — three staggered lines in one h1 */}
@@ -244,7 +244,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore, onDonate }) => {
                 aria-hidden="true"
               >
                 <p className="text-[9px] font-bold uppercase tracking-widest opacity-75">ASBL</p>
-                <p className="text-label font-bold mt-0.5">Agréée</p>
+                <p className="text-label font-bold mt-0.5">Molenbeek</p>
               </motion.div>
             </div>
           </motion.div>

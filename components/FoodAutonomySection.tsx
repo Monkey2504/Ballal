@@ -42,24 +42,8 @@ const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, set
         <div className="flag-line absolute bottom-0 left-0 right-0" aria-hidden="true"><span /><span /><span /></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 -mt-16 relative z-20">
+      <div className="max-w-7xl mx-auto px-6 mt-12 relative z-20">
         
-        {/* Metrics Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-          {[
-            { value: metrics.squats, label: "Points de distribution", icon: <Home className="h-5 w-5" /> },
-            { value: metrics.people, label: "Repas par mois", icon: <Users className="h-5 w-5" /> },
-            { value: `x${metrics.growth}`, label: "Impact 2025", icon: <TrendingUp className="h-5 w-5" /> },
-            { value: metrics.partners, label: "Partenaires locaux", icon: <HeartHandshake className="h-5 w-5" /> }
-          ].map((metric, index) => (
-            <div key={index} className="bg-white p-8 rounded-[2.5rem] shadow-soft-elegant border border-gray-100 flex flex-col items-center text-center">
-              <div className="p-3 bg-guinea-green/10 text-guinea-green rounded-2xl mb-4">{metric.icon}</div>
-              <div className="text-4xl font-serif font-black text-[#0F0F0F] mb-1">{metric.value}</div>
-              <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{metric.label}</div>
-            </div>
-          ))}
-        </div>
-
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Action Card */}
           <div className="bg-white p-12 rounded-[3.5rem] shadow-soft-elegant border border-gray-100 group transition-all">
@@ -68,7 +52,7 @@ const FoodAutonomySection: React.FC<FoodAutonomySectionProps> = ({ language, set
                <h3 className="text-4xl font-serif font-black text-[#0F0F0F]">Ce que nous faisons</h3>
              </div>
              <p className="text-xl text-gray-600 font-medium leading-relaxed mb-10">
-               Chaque semaine, nous collectons les invendus des commerces bruxellois pour approvisionner directement les cuisines collectives de la diaspora. Zéro déchet. Zéro facture pour les familles.
+               Chaque semaine, nous collectons les invendus des commerces bruxellois pour approvisionner les cuisines collectives des occupations solidaires. Zéro déchet. Zéro facture pour les familles.
              </p>
              <div className="space-y-4">
                 {["Zéro gaspillage, zéro frais", "Approvisionnement direct — sans intermédiaire", "Qualité nutritionnelle vérifiée"].map((benefit, i) => (

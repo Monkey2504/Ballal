@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Phone, LogIn, ChevronDown, LogOut } from 'lucide-react';
+import { Menu, X, Phone, Heart, ChevronDown, LogOut } from 'lucide-react';
 import { ViewState, LanguageCode } from '../types.ts';
 import { MAIN_NAV_ITEMS } from '../constants/navigation.ts';
 import { useAuth } from '../contexts/AuthContext.tsx';
@@ -132,10 +132,10 @@ const Navbar: React.FC<NavbarProps> = ({ setView, onOpenAuth }) => {
                 <a
                   href="tel:0493434383"
                   className="flex items-center gap-1.5 text-[10px] font-black tracking-widest text-[#BE0000] hover:text-[#0F0F0F] transition-colors duration-200 uppercase"
-                  aria-label="Numéro d'urgence 24h : 0493 43 43 83"
+                  aria-label="Numéro d'urgence : 0493 43 43 83"
                 >
                   <Phone className="h-3 w-3" aria-hidden="true" />
-                  <span className="hidden xl:inline">Urgence 24h ·</span> 0493 43 43 83
+                  <span className="hidden xl:inline">Urgence ·</span> 0493 43 43 83
                 </a>
 
                 <div className="w-px h-4 bg-[#E8E8E6]" aria-hidden="true" />
@@ -178,11 +178,11 @@ const Navbar: React.FC<NavbarProps> = ({ setView, onOpenAuth }) => {
                   </div>
                 ) : (
                   <button
-                    onClick={onOpenAuth}
+                    onClick={() => handleNavClick(ViewState.DONATE)}
                     className="flex items-center gap-2 px-4 py-2 bg-[#0F0F0F] text-white text-[11px] font-black uppercase tracking-widest rounded-token-lg hover:bg-[#BE0000] transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE0000]/40"
                   >
-                    <LogIn className="h-3.5 w-3.5" aria-hidden="true" />
-                    Connexion
+                    <Heart className="h-3.5 w-3.5" aria-hidden="true" />
+                    Soutenir
                   </button>
                 )}
               </div>
@@ -244,7 +244,7 @@ const Navbar: React.FC<NavbarProps> = ({ setView, onOpenAuth }) => {
                       className="flex items-center gap-2 w-full px-4 py-3 text-[12px] font-black text-[#BE0000] uppercase tracking-widest"
                     >
                       <Phone className="h-4 w-4" aria-hidden="true" />
-                      Urgence 24h — 0493 43 43 83
+                      Urgence — 0493 43 43 83
                     </a>
                     {isAuthenticated ? (
                       <button
@@ -256,11 +256,11 @@ const Navbar: React.FC<NavbarProps> = ({ setView, onOpenAuth }) => {
                       </button>
                     ) : (
                       <button
-                        onClick={() => { onOpenAuth(); setIsMobileMenuOpen(false); }}
+                        onClick={() => { handleNavClick(ViewState.DONATE); setIsMobileMenuOpen(false); }}
                         className="flex items-center gap-2 w-full px-4 py-3 bg-[#0F0F0F] text-white text-[12px] font-black rounded-token-lg hover:bg-[#BE0000] transition-colors uppercase tracking-widest"
                       >
-                        <LogIn className="h-4 w-4" aria-hidden="true" />
-                        Connexion / Accès Membre
+                        <Heart className="h-4 w-4" aria-hidden="true" />
+                        Soutenir Ballal
                       </button>
                     )}
                   </div>

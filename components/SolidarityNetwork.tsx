@@ -21,9 +21,6 @@ const fadeUp = {
 
 const SolidarityNetwork: React.FC = () => {
   const [requests, setRequests] = useState<MutualAidRequest[]>([
-    { id: '1', user: 'Mamadou', type: 'need', content: "Cherche quelqu'un pour m'accompagner à la commune de Schaerbeek pour traduire un document.", date: 'Il y a 2h' },
-    { id: '2', user: 'Fatoumata', type: 'offer', content: 'Je propose mon aide pour les devoirs de français le mercredi après-midi à Molenbeek.', date: 'Il y a 4h' },
-    { id: '3', user: 'Ibrahim', type: 'need', content: 'Cherche des informations sur le renouvellement de ma carte A.', date: 'Il y a 1j' },
   ]);
 
   const [newMessage, setNewMessage] = useState('');
@@ -39,6 +36,9 @@ const SolidarityNetwork: React.FC = () => {
       date: "À l'instant",
     };
     setRequests([newReq, ...requests]);
+    // Le message part vers l'équipe, qui met les personnes en relation
+    const objet = msgType === 'need' ? "Entraide — j'ai besoin d'aide" : 'Entraide — je peux aider';
+    window.location.href = `mailto:admin@ballal.be?subject=${encodeURIComponent(objet)}&body=${encodeURIComponent(newMessage)}`;
     setNewMessage('');
   };
 
@@ -60,7 +60,7 @@ const SolidarityNetwork: React.FC = () => {
             Espace <span className="text-[#00843D]">Entraide</span>
           </h1>
           <p className="text-base sm:text-lg text-[#6B6B6B] font-medium max-w-xl mx-auto leading-relaxed">
-            Mettez en relation vos besoins et vos ressources au sein de la communauté.
+            Écrivez ce dont vous avez besoin ou ce que vous pouvez apporter. Votre message part par e-mail à l'équipe de Ballal, qui met les personnes en relation.
           </p>
         </motion.header>
 
@@ -105,9 +105,15 @@ const SolidarityNetwork: React.FC = () => {
         <div className="space-y-5 sm:space-y-6">
           <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-[#6B6B6B] flex items-center gap-4">
             <div className="h-px flex-grow bg-[#E8E8E6]" aria-hidden="true" />
-            En ce moment dans la communauté
+            Vos messages envoyés
             <div className="h-px flex-grow bg-[#E8E8E6]" aria-hidden="true" />
           </h2>
+
+          {requests.length === 0 && (
+            <p className="text-center text-sm text-[#6B6B6B] font-medium py-6">
+              Aucun message pour l'instant. Vous pouvez aussi appeler le 0493 43 43 83.
+            </p>
+          )}
 
           {requests.map((req, i) => (
             <motion.div
@@ -130,16 +136,6 @@ const SolidarityNetwork: React.FC = () => {
                 <p className="text-[#6B6B6B] font-medium leading-relaxed mb-5 text-sm sm:text-base">
                   {req.content}
                 </p>
-                <div className="flex flex-wrap gap-3">
-                  <button className="flex items-center gap-2 px-5 py-2.5 min-h-[44px] bg-[#F5F5F3] hover:bg-[#0F0F0F] hover:text-white rounded-full text-[10px] font-black uppercase tracking-widest transition-all">
-                    <MessageSquare className="h-3 w-3" aria-hidden="true" />
-                    Je peux aider
-                  </button>
-                  <button className="flex items-center gap-2 px-5 py-2.5 min-h-[44px] bg-[#F5F5F3] hover:bg-[#BE0000] hover:text-white rounded-full text-[10px] font-black uppercase tracking-widest transition-all">
-                    <Heart className="h-3 w-3" aria-hidden="true" />
-                    Soutenir
-                  </button>
-                </div>
               </div>
             </motion.div>
           ))}

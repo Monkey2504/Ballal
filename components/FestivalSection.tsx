@@ -45,7 +45,7 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
   const festivalData = {
     title: "Festival des Sans-Papiers",
     tagline: "Célébrer la fierté, revendiquer la dignité.",
-    date: "15-16 Septembre 2026",
+    date: "Dates à annoncer",
     location: "Bruxelles, Belgique",
     expectedAttendance: 1000,
     mainObjectives: [
@@ -115,25 +115,7 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
             {/* Countdown */}
             <div className="flex justify-center items-center gap-4 mb-8">
               <Clock className="h-6 w-6 text-[#FFCC00]" aria-hidden="true" />
-              <span className="text-lg font-bold">Prochaine édition: {festivalData.date}</span>
-            </div>
-
-            {/* Countdown Timer */}
-            <div className="flex justify-center gap-4 md:gap-6 mb-12">
-              {Object.entries(countdown).map(([unit, value]) => (
-                <div key={unit} className="text-center">
-                  <div className="bg-black/20 backdrop-blur-sm rounded-xl px-4 py-3 min-w-[80px]">
-                    <div className="text-3xl md:text-4xl font-black">
-                      {value.toString().padStart(2, '0')}
-                    </div>
-                    <div className="text-sm uppercase tracking-wider opacity-80 mt-1">
-                      {unit === 'days' ? 'jours' : 
-                       unit === 'hours' ? 'heures' : 
-                       unit === 'minutes' ? 'minutes' : 'secondes'}
-                    </div>
-                  </div>
-                </div>
-              ))}
+              <span className="text-lg font-bold">Projet en préparation — dates à annoncer</span>
             </div>
 
             {/* Quick Info */}
@@ -145,10 +127,6 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
               <div className="flex items-center gap-2">
                 <MapPin className="h-5 w-5 text-[#FFCC00]" aria-hidden="true" />
                 <span className="font-medium">{festivalData.location}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-[#FFCC00]" aria-hidden="true" />
-                <span className="font-medium">{festivalData.expectedAttendance} participants attendus</span>
               </div>
             </div>
           </div>
@@ -307,52 +285,6 @@ const FestivalSection: React.FC<FestivalSectionProps> = ({ language }) => {
               </div>
             </div>
           </div>
-
-          {/* Impact & Results */}
-          <section className="bg-gradient-to-r from-slate-50 to-white rounded-3xl p-8 md:p-12 border border-gray-200">
-            <h2 className="text-2xl md:text-3xl font-black text-slate-900 mb-8 flex items-center gap-3">
-              <TrendingUp className="h-8 w-8 text-green-600" />
-              Impact & Résultats Attendus
-            </h2>
-            
-            <div className="grid md:grid-cols-3 gap-6">
-              {festivalData.impacts.map((impact, index) => (
-                <div key={index} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <BarChart className="h-5 w-5 text-blue-600" />
-                    </div>
-                    <span className="text-2xl font-black text-slate-900">{impact.value}</span>
-                  </div>
-                  <h4 className="font-bold text-slate-900 mb-2">{impact.area}</h4>
-                  <p className="text-sm text-gray-600">{impact.description}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Action Timeline */}
-            <div className="mt-12">
-              <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3">
-                <Lightbulb className="h-6 w-6 text-yellow-600" />
-                Feuille de Route
-              </h3>
-              <div className="grid md:grid-cols-3 gap-4">
-                {festivalData.timeline.map((phase, index) => (
-                  <div key={index} className="bg-white p-6 rounded-xl border-l-4 border-blue-500">
-                    <h4 className="font-bold text-blue-900 mb-2">{phase.month}</h4>
-                    <ul className="space-y-2">
-                      {phase.tasks.map((task, taskIndex) => (
-                        <li key={taskIndex} className="text-sm text-gray-600 flex items-center">
-                          <ChevronRight className="h-3 w-3 mr-2 text-blue-400" />
-                          {task}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
 
           {/* Call to Action */}
           <div className="bg-gradient-to-r from-red-600 to-orange-600 rounded-3xl p-8 md:p-12 text-center text-white">

@@ -196,23 +196,6 @@ const ShareSection: React.FC<ShareSectionProps> = ({ language }) => {
           </p>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-          {shareStats.map((stat, index) => (
-            <div 
-              key={index}
-              className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow"
-            >
-              <div className={`text-3xl font-black mb-2 ${stat.color}`}>
-                {stat.value}
-              </div>
-              <div className="text-gray-600 font-medium text-sm">
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
-
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Left Column: QR Code & Link */}
           <div className="space-y-8">

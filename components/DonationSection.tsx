@@ -14,7 +14,7 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
   
   // PLACEHOLDERS : À REMPLACER PAR LES VRAIES DONNÉES
   const IBAN = "BE43 0020 2412 8201";
-  const BIC = "À RENSEIGNER";
+  const BIC = "GEBABEBB";
   const PAYPAL_LINK = "#"; // À configurer
   const CRYPTO_ADDRESS = "Adresse portefeuille à venir";
 
@@ -129,66 +129,6 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
         </div>
 
         {/* Donation Statistics (Static & Honest) */}
-        <div className="mb-8 md:mb-12">
-          <div className="bg-gradient-to-r from-slate-900 to-black rounded-2xl p-6 md:p-8 text-center shadow-xl border border-gray-800">
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 divide-y md:divide-y-0 md:divide-x divide-white/10">
-              
-              {/* Objectif */}
-              <div className="text-white w-full pt-4 md:pt-0">
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <Target className="h-5 w-5 text-[#FFCC00]" />
-                  <p className="text-sm md:text-base opacity-80 font-bold uppercase tracking-wider">{t.donate_goal_annual}</p>
-                </div>
-                <div className="flex items-center justify-center gap-3">
-                  <span className="text-3xl md:text-5xl font-black text-white">
-                    5 000 €
-                  </span>
-                </div>
-                <p className="text-xs text-gray-400 mt-2">{t.donate_goal_annual_desc}</p>
-              </div>
-
-              {/* Bilan Précédent */}
-              <div className="text-white w-full pt-6 md:pt-0 md:pl-12">
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <Check className="h-5 w-5 text-[#00843D]" />
-                  <p className="text-sm md:text-base opacity-80 font-bold uppercase tracking-wider">{t.donate_goal_previous}</p>
-                </div>
-                <div className="flex items-center justify-center gap-2">
-                  <span className="text-2xl md:text-3xl font-bold text-gray-200">
-                    4 520 €
-                  </span>
-                </div>
-                <p className="text-xs text-gray-400 mt-2">{t.donate_goal_previous_desc}</p>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        {/* Donation Methods Tabs */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-black text-slate-900 mb-6 text-center">
-            Choisissez votre méthode de don
-          </h2>
-          <div className="flex flex-wrap justify-center gap-3 mb-8">
-            {donationMethods.map((method) => (
-              <button
-                key={method.id}
-                onClick={() => setActiveMethod(method.id as any)}
-                className={`flex items-center px-5 py-3 rounded-xl border-2 transition-all ${
-                  activeMethod === method.id
-                    ? `${method.color} ${method.bgColor} ${method.textColor} font-bold shadow-sm`
-                    : 'border-gray-200 text-gray-600 hover:border-gray-300'
-                }`}
-                aria-pressed={activeMethod === method.id}
-              >
-                <span className="mr-2">{method.icon}</span>
-                {method.title}
-              </button>
-            ))}
-          </div>
-        </div>
-
         {/* Donation Details */}
         <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 mb-12 transition-all duration-300">
           
@@ -259,7 +199,7 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
                       </div>
                       <div>
                         <label className="block text-sm text-gray-400 uppercase font-bold mb-2">
-                          Communication structurée
+                          Communication libre
                         </label>
                         <div className="font-mono text-lg text-yellow-400 font-bold bg-black/30 px-4 py-2 rounded-lg">
                           "DON BALLAL"
@@ -284,14 +224,6 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
                   </div>
                 </div>
                 
-                <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-                  <div className="text-center">
-                    <h4 className="font-bold text-slate-900 mb-2">IBAN en cours de configuration</h4>
-                    <p className="text-gray-600 text-sm max-w-md">
-                      Veuillez nous contacter directement si vous souhaitez faire un don urgent avant la mise à jour des coordonnées bancaires.
-                    </p>
-                  </div>
-                </div>
               </div>
             </>
           )}
@@ -368,15 +300,15 @@ const DonationSection: React.FC<DonationSectionProps> = ({ language }) => {
                 <Shield className="h-6 w-6 text-green-600" />
               </div>
               <div>
-                <h4 className="font-bold text-slate-900 mb-1">100% Sécurisé & Transparent</h4>
+                <h4 className="font-bold text-slate-900 mb-1">Virement direct à l'ASBL</h4>
                 <p className="text-gray-600 text-sm">
-                  Tous les dons sont certifiés et utilisés exclusivement pour nos missions
+                  Les dons arrivent sur le compte de l'association et servent uniquement à ses missions
                 </p>
               </div>
             </div>
             <div className="text-center md:text-right">
-              <p className="text-sm text-gray-500 mb-2">Association reconnue d'utilité publique</p>
-              <p className="text-slate-900 font-bold">ASBL Enregistrée</p>
+              <p className="text-sm text-gray-500 mb-2">ASBL de droit belge</p>
+              <p className="text-slate-900 font-bold">BCE 1016.925.333</p>
             </div>
           </div>
         </div>

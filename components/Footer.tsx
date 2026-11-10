@@ -16,6 +16,8 @@ const NAV_LINKS = [
   { label: 'Culture & Histoire',   view: ViewState.CULTURE },
   { label: 'Festival',             view: ViewState.FESTIVAL },
   { label: 'Équipe',               view: ViewState.TEAM },
+  { label: 'Faire un don',         view: ViewState.DONATE },
+  { label: 'Contact',              view: ViewState.CONTACT },
 ];
 
 const LEGAL_LINKS = [
@@ -124,7 +126,7 @@ const Footer: React.FC<FooterProps> = ({ setView }) => {
               <div className="flex items-start gap-3 text-[13px]">
                 <MapPin className="h-4 w-4 text-white/25 mt-0.5 shrink-0" aria-hidden="true" />
                 <span className="text-white/40 leading-snug">
-                  Place Masui 9 Boîte 3<br />
+                  Siège social : Place Masui 9 Boîte 3<br />
                   1030 Bruxelles, Belgique
                 </span>
               </div>
@@ -154,7 +156,7 @@ const Footer: React.FC<FooterProps> = ({ setView }) => {
               className="inline-flex items-center gap-2 mt-2 px-4 py-2.5 bg-[#BE0000] text-white text-[10px] font-black uppercase tracking-widest rounded-[8px] hover:bg-[#9B0000] transition-colors duration-200"
             >
               <Phone className="h-3.5 w-3.5" aria-hidden="true" />
-              Ligne d'urgence 24h
+              Appeler Ballal
             </a>
           </div>
 
@@ -168,7 +170,7 @@ const Footer: React.FC<FooterProps> = ({ setView }) => {
             © {new Date().getFullYear()} BALLAL ASBL · Tous droits réservés.
           </p>
           <p className="text-[11px] text-white/25 italic">
-            Association de solidarité Guinée-Belgique, agréée à Bruxelles.
+            Association de solidarité Guinée-Belgique · ASBL de droit belge.
           </p>
         </div>
       </div>

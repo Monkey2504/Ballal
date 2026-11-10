@@ -17,7 +17,7 @@ const LegalDocSection: React.FC<LegalDocSectionProps> = ({ language, mode }) => 
         <div>
             <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-6">{t.footer_privacy || "Politique de confidentialité"}</h1>
             <p className="text-sm text-gray-500 bg-gray-50 p-4 rounded-lg border border-gray-100">
-                <strong>{t.privacy_updated}</strong> {new Date().toLocaleDateString()} <br/>
+                <strong>{t.privacy_updated}</strong> 10 novembre 2026 <br/>
                 <strong>{t.privacy_controller}</strong> BALLAL ASBL
             </p>
         </div>
@@ -63,15 +63,7 @@ const LegalDocSection: React.FC<LegalDocSectionProps> = ({ language, mode }) => 
                     <p className="text-sm">
                         <strong>{t.privacy_data_types}</strong> Nom, Prénom, Adresse email, Numéro de téléphone, Objet de la demande.
                         <br/><br/>
-                        <strong>{t.privacy_purpose}</strong> Répondre à vos demandes d'information, gérer les adhésions, coordonner l'aide alimentaire ou juridique.
-                    </p>
-                </div>
-                <div className="bg-white border border-gray-200 p-5 rounded-xl">
-                    <h3 className="font-bold text-slate-900 mb-2">{t.privacy_newsletter}</h3>
-                    <p className="text-sm">
-                        <strong>{t.privacy_data_types}</strong> Adresse email.
-                        <br/><br/>
-                        <strong>{t.privacy_purpose}</strong> Vous envoyer des informations sur nos activités et appels à la solidarité.
+                        <strong>{t.privacy_purpose}</strong> Répondre à vos demandes d'information, coordonner l'aide alimentaire ou l'orientation juridique.
                     </p>
                 </div>
             </div>
@@ -97,7 +89,7 @@ const LegalDocSection: React.FC<LegalDocSectionProps> = ({ language, mode }) => 
                 {t.privacy_sec3_desc}
             </p>
             <ul className="list-disc pl-6 space-y-2 text-sm">
-                <li>Avec nos avocats partenaires (sous secret professionnel strict).</li>
+                <li>Avec un avocat ou un service juridique, uniquement à votre demande.</li>
                 <li>Avec les autorités compétentes UNIQUEMENT si une obligation légale impérieuse nous y contraint.</li>
                 <li>Avec nos fournisseurs techniques sécurisés respectant le RGPD.</li>
             </ul>
@@ -144,6 +136,15 @@ const LegalDocSection: React.FC<LegalDocSectionProps> = ({ language, mode }) => 
             <AlertCircle className="h-8 w-8 text-amber-600 flex-shrink-0" />
             <p className="text-amber-900 font-black uppercase text-sm leading-tight">
                 {t.terms_legal_warning_bold}
+            </p>
+        </section>
+
+        <section>
+            <h2 className="text-xl font-bold text-slate-800 mb-3">Éditeur du site</h2>
+            <p className="text-gray-600 mb-4">
+                Ballal ASBL, association sans but lucratif de droit belge. Numéro d'entreprise (BCE) : 1016.925.333.
+                Siège social : Place Masui 9 Boîte 3, 1030 Bruxelles. Contact : admin@ballal.be, 0493 43 43 83.
+                Hébergement : Vercel Inc., 440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis.
             </p>
         </section>
 
