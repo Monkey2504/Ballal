@@ -108,7 +108,7 @@ const Navbar: React.FC<NavbarProps> = ({ setView, onOpenAuth }) => {
                       key={item.value}
                       onClick={() => handleNavClick(item.value)}
                       aria-current={active ? 'page' : undefined}
-                      className={`relative px-4 py-2 text-[11px] font-bold uppercase tracking-[0.14em] transition-colors duration-200 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE0000]/40 ${
+                      className={`relative px-2.5 xl:px-4 py-2 text-[11px] font-bold uppercase tracking-[0.14em] transition-colors duration-200 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE0000]/40 ${
                         active
                           ? 'text-[#BE0000]'
                           : 'text-[#6B6B6B] hover:text-[#0F0F0F]'
@@ -131,7 +131,7 @@ const Navbar: React.FC<NavbarProps> = ({ setView, onOpenAuth }) => {
               <div className="hidden lg:flex items-center gap-3">
                 <a
                   href="tel:0493434383"
-                  className="flex items-center gap-1.5 text-[10px] font-black tracking-widest text-[#BE0000] hover:text-[#0F0F0F] transition-colors duration-200 uppercase"
+                  className="flex items-center gap-1.5 shrink-0 whitespace-nowrap text-[10px] font-black tracking-widest text-[#BE0000] hover:text-[#0F0F0F] transition-colors duration-200 uppercase"
                   aria-label="Numéro d'urgence : 0493 43 43 83"
                 >
                   <Phone className="h-3 w-3" aria-hidden="true" />
